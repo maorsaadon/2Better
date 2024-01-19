@@ -1,2 +1,0 @@
-# 2Better
-android application
