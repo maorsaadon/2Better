@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
-import { db } from '../firebase'
+import { auth } from '../back/firebase'
+import { db } from '../back/firebase'
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('')
