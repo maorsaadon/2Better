@@ -13,12 +13,11 @@ const MyGroupsScreen = ({ navigation }) => {
     const navigate = useNavigation()
 
     const backButton = () => {
-    auth
-        .signOut()
-        .then(() => {
-        navigate.replace("Home")
-        })
-        .catch(error => alert(error.message))
+        try {
+            navigation.replace("Home");
+          } catch (error) {
+            alert(error.message);
+          }
     }
     /************************************************** */
 

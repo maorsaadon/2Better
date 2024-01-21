@@ -16,51 +16,44 @@ const HomeScreen = () => {
       .catch(error => alert(error.message))
   }
 
-  const handleMyProfile = () =>{
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Profile")
-      })
-      .catch(error => alert(error.message))
+  const handleMyProfile = () => {
+    try {
+      navigation.replace("Profile");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   const handleMyGroups = () =>{
-    auth
-    .signOut()
-    .then(() => {
-      navigation.replace("MyGroups")
-    })
-    .catch(error => alert(error.message))
+    try {
+      navigation.replace("MyGroups");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   const handleFindNewGroup = () =>{
-    auth
-    .signOut()
-    .then(() => {
-      navigation.replace("FindNewGroups")
-    })
-    .catch(error => alert(error.message))
+    try {
+      navigation.replace("FindNewGroups");
+    } catch (error) {
+      alert(error.message);
+    }
   }
   
   const handleNotifications = () =>{
-    auth
-    .signOut()
-    .then(() => {
-      navigation.replace("Notifications")
-    })
-    .catch(error => alert(error.message))
-
+    try {
+      navigation.replace("Notifications");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   const handleUpcomingMeetings = () =>{
-    auth
-    .signOut()
-    .then(() => {
-      navigation.replace("UpcomingMeetings")
-    })
-    .catch(error => alert(error.message))
-
+    try {
+      navigation.replace("UpComingMeetings");
+    } catch (error) {
+      alert(error.message);
+    }
   }
   
   return (

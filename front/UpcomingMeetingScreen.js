@@ -10,15 +10,14 @@ const UpcomingMeetingScreen = () => {
 
      //Aviv's Edit:
     /************************************************* */
-    const navigate = useNavigation()
+    const navigation = useNavigation()
 
     const backButton = () => {
-    auth
-        .signOut()
-        .then(() => {
-        navigate.replace("Home")
-        })
-        .catch(error => alert(error.message))
+        try {
+            navigation.replace("Home");
+          } catch (error) {
+            alert(error.message);
+          }
     }
     /************************************************** */
 

@@ -1,9 +1,13 @@
 import db from './firebase';
 
+var userFirstName = ""
+var userLastName = ""
+var UserCity = ""
+
 export const groupService = {
-    async getMyGroups(userId) {
+    async getMyGroups(userEmail) {
         try {
-            const snapshot = await db.collection('groups').where('leaderId', '==', userId).get();
+            const snapshot = await db.collection('Groups').where('leaderEmail', '==', userEmail).get();
             const groups = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             return groups;
         } catch (error) {

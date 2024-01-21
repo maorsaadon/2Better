@@ -11,7 +11,6 @@ import myLogoPic from '../assets/2better-logo.jpg';
 // import Svg, { Image, Ellipse, ClipPath } from 'react-native-svg';
 // import Animated, { useSharedValue, useAnimatedStyle, interpolate, withTiming, withDelay, runOnJS, withSequence, withSpring } from 'react-native-reanimated';
 
-
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

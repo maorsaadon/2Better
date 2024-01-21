@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native'
-import { auth } from '../back/firebase'
-import { db } from '../back/firebase'
+import { auth, db } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
 
 

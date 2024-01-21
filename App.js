@@ -26,7 +26,7 @@ export default function App() {
         <Stack.Screen name="MyGroups" component={MyGroupScreen} />
         <Stack.Screen name="FindNewGroups" component={FindNewGroupScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
-        <Stack.Screen name="UpcomingMeetings" component={UpcomingMeetingScreen} />
+        <Stack.Screen name="UpComingMeetings" component={UpcomingMeetingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
