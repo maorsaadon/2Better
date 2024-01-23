@@ -1,11 +1,34 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native'
 import { auth } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
+import { userFirstName, userLastName, UserCity} from '../back/UserService'
+import UserService from '../back/UserService';
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+
+  useEffect(()=> {
+     // Fetch groups from the service
+     const fetchData = async () => {
+      await UserService.getUserDetails();
+    };
+    // fetchGroups();
+
+    // const fetchData = async () => {
+    //   try {
+    //     const data = await UserService.getUserDetails();
+    //     // Handle the data
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
+
+    fetchData();
+    console.log("blabla bla", userLastName)
+  },[]);
+
 
   const handleSignOut = () => {
     auth
