@@ -20,7 +20,7 @@ export const UserService = {
         userMyGroups = userData.MyGroups || []; // Assign MyGroups if it exists, else default to an empty array
 
         // Log the user's groups to the console
-        console.log('User Groups:', userMyGroups[0]);
+        console.log('User Groups:', userMyGroups);
       } else {
         // Handle the case where the document does not exist
         console.log('No such document!');
