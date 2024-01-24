@@ -29,6 +29,26 @@ export const UserService = {
       console.error("Error fetching User: ", error);
     }
   },
+
+  // Update user details
+  async updateUserDetails(firstName, lastName, city, myGroups) {
+    try {
+      const userEmail = auth.currentUser.email;
+      const userRef = db.collection('Users').doc(userEmail);
+
+      // Update the user document
+      await userRef.update({
+        FirstName: firstName,
+        LastName: lastName,
+        City: city,
+        MyGroups: myGroups
+      });
+
+      console.log('User details updated successfully');
+    } catch (error) {
+      console.error("Error updating user details: ", error);
+    }
+  },
 };
 
 export { userFirstName, userLastName, UserCity, userMyGroups };

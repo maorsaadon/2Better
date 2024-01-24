@@ -1,46 +1,54 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native'
+import React, { useEffect, useState  } from 'react'
+import { StyleSheet, Text, TextInput, Button, TouchableOpacity, View, ImageBackground } from 'react-native'
 import { auth, db } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
+import { userFirstName, userLastName, UserCity} from '../back/UserService'
+import UserService from '../back/UserService';
 
-var firstName = ""
-var lastName = ""
-var city = ""
 
 
 const ProfileScreen = () => {
+    // UserService.updateUserDetails('John', 'Doe', 'New York', ['group1', 'group2']); // This is example of updating the data!!!!!
 
-  const userEmail = auth.currentUser.email;
-  const userDocRef = db.collection('Users').doc(userEmail)
-  // const userName = userDoc.FirstName
-  userDocRef.get()
-    .then(docSnapshot => {
-      if (docSnapshot.exists) {
-        const userData = docSnapshot.data();
-        // const firstName = userData.FirstName; // Accessing the 'FirstName' field
-        firstName = userData.FirstName; // Accessing the 'FirstName' field
-        console.log("User's first name:", firstName);
-        // Do something with firstName
-      } else {
-        // Handle the case where the document does not exist
-        console.log('No such document!');
-      }
-    })
-    .catch(error => {
-      // Handle any errors in fetching document
-      console.error("Error fetching document:", error);
-    });
-    
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [city, setCity] = useState('');
 
-    const navigation = useNavigation()
-
-    const backButton = () => {
+  useEffect(() => {
+    // Fetch user details and initialize fields
+    const fetchUserDetails = async () => {
       try {
-        navigation.replace("Home");
+        // const userDetails = await UserService.getUserDetails();
+        setFirstName(userFirstName);
+        setLastName(userLastName);
+        setCity(UserCity);
       } catch (error) {
-        alert(error.message);
+        console.error('Error fetching user details:', error);
       }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      await UserService.updateUserDetails(firstName, lastName, city, ['group1', 'group2']);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating user details:', error);
+    }
+  };
+
+  const navigation = useNavigation()
+
+  const backButton = () => {
+    try {
+      navigation.replace("Home");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   // const nameButton = () => {
@@ -60,11 +68,41 @@ const ProfileScreen = () => {
         onPress={()=> { } }
         style={styles.button}
       >
-        <Text style={styles.buttonText}>{firstName}</Text>
+        <Text style={styles.buttonText}>{userFirstName}</Text>
       </TouchableOpacity>
     </View>
 
     <View style={styles.container}>
+      {/* ############################## */}
+
+      <TextInput
+        style={styles.input}
+        value={firstName}
+        onChangeText={setFirstName}
+        editable={isEditing}
+        placeholder="First Name"
+      />
+      <TextInput
+        style={styles.input}
+        value={lastName}
+        onChangeText={setLastName}
+        editable={isEditing}
+        placeholder="Last Name"
+      />
+      <TextInput
+        style={styles.input}
+        value={city}
+        onChangeText={setCity}
+        editable={isEditing}
+        placeholder="City"
+      />
+      {isEditing ? (
+        <Button title="Save" onPress={handleSave} />
+      ) : (
+        <Button title="Edit" onPress={() => setIsEditing(true)} />
+      )}
+      {/* ##############################3 */}
+
       <TouchableOpacity
         onPress={backButton}
         style={styles.button}
@@ -105,5 +143,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         justifyContent: 'center',
+      },
+      input: {
+        width: '100%',
+        margin: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'gray',
       },
 })
