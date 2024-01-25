@@ -5,11 +5,10 @@ import { groupService } from '../back/GroupService';
 import { useNavigation } from '@react-navigation/core'
 import { auth } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
+import { userMyGroups } from '../back/UserService';
 
 const MyGroupsScreen = ({ navigation }) => {
-
-    //Aviv's Edit:
-    /************************************************* */
+    
     const navigate = useNavigation()
 
     const backButton = () => {
@@ -19,9 +18,24 @@ const MyGroupsScreen = ({ navigation }) => {
             alert(error.message);
         }
     }
-    /************************************************** */
 
-    const [groups, setGroups] = useState([]);
+    const detailsButton = () => {
+        try {
+            navigation.replace("Home");
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    const meetingButton = () => {
+        try {
+            navigation.replace("Home");
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    const groups = userMyGroups;
 
     useEffect(() => {
         // Fetch groups from the service
@@ -33,9 +47,16 @@ const MyGroupsScreen = ({ navigation }) => {
         fetchGroups();
     }, []);
 
+    // // Add two empty rows initially
+    // useEffect(() => {
+    //     setGroups([
+    //         { id: 1, name: 'Row ' },
+    //     ]);
+    // }, []);
+
     const handleAddGroup = () => {
         // Navigate to Add Group Screen
-        navigation.navigate('AddGroupScreen');
+        navigation.navigate('AddNewGroupScreen');
     };
 
     const handleViewGroupMeetings = (groupId) => {
@@ -54,112 +75,122 @@ const MyGroupsScreen = ({ navigation }) => {
                     <Text style={styles.buttonText}>Back</Text>
                 </TouchableOpacity>
 
-                {/* FlatList of Groups */}
-                <FlatList
-                    data={groups}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => (
-                        <View style={styles.groupItem}>
-                            <Text style={styles.groupName}>{item.name}</Text>
-                            <Button
-                                title="Group Meetings"
-                                onPress={() => handleViewGroupMeetings(item.id)}
-                            />
-                            </View>
-                            )}
-                            />
+                {/* Table Header */}
+                <View style={styles.tableHeader}>
+                    <Text style={styles.tableHeaderText}>Group Name</Text>
+                </View>
 
-  {/* "Add a New Group" Button */}
-  <TouchableOpacity
-    onPress={handleAddGroup}
-    style={styles.addButton}
-  >
-    <Text style={styles.buttonText}>Add</Text>
-  </TouchableOpacity>
-  {/* FlatList of Groups */}
-  <FlatList
-    data={groups}
-    keyExtractor={(item) => item.id.toString()}
-    renderItem={({ item }) => (
-      <View style={styles.groupItem}>
-        <Text style={styles.groupName}>{item.name}</Text>
-        <Button
-          title="Group Meetings"
-          onPress={() => handleViewGroupMeetings(item.id)}
-        />
-      </View>
-    )}
-  />
+                {/* Table Rows */}
+                {userMyGroups.map((item) => (
+                    <View key={item.groupId} style={styles.groupItem}>
+                        <Text style={styles.groupName}>{item}</Text>
+                        {/* Group Details */}
+                        <TouchableOpacity
+                            onPress={detailsButton}
+                            style={styles.detailsButton}
+                        >
+                            <Text style={styles.buttonText}>Group Details</Text>
+                        </TouchableOpacity>
+                        {/* Add a group meeting  */}
+                        <TouchableOpacity
+                            onPress={meetingButton}
+                            style={styles.addMeetingButton}
+                        >
+                            <Text style={styles.buttonText}>+</Text>
+                        </TouchableOpacity>
+                    </View>
+                ))}
 
-  {/* "Add a New Group" Button (Center) */}
-  <TouchableOpacity
-    onPress={handleAddGroup}
-    style={styles.addButton}
-  >
-    <Text style={styles.buttonText}>Add a New Group</Text>
-  </TouchableOpacity>
-</View>
-                {/************************************************* */}
-            
+                {/* "Add a New Group" Button */}
+                <TouchableOpacity
+                    onPress={handleAddGroup}
+                    style={styles.addButton}
+                >
+                    <Text style={styles.buttonText}>Add New Group</Text>
+                </TouchableOpacity>
+
+            </View>
+
         </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'flex-start',
+        flex: 1,
+        justifyContent: 'flex-start',
     },
     groupItem: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-      borderWidth: 1,
-      borderColor: '#ddd',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginVertical: 5, // Adjusted margin for better spacing
+        marginHorizontal: 5, // Adjusted margin for better spacing
+        borderWidth: 2,
+        borderColor: '#ddd',
+        height: 55, // Set the desired height
     },
     groupName: {
-      fontSize: 18,
+        color: 'green',
+        fontSize: 24,
+        marginRight: 300,
     },
     backButton: {
-      backgroundColor: '#0782F9',
-      width: '15%',
-      padding: 10, // Adjusted padding to make the button shorter
-      borderRadius: 10,
-      marginTop: 20,
-      marginLeft: 10,
+        backgroundColor: '#0782F9',
+        width: '15%',
+        padding: 10, // Adjusted padding to make the button shorter
+        borderRadius: 10,
+        marginTop: 5,
+        marginLeft: 5,
     },
     addButton: {
-      backgroundColor: '#0782F9',
-      padding: 15,
-      borderRadius: 10,
-      alignSelf: 'center',
-      marginVertical: 20,
+        backgroundColor: '#0782F9',
+        padding: 15,
+        marginTop: 200,
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginVertical: 20,
     },
     buttonText: {
-      color: 'black',
-      fontWeight: '700',
-      fontSize: 16,
+        color: 'black',
+        fontWeight: '700',
+        fontSize: 16,
     },
     backgroundImage: {
-      flex: 1,
-      width: '100%',
-      height: '100%',
-      justifyContent: 'center',
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+    },
+    detailsButton: {
+        backgroundColor: '#0782F9',
+        padding: 10, // Adjusted padding to make the button shorter
+        borderRadius: 10,
+        marginTop: -30,
+        marginLeft: 190,
+    },
+    addMeetingButton: {
+        backgroundColor: '#0782F9',
+        padding: 10, // Adjusted padding to make the button shorter
+        borderRadius: 10,
+        marginTop: -42,
+        marginLeft: 350,
     },
 
-  tableHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  tableHeaderText: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  });
+    tableHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        marginTop: 20,
+        borderRadius: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        backgroundColor: '#f0f0f0',
+    },
+    tableHeaderText: {
+        fontSize: 16,
+        fontWeight: '700',
+    },
+});
 
 export default MyGroupsScreen;
