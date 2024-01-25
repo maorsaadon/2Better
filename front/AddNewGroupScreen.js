@@ -12,6 +12,14 @@ const AddNewGroupScreen = () => {
 
   const navigation = useNavigation()
 
+  const backButton = () => {
+    try {
+        navigation.replace("MyGroups");
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
@@ -59,6 +67,15 @@ const AddNewGroupScreen = () => {
         behavior="padding"
       >
         <View style={styles.inputContainer}>
+
+           {/* Back Button */}
+           <TouchableOpacity
+                onPress={backButton}
+                style={styles.backButton}
+            >
+                <Text style={styles.backButtonText}>Back</Text>
+           </TouchableOpacity>
+
           <TextInput
             placeholder="Group name"
             value={groupName}
@@ -102,6 +119,19 @@ const AddNewGroupScreen = () => {
 export default AddNewGroupScreen
 
 const styles = StyleSheet.create({
+  backButton: {
+    backgroundColor: '#0782F9',
+    width: '15%',
+    padding: 5, // Adjusted padding to make the button shorter
+    borderRadius: 10,
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  backButtonText: {
+    color: 'black',
+    fontWeight: '700',
+    fontSize: 16,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
