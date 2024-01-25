@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { groupService } from '../back/GroupService';
@@ -18,12 +17,6 @@ const MyGroupsScreen = ({ navigation }) => {
             alert(error.message);
         }
     }
-<<<<<<< HEAD
-=======
-
-    
-    /************************************************** */
->>>>>>> 5796b55a36cb533156eb7e0d2ad31a4c4e864713
 
     const detailsButton = () => {
         try {
@@ -53,7 +46,6 @@ const MyGroupsScreen = ({ navigation }) => {
         fetchGroups();
     }, []);
 
-<<<<<<< HEAD
     // // Add two empty rows initially
     // useEffect(() => {
     //     setGroups([
@@ -64,14 +56,6 @@ const MyGroupsScreen = ({ navigation }) => {
     const handleAddGroup = () => {
         // Navigate to Add Group Screen
         navigation.navigate('AddNewGroupScreen');
-=======
-    const handleAddNewGroup = () => {
-      try {
-        navigation.replace("AddNewGroup");
-      } catch (error) {
-        alert(error.message);
-      }
->>>>>>> 5796b55a36cb533156eb7e0d2ad31a4c4e864713
     };
 
     const handleViewGroupMeetings = (groupId) => {
@@ -95,7 +79,6 @@ const MyGroupsScreen = ({ navigation }) => {
                     <Text style={styles.tableHeaderText}>Group Name</Text>
                 </View>
 
-<<<<<<< HEAD
                 {/* Table Rows */}
                 {userMyGroups.map((item) => (
                     <View key={item.groupId} style={styles.groupItem}>
@@ -127,20 +110,6 @@ const MyGroupsScreen = ({ navigation }) => {
 
             </View>
 
-=======
-
-
-  {/* "Add a New Group" Button (Center) */}
-  <TouchableOpacity
-    onPress={handleAddNewGroup}
-    style={styles.addButton}
-  >
-    <Text style={styles.buttonText}>Add a New Group</Text>
-  </TouchableOpacity>
-</View>
-                {/************************************************* */}
-            
->>>>>>> 5796b55a36cb533156eb7e0d2ad31a4c4e864713
         </ImageBackground>
     );
 };
