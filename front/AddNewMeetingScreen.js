@@ -1,8 +1,8 @@
 // src/components/AddNewMeetingScreen.js
 import React, { useState, useContext } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { groupService } from '../services/GroupService';
-import { UserContext } from '../context/UserContext';
+import { groupService } from '../back/GroupService';
+import { UserService } from '../back/UserService';
 
 const AddNewMeetingScreen = ({ route }) => {
     const { groupId } = route.params;
