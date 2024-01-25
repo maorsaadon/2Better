@@ -18,6 +18,7 @@ const RegisterScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        
         navigation.replace("Home")
       }
     })
@@ -39,6 +40,7 @@ const RegisterScreen = () => {
           LastName: lastName,
           City: city,
           Email: user.email,
+          MyGroups: []
         });
         
       })
