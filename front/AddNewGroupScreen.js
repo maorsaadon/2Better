@@ -99,7 +99,7 @@ const AddNewGroupScreen = () => {
   )
 }
 
-export default RegisterScreen
+export default AddNewGroupScreen
 
 const styles = StyleSheet.create({
   container: {

@@ -19,6 +19,8 @@ const MyGroupsScreen = ({ navigation }) => {
             alert(error.message);
         }
     }
+
+    
     /************************************************** */
 
     const [groups, setGroups] = useState([]);
@@ -33,9 +35,12 @@ const MyGroupsScreen = ({ navigation }) => {
         fetchGroups();
     }, []);
 
-    const handleAddGroup = () => {
-        // Navigate to Add Group Screen
-        navigation.navigate('AddGroupScreen');
+    const handleAddNewGroup = () => {
+      try {
+        navigation.replace("AddNewGroup");
+      } catch (error) {
+        alert(error.message);
+      }
     };
 
     const handleViewGroupMeetings = (groupId) => {
@@ -69,31 +74,11 @@ const MyGroupsScreen = ({ navigation }) => {
                             )}
                             />
 
-  {/* "Add a New Group" Button */}
-  <TouchableOpacity
-    onPress={handleAddGroup}
-    style={styles.addButton}
-  >
-    <Text style={styles.buttonText}>Add</Text>
-  </TouchableOpacity>
-  {/* FlatList of Groups */}
-  <FlatList
-    data={groups}
-    keyExtractor={(item) => item.id.toString()}
-    renderItem={({ item }) => (
-      <View style={styles.groupItem}>
-        <Text style={styles.groupName}>{item.name}</Text>
-        <Button
-          title="Group Meetings"
-          onPress={() => handleViewGroupMeetings(item.id)}
-        />
-      </View>
-    )}
-  />
+
 
   {/* "Add a New Group" Button (Center) */}
   <TouchableOpacity
-    onPress={handleAddGroup}
+    onPress={handleAddNewGroup}
     style={styles.addButton}
   >
     <Text style={styles.buttonText}>Add a New Group</Text>
