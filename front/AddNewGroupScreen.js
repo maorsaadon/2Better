@@ -20,14 +20,12 @@ const AddNewGroupScreen = () => {
     }
   };
 
-  const handleCreate = async () => {
-    try {
-      await GroupService.handleAddNewGroup(groupName, city, sportType, participants);
-      setIsEditing(false);
-    } catch (error) {
-      console.error('Error updating user details:', error);
-    }
-  };
+  
+  const handleCreate = () => {
+    
+    GroupService.handleAddNewGroup(groupName, city, sportType, participants);
+    
+  }
 
 
   return (
@@ -78,8 +76,7 @@ const AddNewGroupScreen = () => {
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Add</Text>
-          </TouchableOpacity>
-          
+          </TouchableOpacity>  
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
