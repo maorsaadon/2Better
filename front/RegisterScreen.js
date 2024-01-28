@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground, SafeAreaView } from 'react-native'
 import { auth, db } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
 
@@ -49,7 +49,7 @@ const RegisterScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <KeyboardAvoidingView
+      <SafeAreaView
         style={styles.container}
         behavior="padding"
       >
@@ -96,7 +96,7 @@ const RegisterScreen = () => {
           </TouchableOpacity>
           
         </View>
-      </KeyboardAvoidingView>
+      </ SafeAreaView>
     </ImageBackground>
   )
 }
