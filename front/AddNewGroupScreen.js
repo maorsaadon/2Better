@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native'
 import myLogoPic from '../assets/2better-logo.jpg';
 import GroupService from '../back/GroupService';
@@ -18,17 +18,16 @@ const AddNewGroupScreen = () => {
     } catch (error) {
         alert(error.message);
     }
+  }
 
-    const handleCreate = async () => {
-      try {
-        await GroupService.handleAddNewGroup(groupName, city, sportType, participants);
-        setIsEditing(false);
-      } catch (error) {
-        console.error('Error updating user details:', error);
-      }
-    };
-  
-}
+  const handleCreate = async () => {
+    try {
+      await GroupService.handleAddNewGroup(groupName, city, sportType, participants);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating user details:', error);
+    }
+  }
 
 
   return (
