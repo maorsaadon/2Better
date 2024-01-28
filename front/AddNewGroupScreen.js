@@ -18,7 +18,7 @@ const AddNewGroupScreen = () => {
     } catch (error) {
         alert(error.message);
     }
-  }
+  };
 
   const handleCreate = async () => {
     try {
@@ -27,7 +27,7 @@ const AddNewGroupScreen = () => {
     } catch (error) {
       console.error('Error updating user details:', error);
     }
-  }
+  };
 
 
   return (
