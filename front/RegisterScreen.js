@@ -40,7 +40,7 @@ const RegisterScreen = () => {
           LastName: lastName,
           City: city,
           Email: user.email,
-          MyGroups: []
+          MyGroups: [],
         });
         
       })
