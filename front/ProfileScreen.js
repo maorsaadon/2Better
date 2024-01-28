@@ -46,7 +46,7 @@ const ProfileScreen = () => {
     } catch (error) {
       alert(error.message);
     }
-  }
+  };
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>

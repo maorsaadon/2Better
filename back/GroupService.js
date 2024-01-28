@@ -1,7 +1,6 @@
 
 import { auth, db } from './firebase';
 
-
 var GroupName = ""
 var LeaderEmail = ""
 var Participants = ""
@@ -14,8 +13,8 @@ export const GroupService = {
         const userEmail = auth.currentUser.email;
  
         db.collection('Groups') // The collection name
-        .doc(userEmail) // The document name
-        .add({
+        .doc(groupName) // The document name
+        .set({
             GroupName: groupName,
             LeaderEmail: userEmail,
             Participants:participants,
@@ -27,46 +26,46 @@ export const GroupService = {
             alert(error.message);
         });
 
-   },
-  async getGroup() {
-    try {
-      const userEmail = auth.currentUser.email;
-      const snapshot = await db.collection('Groups').doc(userEmail).get();
+   }
+//   async getGroup() {
+//     try {
+//       const userEmail = auth.currentUser.email;
+//       const snapshot = await db.collection('Groups').doc(userEmail).get();
 
-      if (snapshot.exists) {
-        const groupData = snapshot.data(); 
-        GroupName = groupData.GroupName;
-        LeaderEmail = groupData.LeaderEmail;
-        Participants = groupData.Participants;
-        City = groupData.City;
-        SportType = groupData.SportType;
+//       if (snapshot.exists) {
+//         const groupData = snapshot.data(); 
+//         GroupName = groupData.GroupName;
+//         LeaderEmail = groupData.LeaderEmail;
+//         Participants = groupData.Participants;
+//         City = groupData.City;
+//         SportType = groupData.SportType;
         
-      } 
+//       } 
         
-    } catch (error) {
-      console.error("Error fetching Group: ", error);
-    }
-  },
+//     } catch (error) {
+//       console.error("Error fetching Group: ", error);
+//     }
+//   },
 
-  // Update user details
-  async updateGroupDetails(groupName, city, sportType, participants) {
-    try {
-      const userEmail = auth.currentUser.email;
-      const groupRef = db.collection('Groups').doc(userEmail);
+//   // Update user details
+//   async updateGroupDetails(groupName, city, sportType, participants) {
+//     try {
+//       const userEmail = auth.currentUser.email;
+//       const groupRef = db.collection('Groups').doc(userEmail);
 
-      // Update the user document
-      await userRef.update({
-        GroupName : groupName,
-        Participants : participants,
-        City : city,
-        SportType : sportType,
-      });
+//       // Update the user document
+//       await userRef.update({
+//         GroupName : groupName,
+//         Participants : participants,
+//         City : city,
+//         SportType : sportType,
+//       });
 
-      console.log('Group details updated successfully');
-    } catch (error) {
-      console.error("Error updating group details: ", error);
-    }
-  },
+//       console.log('Group details updated successfully');
+//     } catch (error) {
+//       console.error("Error updating group details: ", error);
+//     }
+//   },
 };
 
 export { GroupName, LeaderEmail, Participants, City, SportType};
