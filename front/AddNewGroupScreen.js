@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native'
-import { auth, db } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
+import GroupService from '../back/GroupService';
 
 const AddNewGroupScreen = () => {
   const [groupName, setGroupName] = useState('')
@@ -18,47 +18,18 @@ const AddNewGroupScreen = () => {
     } catch (error) {
         alert(error.message);
     }
+
+    const handleCreate = async () => {
+      try {
+        await GroupService.handleAddNewGroup(groupName, city, sportType, participants);
+        setIsEditing(false);
+      } catch (error) {
+        console.error('Error updating user details:', error);
+      }
+    };
+  
 }
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        
-        navigation.replace("MyGroup")
-      }
-    })
-
-    return unsubscribe
-  }, [])
-
-  const handleSignUp = (groupName, city, sportType, participants) => {
-        // Check if the user is logged in
-        const user = auth.currentUser;
-        if (!user) {
-            alert('No authenticated user found.');
-            return;
-        }
-            
-        db.collection('Groups') // The collection name
-        .doc(groupId) // The document name
-        .add({
-            GroupName: groupName,
-            LeaderEmail: user.email,
-            Participants:participants,
-            City:city,
-            SportType:sportType,
-        })
-        .then(docRef => {
-            console.log('Group created with ID: ', docRef.id);
-        // Handle successful group creation (e.g., navigate to the group details page or update state)
-        })
-        .catch(error => {
-            console.error('Error creating group: ', error);
-            alert(error.message);
-        });
-        
-    
-  }
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
@@ -104,7 +75,7 @@ const AddNewGroupScreen = () => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={handleSignUp}
+            onPress={handleCreate}
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Add</Text>

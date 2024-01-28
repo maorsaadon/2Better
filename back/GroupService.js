@@ -1,67 +1,78 @@
-import db from './firebase';
 
-var userFirstName = ""
-var userLastName = ""
-var UserCity = ""
+import { auth, db } from './firebase';
 
-export const groupService = {
-    async getMyGroups(userEmail) {
-        try {
-            const snapshot = await db.collection('Groups').where('leaderEmail', '==', userEmail).get();
-            const groups = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            return groups;
-        } catch (error) {
-            console.error("Error fetching groups: ", error);
-            throw error;
-        }
-    },
-    async addGroup(groupData) {
-        try {
-            const docRef = await db.collection('groups').add(groupData);
-            return docRef.id; // Returns the newly created document's ID
-        } catch (error) {
-            console.error('Error adding group: ', error);
-            throw new Error(error);
-        }
-    },
+
+var GroupName = ""
+var LeaderEmail = ""
+var Participants = ""
+var City = ""
+var SportType = ""
+
+export const GroupService = {
+    async handleAddNewGroup(groupName, city, sportType, participants){
+        // Check if the user is logged in
+        const userEmail = auth.currentUser;
+ 
+        db.collection('Groups') // The collection name
+        .doc(userEmail) // The document name
+        .add({
+            GroupName: groupName,
+            LeaderEmail: userEmail,
+            Participants:participants,
+            City:city,
+            SportType:sportType,
+        })
+        .catch(error => {
+            console.error('Error creating group: ', error);
+            alert(error.message);
+        });
+
+   },
+  async getGroup() {
+    try {
+      const userEmail = auth.currentUser.email;
+      const snapshot = await db.collection('Groups').doc(userEmail).get();
+
+      if (snapshot.exists) {
+        const groupData = snapshot.data(); 
+        GroupName = groupData.GroupName;
+        LeaderEmail = groupData.LeaderEmail;
+        Participants = groupData.Participants;
+        City = groupData.City;
+        SportType = groupData.SportType;
+        
+      } 
+        
+    } catch (error) {
+      console.error("Error fetching Group: ", error);
+    }
+  },
+
+  // Update user details
+  async updateGroupDetails(groupName, city, sportType, participants) {
+    try {
+      const userEmail = auth.currentUser.email;
+      const groupRef = db.collection('Groups').doc(userEmail);
+
+      // Update the user document
+      await userRef.update({
+        GroupName : groupName,
+        Participants : participants,
+        City : city,
+        SportType : sportType,
+      });
+
+      console.log('Group details updated successfully');
+    } catch (error) {
+      console.error("Error updating group details: ", error);
+    }
+  },
 };
 
+export { GroupName, LeaderEmail, Participants, City, SportType};
+
+export default GroupService;
 
 
 
 
-// var userFirstName = ""
-// var userLastName = ""
-// var UserCity = ""
-
-//   const userEmail = auth.currentUser.email;
-//   const userDocRef = db.collection('Users').doc(userEmail)
-//   // const userName = userDoc.FirstName
-//   userDocRef.get()
-//     .then(docSnapshot => {
-//       if (docSnapshot.exists) {
-//         const userData = docSnapshot.data();
-//         // const firstName = userData.FirstName; // Accessing the 'FirstName' field
-//         firstName = userData.FirstName; // Accessing the 'FirstName' field
-//         console.log("User's first name:", firstName);
-//         // Do something with firstName
-//       } else {
-//         // Handle the case where the document does not exist
-//         console.log('No such document!');
-//       }
-//     })
-//     .catch(error => {
-//       // Handle any errors in fetching document
-//       console.error("Error fetching document:", error);
-//     });
-    
-
-//     const navigation = useNavigation()
-
-//     const backButton = () => {
-//       try {
-//         navigation.replace("Home");
-//       } catch (error) {
-//         alert(error.message);
-//       }
-//   }
