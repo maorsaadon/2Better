@@ -27,17 +27,7 @@ const ProfileScreen = () => {
   }, []);
 
   const handleEdit = () => {
-    navigation.navigate('EditProfile', {
-      userFirstName,
-      userLastName,
-      UserCity,
-      onSave: (updatedFirstName, updatedLastName, updatedCity) => {
-        setFirstName(updatedFirstName);
-        setLastName(updatedLastName);
-        setCity(updatedCity);
-        setIsEditing(false);
-      },
-    });
+    navigation.navigate('EditProfile');
   };
 
   const handleSave = async () => {
@@ -61,15 +51,6 @@ const ProfileScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => { }}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>{userFirstName}</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.container}>
         <Text style={styles.label}>First Name:</Text>
         <Text style={styles.value}>{userFirstName}</Text>
@@ -101,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -150,
+    marginTop: 0,
     marginLeft: 20,
   },
   button: {
