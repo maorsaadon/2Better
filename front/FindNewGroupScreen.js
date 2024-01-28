@@ -8,6 +8,22 @@ import myLogoPic from '../assets/2better-logo.jpg';
 // Screen for finding and joining new groups
 const FindNewGroupScreen = () => {
 
+    //#######################################################
+    // const [city, setCity] = useState('');
+    // const [sportType, setSportType] = useState('');
+    // const [dayOfWeek, setDayOfWeek] = useState('');
+    // const [groups2, setGroups] = useState([]);
+
+    // const findGroups = () => {
+    //     // Implement the logic to find groups based on the criteria
+    //     // This is a placeholder for your fetching logic
+    //     console.log(city, sportType, dayOfWeek);
+    //     // Assume we fetch and set the groups to the state
+    //     // setGroups(fetchedGroups);
+    //   };
+
+
+    //#######################################################
      //Aviv's Edit:
     /************************************************* */
     const navigation = useNavigation()

@@ -11,7 +11,7 @@ var SportType = ""
 export const GroupService = {
     async handleAddNewGroup(groupName, city, sportType, participants){
         // Check if the user is logged in
-        const userEmail = auth.currentUser;
+        const userEmail = auth.currentUser.email;
  
         db.collection('Groups') // The collection name
         .doc(userEmail) // The document name
