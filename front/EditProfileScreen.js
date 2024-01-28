@@ -23,14 +23,13 @@ const EditProfileScreen = () => {
   };
 
 
-  //***************** its need to make that all the data will be up to date but its not always work ***********
   // Use useFocusEffect to update the state when the screen gains focus
   useFocusEffect(
     useCallback(() => {
       // Set initial values when the screen gains focus
-      setFirstName('');
-      setLastName('');
-      setCity('');
+      setFirstName(userFirstName);
+      setLastName(userLastName);
+      setCity(UserCity);
     }, [])
   );
 
@@ -42,6 +41,7 @@ const EditProfileScreen = () => {
           style={styles.input}
           value={firstName}
           onChangeText={setFirstName}
+          onFocus={() => setFirstName('')} // Clear text on focus
           placeholder="First Name"
         />
 
@@ -50,6 +50,7 @@ const EditProfileScreen = () => {
           style={styles.input}
           value={lastName}
           onChangeText={setLastName}
+          onFocus={() => setLastName('')} // Clear text on focus
           placeholder="Last Name"
         />
 
@@ -58,6 +59,7 @@ const EditProfileScreen = () => {
           style={styles.input}
           value={city}
           onChangeText={setCity}
+          onFocus={() => setCity('')} // Clear text on focus
           placeholder="City"
         />
 
