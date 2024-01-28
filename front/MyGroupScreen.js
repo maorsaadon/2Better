@@ -6,9 +6,9 @@ import { auth } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
 import { userMyGroups } from '../back/UserService';
 
-const MyGroupsScreen = ({ navigation }) => {
+const MyGroupsScreen = () => {
     
-    const navigate = useNavigation()
+    const navigation = useNavigation()
 
     const backButton = () => {
         try {
@@ -53,14 +53,17 @@ const MyGroupsScreen = ({ navigation }) => {
     //     ]);
     // }, []);
 
-    const handleAddGroup = () => {
-        // Navigate to Add Group Screen
-        navigation.navigate('AddNewGroupScreen');
+    const handleAddNewGroup = () => {
+      try {
+        navigation.replace("AddNewGroup");
+      } catch (error) {
+        alert(error.message);
+      }
     };
 
     const handleViewGroupMeetings = (groupId) => {
         // Navigate to Group Meetings Screen with groupId
-        navigation.navigate('GroupMeetingsScreen', { groupId });
+        navigation.navigation('GroupMeetingsScreen', { groupId });
     };
 
     return (
@@ -102,7 +105,7 @@ const MyGroupsScreen = ({ navigation }) => {
 
                 {/* "Add a New Group" Button */}
                 <TouchableOpacity
-                    onPress={handleAddGroup}
+                    onPress={handleAddNewGroup}
                     style={styles.addButton}
                 >
                     <Text style={styles.buttonText}>Add New Group</Text>

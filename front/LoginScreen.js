@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground  } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground , SafeAreaView  } from 'react-native'
 import { auth } from '../back/firebase'
 
 //########################################
@@ -12,7 +12,7 @@ import myLogoPic from '../assets/2better-logo.jpg';
 // import Animated, { useSharedValue, useAnimatedStyle, interpolate, withTiming, withDelay, runOnJS, withSequence, withSpring } from 'react-native-reanimated';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
+  var [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const navigation = useNavigation()
@@ -32,6 +32,7 @@ const LoginScreen = () => {
   }
 
   const handleLogin = () => {
+    email = email.toLowerCase();
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
@@ -43,7 +44,7 @@ const LoginScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <KeyboardAvoidingView
+      <SafeAreaView
         style={styles.container}
         behavior="padding"
       >
@@ -81,7 +82,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
           
         </View>
-      </KeyboardAvoidingView>
+      </ SafeAreaView>
     </ImageBackground>
 
   )

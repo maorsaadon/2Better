@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground, SafeAreaView } from 'react-native'
 import { auth, db } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
 
 
 const RegisterScreen = () => {
-  const [email, setEmail] = useState('')
+  var [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -27,11 +27,12 @@ const RegisterScreen = () => {
   }, [])
 
   const handleSignUp = () => {
+    email = email.toLowerCase();
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Registered with:', user.email);
+        console.log('Registered with:', email);
 
         db.collection('Users') // The collection name
         .doc(email) // The document name
@@ -39,7 +40,7 @@ const RegisterScreen = () => {
           FirstName: firstName,
           LastName: lastName,
           City: city,
-          Email: user.email,
+          Email: email,
           MyGroups: [],
         });
         
@@ -49,7 +50,7 @@ const RegisterScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <KeyboardAvoidingView
+      <SafeAreaView
         style={styles.container}
         behavior="padding"
       >
@@ -96,7 +97,7 @@ const RegisterScreen = () => {
           </TouchableOpacity>
           
         </View>
-      </KeyboardAvoidingView>
+      </ SafeAreaView>
     </ImageBackground>
   )
 }
