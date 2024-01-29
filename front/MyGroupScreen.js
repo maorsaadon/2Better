@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
-import { groupService } from '../back/GroupService';
+import { GroupService } from '../back/GroupService';
 import { useNavigation } from '@react-navigation/core'
-import { auth } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
 import { userMyGroups } from '../back/UserService';
 
@@ -20,7 +19,7 @@ const MyGroupsScreen = () => {
 
     const detailsButton = () => {
         try {
-            navigation.replace("Home");
+            navigation.navigate('GroupDetails', userMyGroups.at(0));
         } catch (error) {
             alert(error.message);
         }
@@ -34,24 +33,16 @@ const MyGroupsScreen = () => {
         }
     }
 
-    const groups = userMyGroups;
 
     useEffect(() => {
         // Fetch groups from the service
         const fetchGroups = async () => {
-            const userGroups = await groupService.getMyGroups();
-            setGroups(userGroups);
+            await GroupService.getGroup();
         };
 
         fetchGroups();
     }, []);
 
-    // // Add two empty rows initially
-    // useEffect(() => {
-    //     setGroups([
-    //         { id: 1, name: 'Row ' },
-    //     ]);
-    // }, []);
 
     const handleAddNewGroup = () => {
       try {
@@ -134,7 +125,7 @@ const styles = StyleSheet.create({
     },
     groupName: {
         color: 'green',
-        fontSize: 24,
+        fontSize: 17,
         marginRight: 300,
     },
     backButton: {

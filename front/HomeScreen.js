@@ -26,7 +26,6 @@ const HomeScreen = () => {
     // };
 
     fetchData();
-    console.log("blabla bla", userLastName)
   },[]);
 
 

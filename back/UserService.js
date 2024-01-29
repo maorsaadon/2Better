@@ -1,4 +1,7 @@
-import { auth, db } from '../back/firebase'
+import { auth, db} from '../back/firebase'
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 var userFirstName = ""
 var userLastName = ""
@@ -49,6 +52,24 @@ export const UserService = {
       console.error("Error updating user details: ", error);
     }
   },
+
+  async addUserGroup(groupName) {
+    try {
+      const userEmail = auth.currentUser.email;
+      const userRef = db.collection('Users').doc(userEmail);
+  
+      // Atomically add a new group ID to the 'MyGroups' array field
+      await userRef.update({
+        MyGroups:  firebase.firestore.FieldValue.arrayUnion(groupName)
+      });
+  
+      // Optional: You might want to update the local 'userMyGroups' variable
+      userMyGroups.push(groupName);
+      console.log('Group ID added to user profile successfully');
+    } catch (error) {
+      console.error("Error adding group ID to user profile: ", error);
+    }
+  }
 };
 
 export { userFirstName, userLastName, UserCity, userMyGroups };

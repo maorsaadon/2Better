@@ -14,6 +14,7 @@ import NotificationsScreen from './front/NotificationsScreen';
 import UpcomingMeetingScreen from './front/UpcomingMeetingScreen';
 import AddNewMeetingScreen from './front/AddNewMeetingScreen';
 import AddNewGroupScreen from './front/AddNewGroupScreen';
+import GroupDetailsScreen from './front/GroupDetailsScreen';
 
 
 
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="UpComingMeetings" component={UpcomingMeetingScreen} />
         <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
         <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
+        <Stack.Screen name="GroupDetails" component={GroupDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

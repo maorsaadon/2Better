@@ -20,12 +20,15 @@ const AddNewGroupScreen = () => {
     }
   };
 
-  
-  const handleCreate = () => {
-    
-    GroupService.handleAddNewGroup(groupName, city, sportType, participants);
-    
-  }
+  const AddButton = () => {
+    try {
+      GroupService.handleAddNewGroup(groupName, city, sportType, participants);
+      navigation.replace("MyGroups");
+    } catch (error) {
+        alert(error.message);
+    }
+  };
+
 
 
   return (
@@ -72,7 +75,7 @@ const AddNewGroupScreen = () => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={handleCreate}
+            onPress={AddButton}
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Add</Text>
@@ -83,7 +86,7 @@ const AddNewGroupScreen = () => {
   )
 }
 
-export default AddNewGroupScreen
+   export default AddNewGroupScreen
 
 const styles = StyleSheet.create({
   backButton: {
