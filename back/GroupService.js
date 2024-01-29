@@ -30,9 +30,9 @@ export const GroupService = {
         UserService.addUserGroup(groupName);
 
    },
-  async getGroup(groupName) {
+  async getGroup(groupId) {
     try {
-      const snapshot = await db.collection('Groups').doc(groupName).get();
+      const snapshot = await db.collection('Groups').doc(groupId).get();
 
       if (snapshot.exists) {
         const groupData = snapshot.data(); 
@@ -73,7 +73,3 @@ export const GroupService = {
 export { GroupName, LeaderEmail, Participants, City, SportType};
 
 export default GroupService;
-
-
-
-

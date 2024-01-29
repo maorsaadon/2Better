@@ -17,9 +17,9 @@ const MyGroupsScreen = () => {
         }
     }
 
-    const detailsButton = () => {
+    const detailsButton = (groupId) => {
         try {
-            navigation.navigate('GroupDetails', userMyGroups.at(0));
+            navigation.navigate('GroupDetails', groupId);
         } catch (error) {
             alert(error.message);
         }
@@ -79,7 +79,7 @@ const MyGroupsScreen = () => {
                         <Text style={styles.groupName}>{item}</Text>
                         {/* Group Details */}
                         <TouchableOpacity
-                            onPress={detailsButton}
+                            onPress={detailsButton(item.groupId)}
                             style={styles.detailsButton}
                         >
                             <Text style={styles.buttonText}>Group Details</Text>

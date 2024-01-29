@@ -5,32 +5,26 @@ import { StyleSheet, Text, TextInput, Button, TouchableOpacity, View, ImageBackg
 import myLogoPic from '../assets/2better-logo.jpg';
 import GroupService from '../back/GroupService';
 
+var groupName = ""
+var leaderEmail = ""
+var participants = ""
+var city = ""
+var sportType = ""
 
-const GroupDetailsScreen = ({groupName}) => {
+const GroupDetailsScreen = ({groupId}) => {
   
   const navigation = useNavigation();
   
   const [isEditing, setIsEditing] = useState(false);
-  const [GroupName, setGroupName] = useState('');
-  const [LeaderEmail, setLeaderEmail] = useState('');
-  const [Participants, setParticipants] = useState('');
-  const [City, setCity] = useState('');
-  const [SportType, setSportType] = useState('');
-  
   
   useEffect(() => {
     // Fetch the group details from Firestore when the component mounts
     const fetchGroupDetails = async () => {
       try {
         
-        const {GroupName, LeaderEmail, Participants, City, SportType} = await GroupService.getGroup(groupName);
-        console.log(GroupName, LeaderEmail, Participants, City, SportType);
+        const {groupName, leaderEmail, participants, city, sportType} = await GroupService.getGroup(groupId);
+        console.log(groupName, leaderEmail, participants, city, sportType);
         
-        setGroupName(GroupName);
-        setLeaderEmail(LeaderEmail);
-        setParticipants(Participants);
-        setCity(City);
-        setSportType(SportType);
         
       } catch (error) {
         console.error('Error fetching group details:', error);
@@ -46,7 +40,7 @@ const GroupDetailsScreen = ({groupName}) => {
 
   const handleSaveGroup = async () => {
     try {
-      await GroupService.updateGroupDetails(GroupName, City, SportType, Participants);
+      await GroupService.updateGroupDetails(groupName, city, sportType, participants, groupId);
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating group details:', error);
@@ -68,19 +62,19 @@ const GroupDetailsScreen = ({groupName}) => {
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Text style={styles.label}>Group Name:</Text>
-        <Text style={styles.value}>{GroupName}</Text>
+        <Text style={styles.value}>{groupName}</Text>
 
         <Text style={styles.label}>Leader Email:</Text>
-        <Text style={styles.value}>{LeaderEmail}</Text>
+        <Text style={styles.value}>{leaderEmail}</Text>
 
         <Text style={styles.label}>Participants:</Text>
-        <Text style={styles.value}>{Participants}</Text>
+        <Text style={styles.value}>{participants}</Text>
 
         <Text style={styles.label}>City:</Text>
-        <Text style={styles.value}>{City}</Text>
+        <Text style={styles.value}>{city}</Text>
 
         <Text style={styles.label}>Spor tType:</Text>
-        <Text style={styles.value}>{SportType}</Text>
+        <Text style={styles.value}>{sportType}</Text>
 
         {isEditing ? (
           <Button title="Save" onPress={handleSaveGroup} />
