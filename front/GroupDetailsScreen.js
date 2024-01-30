@@ -15,7 +15,6 @@ var sportType = ""
 const GroupDetailsScreen = ({ route }) => {
   const { groupName } = route.params;
 
-
   const navigation = useNavigation();
   const [isEditing, setIsEditing] = useState(false);
   const [groupDetails, setGroupDetails] = useState({

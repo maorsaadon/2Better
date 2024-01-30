@@ -18,9 +18,8 @@ const MyGroupsScreen = () => {
     }
 
     const detailsButton = (groupName) => {
-        console.log(typeof groupName);
         try {
-            navigation.navigate('GroupDetails', groupName);
+            navigation.navigate('GroupDetails',{ groupName });
         } catch (error) {
             alert(error.message);
         }
