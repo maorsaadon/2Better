@@ -3,42 +3,59 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TextInput, Button, TouchableOpacity, View, ImageBackground } from 'react-native'
 import myLogoPic from '../assets/2better-logo.jpg';
+// import {_groupName, _leaderEmail, _participants, _city, _sportType} from '../back/GroupService';
 import GroupService from '../back/GroupService';
 
 
-const GroupDetailsScreen = ({groupName}) => {
-  
+const GroupDetailsScreen = ({ route }) => {
+  console.log("Route object:", route);
+  const { groupName } = route.params;
+
+  console.log("Group Name there:", groupName)
+  console.log(typeof groupName);
+
   const navigation = useNavigation();
-  
   const [isEditing, setIsEditing] = useState(false);
-  const [GroupName, setGroupName] = useState('');
-  const [LeaderEmail, setLeaderEmail] = useState('');
-  const [Participants, setParticipants] = useState('');
-  const [City, setCity] = useState('');
-  const [SportType, setSportType] = useState('');
+  const [groupDetails, setGroupDetails] = useState({
+    groupName: '',
+    leaderEmail: '',
+    participants: '',
+    city: '',
+    sportType: '',
+  });
+
+  // const [group_name, setGroupName] = useState('');
+  // const [leader_email, setLeaderEmail] = useState('');
+  // const [participants, setParticipants] = useState('');
+  // const [city, setCity] = useState('');
+  // const [sport_type, setSportType] = useState('');  
   
+  // var group_name = "";
+  // var leader_email = "";
+  // var participants = "";
+  // var city = "";
+  // var sport_type = "";
+
+  // const {group_name, leader_email, participants, city, sport_type} = GroupService.getGroup(groupName);
+  // console.log(group_name, leader_email, participants, city, sport_type);
+
   
   useEffect(() => {
-    // Fetch the group details from Firestore when the component mounts
     const fetchGroupDetails = async () => {
       try {
-        
-        const {GroupName, LeaderEmail, Participants, City, SportType} = await GroupService.getGroup(groupName);
-        console.log(GroupName, LeaderEmail, Participants, City, SportType);
-        
-        setGroupName(GroupName);
-        setLeaderEmail(LeaderEmail);
-        setParticipants(Participants);
-        setCity(City);
-        setSportType(SportType);
-        
+        const data = await GroupService.getGroup(groupName);
+        if (data) {
+          setGroupDetails(data); // Use the data directly as it matches the state structure
+        } else {
+          // Handle the case where the group data is not found
+          console.log('No group data found for:', groupName);
+        }
       } catch (error) {
         console.error('Error fetching group details:', error);
       }
     };
-
     fetchGroupDetails();
-  }, []);
+  }, [groupName]);
 
   const handleEditGroup = () => {
     navigation.navigate('EditGroup');
@@ -46,7 +63,7 @@ const GroupDetailsScreen = ({groupName}) => {
 
   const handleSaveGroup = async () => {
     try {
-      await GroupService.updateGroupDetails(GroupName, City, SportType, Participants);
+      await GroupService.updateGroupDetails(group_name, city, sport_type, participants);
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating group details:', error);
@@ -68,19 +85,19 @@ const GroupDetailsScreen = ({groupName}) => {
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Text style={styles.label}>Group Name:</Text>
-        <Text style={styles.value}>{GroupName}</Text>
+        <Text style={styles.value}>{groupDetails.groupName}</Text>
 
         <Text style={styles.label}>Leader Email:</Text>
-        <Text style={styles.value}>{LeaderEmail}</Text>
+        <Text style={styles.value}>{groupDetails.leaderEmail}</Text>
 
         <Text style={styles.label}>Participants:</Text>
-        <Text style={styles.value}>{Participants}</Text>
+        <Text style={styles.value}>{groupDetails.participants}</Text>
 
         <Text style={styles.label}>City:</Text>
-        <Text style={styles.value}>{City}</Text>
+        <Text style={styles.value}>{groupDetails.city}</Text>
 
-        <Text style={styles.label}>Spor tType:</Text>
-        <Text style={styles.value}>{SportType}</Text>
+        <Text style={styles.label}>Sport Type:</Text>
+        <Text style={styles.value}>{groupDetails.sportType}</Text>
 
         {isEditing ? (
           <Button title="Save" onPress={handleSaveGroup} />
