@@ -58,7 +58,7 @@ export const GroupService = {
   },
 
   async handleAddNewGroup(groupName, city, sportType, participants){
-      // Check if the user is logged in
+    // Check if the user is logged in
       const userEmail = auth.currentUser.email;
       const docRef = db.collection('Groups') // The collection name
       .doc(groupName) // The document name
@@ -68,6 +68,7 @@ export const GroupService = {
           Participants:participants,
           City:city,
           SportType:sportType,
+          MeetingsGroup: [],
           
       })
       .catch(error => {
@@ -81,18 +82,20 @@ export const GroupService = {
 
   async addGroupMeeting(MeetingId, groupName) {
     try {
-      const groupRef = db.collection('Group').doc(groupName);
+      console.log('meetReg', MeetingId);
+      const groupRef = db.collection('Groups').doc(groupName);
+     
       // Atomically add a new group ID to the 'MyGroups' array field
-      console.log(groupName);
+      
       await groupRef.update({
-        Meetings: firebase.firestore.FieldValue.arrayUnion(MeetingId)
+        MeetingsGroup: firebase.firestore.FieldValue.arrayUnion(MeetingId)
       });
   
       // Optional: You might want to update the local 'userMyGroups' variable
-      _myGroupsMeetings.push(MeetingId);
+      _myGroupsMeetings.push();
       console.log('Group ID added to user profile successfully');
     } catch (error) {
-      console.error("Error adding group ID to user profile: ", error);
+      console.error("Error adding meeting ID to group collection: ", error);
     }
   }
 };

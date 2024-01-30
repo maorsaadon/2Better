@@ -48,9 +48,8 @@ export const MeetingService = {
   },
 
   async handleAddNewMeeting(groupName, location, date){
-      const MeetingId = db.collection('Meetings') // The collection name
-      .doc(MeetingId) // The document name
-      .set({
+      const MeetingRef = db.collection('Meetings').doc() // The document name
+      MeetingRef.set({
           GroupName: groupName,
           Location: location,
           Date:date,
@@ -60,8 +59,7 @@ export const MeetingService = {
           console.error('Error creating Meeting: ', error);
           alert(error.message);
       });
-      
-      GroupService.addGroupMeeting(MeetingId, groupName);
+      GroupService.addGroupMeeting(MeetingRef, groupName);
 
   }
 };

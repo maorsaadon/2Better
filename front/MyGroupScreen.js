@@ -36,6 +36,7 @@ const MyGroupsScreen = () => {
     const handleAddNewGroup = () => {
       try {
         navigation.replace("AddNewGroup");
+       
       } catch (error) {
         alert(error.message);
       }
