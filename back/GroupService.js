@@ -1,12 +1,17 @@
 
 import { auth, db } from './firebase';
 import {UserService} from './UserService'
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
 
 var _groupName = ""
 var _leaderEmail = ""
 var _participants = ""
 var _city = ""
 var _sportType = ""
+var _myGroupsMeetings = [] 
 
 export const GroupService = {
   async getGroup(groupName) {
@@ -72,9 +77,26 @@ export const GroupService = {
       
       UserService.addUserGroup(groupName);
 
+  },
+
+  async addGroupMeeting(MeetingId, groupName) {
+    try {
+      const groupRef = db.collection('Group').doc(groupName);
+      // Atomically add a new group ID to the 'MyGroups' array field
+      console.log(groupName);
+      await groupRef.update({
+        Meetings: firebase.firestore.FieldValue.arrayUnion(MeetingId)
+      });
+  
+      // Optional: You might want to update the local 'userMyGroups' variable
+      _myGroupsMeetings.push(MeetingId);
+      console.log('Group ID added to user profile successfully');
+    } catch (error) {
+      console.error("Error adding group ID to user profile: ", error);
+    }
   }
 };
 
-export { _groupName, _leaderEmail, _participants, _city, _sportType};
+export { _groupName, _leaderEmail, _participants, _city, _sportType, _myGroupsMeetings};
 
 export default GroupService;
