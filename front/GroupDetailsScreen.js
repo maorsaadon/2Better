@@ -6,13 +6,15 @@ import myLogoPic from '../assets/2better-logo.jpg';
 // import {_groupName, _leaderEmail, _participants, _city, _sportType} from '../back/GroupService';
 import GroupService from '../back/GroupService';
 
+var groupName = ""
+var leaderEmail = ""
+var participants = ""
+var city = ""
+var sportType = ""
 
 const GroupDetailsScreen = ({ route }) => {
-  console.log("Route object:", route);
   const { groupName } = route.params;
 
-  console.log("Group Name there:", groupName)
-  console.log(typeof groupName);
 
   const navigation = useNavigation();
   const [isEditing, setIsEditing] = useState(false);

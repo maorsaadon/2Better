@@ -36,7 +36,7 @@ export const GroupService = {
   // Update user details
   async updateGroupDetails(groupName, city, sportType, participants) {
     try {
-      const groupRef = db.collection('Groups').doc(group_Name);
+      const groupRef = db.collection('Groups').doc(groupName);
 
       // Update the user document
       await groupRef.update({
@@ -78,7 +78,3 @@ export const GroupService = {
 export { _groupName, _leaderEmail, _participants, _city, _sportType};
 
 export default GroupService;
-
-
-
-

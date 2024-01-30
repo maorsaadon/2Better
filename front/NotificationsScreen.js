@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet,  TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { notificationService } from '../back/NotificationsService';
 import { useNavigation } from '@react-navigation/core'
 import { auth } from '../back/firebase'
@@ -8,16 +8,16 @@ import myLogoPic from '../assets/2better-logo.jpg';
 // Screen to display user notifications
 const NotificationsScreen = () => {
 
-     //Aviv's Edit:
+    //Aviv's Edit:
     /************************************************* */
     const navigation = useNavigation()
 
     const backButton = () => {
         try {
             navigation.replace("Home");
-          } catch (error) {
+        } catch (error) {
             alert(error.message);
-          }
+        }
     }
     /************************************************** */
 
@@ -42,26 +42,23 @@ const NotificationsScreen = () => {
 
     return (
         <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-        <View style={styles.container}>
-            <FlatList
-                data={notifications}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={renderNotificationItem}
-            />
-
-            {/*Aviv's Edit:
-            /**************************************************/}
             <View style={styles.container}>
                 <TouchableOpacity
                     onPress={backButton}
                     style={styles.button}
-                    >
+                >
                     <Text style={styles.buttonText}>Back</Text>
                 </TouchableOpacity>
             </View>
-            {/************************************************* */}
+            <View style={styles.container}>
+                <FlatList
+                    data={notifications}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderNotificationItem}
+                />
 
-        </View>
+
+            </View>
         </ImageBackground>
     );
 };
@@ -90,20 +87,21 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 40,
-      },
-      buttonText: {
-        color: 'white',
+        marginTop: -290,
+        marginRight: 310,
+    },
+    buttonText: {
+        color: 'black',
         fontWeight: '700',
         fontSize: 16,
-      },
-      backgroundImage: {
+    },
+    backgroundImage: {
         flex: 1,
         width: '100%',
         height: '100%',
         justifyContent: 'left',
-      },
-      /************************************************* */
+    },
+    /************************************************* */
 });
 
 export default NotificationsScreen;
