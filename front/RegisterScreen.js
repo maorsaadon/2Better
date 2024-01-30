@@ -4,7 +4,6 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import { auth, db } from '../back/firebase'
 import myLogoPic from '../assets/2better-logo.jpg';
 
-
 const RegisterScreen = () => {
   var [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,8 +17,13 @@ const RegisterScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        
-        navigation.replace("Home")
+      auth
+      .signOut()
+      .then(() => {
+        console.log("here")
+        navigation.navigate("Login")
+      })
+      .catch(error => alert(error.message))
       }
     })
 
@@ -35,15 +39,15 @@ const RegisterScreen = () => {
         console.log('Registered with:', email);
 
         db.collection('Users') // The collection name
-        .doc(email) // The document name
-        .set({
-          FirstName: firstName,
-          LastName: lastName,
-          City: city,
-          Email: email,
-          MyGroups: [],
-        });
-        
+          .doc(email) // The document name
+          .set({
+            FirstName: firstName,
+            LastName: lastName,
+            City: city,
+            Email: email,
+            MyGroups: [],
+          });
+
       })
       .catch(error => alert(error.message))
   }
@@ -95,7 +99,7 @@ const RegisterScreen = () => {
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
           </TouchableOpacity>
-          
+
         </View>
       </ SafeAreaView>
     </ImageBackground>
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '80%'
-    
+
   },
   input: {
     backgroundColor: 'white',

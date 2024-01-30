@@ -17,15 +17,15 @@ const MyGroupsScreen = () => {
         }
     }
 
-    const detailsButton = () => {
+    const detailsButton = (groupName) => {
         try {
-            navigation.navigate('GroupDetails', userMyGroups.at(0));
+            navigation.navigate('GroupDetails',{ groupName });
         } catch (error) {
             alert(error.message);
         }
-    }
+    };
 
-    const meetingButton = () => {
+    function meetingButton() {
         try {
             navigation.replace("Home");
         } catch (error) {
@@ -34,14 +34,14 @@ const MyGroupsScreen = () => {
     }
 
 
-    useEffect(() => {
-        // Fetch groups from the service
-        const fetchGroups = async () => {
-            await GroupService.getGroup();
-        };
+    // useEffect(() => {
+    //     // Fetch groups from the service
+    //     const fetchGroups = async () => {
+    //         await GroupService.getGroup();
+    //     };
 
-        fetchGroups();
-    }, []);
+    //     fetchGroups();
+    // }, []);
 
 
     const handleAddNewGroup = () => {
@@ -54,7 +54,7 @@ const MyGroupsScreen = () => {
 
     const handleViewGroupMeetings = (groupId) => {
         // Navigate to Group Meetings Screen with groupId
-        navigation.navigation('GroupMeetingsScreen', { groupId });
+        navigation.navigate('GroupMeetingsScreen', { groupId });
     };
 
     return (
@@ -79,7 +79,7 @@ const MyGroupsScreen = () => {
                         <Text style={styles.groupName}>{item}</Text>
                         {/* Group Details */}
                         <TouchableOpacity
-                            onPress={detailsButton}
+                            onPress={() => detailsButton(item)}
                             style={styles.detailsButton}
                         >
                             <Text style={styles.buttonText}>Group Details</Text>
