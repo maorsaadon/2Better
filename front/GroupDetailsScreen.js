@@ -109,15 +109,8 @@ const GroupDetailsScreen = ({ route }) => {
         )}
 
         <Text style={styles.label}>Sport Type:</Text>
-        {editMode ? (
-          <TextInput
-            style={styles.input}
-            value={_sportType}
-            onChangeText={(text) => setSportType(text)}
-          />
-        ) : (
-          <Text style={styles.input}>{_sportType}</Text>
-        )}
+        <Text style={styles.input}>{_sportType}</Text>
+       
 
         <Text style={styles.label}>City:</Text>
         {editMode ? (
