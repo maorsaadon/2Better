@@ -15,7 +15,7 @@ const MyGroupsScreen = () => {
         } catch (error) {
             alert(error.message);
         }
-    }
+    };
 
     const detailsButton = (groupName) => {
         try {
@@ -25,28 +25,18 @@ const MyGroupsScreen = () => {
         }
     };
 
-    function meetingButton() {
+    const handleAddNewMeeting = (groupName) => {
         try {
-            navigation.replace("Home");
+            navigation.replace("AddNewMeeting", { groupName });
         } catch (error) {
             alert(error.message);
         }
-    }
-
-
-    // useEffect(() => {
-    //     // Fetch groups from the service
-    //     const fetchGroups = async () => {
-    //         await GroupService.getGroup();
-    //     };
-
-    //     fetchGroups();
-    // }, []);
-
+    };
 
     const handleAddNewGroup = () => {
       try {
         navigation.replace("AddNewGroup");
+       
       } catch (error) {
         alert(error.message);
       }
@@ -86,7 +76,7 @@ const MyGroupsScreen = () => {
                         </TouchableOpacity>
                         {/* Add a group meeting  */}
                         <TouchableOpacity
-                            onPress={meetingButton}
+                            onPress={() => handleAddNewMeeting(item)}
                             style={styles.addMeetingButton}
                         >
                             <Text style={styles.buttonText}>+</Text>

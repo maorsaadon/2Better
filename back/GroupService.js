@@ -1,12 +1,10 @@
 
 import { auth, db } from './firebase';
 import {UserService} from './UserService'
-
-var _groupName = ""
-var _leaderEmail = ""
-var _participants = ""
-var _city = ""
-var _sportType = ""
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import {MeetingService} from './MeetingService';
 
 export const GroupService = {
   async getGroup(groupName) {
@@ -33,15 +31,15 @@ export const GroupService = {
     }
   },
 
-  // Update user details
+  // Update group details
   async updateGroupDetails(groupName, city, sportType, participants) {
     try {
+      console.log('City', city);
       const groupRef = db.collection('Groups').doc(groupName);
 
-      // Update the user document
+      // Update the group document
       await groupRef.update({
-        GroupName : groupName,
-        Participants : participants,
+        Participants : parseInt(participants),
         City : city,
         SportType : sportType,
       });
@@ -53,16 +51,18 @@ export const GroupService = {
   },
 
   async handleAddNewGroup(groupName, city, sportType, participants){
-      // Check if the user is logged in
+    // Check if the user is logged in
       const userEmail = auth.currentUser.email;
       const docRef = db.collection('Groups') // The collection name
       .doc(groupName) // The document name
       .set({
           GroupName: groupName,
           LeaderEmail: userEmail,
-          Participants:participants,
+          Participants: participants,
           City:city,
           SportType:sportType,
+          MeetingsGroup: [],
+          Members: [],
           
       })
       .catch(error => {
@@ -72,9 +72,73 @@ export const GroupService = {
       
       UserService.addUserGroup(groupName);
 
+  },
+
+  async handleDeleteGroup(groupName) {
+    const groupRef = db.collection('Groups').doc(groupName);
+  
+    try {
+      
+      UserService.removeUserGroup(groupName);
+
+      // Step 1: Retrieve the group document to get the array of meeting IDs
+      const groupDoc = await groupRef.get();
+      
+      if (!groupDoc.exists) {
+        console.log(`No group found with ID: ${groupName}`);
+        return;
+      }
+  
+      const groupData = groupDoc.data();
+      const meetingsArray = groupData.MeetingsGroup || [];
+  
+      // Step 2: Delete all meetings from the 'Meetings' collection
+      for (const meetingId of meetingsArray) {
+        MeetingService.handleDeleteMeeting(meetingId);
+        console.log(`Deleted meeting with ID: ${meetingId}`);
+      }
+  
+      // Step 3: Delete the group document itself
+      await groupRef.delete();
+      console.log(`Deleted group with ID: ${groupName}`);
+    } catch (error) {
+      console.error(`Error deleting group with ID: ${groupName} and its meetings`, error);
+      throw error; // or handle the error as needed
+    }
+  },  
+
+  async addGroupMeeting(meetingId, groupName) {
+    try {
+      const groupRef = db.collection('Groups').doc(groupName);
+     
+      // Atomically add a new group ID to the 'MyGroups' array field
+      
+      await groupRef.update({
+        MeetingsGroup: firebase.firestore.FieldValue.arrayUnion(meetingId)
+      });
+  
+      console.log('Group ID added to user profile successfully');
+    } catch (error) {
+      console.error("Error adding meeting ID to group collection: ", error);
+    }
+  },
+
+  async removeGroupMeeting(meetingId, groupName) {
+    try {
+      const groupRef = db.collection('Groups').doc(groupName);
+  
+      // Atomically remove the meeting ID from the 'MeetingsGroup' array field
+      await groupRef.update({
+        MeetingsGroup: firebase.firestore.FieldValue.arrayRemove(meetingId)
+      });
+  
+      console.log(`Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`);
+    } catch (error) {
+      console.error(`Error removing meeting ID: ${meetingId} from group ID: ${groupName}`, error);
+      // Handle the error accordingly
+    }
   }
 };
 
-export { _groupName, _leaderEmail, _participants, _city, _sportType};
 
 export default GroupService;

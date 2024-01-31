@@ -69,6 +69,23 @@ export const UserService = {
     } catch (error) {
       console.error("Error adding group ID to user profile: ", error);
     }
+  },
+
+  async removeUserGroup(groupName) {
+    try {
+      const userEmail = auth.currentUser.email;
+      const userRef = db.collection('Users').doc(userEmail);
+
+      // Atomically remove the meeting ID from the 'MeetingsGroup' array field
+      await userRef.update({
+        MyGroups: firebase.firestore.FieldValue.arrayRemove(groupName)
+      });
+  
+      console.log(`Group ID: ${groupName} has been removed from User ID: ${userEmail}`);
+    } catch (error) {
+      console.error(`Error removing Group ID: ${groupName} from User ID: ${userEmail}`, error);
+      // Handle the error accordingly
+    }
   }
 };
 
