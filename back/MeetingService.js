@@ -2,10 +2,6 @@
 import { auth, db } from './firebase';
 import {GroupService} from './GroupService'
 
-var _groupName = ""
-var _location = ""
-var _date   = ""
-
 
 export const MeetingService = {
   async getMeeting(MeetingId) {
@@ -61,9 +57,20 @@ export const MeetingService = {
       });
       GroupService.addGroupMeeting(MeetingRef, groupName);
 
+  },
+
+  async handleDeleteMeeting(meetingId) {
+    try {
+      // Assuming 'Meetings' is the name of the collection where meetings are stored
+      await db.collection('Meetings').doc(meetingId).delete();
+      console.log(`Meeting with ID: ${meetingId} has been deleted.`);
+    } catch (error) {
+      console.error(`Error deleting meeting with ID: ${meetingId}`, error);
+      // Handle the error accordingly
+    }
   }
+  
 };
 
-export { _groupName, _location, _date};
 
 export default MeetingService;
