@@ -9,7 +9,6 @@ import RegisterScreen from './front/RegisterScreen';
 import ProfileScreen from './front/ProfileScreen';
 import EditProfileScreen from './front/EditProfileScreen';
 import MyGroupScreen from './front/MyGroupScreen';
-import EditGroupScreen from './front/EditGroupScreen';
 import FindNewGroupScreen from './front/FindNewGroupScreen';
 import NotificationsScreen from './front/NotificationsScreen';
 import UpcomingMeetingScreen from './front/UpcomingMeetingScreen';
@@ -37,7 +36,6 @@ export default function App() {
         <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
         <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
         <Stack.Screen name="GroupDetails" component={GroupDetailsScreen} />
-        <Stack.Screen name="EditGroup" component={EditGroupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
