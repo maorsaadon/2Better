@@ -24,15 +24,13 @@ const RegisterScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        auth
-          .signOut()
-          .then(() => {
-            console.log("here");
-            navigation.navigate("Login");
-          })
-          .catch((error) => alert(error.message));
+        try {auth
+          .signOut();
+          navigation.navigate("Login");}
+          catch(error) {alert(error.message);
       }
-    });
+    }
+  });
 
     return unsubscribe;
   }, []);
