@@ -142,7 +142,7 @@ export const GroupService = {
     }
   },
 
-  async getGroupsAndNextMeetingBySport(sportType, city) {
+  async getGroupsBySort(sportType, city) {
     try {
       const groupsRef = db
         .collection("Groups")
@@ -156,51 +156,24 @@ export const GroupService = {
         return [];
       }
 
-      const groupsWithNextMeeting = [];
+      const groups = [];
 
-      for (const groupDoc of snapshot.docs) {
+      snapshot.forEach((groupDoc) => {
         const groupData = groupDoc.data();
-        let nextMeeting = null;
+        const groupName = groupData.GroupName || "Unknown"; // Provide a default if groupName is missing
 
-        // Assuming MeetingsGroup is an array of meeting document IDs
-        if (groupData.MeetingsGroup && groupData.MeetingsGroup.length > 0) {
-          // Fetch all meetings and find the next upcoming one
-          const meetings = await Promise.all(
-            groupData.MeetingsGroup.map((meetingId) =>
-              db.collection("Meetings").doc(meetingId).get()
-            )
-          );
-
-          const futureMeetings = meetings
-            .filter(
-              (doc) =>
-                doc.exists &&
-                doc.data().Date &&
-                new Date(doc.data().Date) > new Date()
-            )
-            .map((doc) => ({ id: doc.id, ...doc.data() }))
-            .sort((a, b) => new Date(a.Date) - new Date(b.Date));
-
-          nextMeeting = futureMeetings.length > 0 ? futureMeetings[0] : null;
-        }
-
-        groupsWithNextMeeting.push({
-          GroupName: groupData.groupName,
-          LeaderEmail: groupData.userEmail,
-          Participants: groupData.participants,
-          City: groupData.city,
-          SportType: groupData.sportType,
-          NextMeeting: nextMeeting, // The next upcoming meeting
+        groups.push({
+          GroupName: groupName,
+          LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
+          Participants: groupData.Participants || -1, // Provide an empty array if participants are missing
+          City: groupData.City || "Unknown", // Provide a default if city is missing
+          SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
         });
-      }
+      });
 
-      console.log("Groups with their next meeting:", groupsWithNextMeeting);
-      return groupsWithNextMeeting;
+      return groups;
     } catch (error) {
-      console.error(
-        "Error getting groups and their next meeting by sport:",
-        error
-      );
+      console.error("Error getting groups by sport:", error);
       throw error;
     }
   },

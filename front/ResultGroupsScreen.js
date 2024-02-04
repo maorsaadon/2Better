@@ -1,40 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableWithoutFeedback,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import MeetingCard from "../components/MeetingCard";
+import myLogoPic from "../assets/2better-logo.jpg";
 import GroupService from "../back/GroupService";
 
-const ResultGroupScreen = ({ city, category }) => {
+const ResultGroupScreen = ({ route, navigation }) => {
+  const { selectedCity, selectedTypeOfSport } = route.params;
+
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
     const fetchGroups = async () => {
+      console.log(`Fetching groups for sport: ${selectedTypeOfSport}, city: ${selectedCity}`);
       try {
-        const fetchedGroups = await GroupService.getGroupsAndNextMeetingBySport(
-          category,
-          city
+        const fetchedGroups = await GroupService.getGroupsBySort(
+          selectedTypeOfSport,
+          selectedCity
         );
-        setGroups(fetchedGroups);
+  
+        console.log("Fetched Groups:", fetchedGroups); // Log the fetched groups
+  
+        if (fetchedGroups && fetchedGroups.length > 0) {
+          setGroups(fetchedGroups);
+          console.log("Fetched Groups:", groups);
+        } else {
+          console.log("No groups found for the given criteria.");
+        }
       } catch (error) {
         console.error("Error fetching groups:", error);
-        // Handle error (e.g., show a message to the user)
       }
     };
-
+  
     fetchGroups();
-  }, [city, category]); // Re-run the effect if city or category changes
+  }, [selectedCity, selectedTypeOfSport]); // Depend on selectedCity and selectedTypeOfSport
+
+  useEffect(() => {
+    console.log("Updated groups state:", groups);
+  }, [groups]);
+  
+
+  const backButton = () => {
+    try {
+      navigation.replace("FindNewGroups");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.iconText}>Here is what we found for you</Text>
-      <ScrollView>
-        <View style={styles.container}>
-          {/* Map over the groups array to render AppointmentCards */}
-          {groups.map((group) => (
-            <MeetingCard key={group.id} group={group} />
-          ))}
-        </View>
-      </ScrollView>
-    </View>
+    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.container}>
+            {/* Map over the groups array to render AppointmentCards */}
+            {groups.map((group, index) => (
+              <MeetingCard key={index} group={group} />
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -42,11 +78,34 @@ export default ResultGroupScreen;
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#5B8BDF",
+    flex: 1,
+    justifyContent: "flex-start", // Align items at the top
     alignItems: "center",
-    paddingBottom: 40,
-    paddingTop: 20,
-    gap: 15,
+    paddingTop: 40, // Add padding to give some space at the top
+    flexDirection: "column",
+    gap: 17,
+    // alignItems: "center",
+    // paddingBottom: 40,
+    // paddingTop: 20,
+    // gap: 15,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  backButton: {
+    backgroundColor: "#3B82F6",
+    width: "20%",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 6,
+  },
+  backButtonText: {
+    alignSelf: "center",
+    color: "white",
   },
   card: {
     width: "100%",

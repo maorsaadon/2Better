@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Button,
   TouchableOpacity,
   View,
   ImageBackground,
