@@ -1,14 +1,21 @@
-import React, { useState, useCallback } from 'react';
-import { StyleSheet, Text, TextInput, Button, View, ImageBackground } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/core';
-import { userFirstName, userLastName, UserCity } from '../back/UserService';
-import UserService from '../back/UserService';
-import myLogoPic from '../assets/2better-logo.jpg';
+import React, { useState, useCallback } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  Button,
+  View,
+  ImageBackground,
+} from "react-native";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
+import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import UserService from "../back/UserService";
+import myLogoPic from "../assets/2better-logo.jpg";
 
 const EditProfileScreen = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [city, setCity] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [city, setCity] = useState("");
 
   const navigation = useNavigation();
 
@@ -18,10 +25,9 @@ const EditProfileScreen = () => {
       await UserService.updateUserDetails(firstName, lastName, city, []);
       navigation.replace("Home"); // Go back to the Home screen after saving
     } catch (error) {
-      console.error('Error updating user details:', error);
+      console.error("Error updating user details:", error);
     }
   };
-
 
   // Use useFocusEffect to update the state when the screen gains focus
   useFocusEffect(
@@ -41,7 +47,7 @@ const EditProfileScreen = () => {
           style={styles.input}
           value={firstName}
           onChangeText={setFirstName}
-          onFocus={() => setFirstName('')} // Clear text on focus
+          onFocus={() => setFirstName("")} // Clear text on focus
           placeholder="First Name"
         />
 
@@ -50,7 +56,7 @@ const EditProfileScreen = () => {
           style={styles.input}
           value={lastName}
           onChangeText={setLastName}
-          onFocus={() => setLastName('')} // Clear text on focus
+          onFocus={() => setLastName("")} // Clear text on focus
           placeholder="Last Name"
         />
 
@@ -59,7 +65,7 @@ const EditProfileScreen = () => {
           style={styles.input}
           value={city}
           onChangeText={setCity}
-          onFocus={() => setCity('')} // Clear text on focus
+          onFocus={() => setCity("")} // Clear text on focus
           placeholder="City"
         />
 
@@ -74,37 +80,37 @@ export default EditProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
     marginLeft: 20,
   },
   backgroundImage: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
   },
   label: {
-    backgroundColor: '#0782F9',
+    backgroundColor: "#0782F9",
     fontSize: 15,
     padding: 15,
     borderRadius: 10,
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     marginTop: 10,
   },
   input: {
-    width: '80%',
-    backgroundColor: 'white',
+    width: "80%",
+    backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: "#0782F9",
     borderWidth: 2,
   },
   saveButtom: {
-    marginTop: 100
+    marginTop: 100,
   },
 });
