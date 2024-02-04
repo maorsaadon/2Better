@@ -42,10 +42,10 @@ const MyGroupsScreen = () => {
       }
     };
 
-    const handleViewGroupMeetings = (groupId) => {
-        // Navigate to Group Meetings Screen with groupId
-        navigation.navigate('GroupMeetingsScreen', { groupId });
-    };
+    // const handleViewGroupMeetings = (groupId) => {
+    //     // Navigate to Group Meetings Screen with groupId
+    //     navigation.navigate('GroupMeetingsScreen', { groupId });
+    // };
 
     return (
         <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
@@ -65,7 +65,7 @@ const MyGroupsScreen = () => {
 
                 {/* Table Rows */}
                 {userMyGroups.map((item) => (
-                    <View key={item.groupId} style={styles.groupItem}>
+                    <View key={item.groupName} style={styles.groupItem}>
                         <Text style={styles.groupName}>{item}</Text>
                         {/* Group Details */}
                         <TouchableOpacity

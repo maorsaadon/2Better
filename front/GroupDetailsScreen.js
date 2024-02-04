@@ -32,11 +32,11 @@ const GroupDetailsScreen = ({ route }) => {
       try {
         const data = await GroupService.getGroup(groupName);
         if (data) {
-           setGroupName(data.groupName); // Use the data directly as it matches the state structure
-           setLeaderEmail(data.leaderEmail);
-           setParticipants(data.participants);
-           setSportType(data.sportType);
-           setCity(data.city);
+          setGroupName(data.groupName); // Use the data directly as it matches the state structure
+          setLeaderEmail(data.leaderEmail);
+          setParticipants(data.participants);
+          setSportType(data.sportType);
+          setCity(data.city);
         } else {
           // Handle the case where the group data is not found
           console.log("No group data found for:", groupName);
@@ -91,11 +91,9 @@ const GroupDetailsScreen = ({ route }) => {
 
         <Text style={styles.label}>Group Name:</Text>
         <Text style={styles.input}>{_groupName}</Text>
-        
 
         <Text style={styles.label}>Leader Email:</Text>
         <Text style={styles.input}>{_leaderEmail}</Text>
-        
 
         <Text style={styles.label}>Participants:</Text>
         {editMode ? (
@@ -110,7 +108,6 @@ const GroupDetailsScreen = ({ route }) => {
 
         <Text style={styles.label}>Sport Type:</Text>
         <Text style={styles.input}>{_sportType}</Text>
-       
 
         <Text style={styles.label}>City:</Text>
         {editMode ? (
@@ -123,14 +120,16 @@ const GroupDetailsScreen = ({ route }) => {
           <Text style={styles.input}>{_city}</Text>
         )}
 
-
         <View style={styles.buttonsRow}>
           {editMode ? (
             <Pressable style={styles.saveButton} onPress={handleSave}>
               <Text style={styles.buttonText}>Save</Text>
             </Pressable>
           ) : (
-            <Pressable style={styles.editButton} onPress={() => setEditMode(true)}>
+            <Pressable
+              style={styles.editButton}
+              onPress={() => setEditMode(true)}
+            >
               <Text style={styles.buttonText}>Edit</Text>
             </Pressable>
           )}
@@ -161,12 +160,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderWidth: 1,
     padding: 10,
-    color: 'black',
-    borderColor: 'black',
+    color: "black",
+    borderColor: "black",
   },
   input: {
     backgroundColor: "black",
-    overflow : 'hidden',
+    overflow: "hidden",
     width: "60%",
     borderRadius: 20,
     alignItems: "center",
@@ -174,8 +173,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderWidth: 1,
     padding: 8,
-    color: 'white',
-    borderColor: 'white',
+    color: "white",
+    borderColor: "white",
   },
   saveButton: {
     backgroundColor: "#3B82F6",
@@ -194,8 +193,8 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   buttonText: {
-    alignSelf: 'center',
-    color: 'white',
+    alignSelf: "center",
+    color: "white",
   },
   deleteButton: {
     backgroundColor: "red",

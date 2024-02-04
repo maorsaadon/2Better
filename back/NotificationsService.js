@@ -1,16 +1,18 @@
 // src/services/NotificationService.js
-import {db} from './firebase';
+import { db } from "./firebase";
 
-const notificationCollection = db.collection('notifications');
+const notificationCollection = db.collection("notifications");
 
 export const notificationService = {
   // Fetch notifications for a specific user
   async getUserNotifications(userId) {
     try {
-      const snapshot = await notificationCollection.where('userId', '==', userId).get();
-      return snapshot.docs.map(doc => doc.data());
+      const snapshot = await notificationCollection
+        .where("userId", "==", userId)
+        .get();
+      return snapshot.docs.map((doc) => doc.data());
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error("Error fetching notifications:", error);
       throw error;
     }
   },
@@ -25,7 +27,7 @@ export const notificationService = {
         // ... other notification fields
       });
     } catch (error) {
-      console.error('Error sending notification:', error);
+      console.error("Error sending notification:", error);
       throw error;
     }
   },
