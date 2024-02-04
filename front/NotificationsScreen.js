@@ -11,9 +11,9 @@ import { notificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/2better-logo.jpg";
-
+import AddPicture from "./AddPicture";
 // Screen to display user notifications
-const NotificationsScreen = () => {
+const NotificationsScreen = (image) => {
   //Aviv's Edit:
   /************************************************* */
   const navigation = useNavigation();
@@ -48,12 +48,19 @@ const NotificationsScreen = () => {
     </View>
   );
 
+  setProfileImage = (image) => {
+
+  }
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
         <TouchableOpacity onPress={backButton} style={styles.button}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
+      </View>
+      <View>
+        <AddPicture image={image} onImagePicked = {setProfileImage}/>
       </View>
       <View style={styles.container}>
         <FlatList
