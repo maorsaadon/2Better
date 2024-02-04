@@ -53,6 +53,22 @@ export const UserService = {
     }
   },
 
+  async deleteUserAccount() {
+    try {
+      const userEmail = auth.currentUser.email;
+      const userRef = db.collection("Users").doc(userEmail);
+
+      // Delete the user document from the "Users" collection in Firestore
+      await firebase.firestore().collection("Users").doc(userEmail).delete();
+
+      console.log("User details deleted successfully");
+    } catch (error) {
+      console.error("Error deleting user details:", error);
+      throw error; // Rethrow the error to be caught by the calling function
+      // Handle the error accordingly
+    }
+  },
+
   async addUserGroup(groupName) {
     try {
       const userEmail = auth.currentUser.email;

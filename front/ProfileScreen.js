@@ -12,6 +12,7 @@ import {
 import myLogoPic from "../assets/2better-logo.jpg";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
+import { auth } from "../back/firebase";
 
 const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -37,15 +38,18 @@ const ProfileScreen = () => {
     navigation.navigate("EditProfile");
   };
 
-  const handleSave = async () => {
+  const handleDelete = async () => {
     try {
-      await UserService.updateUserDetails(firstName, lastName, city, [
-        "group1",
-        "group2",
-      ]);
-      setIsEditing(false);
+      // Call the deleteUserAccount function or any other method you have for account deletion
+      await UserService.deleteUserAccount();
+
+      // Delete the user account in Firebase Authentication
+      await auth.currentUser.delete();
+
+      // Navigate to the login screen or any other desired screen after account deletion
+      navigation.replace("Login");
     } catch (error) {
-      console.error("Error updating user details:", error);
+      console.error("Error deleting account:", error);
     }
   };
 
@@ -62,6 +66,9 @@ const ProfileScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
+        <Text style={styles.label}>Email:</Text>
+        <Text style={styles.value}>{auth.currentUser?.email}</Text>
+
         <Text style={styles.label}>First Name:</Text>
         <Text style={styles.value}>{userFirstName}</Text>
 
@@ -71,11 +78,11 @@ const ProfileScreen = () => {
         <Text style={styles.label}>City:</Text>
         <Text style={styles.value}>{UserCity}</Text>
 
-        {isEditing ? (
-          <Button title="Save" onPress={handleSave} />
-        ) : (
-          <Button title="Edit" onPress={handleEdit} />
-        )}
+        <Button title="Edit" onPress={handleEdit} />
+
+        <TouchableOpacity onPress={handleDelete} style={styles.button}>
+          <Text style={styles.buttonText}>Delete Account</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={backButton} style={styles.button}>
           <Text style={styles.buttonText}>Back</Text>
@@ -101,7 +108,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 50,
   },
   buttonText: {
     color: "white",
