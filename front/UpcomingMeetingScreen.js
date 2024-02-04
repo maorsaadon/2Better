@@ -4,6 +4,8 @@ import { DataTable } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/core';
 import { db } from "../back/firebase";
 import myLogoPic from '../assets/2better-logo.jpg';
+import '../back/MeetingService'
+import MeetingService from '../back/MeetingService';
 
 const UpcomingMeetingsScreen = () => {
   const navigation = useNavigation();
@@ -11,27 +13,15 @@ const UpcomingMeetingsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
 
-  useEffect(() => {
-    const fetchMeetingsData = async () => {
-      try {
-        const meetingsCollection = await db.collection('Meetings').get();
-        const meetingsData = meetingsCollection.docs.map(doc => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            GroupName: data.GroupName,
-            Date: data.Date,
-            Location: data.Location,
-          };
-        });
-        setMeetings(meetingsData);
-      } catch (error) {
-        console.error("Error fetching meetings data: ", error);
-      }
-    };
-
-    fetchMeetingsData();
-  }, []);
+    useEffect(() => {
+        const getMeetings = async () => {
+        const meetingsData = await MeetingService.fetchMeetingsData();
+        setMeetings(meetingsData); // Update the state with the fetched data
+        };
+    
+        getMeetings();
+    }, []);
+    
 
   const backButton = () => {
     try {

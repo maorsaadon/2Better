@@ -2,6 +2,26 @@ import { auth, db } from "./firebase";
 import { GroupService } from "./GroupService";
 
 export const MeetingService = {
+
+  async fetchMeetingsData () {
+    try {
+      const meetingsCollection = await db.collection('Meetings').get();
+      const meetingsData = meetingsCollection.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          GroupName: data.GroupName,
+          Date: data.Date,
+          Location: data.Location,
+        };
+      });
+      return meetingsData; // Return the array of meeting objects
+    } catch (error) {
+      console.error("Error fetching meetings data: ", error);
+      return []; // Return an empty array in case of error
+    }
+  },
+
   async getMeeting(MeetingId) {
     try {
       const snapshot = await db.collection("Meetings").doc(MeetingId).get();
