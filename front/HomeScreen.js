@@ -32,7 +32,8 @@ const HomeScreen = () => {
     // };
 
     fetchData();
-  }, []);
+  },[]);
+
 
   const handleSignOut = () => {
     auth
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
   },
-});
+})
 
 //#################################################################
 
