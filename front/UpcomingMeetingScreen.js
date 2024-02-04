@@ -181,10 +181,10 @@ const UpcomingMeetingsScreen = () => {
                 <View style={styles.wrapper}>
                     <DataTable>
                         <DataTable.Header style={styles.header}>
-                            <DataTable.Title style={[styles.title, { flex: 2 }]}>Name</DataTable.Title>
-                            <DataTable.Title style={[styles.title, { flex: 3 }]}>Email</DataTable.Title>
-                            <DataTable.Title numeric style={[styles.title, { flex: 1 }]}>Age</DataTable.Title>
-                            <DataTable.Title style={[styles.title, { flex: 1 }]}>     Edit</DataTable.Title>
+                            <DataTable.Title style={[styles.title, { flex: 2 }]}>Group Name</DataTable.Title>
+                            <DataTable.Title style={[styles.title, { flex: 3 }]}>Date&Time</DataTable.Title>
+                            <DataTable.Title numeric style={[styles.title, { flex: 1 }]}>Loction</DataTable.Title>
+                            <DataTable.Title style={[styles.title, { flex: 1 }]}>Meeting Details </DataTable.Title>
                         </DataTable.Header>
 
                         {meetings.map((meeting) => (
