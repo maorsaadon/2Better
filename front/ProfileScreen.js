@@ -8,13 +8,17 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Image,
   Pressable,
   SafeAreaView,
 } from "react-native";
-import myLogoPic from "../assets/2better-logo.jpg";
+import { MaterialIcons } from "@expo/vector-icons";
+import myLogoPic from "../assets/profileImage.jpeg";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
+import * as ImagePicker from 'expo-image-picker';
+
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -23,7 +27,23 @@ const ProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
+  //const photo = require("../assets/iconProfile.jpeg");
+  const [selectedImage, setSelectedImage] = useState();
 
+  const handleImageSelection = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+  };
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -60,7 +80,7 @@ const ProfileScreen = () => {
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating user details:", error);
-    }
+  }
   };
 
   const backButton = () => {
@@ -74,67 +94,71 @@ const ProfileScreen = () => {
   return (
     
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      <TouchableOpacity onPress={backButton} style={styles.button}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
       
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <Text style={styles.buttonText}>Back</Text>
       </TouchableOpacity>
       <View style={styles.container}>
-      
-        
-        <Text style={styles.label}>Email:</Text>
-        <Text style={styles.input}>{auth.currentUser?.email}</Text>
-        <Text style={styles.label}>First Name:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={firstName}
-            onChangeText={(text) => setFirstName(text)}
-          />
-        ) : (
-          <Text style={styles.input}>{userFirstName}</Text>
-        )}
+        <View
+          style={{
+            alignItems: "center",
+            marginVertical: 22,
+          }}
+        >
+          <TouchableOpacity onPress={handleImageSelection}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={{
+                height: 170,
+                width: 170,
+                borderRadius: 85,
+                borderWidth: 2,
+                borderColor: '#000066',
+              }}
+            />
 
-        <Text style={styles.label}>Last Name:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={lastName}
-            onChangeText={(text) => setLastName(text)}
-          />
-        ) : (
-          <Text style={styles.input}>{userLastName}</Text>
-        )}
-
-        <Text style={styles.label}>City:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={city}
-            onChangeText={(text) => setCity(text)}
-          />
-        ) : (
-          <Text style={styles.input}>{UserCity}</Text>
-        )}
-
-        
-
-        <View style={styles.buttonsRow}>
-          {isEditing ? (
-            <Pressable style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save</Text>
-            </Pressable>
-          ) : (
-            <Pressable
-              style={styles.editButton}
-              onPress={() => setIsEditing(true)}
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 10,
+                zIndex: 9999,
+              }}
             >
-              <Text style={styles.buttonText}>Edit</Text>
-            </Pressable>
-          )}
-          <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
-            <Text style={styles.deleteButtonText}>Delete Account</Text>
+              <MaterialIcons
+                name="photo-camera"
+                size={32}
+                color='#000066'
+              />
+            </View>
           </TouchableOpacity>
         </View>
+        <View style={styles.userInfoContainer}>
+          <Text style={styles.valueName}>
+            {userFirstName} {userLastName}
+          </Text>
+          <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialIcons name="location-on" size={26} color="black" />
+          <View>
+            <Text style={styles.valueNew}>
+              {city}
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={handleEdit} style={styles.buttonEdit}>
+          <Text style={styles.buttonTextEdit}>Edit User</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleDelete} style={styles.buttonDelete}>
+          <Text style={styles.buttonText}>Delete Account</Text>
+        </TouchableOpacity>
+
+
       </View>
     </ImageBackground>
   );
@@ -228,19 +252,44 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  buttonTextEdit: {
+    color: "#000066",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonTextEdit: {
+    color: "#000066",
+    fontWeight: "700",
+    fontSize: 16,
+  },
   backgroundImage: {
     flex: 1,
     width: "100%",
     height: "100%",
     justifyContent: "center",
   },
+  input: {
+    width: "100%",
+    margin: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+  },
+  label: {
+    backgroundColor: "#0782F9",
+    color: "black",
+    fontSize: 18,
+    padding: 5,
+    borderRadius: 10,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
   value: {
     backgroundColor: "white",
     paddingHorizontal: 25,
     paddingVertical: 10,
     borderRadius: 10,
-    marginTop: 10,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
+    alignItems: "center",
+    marginTop: 50,
+  }
 });
