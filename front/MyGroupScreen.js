@@ -20,12 +20,9 @@ const MyGroupsScreen = () => {
   useEffect(() => {
     const fetchGroup = async () => {
       try {
-        const fetchedGroups = await GroupService.getGroup();
-        console.log("Fetched Groups:", fetchedGroups); // Log the fetched groups
-
+        const fetchedGroups = await GroupService.getGroups();
         if (fetchedGroups && fetchedGroups.length > 0) {
           setGroups(fetchedGroups);
-          console.log("Fetched Groups:", groups);
         } else {
           console.log("No groups found for the given criteria.");
         }

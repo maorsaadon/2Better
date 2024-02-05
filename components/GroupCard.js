@@ -1,5 +1,4 @@
 import {
-  Pressable,
   Text,
   View,
   SafeAreaView,
@@ -86,7 +85,7 @@ const GroupCard = ({ group }) => {
 
   const handleEditButton = (groupName) => {
     try {
-      navigation.replace("Home");
+      navigation.replace("EditGroup", {groupName});
     } catch (error) {
       alert(error.message);
     }

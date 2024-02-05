@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Pressable,
+  SafeAreaView,
 } from "react-native";
 import myLogoPic from "../assets/2better-logo.jpg";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
@@ -15,6 +17,8 @@ import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+  
   const [isEditing, setIsEditing] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -34,10 +38,6 @@ const ProfileScreen = () => {
     fetchUserDetails();
   }, []);
 
-  const handleEdit = () => {
-    navigation.navigate("EditProfile");
-  };
-
   const handleDelete = async () => {
     try {
       // Call the deleteUserAccount function or any other method you have for account deletion
@@ -53,8 +53,15 @@ const ProfileScreen = () => {
     }
   };
 
-  const navigation = useNavigation();
-  
+  const handleSave = async () => {
+    try {
+      // Call the updateUserDetails function from UserService to update user data
+      await UserService.updateUserDetails(firstName, lastName, city, []);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating user details:", error);
+    }
+  };
 
   const backButton = () => {
     try {
@@ -65,29 +72,69 @@ const ProfileScreen = () => {
   };
 
   return (
+    
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
       <View style={styles.container}>
+      
+        
         <Text style={styles.label}>Email:</Text>
-        <Text style={styles.value}>{auth.currentUser?.email}</Text>
-
+        <Text style={styles.input}>{auth.currentUser?.email}</Text>
         <Text style={styles.label}>First Name:</Text>
-        <Text style={styles.value}>{userFirstName}</Text>
+        {isEditing ? (
+          <TextInput
+            style={styles.input}
+            value={firstName}
+            onChangeText={(text) => setFirstName(text)}
+          />
+        ) : (
+          <Text style={styles.input}>{userFirstName}</Text>
+        )}
 
         <Text style={styles.label}>Last Name:</Text>
-        <Text style={styles.value}>{userLastName}</Text>
+        {isEditing ? (
+          <TextInput
+            style={styles.input}
+            value={lastName}
+            onChangeText={(text) => setLastName(text)}
+          />
+        ) : (
+          <Text style={styles.input}>{userLastName}</Text>
+        )}
 
         <Text style={styles.label}>City:</Text>
-        <Text style={styles.value}>{UserCity}</Text>
+        {isEditing ? (
+          <TextInput
+            style={styles.input}
+            value={city}
+            onChangeText={(text) => setCity(text)}
+          />
+        ) : (
+          <Text style={styles.input}>{UserCity}</Text>
+        )}
 
-        <Button title="Edit" onPress={handleEdit} />
+        
 
-        <TouchableOpacity onPress={handleDelete} style={styles.buttonDelete}>
-          <Text style={styles.buttonText}>Delete Account</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={backButton} style={styles.button}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonsRow}>
+          {isEditing ? (
+            <Pressable style={styles.saveButton} onPress={handleSave}>
+              <Text style={styles.buttonText}>Save</Text>
+            </Pressable>
+          ) : (
+            <Pressable
+              style={styles.editButton}
+              onPress={() => setIsEditing(true)}
+            >
+              <Text style={styles.buttonText}>Edit</Text>
+            </Pressable>
+          )}
+          <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>Delete Account</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -98,33 +145,86 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 0,
-    marginLeft: 20,
+    padding: 16,
   },
-  button: {
-    backgroundColor: "#0782F9",
-    width: "20%",
-    padding: 15,
-    borderRadius: 10,
+  label: {
+    backgroundColor: "white",
+    overflow: "hidden",
+    width: "37%",
+    borderRadius: 20,
     alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 0, // Align to the bottom
-    left: 0, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
+    fontSize: 20,
+    marginTop: 8,
+    borderWidth: 1,
+    padding: 10,
+    color: "black",
+    borderColor: "#3B82F6",
   },
-  buttonDelete: {
-    backgroundColor: "#0782F9",
+  input: {
+    backgroundColor: "#3B82F6",
+    overflow: "hidden",
+    width: "60%",
+    borderRadius: 20,
+    alignItems: "center",
+    fontSize: 20,
+    marginTop: 20,
+    borderWidth: 1,
+    padding: 8,
+    color: "white",
+    borderColor: "white",
+  },
+  saveButton: {
+    backgroundColor: "#3B82F6",
     width: "40%",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 50,
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 10,
+  },
+  backButton: {
+    backgroundColor: "#3B82F6",
+    width: "20%",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 6,
   },
   buttonText: {
+    alignSelf: "center",
     color: "white",
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    width: "40%",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  deleteButtonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 30,
+  },
+  editButton: {
+    backgroundColor: "green",
+    width: "40%",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  editButtonText: {
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },
@@ -133,22 +233,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
-  },
-  input: {
-    width: "100%",
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "gray",
-  },
-  label: {
-    backgroundColor: "#0782F9",
-    color: "black",
-    fontSize: 18,
-    padding: 5,
-    borderRadius: 10,
-    fontWeight: "bold",
-    marginTop: 10,
   },
   value: {
     backgroundColor: "white",
