@@ -1,179 +1,196 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
-import { GroupService } from '../back/GroupService';
-import { useNavigation } from '@react-navigation/core'
-import myLogoPic from '../assets/2better-logo.jpg';
-import { userMyGroups } from '../back/UserService';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
+import GroupCard from "../components/GroupCard";
+import { useNavigation } from "@react-navigation/core";
+import myLogoPic from "../assets/2better-logo.jpg";
+import { GroupService } from "../back/GroupService";
 
 const MyGroupsScreen = () => {
-    
-    const navigation = useNavigation()
+  const navigation = useNavigation();
 
-    const backButton = () => {
-        try {
-            navigation.replace("Home");
-        } catch (error) {
-            alert(error.message);
-        }
-    };
+  const [groups, setGroups] = useState([]);
 
-    const detailsButton = (groupName) => {
-        try {
-            navigation.navigate('GroupDetails',{ groupName });
-        } catch (error) {
-            alert(error.message);
-        }
-    };
-
-    const handleAddNewMeeting = (groupName) => {
-        try {
-            navigation.replace("AddNewMeeting", { groupName });
-        } catch (error) {
-            alert(error.message);
-        }
-    };
-
-    const handleAddNewGroup = () => {
+  useEffect(() => {
+    const fetchGroup = async () => {
       try {
-        navigation.replace("AddNewGroup");
-       
+        const fetchedGroups = await GroupService.getGroup();
+        console.log("Fetched Groups:", fetchedGroups); // Log the fetched groups
+
+        if (fetchedGroups && fetchedGroups.length > 0) {
+          setGroups(fetchedGroups);
+          console.log("Fetched Groups:", groups);
+        } else {
+          console.log("No groups found for the given criteria.");
+        }
       } catch (error) {
-        alert(error.message);
+        console.error("Error fetching groups:", error);
       }
     };
 
-    // const handleViewGroupMeetings = (groupId) => {
-    //     // Navigate to Group Meetings Screen with groupId
-    //     navigation.navigate('GroupMeetingsScreen', { groupId });
-    // };
+    fetchGroup();
+  }, []); // Depend on selectedCity and selectedTypeOfSport
 
-    return (
-        <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+  useEffect(() => {
+    console.log("Updated groups state:", groups);
+  }, [groups]);
+
+  const backButton = () => {
+    try {
+      navigation.replace("Home");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleAddNewGroup = () => {
+    try {
+      navigation.replace("AddNewGroup");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return (
+    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+        <View style={styles.container}>
+          <ScrollView>
             <View style={styles.container}>
-                {/* Back Button */}
-                <TouchableOpacity
-                    onPress={backButton}
-                    style={styles.backButton}
-                >
-                    <Text style={styles.buttonText}>Back</Text>
-                </TouchableOpacity>
-
-                {/* Table Header */}
-                <View style={styles.tableHeader}>
-                    <Text style={styles.tableHeaderText}>Group Name</Text>
-                </View>
-
-                {/* Table Rows */}
-                {userMyGroups.map((item) => (
-                    <View key={item.groupName} style={styles.groupItem}>
-                        <Text style={styles.groupName}>{item}</Text>
-                        {/* Group Details */}
-                        <TouchableOpacity
-                            onPress={() => detailsButton(item)}
-                            style={styles.detailsButton}
-                        >
-                            <Text style={styles.buttonText}>Group Details</Text>
-                        </TouchableOpacity>
-                        {/* Add a group meeting  */}
-                        <TouchableOpacity
-                            onPress={() => handleAddNewMeeting(item)}
-                            style={styles.addMeetingButton}
-                        >
-                            <Text style={styles.buttonText}>+</Text>
-                        </TouchableOpacity>
-                    </View>
-                ))}
-
-                {/* "Add a New Group" Button */}
-                <TouchableOpacity
-                    onPress={handleAddNewGroup}
-                    style={styles.addButton}
-                >
-                    <Text style={styles.buttonText}>Add New Group</Text>
-                </TouchableOpacity>
-
+              {groups.map((group, index) => (
+                <GroupCard key={index} group={group} />
+              ))}
             </View>
-
-        </ImageBackground>
-    );
+          </ScrollView>
+        </View>
+        <TouchableOpacity onPress={handleAddNewGroup} style={styles.addButton}>
+          <Text style={styles.buttonText}>Add New Group</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-    },
-    groupItem: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 10,
-        marginVertical: 5, // Adjusted margin for better spacing
-        marginHorizontal: 5, // Adjusted margin for better spacing
-        borderWidth: 2,
-        borderColor: '#ddd',
-        height: 55, // Set the desired height
-    },
-    groupName: {
-        color: 'green',
-        fontSize: 17,
-        marginRight: 300,
-    },
-    backButton: {
-        backgroundColor: '#0782F9',
-        width: '15%',
-        padding: 10, // Adjusted padding to make the button shorter
-        borderRadius: 10,
-        marginTop: 5,
-        marginLeft: 5,
-    },
-    addButton: {
-        backgroundColor: '#0782F9',
-        padding: 15,
-        marginTop: 200,
-        borderRadius: 10,
-        alignSelf: 'center',
-        marginVertical: 20,
-    },
-    buttonText: {
-        color: 'black',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    backgroundImage: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-    },
-    detailsButton: {
-        backgroundColor: '#0782F9',
-        padding: 10, // Adjusted padding to make the button shorter
-        borderRadius: 10,
-        marginTop: -30,
-        marginLeft: 190,
-    },
-    addMeetingButton: {
-        backgroundColor: '#0782F9',
-        padding: 10, // Adjusted padding to make the button shorter
-        borderRadius: 10,
-        marginTop: -42,
-        marginLeft: 350,
-    },
-
-    tableHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10,
-        marginTop: 20,
-        borderRadius: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        backgroundColor: '#f0f0f0',
-    },
-    tableHeaderText: {
-        fontSize: 16,
-        fontWeight: '700',
-    },
+  container: {
+    flex: 1,
+    justifyContent: "flex-start", // Align items at the top
+    paddingTop: 30, // Add padding to give some space at the top
+    gap: 5,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  backButton: {
+    backgroundColor: "#3B82F6",
+    width: "20%",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 6,
+  },
+  backButtonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  card: {
+    width: "100%",
+    backgroundColor: "rgba(255, 255, 255 , 0.4)",
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    flexDirection: "column",
+    gap: 10,
+    marginTop: 1,
+  },
+  cardTopRow: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  cardMiddleRow: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  iconAndTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  businessLogo: {
+    height: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    width: 50,
+    borderRadius: 15,
+  },
+  title: {
+    fontWeight: "800",
+    alignSelf: "flex-start",
+  },
+  subTitle: {
+    opacity: 0.6,
+    alignSelf: "flex-start",
+  },
+  button: {
+    backgroundColor: "#3B82F6",
+    width: 240,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  iconText: {
+    fontWeight: "bold",
+    fontSize: 20, // Adjust the font size as needed
+  },
+  logo: {
+    width: 70, // Adjust the width as needed
+    height: 70, // Adjust the height as needed
+    resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+  },
+  backButton: {
+    backgroundColor: "#0782F9",
+    width: "15%",
+    padding: 10, // Adjusted padding to make the button shorter
+    borderRadius: 10,
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  addButton: {
+    backgroundColor: "#0782F9",
+    padding: 15,
+    marginTop: 200,
+    borderRadius: 10,
+    alignSelf: "center",
+    marginVertical: 20,
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
 });
 
 export default MyGroupsScreen;

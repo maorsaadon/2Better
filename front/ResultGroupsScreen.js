@@ -8,7 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import GroupCard from "../components/GroupCard";
+import GroupCard from "../components/ResultGroupCard";
 import myLogoPic from "../assets/2better-logo.jpg";
 import GroupService from "../back/GroupService";
 
@@ -84,10 +84,6 @@ export const styles = StyleSheet.create({
     paddingTop: 40, // Add padding to give some space at the top
     flexDirection: "column",
     gap: 17,
-    // alignItems: "center",
-    // paddingBottom: 40,
-    // paddingTop: 20,
-    // gap: 15,
   },
   backgroundImage: {
     flex: 1,

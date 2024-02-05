@@ -5,26 +5,40 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 export const GroupService = {
-  async getGroup(groupName) {
+  async getGroup() {
     try {
-      const snapshot = await db.collection("Groups").doc(groupName).get();
+      const userEmail = auth.currentUser.email;
+      const groupsRef = db
+        .collection("Groups")
+        .where("LeaderEmail", "==", userEmail);
 
-      if (snapshot.exists) {
-        const groupData = snapshot.data();
-        console.log("Group Data: ", groupData);
-        return {
-          groupName: groupData.GroupNameT, // Ensure the property names match your database fields
-          leaderEmail: groupData.LeaderEmail,
-          totalCapacity: groupData.otalCapacity,
-          city: groupData.City,
-          sportType: groupData.SportType,
-        };
-      } else {
-        console.log("Group not found.");
-        return null;
+      const snapshot = await groupsRef.get();
+
+      if (snapshot.empty) {
+        console.log("No matching groups found.");
+        return [];
       }
+
+      const groups = [];
+
+      snapshot.forEach((groupDoc) => {
+        const groupData = groupDoc.data();
+        const groupName = groupData.GroupName || "Unknown"; // Provide a default if groupName is missing
+
+        groups.push({
+          GroupName: groupName,
+          LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
+          TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
+          City: groupData.City || "Unknown", // Provide a default if city is missing
+          SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
+          Members: groupData.Members?.length || 0 
+        });
+      });
+
+      return groups;
     } catch (error) {
-      console.error("Error fetching Group: ", error);
+      console.error("Error getting groups by sport:", error);
+      throw error;
     }
   },
 

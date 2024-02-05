@@ -85,7 +85,7 @@ const FindNewGroupScreen = ({ navigation }) => {
       >
         <View style={styles.container}>
           <DropDownPicker
-            listMode={Platform.OS==='ios' ? "DEFAULT" : "MODAL"}
+            listMode={Platform.OS==='ios' ? "SCROLLVIEW" : "MODAL"}
             items={sportType_data}
             open={isOpenTypeOfSport}
             setOpen={() => setIsOpenTypeOfSport(!isOpenTypeOfSport)}
@@ -109,7 +109,7 @@ const FindNewGroupScreen = ({ navigation }) => {
           />
 
           <DropDownPicker
-            listMode={Platform.OS==='ios' ? "DEFAULT" : "MODAL"}
+            listMode={Platform.OS==='ios' ? "SCROLLVIEW" : "MODAL"}
             items={city_data}
             open={isOpenCity}
             setOpen={()=>setIsOpenCity(!isOpenCity)}
