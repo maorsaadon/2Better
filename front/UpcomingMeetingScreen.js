@@ -64,7 +64,7 @@ const UpcomingMeetingsScreen = () => {
                 <DataTable.Cell style={styles.cell}>{meeting.Date}</DataTable.Cell>
                 <DataTable.Cell numeric style={styles.cell}>{meeting.Location}</DataTable.Cell>
                 <TouchableOpacity onPress={() => handlePress(meeting)} style={styles.rowButton}>
-                  <Text style={styles.buttonText}>Print!</Text>
+                  <Text style={styles.buttonText}>Show</Text>
                 </TouchableOpacity>
               </DataTable.Row>
             ))}
