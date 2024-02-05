@@ -18,6 +18,7 @@ const EditProfileScreen = () => {
   const [city, setCity] = useState("");
 
   const navigation = useNavigation();
+  
 
   const handleSave = async () => {
     try {
