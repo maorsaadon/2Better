@@ -11,16 +11,11 @@ import { notificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/2better-logo.jpg";
-import AddPicture from "./AddPicture";
 // Screen to display user notifications
-const NotificationsScreen = (image) => {
+const NotificationsScreen = () => {
   //Aviv's Edit:
   /************************************************* */
   const navigation = useNavigation();
-
-  state = {
-    avatar: null
-  };
 
   const backButton = () => {
     try {
@@ -111,21 +106,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "left",
   },
-  // avatar:{
-  //   position:'absolute',
-  //   width: 100,
-  //   height:100,
-  //   borderRadius:50,
-  // },
-  // avatarPlaceHolder:{
-  //   width: 100,
-  //   height:100,
-  //   borderRadius:50,
-  //   backgroundColor: "E1E2E6",
-  //   marginTop:48,
-  //   justifyContent: "center",
-  //   alignItems: "center"
-  // }
+
 });
 
 export default NotificationsScreen;
