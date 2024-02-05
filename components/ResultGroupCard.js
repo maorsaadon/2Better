@@ -5,8 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-} from "react-native";
+} from "react-native"; 
 import {
   AntDesign,
   FontAwesome5,
@@ -14,8 +13,7 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/core";
-import { GroupService } from "../back/GroupService";
+import CustomSlider from "./CustomSlider";
 
 const sportIconMapping_FontAwesome5 = {
   Basketball: "basketball-ball",
@@ -25,6 +23,7 @@ const sportIconMapping_FontAwesome5 = {
   Football: "football-ball",
   Volleyball: "volleyball-ball",
   Running: "running",
+  Tennis: "tennis-ball",
   Swimming: "swimmer",
   Hiking: "hiking",
   Snowboarding: "snowboarding",
@@ -32,10 +31,6 @@ const sportIconMapping_FontAwesome5 = {
 
 const sportIconMapping_FontAwesome = {
   Soccer: "soccer-ball-o",
-};
-
-const sportIconMapping_MaterialCommunityIcons = {
-  Tennis: "tennis-ball",
 };
 
 const sportIconMapping_MaterialIcons = {
@@ -46,8 +41,8 @@ const sportIconMapping_MaterialIcons = {
 const screenWidth = Dimensions.get("window").width;
 
 const GroupCard = ({ group }) => {
-  const navigation = useNavigation();
   const groupName = group?.GroupName ?? "Default Name";
+  const currentParticipants = parseInt(group.Members, 10);
   const totalCapacity = parseInt(group.TotalCapacity, 10);
 
   const getSportIcon = (sportType) => {
@@ -63,30 +58,8 @@ const GroupCard = ({ group }) => {
     if (iconNameMI) {
       return <MaterialIcons name={iconNameMI} size={30} color="black" />;
     }
-    const iconNameMCI = sportIconMapping_MaterialCommunityIcons[sportType];
-    if (iconNameMCI) {
-      return <MaterialCommunityIcons name={iconNameMCI} size={30} color="black" />;
-    }
-    
 
     return null; // Return null if no icon is found
-  };
-
-  const handleAddNewMeeting = (groupName) => {
-    try {
-      navigation.replace("AddNewMeeting", { groupName });
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const deleteButton = (groupName) => {
-    try {
-      GroupService.handleDeleteGroup(groupName);
-      navigation.replace("MyGroups");
-    } catch (error) {
-      alert(error.message);
-    }
   };
 
   return (
@@ -108,24 +81,21 @@ const GroupCard = ({ group }) => {
             <MaterialCommunityIcons name="email" size={22} color="black" />
             <Text>{group.LeaderEmail}</Text>
           </View>
-          <View style={styles.iconAndTextContainer}>
-            <AntDesign name="user" size={22} color="black" />
-            <Text>{totalCapacity}</Text>
-          </View>
+        </View>
+        <View style={styles.participantContainer}>
+          <Text style={styles.participantText}>{currentParticipants}</Text>
+          <CustomSlider
+            minimumValue={0}
+            maximumValue={totalCapacity}
+            value={currentParticipants}
+          />
+          <Text style={styles.participantText}>{totalCapacity}</Text>
+          <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-          <TouchableOpacity
-            onPress={() => handleAddNewMeeting(groupName)}
-            style={styles.addMeetingButton}
-          >
-            <Text style={styles.buttonText}>Add new meeting</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => deleteButton(groupName)}
-            style={styles.deleteButton}
-          >
-            <Text style={styles.buttonText}>Delete</Text>
-          </TouchableOpacity>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Join</Text>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -162,7 +132,6 @@ const styles = StyleSheet.create({
     elevation: 3, // Elevation for Android
     borderWidth: 1, // Border width
     borderColor: "#E0E0E0",
-    gap: 10,
   },
   cardTopRow: {
     marginTop: 0, // Adjust as needed to move closer to the top
@@ -174,13 +143,13 @@ const styles = StyleSheet.create({
   },
   cardMiddleRow: {
     flexDirection: "row",
-    gap: 5,
+    gap: 15,
     alignItems: "center",
   },
   iconAndTextContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: 5,
     marginLeft: 0,
   },
   sportIcon: {
@@ -212,20 +181,25 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
   },
-  addMeetingButton: {
-    backgroundColor: "#0782F9",
-    padding: 10, // Adjusted padding to make the button shorter
-    borderRadius: 10,
-    marginTop: 0,
-    marginLeft: 0,
+  participantContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
   },
-
-  deleteButton: {
-    backgroundColor: "red",
-    padding: 10, // Adjusted padding to make the button shorter
-    borderRadius: 10,
-    marginTop: 0,
-    width: 120,
-    marginLeft: 0,
+  slider: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 10,
+    minimumTrackTintColor: "black",
+    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    thumbTintColor: "white",
+  },
+  participantText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "bold",
+    // Add margin to the left or right to space the text from the slider
+    marginHorizontal: 5,
   },
 });

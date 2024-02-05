@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
-  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
   ImageBackground,
+  SafeAreaView
 } from "react-native";
 import myLogoPic from "../assets/2better-logo.jpg";
 import GroupService from "../back/GroupService";
@@ -25,7 +25,7 @@ const AddNewGroupScreen = () => {
     { label: "Football", value: "Football" },
     { label: "Kitesurfing", value: "Kitesurfing" },
     { label: "Running", value: "Running" },
-    { label: "Tennis", value: "Tenni" },
+    { label: "Tennis", value: "Tennis" },
     { label: "Swimming", value: "Swimming" },
   ];
 
@@ -50,7 +50,7 @@ const AddNewGroupScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+       <SafeAreaView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
           {/* Back Button */}
           <TouchableOpacity onPress={backButton} style={styles.backButton}>
@@ -92,7 +92,7 @@ const AddNewGroupScreen = () => {
             <Text style={styles.buttonOutlineText}>Add</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </SafeAreaView>
     </ImageBackground>
   );
 };
