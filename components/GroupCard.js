@@ -14,6 +14,8 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
+import { GroupService } from "../back/GroupService";
 
 const sportIconMapping_FontAwesome5 = {
   Basketball: "basketball-ball",
@@ -23,7 +25,6 @@ const sportIconMapping_FontAwesome5 = {
   Football: "football-ball",
   Volleyball: "volleyball-ball",
   Running: "running",
-  Tennis: "tennis-ball",
   Swimming: "swimmer",
   Hiking: "hiking",
   Snowboarding: "snowboarding",
@@ -31,6 +32,10 @@ const sportIconMapping_FontAwesome5 = {
 
 const sportIconMapping_FontAwesome = {
   Soccer: "soccer-ball-o",
+};
+
+const sportIconMapping_MaterialCommunityIcons = {
+  Tennis: "tennis-ball",
 };
 
 const sportIconMapping_MaterialIcons = {
@@ -41,6 +46,7 @@ const sportIconMapping_MaterialIcons = {
 const screenWidth = Dimensions.get("window").width;
 
 const GroupCard = ({ group }) => {
+  const navigation = useNavigation();
   const groupName = group?.GroupName ?? "Default Name";
   const totalCapacity = parseInt(group.TotalCapacity, 10);
 
@@ -57,6 +63,11 @@ const GroupCard = ({ group }) => {
     if (iconNameMI) {
       return <MaterialIcons name={iconNameMI} size={30} color="black" />;
     }
+    const iconNameMCI = sportIconMapping_MaterialCommunityIcons[sportType];
+    if (iconNameMCI) {
+      return <MaterialCommunityIcons name={iconNameMCI} size={30} color="black" />;
+    }
+    
 
     return null; // Return null if no icon is found
   };
@@ -64,6 +75,15 @@ const GroupCard = ({ group }) => {
   const handleAddNewMeeting = (groupName) => {
     try {
       navigation.replace("AddNewMeeting", { groupName });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const deleteButton = (groupName) => {
+    try {
+      GroupService.handleDeleteGroup(groupName);
+      navigation.replace("MyGroups");
     } catch (error) {
       alert(error.message);
     }
@@ -93,13 +113,20 @@ const GroupCard = ({ group }) => {
             <Text>{totalCapacity}</Text>
           </View>
         </View>
-        <View style={styles.cardBottomRow}></View>
-        <TouchableOpacity
-          onPress={() => handleAddNewMeeting(group)}
-          style={styles.addMeetingButton}
-        >
-          <Text style={styles.buttonText}>Add new meeting</Text>
-        </TouchableOpacity>
+        <View style={styles.cardBottomRow}>
+          <TouchableOpacity
+            onPress={() => handleAddNewMeeting(groupName)}
+            style={styles.addMeetingButton}
+          >
+            <Text style={styles.buttonText}>Add new meeting</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => deleteButton(groupName)}
+            style={styles.deleteButton}
+          >
+            <Text style={styles.buttonText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -147,13 +174,13 @@ const styles = StyleSheet.create({
   },
   cardMiddleRow: {
     flexDirection: "row",
-    gap: 30,
+    gap: 5,
     alignItems: "center",
   },
   iconAndTextContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 3,
     marginLeft: 0,
   },
   sportIcon: {
@@ -190,6 +217,15 @@ const styles = StyleSheet.create({
     padding: 10, // Adjusted padding to make the button shorter
     borderRadius: 10,
     marginTop: 0,
+    marginLeft: 0,
+  },
+
+  deleteButton: {
+    backgroundColor: "red",
+    padding: 10, // Adjusted padding to make the button shorter
+    borderRadius: 10,
+    marginTop: 0,
+    width: 120,
     marginLeft: 0,
   },
 });

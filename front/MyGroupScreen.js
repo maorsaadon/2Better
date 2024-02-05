@@ -35,11 +35,7 @@ const MyGroupsScreen = () => {
     };
 
     fetchGroup();
-  }, []); // Depend on selectedCity and selectedTypeOfSport
-
-  useEffect(() => {
-    console.log("Updated groups state:", groups);
-  }, [groups]);
+  }, []);
 
   const backButton = () => {
     try {
@@ -85,7 +81,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start", // Align items at the top
     paddingTop: 30, // Add padding to give some space at the top
-    gap: 5,
+    flexDirection: "column",
+    gap: 35,
   },
   backgroundImage: {
     flex: 1,
@@ -164,14 +161,14 @@ const styles = StyleSheet.create({
     height: 70, // Adjust the height as needed
     resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
   },
-  backButton: {
-    backgroundColor: "#0782F9",
-    width: "15%",
-    padding: 10, // Adjusted padding to make the button shorter
-    borderRadius: 10,
-    marginTop: 5,
-    marginLeft: 5,
-  },
+//   backButton: {
+//     backgroundColor: "#0782F9",
+//     width: "15%",
+//     padding: 10, // Adjusted padding to make the button shorter
+//     borderRadius: 10,
+//     marginTop: 5,
+//     marginLeft: 5,
+//   },
   addButton: {
     backgroundColor: "#0782F9",
     padding: 15,

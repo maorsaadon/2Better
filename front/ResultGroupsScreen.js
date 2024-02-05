@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 40, // Add padding to give some space at the top
     flexDirection: "column",
-    gap: 17,
+    gap: 35,
   },
   backgroundImage: {
     flex: 1,
