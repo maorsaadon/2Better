@@ -27,6 +27,7 @@ const AddNewGroupScreen = () => {
     { label: "Running", value: "Running" },
     { label: "Tennis", value: "Tennis" },
     { label: "Swimming", value: "Swimming" },
+    { label: "Soccer", value: "Soccer" },
   ];
 
   const navigation = useNavigation();
