@@ -90,18 +90,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
   },
-  backButton: {
-    backgroundColor: "#3B82F6",
-    width: "20%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 6,
-  },
-  backButtonText: {
-    alignSelf: "center",
-    color: "white",
-  },
   card: {
     width: "100%",
     backgroundColor: "rgba(255, 255, 255 , 0.4)",
@@ -161,14 +149,14 @@ const styles = StyleSheet.create({
     height: 70, // Adjust the height as needed
     resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
   },
-//   backButton: {
-//     backgroundColor: "#0782F9",
-//     width: "15%",
-//     padding: 10, // Adjusted padding to make the button shorter
-//     borderRadius: 10,
-//     marginTop: 5,
-//     marginLeft: 5,
-//   },
+  backButton: {
+    backgroundColor: "#0782F9",
+    width: "15%",
+    padding: 10, // Adjusted padding to make the button shorter
+    borderRadius: 10,
+    marginTop: 5,
+    marginLeft: 5,
+  },
   addButton: {
     backgroundColor: "#0782F9",
     padding: 15,
