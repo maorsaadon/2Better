@@ -13,9 +13,8 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import CustomSlider from "./CustomSlider";
-
 
 const sportIconMapping_FontAwesome5 = {
   Basketball: "basketball-ball",
@@ -28,6 +27,7 @@ const sportIconMapping_FontAwesome5 = {
   Tennis: "tennis-ball",
   Swimming: "swimmer",
   Hiking: "hiking",
+  Snowboarding: "snowboarding",
 };
 
 const sportIconMapping_FontAwesome = {
@@ -40,7 +40,6 @@ const sportIconMapping_MaterialIcons = {
 };
 
 const screenWidth = Dimensions.get("window").width;
-
 
 const GroupCard = ({ group }) => {
   const groupName = group?.GroupName ?? "Default Name";
