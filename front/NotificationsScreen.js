@@ -11,9 +11,8 @@ import { notificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/2better-logo.jpg";
-import AddPicture from "./AddPicture";
 // Screen to display user notifications
-const NotificationsScreen = (image) => {
+const NotificationsScreen = () => {
   //Aviv's Edit:
   /************************************************* */
   const navigation = useNavigation();
@@ -25,9 +24,6 @@ const NotificationsScreen = (image) => {
       alert(error.message);
     }
   };
-  /************************************************** */
-
-  const [notifications, setNotifications] = useState([]);
 
   // Fetch user notifications when the component is mounted
   useEffect(() => {
@@ -48,9 +44,9 @@ const NotificationsScreen = (image) => {
     </View>
   );
 
-  setProfileImage = (image) => {
+  pickImageHandler = async() => {
 
-  }
+  };
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
@@ -59,16 +55,13 @@ const NotificationsScreen = (image) => {
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <AddPicture image={image} onImagePicked = {setProfileImage}/>
-      </View>
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <FlatList
           data={notifications}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderNotificationItem}
         />
-      </View>
+      </View> */}
     </ImageBackground>
   );
 };
@@ -89,16 +82,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  //Aviv's Edit:
-  /************************************************* */
+
   button: {
     backgroundColor: "#0782F9",
     width: "20%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: -290,
-    marginRight: 310,
+    position: "absolute", // Use absolute positioning
+    top: 0, // Align to the bottom
+    left: 0, // Align to the left
+    marginBottom: 10, // Optional margin to add some space from the bottom
+    marginLeft: 10, // Optional margin to add some space from the left
   },
   buttonText: {
     color: "black",
@@ -111,7 +106,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "left",
   },
-  /************************************************* */
+
 });
 
 export default NotificationsScreen;
