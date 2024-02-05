@@ -6,6 +6,7 @@ export const MeetingService = {
   async fetchMeetingsData () {
     try {
       const meetingsCollection = await db.collection('Meetings').get();
+      // const meetingsCollection = await db.collection('Meetings').where('GroupName', '==', 'Maor test 1').get();
       const meetingsData = meetingsCollection.docs.map(doc => {
         const data = doc.data();
         return {
