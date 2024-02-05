@@ -19,7 +19,7 @@ const GroupDetailsScreen = ({ route }) => {
   const navigation = useNavigation();
   const [_groupName, setGroupName] = useState("");
   const [_leaderEmail, setLeaderEmail] = useState("");
-  const [_participants, setParticipants] = useState("");
+  const [_totalCapacity, setTotalCapacity] = useState("");
   const [_sportType, setSportType] = useState("");
   const [_city, setCity] = useState("");
 
@@ -33,7 +33,7 @@ const GroupDetailsScreen = ({ route }) => {
         if (data) {
           setGroupName(data.groupName); // Use the data directly as it matches the state structure
           setLeaderEmail(data.leaderEmail);
-          setParticipants(data.participants);
+          setTotalCapacity(data.totalCapacity);
           setSportType(data.sportType);
           setCity(data.city);
         } else {
@@ -54,7 +54,7 @@ const GroupDetailsScreen = ({ route }) => {
         _groupName,
         _city,
         _sportType,
-        _participants
+        _totalCapacity
       );
 
       setEditMode(false);
@@ -94,15 +94,15 @@ const GroupDetailsScreen = ({ route }) => {
         <Text style={styles.label}>Leader Email:</Text>
         <Text style={styles.input}>{_leaderEmail}</Text>
 
-        <Text style={styles.label}>Participants:</Text>
+        <Text style={styles.label}>totalCapacity:</Text>
         {editMode ? (
           <TextInput
             style={styles.input}
-            value={_participants.toString()}
-            onChangeText={(text) => setParticipants(text)}
+            value={_totalCapacity.toString()}
+            onChangeText={(text) => setTotalCapacity(text)}
           />
         ) : (
-          <Text style={styles.input}>{_participants}</Text>
+          <Text style={styles.input}>{_totalCapacity}</Text>
         )}
 
         <Text style={styles.label}>Sport Type:</Text>

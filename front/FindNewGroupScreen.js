@@ -34,7 +34,7 @@ const FindNewGroupScreen = ({ navigation }) => {
   const [isOpenCity, setIsOpenCity] = useState(false);
   const [selectedTypeOfSport, setSelectedTypeOfSport] = useState(null);
   const [isOpenTypeOfSport, setIsOpenTypeOfSport] = useState(false);
-  
+
   useEffect(() => {
     console.log(
       `city: ${selectedCity},
@@ -42,17 +42,13 @@ const FindNewGroupScreen = ({ navigation }) => {
     );
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, [selectedTypeOfSport, selectedCity]);
-  
+
   const handleTypeOfSportPress = (item) => {
-    setIsOpenCity(false);
     setSelectedTypeOfSport(item.value);
-    setIsOpenTypeOfSport(true);
   };
 
   const handleCityPress = (item) => {
-    setIsOpenTypeOfSport(false);
     setSelectedCity(item.value);
-    setIsOpenCity(true);
   };
 
   const handleSearchPress = () => {
@@ -76,8 +72,6 @@ const FindNewGroupScreen = ({ navigation }) => {
     }
   };
 
-
-
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
@@ -90,56 +84,47 @@ const FindNewGroupScreen = ({ navigation }) => {
         }}
       >
         <View style={styles.container}>
-          <Text style={[styles.searchtext, { textAlign: "right" }]}>
-            Type of sport:
-          </Text>
-
           <DropDownPicker
+            listMode={Platform.OS==='ios' ? "DEFAULT" : "MODAL"}
             items={sportType_data}
             open={isOpenTypeOfSport}
-            setOpen={setIsOpenTypeOfSport}
+            setOpen={() => setIsOpenTypeOfSport(!isOpenTypeOfSport)}
             value={selectedTypeOfSport}
             setValue={setSelectedTypeOfSport}
             dropDownDirection="DOWN"
-            showArrowIcon={false}
+            showArrowIcon={true}
             mode="BADGE"
             badgeColors={"#2C64C6"}
             badgeDotColors={["white"]}
             badgeTextStyle={{ color: "white" }}
             placeholder="Select type of sport"
             placeholderStyle={styles.placeHolderStyle}
-            containerStyle={styles.dropdownContainer}
-            style={[
-              styles.dropdownStyle,
-              { zIndex: isOpenTypeOfSport ? 2 : 0 },
-            ]}
+            containerStyle={[styles.dropdownContainer, { zIndex: 3 }]}
+            style={styles.dropdownStyle}
             itemStyle={styles.dropdownItemStyle}
             dropDownStyle={styles.dropdownListStyle}
             searchable={true}
             searchPlaceholder="Search..."
             onSelectItem={(item) => handleTypeOfSportPress(item)}
           />
-          <Text style={styles.searchtext}>City:</Text>
 
           <DropDownPicker
+            listMode={Platform.OS==='ios' ? "DEFAULT" : "MODAL"}
             items={city_data}
             open={isOpenCity}
-            setOpen={setIsOpenCity}
+            setOpen={()=>setIsOpenCity(!isOpenCity)}
             value={selectedCity}
             setValue={setSelectedCity}
             dropDownDirection="DOWN"
-            showArrowIcon={false}
+            showArrowIcon={true}
             mode="BADGE"
             badgeColors={"#2C64C6"}
             badgeDotColors={["white"]}
             badgeTextStyle={{ color: "white" }}
             placeholder="Select city"
             placeholderStyle={styles.placeHolderStyle}
-            containerStyle={[
-              styles.dropdownContainer,
-              { zIndex: isOpenCity ? 1 : 0 },
-            ]}
-            style={[styles.dropdownStyle, { zIndex: isOpenCity ? 1 : 0 }]}
+            containerStyle={ styles.dropdownContainer}
+            style={styles.dropdownStyle}
             itemStyle={styles.dropdownItemStyle}
             dropDownStyle={styles.dropdownListStyle}
             searchable={true}
@@ -395,7 +380,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: "80%",
     marginBottom: 16,
-    textAlign: "right",
+    textAlign: "left",
     zIndex: 2,
   },
   dropdownStyle: {
@@ -403,20 +388,21 @@ const styles = StyleSheet.create({
     borderColor: "#2C64C6",
     borderWidth: 3,
     borderRadius: 10,
-    textAlign: "right",
+    textAlign: "left",
+    alignSelf: 'flex-end' 
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
-    textAlign: "right",
+    textAlign: "left",
   },
   dropdownListStyle: {
     borderColor: "#2C64C6",
     borderWidth: 3,
-    textAlign: "right",
+    textAlign: "left",
   },
   placeHolderStyle: {
     color: "#A9A9A9",
-    textAlign: "right",
+    textAlign: "left",
   },
   datePickerContainer: {
     marginup: 30, // Adjust this value as needed for the desired spacing

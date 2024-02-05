@@ -13,9 +13,9 @@ export const GroupService = {
         const groupData = snapshot.data();
         console.log("Group Data: ", groupData);
         return {
-          groupName: groupData.GroupName, // Ensure the property names match your database fields
+          groupName: groupData.GroupNameT, // Ensure the property names match your database fields
           leaderEmail: groupData.LeaderEmail,
-          participants: groupData.Participants,
+          totalCapacity: groupData.otalCapacity,
           city: groupData.City,
           sportType: groupData.SportType,
         };
@@ -29,14 +29,14 @@ export const GroupService = {
   },
 
   // Update group details
-  async updateGroupDetails(groupName, city, sportType, participants) {
+  async updateGroupDetails(groupName, city, sportType, totalCapacity) {
     try {
       console.log("City", city);
       const groupRef = db.collection("Groups").doc(groupName);
 
       // Update the group document
       await groupRef.update({
-        Participants: parseInt(participants),
+        TotalCapacity: parseInt(totalCapacity),
         City: city,
         SportType: sportType,
       });
@@ -47,7 +47,7 @@ export const GroupService = {
     }
   },
 
-  async handleAddNewGroup(groupName, city, sportType, participants) {
+  async handleAddNewGroup(groupName, city, sportType, totalCapacity) {
     // Check if the user is logged in
     const userEmail = auth.currentUser.email;
     const docRef = db
@@ -56,7 +56,7 @@ export const GroupService = {
       .set({
         GroupName: groupName,
         LeaderEmail: userEmail,
-        Participants: participants,
+        TotalCapacity: totalCapacity,
         City: city,
         SportType: sportType,
         MeetingsGroup: [],
@@ -165,9 +165,10 @@ export const GroupService = {
         groups.push({
           GroupName: groupName,
           LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
-          Participants: groupData.Participants || -1, // Provide an empty array if participants are missing
+          TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
           City: groupData.City || "Unknown", // Provide a default if city is missing
           SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
+          Members: groupData.Members?.length || 0 
         });
       });
 
