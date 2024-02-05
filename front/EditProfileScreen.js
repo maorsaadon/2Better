@@ -10,7 +10,7 @@ import {
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/profileImage.jpeg";
 
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");

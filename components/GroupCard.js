@@ -36,12 +36,10 @@ const sportIconMapping_FontAwesome = {
 
 const sportIconMapping_MaterialCommunityIcons = {
   Tennis: "tennis-ball",
-};
-
-const sportIconMapping_MaterialIcons = {
   Kitesurfing: "kitesurfing",
   Surfing: "surfing",
 };
+
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -59,15 +57,12 @@ const GroupCard = ({ group }) => {
     if (iconNameFA) {
       return <FontAwesome name={iconNameFA} size={30} color="black" />;
     }
-    const iconNameMI = sportIconMapping_MaterialIcons[sportType];
-    if (iconNameMI) {
-      return <MaterialIcons name={iconNameMI} size={30} color="black" />;
-    }
     const iconNameMCI = sportIconMapping_MaterialCommunityIcons[sportType];
     if (iconNameMCI) {
-      return <MaterialCommunityIcons name={iconNameMCI} size={30} color="black" />;
+      return (
+        <MaterialCommunityIcons name={iconNameMCI} size={30} color="black" />
+      );
     }
-    
 
     return null; // Return null if no icon is found
   };
@@ -84,6 +79,14 @@ const GroupCard = ({ group }) => {
     try {
       GroupService.handleDeleteGroup(groupName);
       navigation.replace("MyGroups");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleEditButton = (groupName) => {
+    try {
+      navigation.replace("Home");
     } catch (error) {
       alert(error.message);
     }
@@ -121,6 +124,12 @@ const GroupCard = ({ group }) => {
             <Text style={styles.buttonText}>Add new meeting</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => handleEditButton(groupName)}
+            style={styles.editButton}
+          >
+            <Text style={styles.buttonText}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => deleteButton(groupName)}
             style={styles.deleteButton}
           >
@@ -139,6 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
+    gap: 10,
   },
   container: {
     backgroundColor: "#5B8BDF",
@@ -219,13 +229,20 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginLeft: 0,
   },
-
   deleteButton: {
     backgroundColor: "red",
     padding: 10, // Adjusted padding to make the button shorter
     borderRadius: 10,
     marginTop: 0,
-    width: 120,
+    width: 80,
+    marginLeft: 0,
+  },
+  editButton: {
+    backgroundColor: "green",
+    padding: 10, // Adjusted padding to make the button shorter
+    borderRadius: 10,
+    marginTop: 0,
+    width: 80,
     marginLeft: 0,
   },
 });

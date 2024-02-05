@@ -8,18 +8,38 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Image,
 } from "react-native";
-import myLogoPic from "../assets/2better-logo.jpg";
+import { MaterialIcons } from "@expo/vector-icons";
+import myLogoPic from "../assets/profileImage.jpeg";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
+import * as ImagePicker from 'expo-image-picker';
+
 
 const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
+  //const photo = require("../assets/iconProfile.jpeg");
+  const [selectedImage, setSelectedImage] = useState();
 
+  const handleImageSelection = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+  };
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -54,7 +74,7 @@ const ProfileScreen = () => {
   };
 
   const navigation = useNavigation();
-  
+
 
   const backButton = () => {
     try {
@@ -66,28 +86,67 @@ const ProfileScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      <TouchableOpacity onPress={backButton} style={styles.button}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
       <View style={styles.container}>
-        <Text style={styles.label}>Email:</Text>
-        <Text style={styles.value}>{auth.currentUser?.email}</Text>
+        <View
+          style={{
+            alignItems: "center",
+            marginVertical: 22,
+          }}
+        >
+          <TouchableOpacity onPress={handleImageSelection}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={{
+                height: 170,
+                width: 170,
+                borderRadius: 85,
+                borderWidth: 2,
+                borderColor: '#000066',
+              }}
+            />
 
-        <Text style={styles.label}>First Name:</Text>
-        <Text style={styles.value}>{userFirstName}</Text>
-
-        <Text style={styles.label}>Last Name:</Text>
-        <Text style={styles.value}>{userLastName}</Text>
-
-        <Text style={styles.label}>City:</Text>
-        <Text style={styles.value}>{UserCity}</Text>
-
-        <Button title="Edit" onPress={handleEdit} />
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 10,
+                zIndex: 9999,
+              }}
+            >
+              <MaterialIcons
+                name="photo-camera"
+                size={32}
+                color='#000066'
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.userInfoContainer}>
+          <Text style={styles.valueName}>
+            {userFirstName} {userLastName}
+          </Text>
+          <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialIcons name="location-on" size={26} color="black" />
+          <View>
+            <Text style={styles.valueNew}>
+              {city}
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={handleEdit} style={styles.buttonEdit}>
+          <Text style={styles.buttonTextEdit}>Edit User</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={handleDelete} style={styles.buttonDelete}>
           <Text style={styles.buttonText}>Delete Account</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={backButton} style={styles.button}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+
       </View>
     </ImageBackground>
   );
@@ -104,7 +163,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#000066",
     width: "20%",
     padding: 15,
     borderRadius: 10,
@@ -116,7 +175,7 @@ const styles = StyleSheet.create({
     marginLeft: 10, // Optional margin to add some space from the left
   },
   buttonDelete: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#990000",
     width: "40%",
     padding: 15,
     borderRadius: 10,
@@ -125,6 +184,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonTextEdit: {
+    color: "#000066",
     fontWeight: "700",
     fontSize: 16,
   },
@@ -150,13 +214,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 10,
   },
-  value: {
-    backgroundColor: "white",
-    paddingHorizontal: 25,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 10,
-    borderColor: "#0782F9",
-    borderWidth: 2,
+  valueName: {
+    fontWeight: "bold",
+    fontSize: 16,
+    flexDirection: "row",
+    fontSize: 28,
+    marginLeft: 4,
   },
+  valueNew: {
+    fontSize: 16,
+    flexDirection: "row",
+    fontSize: 22,
+    marginLeft: 4,
+  },
+  buttonEdit: {
+    width: "30%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 50,
+  }
 });
