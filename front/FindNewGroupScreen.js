@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/2better-logo.jpeg";
 import { sportType_data, city_data } from "../back/DataBase";
 
 const FindNewGroupScreen = ({ navigation }) => {

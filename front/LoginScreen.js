@@ -14,7 +14,7 @@ import {
 import { auth } from "../back/firebase";
 
 //########################################
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/2better-logo.jpeg";
 
 //#############################################
 // import Fstyles from '../styles';

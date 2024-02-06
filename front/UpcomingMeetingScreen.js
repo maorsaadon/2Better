@@ -3,7 +3,7 @@ import { View, ScrollView, Text, StyleSheet, TouchableOpacity, ImageBackground, 
 import { DataTable } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/core';
 import { db } from "../back/firebase";
-import myLogoPic from '../assets/2better-logo.jpg';
+import myLogoPic from '../assets/2better-logo.jpeg';
 import '../back/MeetingService'
 import MeetingService from '../back/MeetingService';
 

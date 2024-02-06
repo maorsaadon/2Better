@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { auth } from "../back/firebase";
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/2better-logo.jpeg";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 //import {stylesHome} from "../components/StylesSheets";
