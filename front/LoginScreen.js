@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
-  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -13,13 +12,7 @@ import {
 //import styles from "../components/StylesSheets";
 import { auth } from "../back/firebase";
 
-//########################################
-import myLogoPic from "../assets/2better-logo.jpeg";
-
-//#############################################
-// import Fstyles from '../styles';
-// import Svg, { Image, Ellipse, ClipPath } from 'react-native-svg';
-// import Animated, { useSharedValue, useAnimatedStyle, interpolate, withTiming, withDelay, runOnJS, withSequence, withSpring } from 'react-native-reanimated';
+import myLogoPic from "../assets/loginPage.jpeg";
 
 const LoginScreen = () => {
   var [email, setEmail] = useState("");
@@ -37,9 +30,6 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
-  const handleSignUp = () => {
-    navigation.navigate("Register");
-  };
 
   const handleLogin = () => {
     email = email.toLowerCase();
@@ -75,15 +65,6 @@ const LoginScreen = () => {
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={handleSignUp}
-            style={[styles.button, styles.buttonOutline]}
-          >
-            <Text style={styles.buttonOutlineText}>
-              New in 2Better? click here!
-            </Text>
-          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ImageBackground>
@@ -96,9 +77,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 220,
   },
   inputContainer: {
-    width: "60%",
+    width: "80%",
+
   },
   input: {
     backgroundColor: "white",
@@ -110,7 +93,7 @@ const styles = StyleSheet.create({
     borderColor: "#366A68",
   },
   buttonContainer: {
-    width: "60%",
+    width: "80%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
@@ -119,8 +102,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#366A68",
     width: "100%", // This will make the button fill the container
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 50,
     alignItems: "center",
+    marginTop: 50,
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -143,7 +127,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: "100%",
-    height: "100%",
+    height: "140%",
     justifyContent: "center",
   },
   //###############################

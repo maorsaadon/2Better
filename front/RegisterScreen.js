@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { auth, db } from "../back/firebase";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/registerPage.png";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
@@ -60,6 +60,18 @@ const RegisterScreen = () => {
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
+        <TextInput
+            placeholder="FirstName"
+            value={firstName}
+            onChangeText={(text) => setFirstName(text)}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="LastName"
+            value={lastName}
+            onChangeText={(text) => setLastName(text)}
+            style={styles.input}
+          />
           <TextInput
             placeholder="Email"
             value={email}
@@ -73,18 +85,7 @@ const RegisterScreen = () => {
             style={styles.input}
             secureTextEntry
           />
-          <TextInput
-            placeholder="FirstName"
-            value={firstName}
-            onChangeText={(text) => setFirstName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="LastName"
-            value={lastName}
-            onChangeText={(text) => setLastName(text)}
-            style={styles.input}
-          />
+
           <TextInput
             placeholder="City"
             value={city}
@@ -96,7 +97,7 @@ const RegisterScreen = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={handleSignUp}
-            style={[styles.button, styles.buttonOutline]}
+            style={styles.button}
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
           </TouchableOpacity>
@@ -116,14 +117,16 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "80%",
+    marginTop: 70,
+    marginLeft: 25,
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: "#C3D4D3",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#C3D4D3",
     borderWidth: 2,
   },
   buttonContainer: {
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#366A68",
     width: "100%",
     padding: 15,
     borderRadius: 10,
@@ -151,15 +154,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "white",
     fontWeight: "700",
     fontSize: 16,
   },
   //###############################
   backgroundImage: {
     flex: 1,
-    width: "100%",
+    width: "105%",
     height: "100%",
+    marginLeft: -19,
     justifyContent: "center",
     // alignItems: 'center',
   },
