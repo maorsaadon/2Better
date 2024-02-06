@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
+  Animated,
 } from "react-native";
 import { notificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
@@ -20,6 +21,31 @@ const NotificationsScreen = () => {
   /************************************************* */
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
+
+  const [showNotification, setShowNotification] = useState(false);
+  const notificationHeight = useRef(new Animated.Value(-100)).current; // Start off-screen
+
+  const triggerNotification = () => {
+    // Show the notification
+    setShowNotification(true);
+    // Start the animation
+    Animated.timing(notificationHeight, {
+      toValue: 0, // Slide down to just within the top of the screen
+      duration: 500, // Duration of the animation in milliseconds
+      useNativeDriver: true,
+    }).start(() => {
+      // After a delay, slide the notification back up
+      setTimeout(() => {
+        Animated.timing(notificationHeight, {
+          toValue: -100, // Slide back up off-screen
+          duration: 500, // Duration of the animation in milliseconds
+          useNativeDriver: true,
+        }).start(() => {
+          setShowNotification(false); // Hide the notification
+        });
+      }, 3000); // Time before the notification slides back up
+    });
+  };
 
   
   // Fetch user notifications when the component is mounted
@@ -59,6 +85,22 @@ const NotificationsScreen = () => {
   // };
 
   return (
+    // <View style={{ flex: 1 }}>
+    //   {showNotification && (
+    //     <Animated.View
+    //       style={{
+    //         position: 'absolute',
+    //         top: notificationHeight, // Animated
+    //         left: 0,
+    //         right: 0,
+    //         // ... other styles for your notification ...
+    //       }}
+    //     >
+    //     {notifications.slice().reverse().map((notification) => (
+    //     <NotificationCard key={0} notification={notification} />
+    //     ))}
+    //     </Animated.View>
+    //   )}
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
       <TouchableOpacity onPress={backButton} style={styles.button}>
@@ -67,7 +109,7 @@ const NotificationsScreen = () => {
         <View style={styles.container}>
           <ScrollView>
             <View style={styles.container}>
-              {notifications.map((notification, index) => (
+              {notifications.slice().reverse().map((notification, index) => (
                 <NotificationCard key={index} notification={notification} />
               ))}
             </View>
@@ -75,6 +117,7 @@ const NotificationsScreen = () => {
         </View>
       </View>
     </ImageBackground>
+  // </View>
   );
 };
 
@@ -84,6 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 50, // Adjust this value so that the ScrollView starts below the back button.
   },
   notificationItem: {
     padding: 20,
@@ -106,6 +150,9 @@ const styles = StyleSheet.create({
     left: 0, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
+    position: "absolute", // This is good for positioning the button.
+    top: 0,
+    left: 0,
   },
   buttonText: {
     color: "black",

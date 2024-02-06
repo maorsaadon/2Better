@@ -47,7 +47,7 @@ const AddNewMeetingScreen = ({ route }) => {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
           {/* Back Button */}
-          <TouchableOpacity onPress={backButton} style={styles.button}>
+          <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <MaterialIcons name="chevron-left" size={30} color="white" />
         </TouchableOpacity>
 
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     width: "15%",
     padding: 5, // Adjusted padding to make the button shorter
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 10,
     marginLeft: 5,
   },
   backButtonText: {
