@@ -1,20 +1,53 @@
 // src/services/NotificationService.js
-import { db } from "./firebase";
+import { db, auth } from "./firebase";
 
-const notificationCollection = db.collection("notifications");
 
 export const notificationService = {
   // Fetch notifications for a specific user
-  async getUserNotifications(userId) {
+  async getUserNotifications() {
     try {
-      const snapshot = await notificationCollection
-        .where("userId", "==", userId)
-        .get();
-      return snapshot.docs.map((doc) => doc.data());
+      const userEmail = auth.currentUser.email;
+      const notificationRef = db
+        .collection("Notifications")
+        .where("Addressee", "==", userEmail);
+
+      const snapshot = await notificationRef.get();
+
+      if (snapshot.empty) {
+        console.log("No matching notifications found.");
+        return [];
+      }
+
+      const notifications = [];
+
+      snapshot.forEach((notificationDoc) => {
+        const notificationData = notificationDoc.data();
+
+        notifications.push({
+          Addressee: notificationData.Addressee || "Unknown",
+          Content: notificationData.Content || "Unknown",
+          Type: notificationData.Type || "Unknown",
+        });
+      });
+
+      return notifications;
     } catch (error) {
-      console.error("Error fetching notifications:", error);
+      console.error("Error getting notifications:", error);
       throw error;
     }
+
+  },
+
+  async handleAddNewNotification(addressee, content, type){
+    const NotificationRef = db.collection("Notifications").doc();
+    NotificationRef.set({
+      Addressee: addressee,
+      Content: content,
+      Type: type,
+    }).catch((error) => {
+      console.error("Error creating Notification: ", error);
+      alert(error.message);
+    });
   },
 
   // Send a notification to a specific user
