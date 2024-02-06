@@ -29,3 +29,26 @@ export const sportType_data = [
     { label: "Hifa", value: "Hifa" },
     { label: "Ashkelon", value: "Ashkelon" },
   ];
+
+  export const sportIconMapping_FontAwesome5 = {
+    Basketball: "basketball-ball",
+    Baseball: "baseball-ball",
+    Bowling: "bowling-ball",
+    Cycling: "biking",
+    Football: "football-ball",
+    Volleyball: "volleyball-ball",
+    Running: "running",
+    Swimming: "swimmer",
+    Hiking: "hiking",
+    Snowboarding: "snowboarding",
+  };
+  
+  export const sportIconMapping_FontAwesome = {
+    Soccer: "soccer-ball-o",
+  };
+  
+  export const sportIconMapping_MaterialCommunityIcons = {
+    Tennis: "tennis-ball",
+    Kitesurfing: "kitesurfing",
+    Surfing: "surfing",
+  };
