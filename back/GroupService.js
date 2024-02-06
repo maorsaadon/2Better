@@ -5,7 +5,32 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 export const GroupService = {
-  async getGroup() {
+  
+  async getGroup(groupName) {
+    try {
+      const snapshot = await db.collection("Groups").doc(groupName).get(); // Add "await" here to wait for the snapshot
+  
+      if (snapshot.exists) {
+        const groupData = snapshot.data(); // Use "snapshot.data()" to access the document data
+        console.log("groupData", groupData);
+  
+        return {
+          GroupName: groupData.GroupName || "Unknown",
+          LeaderEmail: groupData.LeaderEmail || "Unknown",
+          TotalCapacity: groupData.TotalCapacity || 10,
+          City: groupData.City || "Unknown",
+          SportType: groupData.SportType || "Unknown",
+          Members: groupData.Members?.length || 0,
+        };
+      } else {
+        console.log("Group not found.");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching group: ", error);
+    }
+  },
+  async getGroups() {
     try {
       const userEmail = auth.currentUser.email;
       const groupsRef = db
@@ -31,7 +56,7 @@ export const GroupService = {
           TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
           City: groupData.City || "Unknown", // Provide a default if city is missing
           SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
-          Members: groupData.Members?.length || 0 
+          Members: groupData.Members?.length || 0,
         });
       });
 
@@ -182,7 +207,7 @@ export const GroupService = {
           TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
           City: groupData.City || "Unknown", // Provide a default if city is missing
           SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
-          Members: groupData.Members?.length || 0 
+          Members: groupData.Members?.length || 0,
         });
       });
 

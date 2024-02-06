@@ -1,5 +1,4 @@
 import {
-  Pressable,
   Text,
   View,
   SafeAreaView,
@@ -16,30 +15,7 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { GroupService } from "../back/GroupService";
-
-const sportIconMapping_FontAwesome5 = {
-  Basketball: "basketball-ball",
-  Baseball: "baseball-ball",
-  Bowling: "bowling-ball",
-  Cycling: "biking",
-  Football: "football-ball",
-  Volleyball: "volleyball-ball",
-  Running: "running",
-  Swimming: "swimmer",
-  Hiking: "hiking",
-  Snowboarding: "snowboarding",
-};
-
-const sportIconMapping_FontAwesome = {
-  Soccer: "soccer-ball-o",
-};
-
-const sportIconMapping_MaterialCommunityIcons = {
-  Tennis: "tennis-ball",
-  Kitesurfing: "kitesurfing",
-  Surfing: "surfing",
-};
-
+import { sportIconMapping_MaterialCommunityIcons, sportIconMapping_FontAwesome, sportIconMapping_FontAwesome5} from "../back/DataBase";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -86,7 +62,7 @@ const GroupCard = ({ group }) => {
 
   const handleEditButton = (groupName) => {
     try {
-      navigation.replace("Home");
+      navigation.replace("EditGroup", {groupName});
     } catch (error) {
       alert(error.message);
     }

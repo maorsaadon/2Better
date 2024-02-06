@@ -1,6 +1,6 @@
-import { StatusBar } from "expo-status-bar";
+
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./front/LoginScreen";
@@ -15,6 +15,7 @@ import UpcomingMeetingScreen from "./front/UpcomingMeetingScreen";
 import AddNewMeetingScreen from "./front/AddNewMeetingScreen";
 import AddNewGroupScreen from "./front/AddNewGroupScreen";
 import ResultGroupsScreen from "./front/ResultGroupsScreen";
+import EditGroupScreen from "./front/EditGroupScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ export default function App() {
         <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
         <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
         <Stack.Screen name="ResultGroups" component={ResultGroupsScreen} />
+        <Stack.Screen name="EditGroup" component={EditGroupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

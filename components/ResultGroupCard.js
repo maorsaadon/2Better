@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-} from "react-native"; 
+} from "react-native";
 import {
   AntDesign,
   FontAwesome5,
@@ -14,29 +14,11 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import CustomSlider from "./CustomSlider";
-
-const sportIconMapping_FontAwesome5 = {
-  Basketball: "basketball-ball",
-  Baseball: "baseball-ball",
-  Bowling: "bowling-ball",
-  Cycling: "biking",
-  Football: "football-ball",
-  Volleyball: "volleyball-ball",
-  Running: "running",
-  Tennis: "tennis-ball",
-  Swimming: "swimmer",
-  Hiking: "hiking",
-  Snowboarding: "snowboarding",
-};
-
-const sportIconMapping_FontAwesome = {
-  Soccer: "soccer-ball-o",
-};
-
-const sportIconMapping_MaterialIcons = {
-  Kitesurfing: "kitesurfing",
-  Surfing: "surfing",
-};
+import {
+  sportIconMapping_MaterialCommunityIcons,
+  sportIconMapping_FontAwesome,
+  sportIconMapping_FontAwesome5,
+} from "../back/DataBase";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -54,9 +36,11 @@ const GroupCard = ({ group }) => {
     if (iconNameFA) {
       return <FontAwesome name={iconNameFA} size={30} color="black" />;
     }
-    const iconNameMI = sportIconMapping_MaterialIcons[sportType];
-    if (iconNameMI) {
-      return <MaterialIcons name={iconNameMI} size={30} color="black" />;
+    const iconNameMCI = sportIconMapping_MaterialCommunityIcons[sportType];
+    if (iconNameMCI) {
+      return (
+        <MaterialCommunityIcons name={iconNameMCI} size={30} color="black" />
+      );
     }
 
     return null; // Return null if no icon is found

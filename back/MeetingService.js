@@ -29,7 +29,6 @@ export const MeetingService = {
 
       if (snapshot.exists) {
         const meetingData = snapshot.data();
-        console.log("Meeting Data: ", meetingData);
         return {
           groupName: meetingData.GroupName, // Ensure the property names match your database fields
           location: meetingData.Location,
