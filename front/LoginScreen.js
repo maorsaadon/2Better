@@ -10,6 +10,7 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
+//import styles from "../components/StylesSheets";
 import { auth } from "../back/firebase";
 
 //########################################
@@ -90,7 +91,6 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
     borderWidth: 2,
-    borderColor: "#0782F9",
+    borderColor: "#366A68",
   },
   buttonContainer: {
     width: "60%",
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#366A68",
     width: "100%", // This will make the button fill the container
     padding: 15,
     borderRadius: 10,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#366A68",
     borderWidth: 2,
     width: "100%", // This ensures the outlined button also fills the container
   },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "#366A68",
     fontWeight: "700",
     fontSize: 16,
   },

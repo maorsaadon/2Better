@@ -11,6 +11,7 @@ import { auth } from "../back/firebase";
 import myLogoPic from "../assets/2better-logo.jpg";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
+//import {stylesHome} from "../components/StylesSheets";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -85,33 +86,33 @@ const HomeScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={handleMyProfile} style={styles.button}>
-          <Text style={styles.buttonText}>My Profile</Text>
+    <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
+      <View style={stylesHome.container}>
+        <TouchableOpacity onPress={handleMyProfile} style={stylesHome.button}>
+          <Text style={stylesHome.buttonText}>My Profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleMyGroups} style={styles.button}>
-          <Text style={styles.buttonText}>My Groups</Text>
+        <TouchableOpacity onPress={handleMyGroups} style={stylesHome.button}>
+          <Text style={stylesHome.buttonText}>My Groups</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleFindNewGroup} style={styles.button}>
-          <Text style={styles.buttonText}>Find a New Group</Text>
+        <TouchableOpacity onPress={handleFindNewGroup} style={stylesHome.button}>
+          <Text style={stylesHome.buttonText}>Find a New Group</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleNotifications} style={styles.button}>
-          <Text style={styles.buttonText}>Notifications</Text>
+        <TouchableOpacity onPress={handleNotifications} style={stylesHome.button}>
+          <Text style={stylesHome.buttonText}>Notifications</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleUpcomingMeetings}
-          style={styles.button}
+          style={stylesHome.button}
         >
-          <Text style={styles.buttonText}>Upcoming Meetings</Text>
+          <Text style={stylesHome.buttonText}>Upcoming Meetings</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-          <Text style={styles.buttonText}>Log out</Text>
+        <TouchableOpacity onPress={handleSignOut} style={stylesHome.button}>
+          <Text style={stylesHome.buttonText}>Log out</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -120,7 +121,7 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
+const stylesHome = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
