@@ -83,6 +83,62 @@ export const MeetingService = {
       // Handle the error accordingly
     }
   },
+
+
+  // Aviya Added functions:
+  async fetchMeetingsByUserRole() {
+    let memberGroupNames = [];
+    let leaderGroupNames = [];
+    let memberMeetings = [];
+    let leaderMeetings = [];
+    const userEmail = auth.currentUser.email;
+
+
+    try {
+      // Fetch all groups to determine user's role
+      const groupsSnapshot = await db.collection('Groups').get();
+      
+      groupsSnapshot.forEach(doc => {
+        const group = doc.data();
+        if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
+          // User is a member but not the leader
+          memberGroupNames.push(group.GroupName);
+        } else if (group.LeaderEmail === userEmail) {
+          // User is the leader
+          leaderGroupNames.push(group.GroupName);
+        }
+      });
+
+      // Fetch meetings for groups where user is a member
+      for (const groupName of memberGroupNames) {
+        const meetingsSnapshot = await db.collection('Meetings')
+                                         .where('GroupName', '==', groupName)
+                                         .get();
+        meetingsSnapshot.forEach(doc => {
+          const meetingData = doc.data();
+          memberMeetings.push({ ...meetingData, id: doc.id });
+        });
+      }
+
+      // Fetch meetings for groups where user is the leader
+      for (const groupName of leaderGroupNames) {
+        const meetingsSnapshot = await db.collection('Meetings')
+                                         .where('GroupName', '==', groupName)
+                                         .get();
+        meetingsSnapshot.forEach(doc => {
+          const meetingData = doc.data();
+          leaderMeetings.push({ ...meetingData, id: doc.id });
+        });
+      }
+
+    } catch (error) {
+      console.error("Error fetching meetings by user role: ", error);
+    }
+
+    return { memberMeetings, leaderMeetings };
+  },
+
+
 };
 
 export default MeetingService;

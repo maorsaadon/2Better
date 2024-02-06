@@ -13,15 +13,27 @@ const UpcomingMeetingsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
 
+  const [memberMeetings, setMemberMeetings] = useState([]);
+  const [leaderMeetings, setLeaderMeetings] = useState([]);
+
+    // useEffect(() => {
+    //     const getMeetings = async () => {
+    //     const meetingsData = await MeetingService.fetchMeetingsData();
+    //     setMeetings(meetingsData); // Update the state with the fetched data
+    //     };
+    
+    //     getMeetings();
+    // }, []);
+    
     useEffect(() => {
-        const getMeetings = async () => {
-        const meetingsData = await MeetingService.fetchMeetingsData();
-        setMeetings(meetingsData); // Update the state with the fetched data
-        };
-    
-        getMeetings();
+      const fetchMeetings = async () => {
+        const { memberMeetings, leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
+        setMemberMeetings(memberMeetings);
+        setLeaderMeetings(leaderMeetings);
+      };
+  
+      fetchMeetings();
     }, []);
-    
 
   const backButton = () => {
     try {
@@ -51,14 +63,35 @@ const UpcomingMeetingsScreen = () => {
       <ScrollView style={styles.scrollView}>
         <View style={styles.wrapper}>
           <DataTable>
-            {/* <DataTable.Header style={styles.header}>
+
+            {leaderMeetings.map((meeting) => (
+              <DataTable.Row key={meeting.id} style={styles.row}>
+                <DataTable.Cell style={styles.cell}>{meeting.GroupName}</DataTable.Cell>
+                <DataTable.Cell style={styles.cell}>{meeting.Date}</DataTable.Cell>
+                <DataTable.Cell numeric style={styles.cell}>{meeting.Location}</DataTable.Cell>
+                <TouchableOpacity onPress={() => handlePress(meeting)} style={styles.rowButton}>
+                  <Text style={styles.buttonText}>Show</Text>
+                </TouchableOpacity>
+              </DataTable.Row>
+            ))}
+          </DataTable>
+        </View>
+      </ScrollView>
+
+      <View style={styles.wrapper}>
+            <DataTable.Header style={styles.header}>
               <DataTable.Title style={[styles.title, { flex: 2 }]}>Group Name</DataTable.Title>
               <DataTable.Title style={[styles.title, { flex: 2 }]}>Date&Time</DataTable.Title>
               <DataTable.Title style={[styles.title, { flex: 1 }]}>Location</DataTable.Title>
               <DataTable.Title style={[styles.title, { flex: 1 }]}>Meeting Details</DataTable.Title>
-            </DataTable.Header> */}
+            </DataTable.Header>
+        </View>
 
-            {meetings.map((meeting) => (
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.wrapper}>
+          <DataTable>
+            
+            {memberMeetings.map((meeting) => (
               <DataTable.Row key={meeting.id} style={styles.row}>
                 <DataTable.Cell style={styles.cell}>{meeting.GroupName}</DataTable.Cell>
                 <DataTable.Cell style={styles.cell}>{meeting.Date}</DataTable.Cell>
