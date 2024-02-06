@@ -11,6 +11,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/profileImage.jpeg";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     borderColor: "#0782F9",
     borderWidth: 2,
   },
-  saveButtom: {
+  saveButton: {
     marginTop: 100,
   },
 });

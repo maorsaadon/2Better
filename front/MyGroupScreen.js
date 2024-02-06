@@ -11,6 +11,7 @@ import GroupCard from "../components/GroupCard";
 import { useNavigation } from "@react-navigation/core";
 import myLogoPic from "../assets/2better-logo.jpeg";
 import { GroupService } from "../back/GroupService";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const MyGroupsScreen = () => {
   const navigation = useNavigation();
@@ -53,9 +54,9 @@ const MyGroupsScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+      <MaterialIcons name="chevron-left" size={30} color="white" />
+      </TouchableOpacity>
         <View style={styles.container}>
           <ScrollView>
             <View style={styles.container}>
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   buttonText: {
-    color: "black",
+    color: "white",
     fontWeight: "700",
     fontSize: 16,
   },

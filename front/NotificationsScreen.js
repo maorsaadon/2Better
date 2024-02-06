@@ -6,16 +6,39 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from "react-native";
 import { notificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/2better-logo.jpeg";
-// Screen to display user notifications
+import NotificationCard from "../components/NotificationCard";
+import { MaterialIcons } from "@expo/vector-icons";
+
 const NotificationsScreen = () => {
   //Aviv's Edit:
   /************************************************* */
   const navigation = useNavigation();
+  const [notifications, setNotifications] = useState([]);
+
+  
+  // Fetch user notifications when the component is mounted
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const userNotifications = await notificationService.getUserNotifications();
+        if (userNotifications && userNotifications.length > 0) {
+          setNotifications(userNotifications);
+        } else {
+          console.log("No Notifications found for the given criteria.");
+        }
+      } catch (error) {
+        console.error("Error fetching Notifications:", error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
 
   const backButton = () => {
     try {
@@ -24,44 +47,33 @@ const NotificationsScreen = () => {
       alert(error.message);
     }
   };
-
-  // Fetch user notifications when the component is mounted
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      const userNotifications = await notificationService.getUserNotifications(
-        userId
-      );
-      setNotifications(userNotifications);
-    };
-
-    fetchNotifications();
-  }, []);
-
   // Render each notification as a list item
-  const renderNotificationItem = ({ item }) => (
-    <View style={styles.notificationItem}>
-      <Text style={styles.notificationText}>{item.message}</Text>
-    </View>
-  );
-
-  pickImageHandler = async() => {
-
-  };
+  // const renderNotificationItem = ({ item }) => (
+  //   <View style={styles.notificationItem}>
+  //     <Text style={styles.notificationText}>{item.message}</Text>
+  //   </View>
+  // );
+  
+  // pickImageHandler = async() => {
+    
+  // };
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={backButton} style={styles.button}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={backButton} style={styles.button}>
+        <MaterialIcons name="chevron-left" size={30} color="white" />
+      </TouchableOpacity>
+        <View style={styles.container}>
+          <ScrollView>
+            <View style={styles.container}>
+              {notifications.map((notification, index) => (
+                <NotificationCard key={index} notification={notification} />
+              ))}
+            </View>
+          </ScrollView>
+        </View>
       </View>
-      {/* <View style={styles.container}>
-        <FlatList
-          data={notifications}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderNotificationItem}
-        />
-      </View> */}
     </ImageBackground>
   );
 };

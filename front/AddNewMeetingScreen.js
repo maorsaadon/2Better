@@ -11,11 +11,16 @@ import {
 } from "react-native";
 import myLogoPic from "../assets/2better-logo.jpeg";
 import MeetingService from "../back/MeetingService";
+import NotificationService from "../back/NotificationsService";
+import { auth, db } from "../back/firebase";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const AddNewMeetingScreen = ({ route }) => {
   const { groupName } = route.params;
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const userEmail = auth.currentUser.email;
+  const content = "" + groupName + " - " + date + ", "  + location;
 
   const navigation = useNavigation();
 
@@ -30,6 +35,7 @@ const AddNewMeetingScreen = ({ route }) => {
   const AddButton = () => {
     try {
       MeetingService.handleAddNewMeeting(groupName, location, date);
+      NotificationService.handleAddNewNotification(userEmail, content, "New Meeting")
       navigation.replace("MyGroups");
     } catch (error) {
       alert(error.message);
@@ -41,9 +47,9 @@ const AddNewMeetingScreen = ({ route }) => {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
           {/* Back Button */}
-          <TouchableOpacity onPress={backButton} style={styles.backButton}>
-            <Text style={styles.backButtonText}>Back</Text>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={backButton} style={styles.button}>
+        <MaterialIcons name="chevron-left" size={30} color="white" />
+        </TouchableOpacity>
 
           <TextInput
             placeholder="January 30, 2024 at 12:59:23 PM "

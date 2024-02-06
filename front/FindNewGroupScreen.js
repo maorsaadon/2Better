@@ -14,6 +14,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import myLogoPic from "../assets/2better-logo.jpeg";
 import { sportType_data, city_data } from "../back/DataBase";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const FindNewGroupScreen = ({ navigation }) => {
   const [selectedCity, setSelectedCity] = useState(null);
@@ -57,7 +58,7 @@ const FindNewGroupScreen = ({ navigation }) => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
-        <Text style={styles.backButtonText}>Back</Text>
+      <MaterialIcons name="chevron-left" size={30} color="white" />
       </TouchableOpacity>
       <TouchableWithoutFeedback
         onPress={() => {
@@ -149,17 +150,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   backButton: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#2C64C6",
     width: "15%",
     padding: 5, // Adjusted padding to make the button shorter
     borderRadius: 10,
     marginTop: 5,
     marginLeft: 5,
-  },
-  backButtonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
   },
   container_text: {
     flex: 1,

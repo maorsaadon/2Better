@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import myLogoPic from "../assets/2better-logo.jpeg";
 import GroupService from "../back/GroupService";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const EditGroupScreen = ({ route }) => {
   const { groupName } = route.params;
@@ -69,9 +70,9 @@ const EditGroupScreen = ({ route }) => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={backButton} style={styles.button}>
+      <MaterialIcons name="chevron-left" size={30} color="white" />
+      </TouchableOpacity>
 
         <Text style={styles.label}>Group Name:</Text>
         <Text style={styles.input}>{groupName}</Text>

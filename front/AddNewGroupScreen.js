@@ -16,6 +16,7 @@ import myLogoPic from "../assets/2better-logo.jpeg";
 import DropDownPicker from "react-native-dropdown-picker";
 import GroupService from "../back/GroupService";
 import { sportType_data, city_data, cityNames } from "../back/DataBase";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const AddNewGroupScreen = () => {
   const navigation = useNavigation();
@@ -63,9 +64,9 @@ const AddNewGroupScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.safeArea}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={backButton} style={styles.button}>
+      <MaterialIcons name="chevron-left" size={30} color="white" />
+      </TouchableOpacity>
         <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCities(false);
