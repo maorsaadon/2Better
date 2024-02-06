@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import GroupCard from "../components/ResultGroupCard";
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/2better-logo.jpeg";
 import GroupService from "../back/GroupService";
 
 const ResultGroupScreen = ({ route, navigation }) => {

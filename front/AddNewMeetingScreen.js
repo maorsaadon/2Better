@@ -9,7 +9,7 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/2better-logo.jpeg";
 import MeetingService from "../back/MeetingService";
 
 const AddNewMeetingScreen = ({ route }) => {

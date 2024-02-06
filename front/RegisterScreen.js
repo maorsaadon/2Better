@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { auth, db } from "../back/firebase";
-import myLogoPic from "../assets/2better-logo.jpg";
+import myLogoPic from "../assets/2better-logo.jpeg";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
