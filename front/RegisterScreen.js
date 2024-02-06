@@ -24,13 +24,16 @@ const RegisterScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        try {auth
-          .signOut();
-          navigation.navigate("Login");}
-          catch(error) {alert(error.message);
+        try {
+          auth
+            .signOut();
+          navigation.navigate("Login");
+        }
+        catch (error) {
+          alert(error.message);
+        }
       }
-    }
-  });
+    });
 
     return unsubscribe;
   }, []);
@@ -55,12 +58,14 @@ const RegisterScreen = () => {
       })
       .catch((error) => alert(error.message));
   };
-
+  const handleSignIn = () => {
+    navigation.navigate("Login");
+  };
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
-        <TextInput
+          <TextInput
             placeholder="FirstName"
             value={firstName}
             onChangeText={(text) => setFirstName(text)}
@@ -102,6 +107,12 @@ const RegisterScreen = () => {
             <Text style={styles.buttonOutlineText}>Register</Text>
           </TouchableOpacity>
         </View>
+        <View>
+          <TouchableOpacity onPress={handleSignIn} style={styles.buttonEdit}>
+            <Text style={styles.buttonTextEdit}>Sign in</Text>
+          </TouchableOpacity>
+        </View>
+
       </SafeAreaView>
     </ImageBackground>
   );
@@ -167,5 +178,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // alignItems: 'center',
   },
-  //###############################
+  buttonEdit: {
+    position: 'absolute',
+    top: 50, 
+    left: 30, 
+    width: "30%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  
+  buttonTextEdit: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+  },
 });

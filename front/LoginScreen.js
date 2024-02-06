@@ -41,7 +41,9 @@ const LoginScreen = () => {
       })
       .catch((error) => alert(error.message));
   };
-
+  const handleSignUp = () => {
+    navigation.navigate("Register");
+  };
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
@@ -64,6 +66,11 @@ const LoginScreen = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity onPress={handleSignUp} style={styles.buttonEdit}>
+            <Text style={styles.buttonTextEdit}>Sign up</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -123,12 +130,26 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-  //###############################
+  
   backgroundImage: {
     flex: 1,
     width: "100%",
     height: "140%",
     justifyContent: "center",
   },
-  //###############################
+  buttonEdit: {
+    position: 'absolute',
+    top: 30, 
+    left: 30, 
+    width: "30%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  
+  buttonTextEdit: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+  },
 });
