@@ -15,7 +15,7 @@ import {
 import myLogoPic from "../assets/2better-logo.jpg";
 import DropDownPicker from "react-native-dropdown-picker";
 import GroupService from "../back/GroupService";
-import { sportType_data, city_data } from "../back/DataBase";
+import { sportType_data, city_data, cityNames } from "../back/DataBase";
 
 const AddNewGroupScreen = () => {
   const navigation = useNavigation();
@@ -111,7 +111,7 @@ const AddNewGroupScreen = () => {
 
           <DropDownPicker
             listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
-            items={city_data}
+            items={cityNames}
             open={isOpenCities}
             setOpen={() => setIsOpenCities(!isOpenCities)}
             value={selectedCity}
