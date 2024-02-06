@@ -10,6 +10,7 @@ import {
   ImageBackground,
   SafeAreaView,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 import myLogoPic from "../assets/2better-logo.jpg";
 import DropDownPicker from "react-native-dropdown-picker";

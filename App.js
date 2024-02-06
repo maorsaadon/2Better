@@ -7,6 +7,7 @@ import LoginScreen from "./front/LoginScreen";
 import HomeScreen from "./front/HomeScreen";
 import RegisterScreen from "./front/RegisterScreen";
 import ProfileScreen from "./front/ProfileScreen";
+import EditProfileScreen from "./front/EditProfileScreen";
 import MyGroupScreen from "./front/MyGroupScreen";
 import FindNewGroupScreen from "./front/FindNewGroupScreen";
 import NotificationsScreen from "./front/NotificationsScreen";
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="MyGroups" component={MyGroupScreen} />
         <Stack.Screen name="FindNewGroups" component={FindNewGroupScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />

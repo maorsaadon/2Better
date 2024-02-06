@@ -9,8 +9,6 @@ import {
   View,
   ImageBackground,
   Image,
-  Pressable,
-  SafeAreaView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import myLogoPic from "../assets/profileImage.jpeg";
@@ -21,8 +19,6 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 const ProfileScreen = () => {
-  const navigation = useNavigation();
-  
   const [isEditing, setIsEditing] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -58,6 +54,10 @@ const ProfileScreen = () => {
     fetchUserDetails();
   }, []);
 
+  const handleEdit = () => {
+    navigation.navigate("EditProfile");
+  };
+
   const handleDelete = async () => {
     try {
       // Call the deleteUserAccount function or any other method you have for account deletion
@@ -73,15 +73,8 @@ const ProfileScreen = () => {
     }
   };
 
-  const handleSave = async () => {
-    try {
-      // Call the updateUserDetails function from UserService to update user data
-      await UserService.updateUserDetails(firstName, lastName, city, []);
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating user details:", error);
-  }
-  };
+  const navigation = useNavigation();
+
 
   const backButton = () => {
     try {
@@ -92,13 +85,8 @@ const ProfileScreen = () => {
   };
 
   return (
-    
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <TouchableOpacity onPress={backButton} style={styles.button}>
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <Text style={styles.buttonText}>Back</Text>
       </TouchableOpacity>
       <View style={styles.container}>
@@ -169,91 +157,33 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-  },
-  label: {
-    backgroundColor: "white",
-    overflow: "hidden",
-    width: "37%",
-    borderRadius: 20,
     alignItems: "center",
-    fontSize: 20,
-    marginTop: 8,
-    borderWidth: 1,
-    padding: 10,
-    color: "black",
-    borderColor: "#3B82F6",
+    justifyContent: "center",
+    marginTop: 0,
+    marginLeft: 20,
   },
-  input: {
-    backgroundColor: "#3B82F6",
-    overflow: "hidden",
-    width: "60%",
-    borderRadius: 20,
-    alignItems: "center",
-    fontSize: 20,
-    marginTop: 20,
-    borderWidth: 1,
-    padding: 8,
-    color: "white",
-    borderColor: "white",
-  },
-  saveButton: {
-    backgroundColor: "#3B82F6",
-    width: "40%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  backButton: {
-    backgroundColor: "#3B82F6",
+  button: {
+    backgroundColor: "#000066",
     width: "20%",
     padding: 15,
-    borderRadius: 50,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 6,
+    position: "absolute", // Use absolute positioning
+    top: 0, // Align to the bottom
+    left: 0, // Align to the left
+    marginBottom: 10, // Optional margin to add some space from the bottom
+    marginLeft: 10, // Optional margin to add some space from the left
   },
-  buttonText: {
-    alignSelf: "center",
-    color: "white",
-  },
-  deleteButton: {
-    backgroundColor: "red",
+  buttonDelete: {
+    backgroundColor: "#990000",
     width: "40%",
     padding: 15,
-    borderRadius: 50,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 10,
-  },
-  deleteButtonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: 30,
-  },
-  editButton: {
-    backgroundColor: "green",
-    width: "40%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
+    marginTop: 50,
   },
   buttonText: {
-    alignSelf: "center",
     color: "white",
-  },
-  editButtonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonTextEdit: {
-    color: "#000066",
     fontWeight: "700",
     fontSize: 16,
   },
@@ -284,10 +214,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 10,
   },
-  value: {
-    backgroundColor: "white",
-    paddingHorizontal: 25,
-    paddingVertical: 10,
+  valueName: {
+    fontWeight: "bold",
+    fontSize: 16,
+    flexDirection: "row",
+    fontSize: 28,
+    marginLeft: 4,
+  },
+  valueNew: {
+    fontSize: 16,
+    flexDirection: "row",
+    fontSize: 22,
+    marginLeft: 4,
+  },
+  buttonEdit: {
+    width: "30%",
+    padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 50,
