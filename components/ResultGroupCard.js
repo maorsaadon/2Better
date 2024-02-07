@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingTop: 30,
     gap: 15,
+    flex: 1,
   },
   card: {
     width: screenWidth - 32,

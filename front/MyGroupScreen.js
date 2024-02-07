@@ -54,18 +54,18 @@ const MyGroupsScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
-      <MaterialIcons name="chevron-left" size={30} color="white" />
-      </TouchableOpacity>
-        <View style={styles.container}>
-          <ScrollView>
+        <View style={styles.back_container}>
+          <TouchableOpacity onPress={backButton} style={styles.backButton}>
+            <MaterialIcons name="chevron-left" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+          <ScrollView style={{paddingTop: 30}}>
             <View style={styles.container}>
               {groups.map((group, index) => (
                 <GroupCard key={index} group={group} />
               ))}
             </View>
           </ScrollView>
-        </View>
         <TouchableOpacity onPress={handleAddNewGroup} style={styles.addButton}>
           <Text style={styles.buttonText}>Add New Group</Text>
         </TouchableOpacity>
@@ -75,10 +75,17 @@ const MyGroupsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  back_container: {
     flex: 1,
     justifyContent: "flex-start", // Align items at the top
     paddingTop: 30, // Add padding to give some space at the top
+    flexDirection: "column",
+    gap: 35,
+    paddingTop: 300,
+  },
+  container: {
+    justifyContent: "flex-start", // Align items at the top
+    paddingVertical: 30, // Add padding to give some space at the top
     flexDirection: "column",
     gap: 35,
   },
@@ -149,11 +156,14 @@ const styles = StyleSheet.create({
   },
   backButton: {
     backgroundColor: "#0782F9",
-    width: "15%",
+    width: 50,
+    height: 50,
     padding: 10, // Adjusted padding to make the button shorter
     borderRadius: 10,
     marginTop: 5,
     marginLeft: 5,
+    borderRadius: 50,
+    opacity: 0.7
   },
   addButton: {
     backgroundColor: "#0782F9",
