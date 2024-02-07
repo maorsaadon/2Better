@@ -158,6 +158,7 @@ export const MeetingService = {
           id: doc.id,
           GroupName: data.GroupName,
           Date: data.Date,
+          Time: data.Time,
           Location: data.Location,
         };
       });
@@ -178,6 +179,7 @@ export const MeetingService = {
           groupName: meetingData.GroupName, // Ensure the property names match your database fields
           location: meetingData.Location,
           date: meetingData.Date,
+          time: meetingData.Time,
         };
       } else {
         console.log("Meeting not found.");
@@ -189,13 +191,14 @@ export const MeetingService = {
   },
 
   // Update user details
-  async updateGroupDetails(groupName, date, location) {
+  async updateGroupDetails(groupName, date, time, location) {
     try {
       const groupRef = db.collection("Groups").doc(groupName);
 
       // Update the user document
       await groupRef.update({
         Date: date,
+        Time: time,
         Location: location,
       });
 
@@ -205,12 +208,13 @@ export const MeetingService = {
     }
   },
 
-  async handleAddNewMeeting(groupName, location, date) {
+  async handleAddNewMeeting(groupName, location, date, time) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
     MeetingRef.set({
       GroupName: groupName,
       Location: location,
       Date: date,
+      Time: time,
     }).catch((error) => {
       console.error("Error creating Meeting: ", error);
       alert(error.message);
@@ -247,32 +251,32 @@ export const MeetingService = {
         const group = doc.data();
         if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
           // User is a member but not the leader
-          memberGroupNames.push({groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity });
+          memberGroupNames.push(group.GroupName);
         } else if (group.LeaderEmail === userEmail) {
           // User is the leader
-          leaderGroupNames.push({groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity });
+          leaderGroupNames.push(group.GroupName);
         }
       });
 
       // Fetch meetings for groups where user is a member
-      for (const group of memberGroupNames) {
+      for (const groupName of memberGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
-                                         .where('GroupName', '==', group.groupName)
+                                         .where('GroupName', '==', groupName)
                                          .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
-          memberMeetings.push({ ...meetingData, id: doc.id, SportType: group.sportType, TotalCapacity: group.totalCapacity });
+          memberMeetings.push({ ...meetingData, id: doc.id });
         });
       }
 
       // Fetch meetings for groups where user is the leader
-      for (const group of leaderGroupNames) {
+      for (const groupName of leaderGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
-                                         .where('GroupName', '==', group.groupName)
+                                         .where('GroupName', '==', groupName)
                                          .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
-          leaderMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, id: doc.id  });
+          leaderMeetings.push({ ...meetingData, id: doc.id });
         });
       }
 

@@ -15,13 +15,20 @@ import NotificationService from "../back/NotificationsService";
 import { auth, db } from "../back/firebase";
 import { MaterialIcons } from "@expo/vector-icons";
 import { serverTimestamp } from "firebase/firestore";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const AddNewMeetingScreen = ({ route }) => {
   const { groupName } = route.params;
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(""); // var to firestore
+  const [time, setTime] = useState(""); // var to firestore
   const [location, setLocation] = useState("");
   const userEmail = auth.currentUser.email;
   const content = "" + groupName + " - " + date + ", "  + location;
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('Select Date');
+  const [selectedTime, setSelectedTime] = useState('Select Time');
 
   const navigation = useNavigation();
 
@@ -35,7 +42,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
   const AddButton = () => {
     try {
-      MeetingService.handleAddNewMeeting(groupName, location, date);
+      MeetingService.handleAddNewMeeting(groupName, location, date, time);
       NotificationService.handleAddNewNotification(userEmail, content, "New Meeting", serverTimestamp())
       navigation.replace("MyGroups");
     } catch (error) {
@@ -43,21 +50,81 @@ const AddNewMeetingScreen = ({ route }) => {
     }
   };
 
+  {/* open and close calander modal */}
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  {/* Change date selected */}
+  const handleDateConfirm = (date) => {
+    const dt= new Date(date);
+    const dateAlone = dt.toISOString().split('T');
+    const splitDate= dateAlone[0].split('-');
+    const correctFormatDate = splitDate[2] + "/" + splitDate[1] + "/" + splitDate[0];
+    setSelectedDate(correctFormatDate);
+    setDate(correctFormatDate); // This var to update in firestore
+    hideDatePicker();
+  };
+
+  {/* open and close clock time modal */}
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  {/* Change time selected */}
+  const handleTimeConfirm = (date) => {
+    const dt= new Date(date);
+    const timeAlone = dt.toLocaleTimeString();
+    const splitTime = timeAlone.split(':');
+    const correctFormatTime = splitTime[0] + ':' + splitTime[1];
+    setSelectedTime(correctFormatTime);
+    setTime(correctFormatTime);  // This var to update in firestore
+    hideTimePicker();
+  };
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
+
           {/* Back Button */}
           <TouchableOpacity onPress={backButton} style={styles.backButton}>
-        <MaterialIcons name="chevron-left" size={30} color="white" />
-        </TouchableOpacity>
+            <MaterialIcons name="chevron-left" size={30} color="white" />
+          </TouchableOpacity>
+          
+  
+          {/* Date buttom */}
+          <TouchableOpacity onPress={() => { showDatePicker()}} style={[styles.button, styles.buttonOutline, styles.dateButtom]}>
+            <Text>{selectedDate}</Text>
+          </TouchableOpacity>
 
-          <TextInput
-            placeholder="January 30, 2024 at 12:59:23 PM "
-            value={date}
-            onChangeText={(text) => setDate(text)}
-            style={styles.input}
+          {/* Time buttom */}
+          <TouchableOpacity onPress={() => { showTimePicker()}} style={[styles.button, styles.buttonOutline, styles.timeButtom]}>
+            <Text>{selectedTime}</Text>
+          </TouchableOpacity>
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleDateConfirm}
+            onCancel={hideDatePicker}
           />
+
+          <DateTimePickerModal
+            isVisible={isTimePickerVisible}
+            mode="time"
+            onConfirm={handleTimeConfirm}
+            onCancel={hideTimePicker}
+          />
+
           <TextInput
             placeholder="Location"
             value={location}
@@ -150,4 +217,29 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   //###############################
+  dateButtom: {
+    backgroundColor: "white",
+    width: '80%',
+    height: 50,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  timeButtom: {
+    backgroundColor: "white",
+    width: '80%',
+    height: 50,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+    marginBottom: 50,
+  }
+
+
 });
