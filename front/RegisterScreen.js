@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   buttonEdit: {
     position: 'absolute',
-    top: 50, 
+    top: 55, 
     left: 30, 
     width: "30%",
     padding: 15,
