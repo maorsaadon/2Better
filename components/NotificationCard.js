@@ -23,6 +23,7 @@ const NotificationCard = ({ notification }) => {
     const addressee = notification?.Addressee ?? "Default Addressee"
     const content = notification?.Content ?? "Default Content"
     const type = notification?.Type ?? "Default Type"
+    const request = type == "Group joining request" ? true : false;
 
 
     return (
@@ -34,6 +35,22 @@ const NotificationCard = ({ notification }) => {
             <View style={styles.cardMiddleRow}>
                 <Text>{content}</Text>
             </View>
+            {request && (
+            <View style={styles.cardBottomRow}>
+          <TouchableOpacity
+            onPress={() => handleAcceptButton(groupName)}
+            style={styles.acceptButton}
+          >
+            <Text style={styles.buttonText}>Accept</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleRejectButton(groupName)}
+            style={styles.rejectButton}
+          >
+            <Text style={styles.buttonText}>Reject</Text>
+          </TouchableOpacity>
+          </View>
+            )}
           </View>
         </SafeAreaView>
       );
@@ -42,19 +59,6 @@ const NotificationCard = ({ notification }) => {
     export default NotificationCard;
 
     const styles = StyleSheet.create({
-        // cardBottomRow: {
-        //   flexDirection: "row",
-        //   alignItems: "center",
-        //   justifyContent: "space-around",
-        //   gap: 10,
-        // },
-        // container: {
-        //   backgroundColor: "#5B8BDF",
-        //   alignItems: "center",
-        //   paddingBottom: 40,
-        //   paddingTop: 30,
-        //   gap: 15,
-        // },
         card: {
           width: screenWidth - 32,
           marginTop: 10,
@@ -85,63 +89,31 @@ const NotificationCard = ({ notification }) => {
           gap: 5,
           alignItems: "center",
         },
-        // iconAndTextContainer: {
-        //   flexDirection: "row",
-        //   alignItems: "center",
-        //   gap: 3,
-        //   marginLeft: 0,
-        // },
-        // sportIcon: {
-        //   width: 30, // Adjust size as needed
-        //   height: 30, // Adjust size as needed
-        //   resizeMode: "contain",
-        //   marginRight: 10, // Add some space between the icon and the text
-        // },
+        cardBottomRow: {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around",
+          gap: 10,
+        },
         title: {
           fontWeight: "bold",
           fontSize: 18,
           alignSelf: "flex-start",
           marginLeft: 0,
         },
-        // subTitle: {
-        //   opacity: 0.6,
-        //   alignSelf: "flex-start",
-        //   marginLeft: 0,
-        //   fontSize: 16,
-        //   color: "gray",
-        // },
-        // button: {
-        //   backgroundColor: "#3B82F6",
-        //   width: 120,
-        //   paddingVertical: 10,
-        //   borderRadius: 10,
-        // },
-        // buttonText: {
-        //   alignSelf: "center",
-        //   color: "white",
-        // },
-        // addMeetingButton: {
-        //   backgroundColor: "#0782F9",
-        //   padding: 10, // Adjusted padding to make the button shorter
-        //   borderRadius: 10,
-        //   marginTop: 0,
-        //   marginLeft: 0,
-        // },
-        // deleteButton: {
-        //   backgroundColor: "red",
-        //   padding: 10, // Adjusted padding to make the button shorter
-        //   borderRadius: 10,
-        //   marginTop: 0,
-        //   width: 80,
-        //   marginLeft: 0,
-        // },
-        // editButton: {
-        //   backgroundColor: "green",
-        //   padding: 10, // Adjusted padding to make the button shorter
-        //   borderRadius: 10,
-        //   marginTop: 0,
-        //   width: 80,
-        //   marginLeft: 0,
-        // },
+        acceptButton: {
+          backgroundColor: "green",
+          padding: 10, // Adjusted padding to make the button shorter
+          borderRadius: 10,
+          marginTop: 0,
+          marginLeft: 0,
+        },
+        rejectButton: {
+          backgroundColor: "red",
+          padding: 10, // Adjusted padding to make the button shorter
+          borderRadius: 10,
+          marginTop: 0,
+          marginLeft: 0,
+        },
       });
       

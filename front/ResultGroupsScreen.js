@@ -8,7 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import GroupCard from "../components/ResultGroupCard";
+import ResultGroupCard from "../components/ResultGroupCard";
 import myLogoPic from "../assets/2better-logo.jpeg";
 import GroupService from "../back/GroupService";
 
@@ -65,7 +65,7 @@ const ResultGroupScreen = ({ route, navigation }) => {
           <View style={styles.container}>
             {/* Map over the groups array to render AppointmentCards */}
             {groups.map((group, index) => (
-              <GroupCard key={index} group={group} />
+              <ResultGroupCard key={index} group={group} />
             ))}
           </View>
         </ScrollView>

@@ -112,7 +112,7 @@ const AddNewGroupScreen = () => {
 
           <DropDownPicker
             listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
-            items={cityNames}
+            items={city_data}
             open={isOpenCities}
             setOpen={() => setIsOpenCities(!isOpenCities)}
             value={selectedCity}
