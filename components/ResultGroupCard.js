@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import {
   AntDesign,
@@ -19,13 +20,39 @@ import {
   sportIconMapping_FontAwesome,
   sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
+import { useNavigation } from "@react-navigation/core";
+import NotificationService from "../back/NotificationsService";
+import { auth } from "../back/firebase";
+import React, { useEffect, useState } from "react";
+import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { serverTimestamp } from "firebase/firestore";
 
 const screenWidth = Dimensions.get("window").width;
 
 const GroupCard = ({ group }) => {
+
+  const navigation = useNavigation();
   const groupName = group?.GroupName ?? "Default Name";
   const currentParticipants = parseInt(group.Members, 10);
   const totalCapacity = parseInt(group.TotalCapacity, 10);
+  // const userEmail = auth.currentUser.email;
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
+
+  // useEffect(() => {
+  //   const fetchUserDetails = async () => {
+  //     try {
+  //       setFirstName(userFirstName);
+  //       setLastName(userLastName);
+  //     } catch (error) {
+  //       console.error("Error fetching user details:", error);
+  //     }
+  //   };
+
+  //   fetchUserDetails();
+  // }, []);
 
   const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -44,6 +71,10 @@ const GroupCard = ({ group }) => {
     }
 
     return null; // Return null if no icon is found
+  };
+
+  const handleJoinPress = () =>{
+    NotificationService.handleAddNewNotification(group.LeaderEmail, content, "Group joining request", serverTimestamp())
   };
 
   return (
@@ -77,9 +108,12 @@ const GroupCard = ({ group }) => {
           <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-          <Pressable style={styles.button}>
+          <TouchableOpacity 
+          style={styles.button}
+          onPress={handleJoinPress}
+          >
             <Text style={styles.buttonText}>Join</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

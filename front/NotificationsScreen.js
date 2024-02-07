@@ -15,6 +15,7 @@ import { auth } from "../back/firebase";
 import myLogoPic from "../assets/2better-logo.jpeg";
 import NotificationCard from "../components/NotificationCard";
 import { MaterialIcons } from "@expo/vector-icons";
+import {notificationCount} from "../back/DataBase";
 
 const NotificationsScreen = () => {
   //Aviv's Edit:
@@ -22,30 +23,30 @@ const NotificationsScreen = () => {
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
 
-  const [showNotification, setShowNotification] = useState(false);
-  const notificationHeight = useRef(new Animated.Value(-100)).current; // Start off-screen
+  // const [showNotification, setShowNotification] = useState(false);
+  // const notificationHeight = useRef(new Animated.Value(-100)).current; // Start off-screen
 
-  const triggerNotification = () => {
-    // Show the notification
-    setShowNotification(true);
-    // Start the animation
-    Animated.timing(notificationHeight, {
-      toValue: 0, // Slide down to just within the top of the screen
-      duration: 500, // Duration of the animation in milliseconds
-      useNativeDriver: true,
-    }).start(() => {
-      // After a delay, slide the notification back up
-      setTimeout(() => {
-        Animated.timing(notificationHeight, {
-          toValue: -100, // Slide back up off-screen
-          duration: 500, // Duration of the animation in milliseconds
-          useNativeDriver: true,
-        }).start(() => {
-          setShowNotification(false); // Hide the notification
-        });
-      }, 3000); // Time before the notification slides back up
-    });
-  };
+  // const triggerNotification = () => {
+  //   // Show the notification
+  //   setShowNotification(true);
+  //   // Start the animation
+  //   Animated.timing(notificationHeight, {
+  //     toValue: 0, // Slide down to just within the top of the screen
+  //     duration: 500, // Duration of the animation in milliseconds
+  //     useNativeDriver: true,
+  //   }).start(() => {
+  //     // After a delay, slide the notification back up
+  //     setTimeout(() => {
+  //       Animated.timing(notificationHeight, {
+  //         toValue: -100, // Slide back up off-screen
+  //         duration: 500, // Duration of the animation in milliseconds
+  //         useNativeDriver: true,
+  //       }).start(() => {
+  //         setShowNotification(false); // Hide the notification
+  //       });
+  //     }, 3000); // Time before the notification slides back up
+  //   });
+  // };
 
   
   // Fetch user notifications when the component is mounted
@@ -73,16 +74,6 @@ const NotificationsScreen = () => {
       alert(error.message);
     }
   };
-  // Render each notification as a list item
-  // const renderNotificationItem = ({ item }) => (
-  //   <View style={styles.notificationItem}>
-  //     <Text style={styles.notificationText}>{item.message}</Text>
-  //   </View>
-  // );
-  
-  // pickImageHandler = async() => {
-    
-  // };
 
   return (
     // <View style={{ flex: 1 }}>

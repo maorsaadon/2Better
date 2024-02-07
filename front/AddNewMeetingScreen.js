@@ -14,6 +14,7 @@ import MeetingService from "../back/MeetingService";
 import NotificationService from "../back/NotificationsService";
 import { auth, db } from "../back/firebase";
 import { MaterialIcons } from "@expo/vector-icons";
+import { serverTimestamp } from "firebase/firestore";
 
 const AddNewMeetingScreen = ({ route }) => {
   const { groupName } = route.params;
@@ -35,7 +36,7 @@ const AddNewMeetingScreen = ({ route }) => {
   const AddButton = () => {
     try {
       MeetingService.handleAddNewMeeting(groupName, location, date);
-      NotificationService.handleAddNewNotification(userEmail, content, "New Meeting")
+      NotificationService.handleAddNewNotification(userEmail, content, "New Meeting", serverTimestamp())
       navigation.replace("MyGroups");
     } catch (error) {
       alert(error.message);
