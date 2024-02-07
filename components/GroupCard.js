@@ -136,24 +136,24 @@ const styles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#FFFFFF", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: "#FFFFFF", 
+    borderRadius: 15, 
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 1 }, 
+    shadowOpacity: 0.22, 
+    shadowRadius: 2.22,
+    elevation: 3, 
+    borderWidth: 1,
     borderColor: "#E0E0E0",
     gap: 10,
   },
   cardTopRow: {
-    marginTop: 0, // Adjust as needed to move closer to the top
-    marginLeft: 0, // Adjust as needed for left alignment
-    alignSelf: "flex-start", // Align self to the start of the cross axis
+    marginTop: 0, 
+    marginLeft: 0, 
+    alignSelf: "flex-start", 
     flexDirection: "row",
     gap: 15,
     alignItems: "center",

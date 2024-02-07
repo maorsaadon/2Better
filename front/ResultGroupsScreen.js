@@ -112,36 +112,6 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 10,
   },
-  cardTopRow: {
-    flexDirection: "row",
-    gap: 15,
-    alignItems: "center",
-  },
-  cardMiddleRow: {
-    flexDirection: "row",
-    gap: 15,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  iconAndTextContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-  },
-  businessLogo: {
-    height: 50,
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-    width: 50,
-    borderRadius: 15,
-  },
-  title: {
-    fontWeight: "800",
-    alignSelf: "flex-start",
-  },
-  subTitle: {
-    opacity: 0.6,
-    alignSelf: "flex-start",
-  },
   button: {
     backgroundColor: "#3B82F6",
     width: 240,
@@ -151,10 +121,6 @@ export const styles = StyleSheet.create({
   buttonText: {
     alignSelf: "center",
     color: "white",
-  },
-  iconText: {
-    fontWeight: "bold",
-    fontSize: 20, // Adjust the font size as needed
   },
   logo: {
     width: 70, // Adjust the width as needed

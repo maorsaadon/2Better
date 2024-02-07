@@ -59,18 +59,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 200,
   },
-  inputContainer: {
-    width: "60%",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-    borderWidth: 2,
-    borderColor: "#366A68",
-  },
   buttonContainer: {
     width: "60%",
     justifyContent: "center",

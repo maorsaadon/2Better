@@ -171,11 +171,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
   },
-  backButtonText: {
-    color: "white",
-    fontWeight: "700",
-    textAlign: "center", // Ensures text is centered within the button
-  },
   inputContainer: {
     flex: 1,
     width: "80%", // Adjusted to take the full width

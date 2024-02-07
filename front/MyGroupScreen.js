@@ -105,36 +105,6 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 1,
   },
-  cardTopRow: {
-    flexDirection: "row",
-    gap: 15,
-    alignItems: "center",
-  },
-  cardMiddleRow: {
-    flexDirection: "row",
-    gap: 15,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  iconAndTextContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-  },
-  businessLogo: {
-    height: 50,
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-    width: 50,
-    borderRadius: 15,
-  },
-  title: {
-    fontWeight: "800",
-    alignSelf: "flex-start",
-  },
-  subTitle: {
-    opacity: 0.6,
-    alignSelf: "flex-start",
-  },
   button: {
     backgroundColor: "#3B82F6",
     width: 240,
@@ -144,10 +114,6 @@ const styles = StyleSheet.create({
   buttonText: {
     alignSelf: "center",
     color: "white",
-  },
-  iconText: {
-    fontWeight: "bold",
-    fontSize: 20, // Adjust the font size as needed
   },
   logo: {
     width: 70, // Adjust the width as needed
@@ -165,24 +131,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     opacity: 0.7
   },
-  addButton: {
-    backgroundColor: "#0782F9",
-    padding: 15,
-    marginTop: 200,
-    borderRadius: 10,
-    alignSelf: "center",
-    marginVertical: 20,
-  },
   buttonText: {
     color: "white",
     fontWeight: "700",
     fontSize: 16,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
   },
 });
 

@@ -160,40 +160,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
   },
-  deleteButton: {
-    backgroundColor: "red",
-    width: "40%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  deleteButtonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
   buttonsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 30,
   },
-  editButton: {
-    backgroundColor: "green",
-    width: "40%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-  },
   buttonText: {
     alignSelf: "center",
     color: "white",
-  },
-  editButtonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
   },
   backgroundImage: {
     flex: 1,
