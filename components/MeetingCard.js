@@ -20,14 +20,14 @@ sportIconMapping_MaterialCommunityIcons,
 sportIconMapping_FontAwesome,
 sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
-import { auth } from "../back/firebase";
-import React, { useEffect, useState } from "react";
+// import { auth } from "../back/firebase";
+// import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
-import { serverTimestamp } from "firebase/firestore";
+// import { serverTimestamp } from "firebase/firestore";
 
 const screenWidth = Dimensions.get("window").width;
 
-const MeetingCard = ({ meeting }) => {
+const MeetingCard = ({ meeting, isLeader }) => {
 
 const groupName = meeting?.GroupName ?? "Default Name";
 // const currentParticipants = parseInt(meeting.Members, 10);

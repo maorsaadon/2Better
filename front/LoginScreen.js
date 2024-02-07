@@ -12,7 +12,7 @@ import {
 //import styles from "../components/StylesSheets";
 import { auth } from "../back/firebase";
 
-import myLogoPic from "../assets/loginPage.jpeg";
+import myLogoPic from "../assets/loginPage.png";
 
 const LoginScreen = () => {
   var [email, setEmail] = useState("");
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 220,
+    marginTop: 200,
+    left: 10,
   },
   inputContainer: {
     width: "80%",
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 20,
   },
   button: {
     backgroundColor: "#366A68",
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 50,
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 30,
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -132,10 +133,11 @@ const styles = StyleSheet.create({
   },
   
   backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "140%",
+    width: "103%",
+    height: "109%",
     justifyContent: "center",
+    right: 16,
+    
   },
   buttonEdit: {
     position: 'absolute',
