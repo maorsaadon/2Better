@@ -38,6 +38,8 @@ const totalCapacity = parseInt(10);
 const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
 
 const getSportIcon = (sportType) => {
+    console.log("the sport type is -->");
+    console.log(sportType);
     const iconName = sportIconMapping_FontAwesome5[sportType];
     if (iconName) {
     return <FontAwesome5 name={iconName} size={30} color="black" />;
@@ -78,7 +80,7 @@ return (
         </View>
         <View style={styles.iconAndTextContainer}>
             <MaterialCommunityIcons name="calendar-clock" size={22} color="black" />
-            <Text>{/*meeting.Time*/} , {meeting.Date}</Text>
+            <Text> {/*meeting.Time*/} , {meeting.Date}</Text>
         </View>
         </View>
         <View style={styles.participantContainer}>

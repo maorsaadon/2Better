@@ -106,32 +106,32 @@ export const MeetingService = {
         const group = doc.data();
         if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
           // User is a member but not the leader
-          memberGroupNames.push(group.GroupName);
+          memberGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity });
         } else if (group.LeaderEmail === userEmail) {
           // User is the leader
-          leaderGroupNames.push(group.GroupName);
+          leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity });
         }
       });
 
       // Fetch meetings for groups where user is a member
-      for (const groupName of memberGroupNames) {
+      for (const group of memberGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
-                                         .where('GroupName', '==', groupName)
+                                         .where('GroupName', '==', group.groupName)
                                          .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
-          memberMeetings.push({ ...meetingData, id: doc.id });
+          memberMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity,  id: doc.id  });
         });
       }
 
       // Fetch meetings for groups where user is the leader
-      for (const groupName of leaderGroupNames) {
+      for (const group of leaderGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
-                                         .where('GroupName', '==', groupName)
+                                         .where('GroupName', '==', group.groupName)
                                          .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
-          leaderMeetings.push({ ...meetingData, id: doc.id });
+          leaderMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity,  id: doc.id });
         });
       }
 
