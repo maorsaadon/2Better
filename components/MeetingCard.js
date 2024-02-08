@@ -85,6 +85,10 @@ return (
             <AntDesign name="clockcircle" size={20} color="black" />
             <Text>{meeting.Time}</Text>
         </View>
+        <View style={styles.iconAndTextContainer}>
+            <AntDesign name="clockcircle" size={20} color="black" />
+            <Text>is Leader ? {meeting.IsLeader}</Text>
+        </View>
         </View>
         <View style={styles.participantContainer}>
         <Text style={styles.participantText}>{currentParticipants}</Text>
