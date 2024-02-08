@@ -71,7 +71,7 @@ export const GroupService = {
         console.log("No matching groups found.");
         return [];
       }
-      
+
       snapshot.forEach((doc) => {
         const group = doc.data();
         if (group.Members.includes(userEmail)) {
@@ -152,41 +152,84 @@ export const GroupService = {
     }
   },
 
+  // async getGroupsBySort(sportType, city) {
+  //   try {
+  //     const userEmail = auth.currentUser.email;
+  //     let groupsRef = db
+  //       .collection("Groups")
+  //       .where("LeaderEmail", "!=", userEmail);
+
+  //     if (sportType != "All" && city != "All") {
+  //       groupsRef = groupsRef
+  //         .where("SportType", "==", sportType)
+  //         .where("City", "==", city);
+  //     }
+  //     if (sportType != "All" && city == "All") {
+  //       groupsRef = groupsRef.where("SportType", "==", sportType);
+  //     }
+  //     if (sportType == "All" && city != "All") {
+  //       groupsRef = groupsRef.where("City", "==", city);
+  //     }
+
+  //     const snapshot = await groupsRef.get();
+
+  //     if (snapshot.empty) {
+  //       console.log("No matching groups found.");
+  //       return [];
+  //     }
+
+  //     const groups = [];
+
+  //     snapshot.forEach((doc) => {
+  //       const group = doc.data();
+  //       groups.push({
+  //         GroupName: group.GroupName || "Unknown",
+  //         LeaderEmail: group.LeaderEmail || "Unknown",
+  //         TotalCapacity: group.TotalCapacity || 10,
+  //         City: group.City || "Unknown",
+  //         SportType: group.SportType || "Unknown",
+  //         Members: group.Members?.length || 0,
+  //       });
+  //     });
+
+  //     return groups;
+  //   } catch (error) {
+  //     console.error("Error getting groups by sort:", error);
+  //     throw error;
+  //   }
+  // },
+
   async getGroupsBySort(sportType, city) {
     try {
       const userEmail = auth.currentUser.email;
-      let groupsRef = db
-        .collection("Groups")
-        .where("LeaderEmail", "!=", userEmail);
-
-      if (sportType != "All") {
-        groupsRef = groupsRef.where("SportType", "==", sportType);
-      }
-      if (city != "All") {
-        groupsRef = groupsRef.where("City", "==", city);
-      }
-
+      const groupsRef = db.collection("Groups").where("LeaderEmail", "!=", userEmail);
+  
       const snapshot = await groupsRef.get();
-
+  
       if (snapshot.empty) {
         console.log("No matching groups found.");
         return [];
       }
-
+  
       const groups = [];
-
+  
       snapshot.forEach((doc) => {
         const group = doc.data();
-        groups.push({
-          GroupName: group.GroupName || "Unknown",
-          LeaderEmail: group.LeaderEmail || "Unknown",
-          TotalCapacity: group.TotalCapacity || 10,
-          City: group.City || "Unknown",
-          SportType: group.SportType || "Unknown",
-          Members: group.Members?.length || 0,
-        });
+        // Perform filtering in application code
+        const matchesSportType = sportType === "All" || group.SportType === sportType;
+        const matchesCity = city === "All" || group.City === city;
+        if (matchesSportType && matchesCity) {
+          groups.push({
+            GroupName: group.GroupName || "Unknown",
+            LeaderEmail: group.LeaderEmail || "Unknown",
+            TotalCapacity: group.TotalCapacity || 10,
+            City: group.City || "Unknown",
+            SportType: group.SportType || "Unknown",
+            Members: group.Members?.length || 0,
+          });
+        }
       });
-
+  
       return groups;
     } catch (error) {
       console.error("Error getting groups by sort:", error);
