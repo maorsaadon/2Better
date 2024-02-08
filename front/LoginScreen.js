@@ -13,10 +13,12 @@ import {
 import { auth } from "../back/firebase";
 
 import myLogoPic from "../assets/loginPage.png";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const LoginScreen = () => {
   var [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigation = useNavigation();
 
@@ -48,19 +50,48 @@ const LoginScreen = () => {
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
-          />
+          {/* Email line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="email"
+              color="#420475"
+              size={30}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              style={styles.input}
+            />
+          </View>
+          {/* Password line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="lock"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              style={styles.input}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+              <View style={styles.checkShowIcon}>
+                {password.length < 1 ? null : 
+                <MaterialIcons
+                  name="remove-red-eye"
+                  color= "green"
+                  size={30} 
+                />
+                }
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -91,9 +122,26 @@ const styles = StyleSheet.create({
     width: "80%",
 
   },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  icon: {
+    position: 'absolute',
+    left: 5,
+    zIndex: 1,
+  },
+  checkShowIcon: {
+    position: 'absolute',
+    right: 5,
+    bottom: -18,
+    zIndex: 1,
+  },
   input: {
+    width: '100%',
     backgroundColor: "white",
-    paddingHorizontal: 15,
+    paddingHorizontal: 35,
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
