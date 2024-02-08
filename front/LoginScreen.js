@@ -85,7 +85,7 @@ const LoginScreen = () => {
                 {password.length < 1 ? null : 
                 <MaterialIcons
                   name="remove-red-eye"
-                  color= "green"
+                  color= "black"
                   size={30} 
                 />
                 }
