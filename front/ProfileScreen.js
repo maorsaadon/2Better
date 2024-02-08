@@ -1,10 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
   Text,
-  TextInput,
-  Button,
   TouchableOpacity,
   View,
   ImageBackground,

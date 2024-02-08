@@ -26,7 +26,7 @@ const EditGroupScreen = ({ route }) => {
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const data = await GroupService.getGroup(groupName);
+        const data = await GroupService.getGroupByName(groupName);
         if (data) {
           setLeaderEmail(data.LeaderEmail);
           setTotalCapacity(data.TotalCapacity);

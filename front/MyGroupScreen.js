@@ -7,35 +7,47 @@ import {
   ImageBackground,
   ScrollView,
 } from "react-native";
-import GroupCard from "../components/GroupCard";
 import { useNavigation } from "@react-navigation/core";
 import myLogoPic from "../assets/default.png";
 import { GroupService } from "../back/GroupService";
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import ManagerGroupCard from "../components/ManagerGroupCard";
+import MemberGroupCard from "../components/MemberGroupCard";
 
 const MyGroupsScreen = () => {
   const navigation = useNavigation();
-
-  const [groups, setGroups] = useState([]);
+  const [isManagerView, setIsManagerView] = useState(true);
+  const [ManagerGroups, setManagerGroups] = useState([]);
+  const [MemberGroups, setMemberGroups] = useState([]);
 
   useEffect(() => {
-    const fetchGroup = async () => {
+    const fetchGroups = async () => {
       try {
-        const fetchedGroups = await GroupService.getGroups();
-        if (fetchedGroups && fetchedGroups.length > 0) {
-          setGroups(fetchedGroups);
+        if (isManagerView) {
+          const fetchManagerGroups = await GroupService.getManagerGroups();
+          if (Array.isArray(fetchManagerGroups)) {
+            setManagerGroups(fetchManagerGroups);
+          } else {
+            setManagerGroups([]);
+          }
         } else {
-          console.log("No groups found for the given criteria.");
+          const fetchMemberGroups = await GroupService.getMemberGroups();
+          if (Array.isArray(fetchMemberGroups)) {
+            setMemberGroups(fetchMemberGroups);
+          } else {
+            setMemberGroups([]);
+          }
         }
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
     };
 
-    fetchGroup();
-  }, []);
+    fetchGroups();
+  }, [isManagerView]);
 
   const backButton = () => {
+    console.log("Add New Group button pressed");
     try {
       navigation.replace("Home");
     } catch (error) {
@@ -53,41 +65,78 @@ const MyGroupsScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <View style={styles.back_container}>
-          <TouchableOpacity onPress={backButton} style={styles.backButton}>
-            <MaterialIcons name="chevron-left" size={30} color="white" />
-          </TouchableOpacity>
-        </View>
-          <ScrollView style={{paddingTop: 30}}>
-            <View style={styles.container}>
-              {groups.map((group, index) => (
-                <GroupCard key={index} group={group} />
-              ))}
-            </View>
-          </ScrollView>
-        <TouchableOpacity onPress={handleAddNewGroup} style={styles.addButton}>
-          <Text style={styles.buttonText}>Add New Group</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <AntDesign name="back" size={24} color="#366A68" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setIsManagerView(true)}
+          style={[
+            styles.toggleButton,
+            isManagerView && styles.toggleButtonActive,
+          ]}
+        >
+          <Text style={styles.buttonText}>MY GROUP AS</Text>
+          <Text style={styles.buttonText}>A MANAGER</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setIsManagerView(false)}
+          style={[
+            styles.toggleButton,
+            !isManagerView && styles.toggleButtonActive,
+          ]}
+        >
+          <Text style={styles.buttonText}>MY GROUP AS</Text>
+          <Text style={styles.buttonText}>A MEMBER</Text>
         </TouchableOpacity>
       </View>
+      <ScrollView>
+        <View style={styles.container}>
+          {isManagerView
+            ? ManagerGroups.map((group, index) => (
+                <ManagerGroupCard key={index} group={group} />
+              ))
+            : MemberGroups.map((group, index) => (
+                <MemberGroupCard key={index} group={group} />
+              ))}
+        </View>
+      </ScrollView>
+      {isManagerView && (
+        <View style={styles.container}>
+          <TouchableOpacity
+            onPress={handleAddNewGroup}
+            style={styles.addButton}
+          >
+            <Text style={styles.buttonText}>Add New Group</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  back_container: {
+  buttonContainer: {
+    paddingVertical: 15,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 50,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+    elevation: 3,
+  },
+  addContainer: {
     flex: 1,
     justifyContent: "flex-start", // Align items at the top
-    paddingTop: 30, // Add padding to give some space at the top
     flexDirection: "column",
-    gap: 35,
-    paddingTop: 300,
   },
   container: {
-    justifyContent: "flex-start", // Align items at the top
-    paddingVertical: 30, // Add padding to give some space at the top
+    justifyContent: "flex-start",
+    paddingVertical: 40,
     flexDirection: "column",
-    gap: 35,
+    gap: 40,
   },
   backgroundImage: {
     flex: 1,
@@ -115,21 +164,48 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
   },
+  toggleButton: {
+    flex: 1,
+    backgroundColor: "#366A68",
+    paddingVertical: 10,
+    borderBottomWidth: 2, // Add underline to indicate this part can be tapped
+    borderBottomColor: "black", // Make the underline transparent initially
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  toggleButtonActive: {
+    opacity: 0.5,
+    flex: 1,
+    backgroundColor: "#366A68",
+    paddingVertical: 10,
+    borderBottomWidth: 2, // Add underline to indicate this part can be tapped
+    borderBottomColor: "black", // Make the underline transparent initially
+    alignItems: "center",
+    justifyContent: "center",
+  },
   logo: {
-    width: 70, // Adjust the width as needed
-    height: 70, // Adjust the height as needed
-    resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+    width: 70,
+    height: 70,
+    resizeMode: "contain",
   },
   backButton: {
-    backgroundColor: "#0782F9",
-    width: 50,
-    height: 50,
-    padding: 10, // Adjusted padding to make the button shorter
+    width: "20%",
+    padding: 10,
     borderRadius: 10,
-    marginTop: 5,
-    marginLeft: 5,
-    borderRadius: 50,
-    opacity: 0.7
+    alignItems: "center",
+    position: "absolute",
+    top: 5,
+    left: -15,
+  },
+  addButton: {
+    backgroundColor: "#0782F9",
+    width: "90%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 20,
   },
   buttonText: {
     color: "white",

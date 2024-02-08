@@ -1,58 +1,120 @@
+export const sportIconMapping_FontAwesome5 = {
+  Basketball: "basketball-ball",
+  Baseball: "baseball-ball",
+  Bowling: "bowling-ball",
+  Cycling: "biking",
+  Football: "football-ball",
+  Volleyball: "volleyball-ball",
+  Running: "running",
+  Swimming: "swimmer",
+  Hiking: "hiking",
+  Snowboarding: "snowboarding",
+};
 
+export const sportIconMapping_FontAwesome = {
+  Soccer: "soccer-ball-o",
+};
+
+export const sportIconMapping_MaterialCommunityIcons = {
+  Tennis: "tennis-ball",
+  Kitesurfing: "kitesurfing",
+  Surfing: "surfing",
+};
+
+// export const cityNames = [
+//   "Afula", "Akko", "Arad", "Ariel", "Ashdod", "Ashkelon","Baqa al-Gharbiyye", "Bat Yam", "Beer Sheva", "Beit Shean", "Beit Shemesh", "Betar Illit", "Bnei Berak", "Dimona", "Eilat", "Elad", "Givatayim", "Hadera", "Haifa", "Harish", "Herzliya", "Hod HaSharon", "Holon", "Jerusalem", "Karmiel", "Kfar Sava", "Kiryat Ata", "Kiryat Bialik", "Kiryat Gat", "Kiryat Malachi", "Kiryat Motzkin", "Kiryat Ono", "Kiryat Shemone", "Kiryat Yam", "	Lod", "Maale Adumim", "Maalot Tarshiha", "Migdal HaEmek", "Modiin", "Nahariya", "Nazareth", "Nes Ziona", "Nesher", "Netanya", "Netivot", "Nof Hagalil", "Ofakim", "Or Akiva", "Or Yehuda", "Petah Tikva", "Qalansawe", "Raanana", "Rahat", "Ramat Hasharon", "Ramat-Gan", "Ramla" , "Rehovot", "Rishon Lezion", "Rosh Ha'ayin", "Sakhnin", "Sderot", "Shefaram", "Taibeh", "Tamra", "Tel Aviv", "Tiberias", "Tira", "Tirat Carmel", "Tsfat (Safed)", "Umm al-Fahm", "Yavne", "Yehud-Monosson", "Yokneam"
+// ]
+
+export const city_data = [
+  { label: "All", value: "All" },
+  { label: "Afula", value: "Afula" },
+  { label: "Akko", value: "Akko" },
+  { label: "Arad", value: "Arad" },
+  { label: "Ariel", value: "Ariel" },
+  { label: "Ashdod", value: "Ashdod" },
+  { label: "Ashkelon", value: "Ashkelon" },
+  { label: "Baqa al-Gharbiyye", value: "Baqa al-Gharbiyye" },
+  { label: "Bat Yam", value: "Bat Yam" },
+  { label: "Beer Sheva", value: "Beer Sheva" },
+  { label: "Beit Shean", value: "Beit Shean" },
+  { label: "Beit Shemesh", value: "Beit Shemesh" },
+  { label: "Betar Illit", value: "Betar Illit" },
+  { label: "Bnei Berak", value: "Bnei Berak" },
+  { label: "Dimona", value: "Dimona" },
+  { label: "Eilat", value: "Eilat" },
+  { label: "Elad", value: "Elad" },
+  { label: "Givatayim", value: "Givatayim" },
+  { label: "Hadera", value: "Hadera" },
+  { label: "Haifa", value: "Haifa" },
+  { label: "Harish", value: "Harish" },
+  { label: "Herzliya", value: "Herzliya" },
+  { label: "Hod HaSharon", value: "Hod HaSharon" },
+  { label: "Holon", value: "Holon" },
+  { label: "Jerusalem", value: "Jerusalem" },
+  { label: "Karmiel", value: "Karmiel" },
+  { label: "Kfar Sava", value: "Kfar Sava" },
+  { label: "Kiryat Ata", value: "Kiryat Ata" },
+  { label: "Kiryat Bialik", value: "Kiryat Bialik" },
+  { label: "Kiryat Gat", value: "Kiryat Gat" },
+  { label: "Kiryat Malachi", value: "Kiryat Malachi" },
+  { label: "Kiryat Motzkin", value: "Kiryat Motzkin" },
+  { label: "Kiryat Ono", value: "Kiryat Ono" },
+  { label: "Kiryat Shemone", value: "Kiryat Shemone" },
+  { label: "Kiryat Yam", value: "Kiryat Yam" },
+  { label: "Lod", value: "Lod" },
+  { label: "Maale Adumim", value: "Maale Adumim" },
+  { label: "Maalot Tarshiha", value: "Maalot Tarshiha" },
+  { label: "Migdal HaEmek", value: "Migdal HaEmek" },
+  { label: "Modiin", value: "Modiin" },
+  { label: "Nahariya", value: "Nahariya" },
+  { label: "Nazareth", value: "Nazareth" },
+  { label: "Nes Ziona", value: "Nes Ziona" },
+  { label: "Nesher", value: "Nesher" },
+  { label: "Netanya", value: "Netanya" },
+  { label: "Netivot", value: "Netivot" },
+  { label: "Nof Hagalil", value: "Nof Hagalil" },
+  { label: "Ofakim", value: "Ofakim" },
+  { label: "Or Akiva", value: "Or Akiva" },
+  { label: "Or Yehuda", value: "Or Yehuda" },
+  { label: "Petah Tikva", value: "Petah Tikva" },
+  { label: "Qalansawe", value: "Qalansawe" },
+  { label: "Raanana", value: "Raanana" },
+  { label: "Rahat", value: "Rahat" },
+  { label: "Ramat Hasharon", value: "Ramat Hasharon" },
+  { label: "Ramat-Gan", value: "Ramat-Gan" },
+  { label: "Ramla", value: "Ramla" },
+  { label: "Rehovot", value: "Rehovot" },
+  { label: "Rishon Lezion", value: "Rishon Lezion" },
+  { label: "Rosh Ha'ayin", value: "Rosh Ha'ayin" },
+  { label: "Sakhnin", value: "Sakhnin" },
+  { label: "Sderot", value: "Sderot" },
+  { label: "Shefaram", value: "Shefaram" },
+  { label: "Taibeh", value: "Taibeh" },
+  { label: "Tamra", value: "Tamra" },
+  { label: "Tel Aviv", value: "Tel Aviv" },
+  { label: "Tiberias", value: "Tiberias" },
+  { label: "Tira", value: "Tira" },
+  { label: "Tirat Carmel", value: "Tirat Carmel" },
+  { label: "Tsfat (Safed)", value: "Tsfat (Safed)" },
+  { label: "Umm al-Fahm", value: "Umm al-Fahm" },
+  { label: "Yavne", value: "Yavne" },
+  { label: "Yehud-Monosson", value: "Yehud-Monosson" },
+  { label: "Yokneam", value: "Yokneam" },
+];
 
 export const sportType_data = [
-    { label: "Basketball", value: "Basketball" },
-    { label: "Cycling", value: "Cycling" },
-    { label: "Football", value: "Football" },
-    { label: "Kitesurfing", value: "Kitesurfing" },
-    { label: "Running", value: "Running" },
-    { label: "Tennis", value: "Tennis" },
-    { label: "Swimming", value: "Swimming" },
-    { label: "Baseball", value: "Baseball" },
-    { label: "Volleyball", value: "Volleyball" },
-    { label: "Hiking", value: "Hiking" },
-    { label: "Snowboarding", value: "Snowboarding" },
-    { label: "Soccer", value: "Soccer" },
-    { label: "Surfing", value: "Surfing" },
-  ];
-  
-  export const city_data = [
-    { label: "Tel-Aviv", value: "Tel-Aviv" },
-    { label: "Ariel", value: "Ariel" },
-    { label: "Jerusalem", value: "Jerusalem" },
-    { label: "Beer-Sheva", value: "Beer-Sheva" },
-    { label: "Beit-Shemesh", value: "Beit-Shemesh" },
-    { label: "Elkana", value: "Elkana" },
-    { label: "Ashdod", value: "Ashdod" },
-    { label: "Natanya", value: "Natanya" },
-    { label: "Eilat", value: "Eilat" },
-    { label: "Hifa", value: "Hifa" },
-    { label: "Ashkelon", value: "Ashkelon" },
-  ];
-
-  export const sportIconMapping_FontAwesome5 = {
-    Basketball: "basketball-ball",
-    Baseball: "baseball-ball",
-    Bowling: "bowling-ball",
-    Cycling: "biking",
-    Football: "football-ball",
-    Volleyball: "volleyball-ball",
-    Running: "running",
-    Swimming: "swimmer",
-    Hiking: "hiking",
-    Snowboarding: "snowboarding",
-  };
-  
-  export const sportIconMapping_FontAwesome = {
-    Soccer: "soccer-ball-o",
-  };
-  
-  export const sportIconMapping_MaterialCommunityIcons = {
-    Tennis: "tennis-ball",
-    Kitesurfing: "kitesurfing",
-    Surfing: "surfing",
-  };
-
-  export const cityNames = [
-    "Afula", "Akko", "Arad", "Ariel", "Ashdod", "Ashkelon","Baqa al-Gharbiyye", "Bat Yam", "Beer Sheva", "Beit Shean", "Beit Shemesh", "Betar Illit", "Bnei Berak", "Dimona", "Eilat", "Elad", "Givatayim", "Hadera", "Haifa", "Harish", "Herzliya", "Hod HaSharon", "Holon", "Jerusalem", "Karmiel", "Kfar Sava", "Kiryat Ata", "Kiryat Bialik", "Kiryat Gat", "Kiryat Malachi", "Kiryat Motzkin", "Kiryat Ono", "Kiryat Shemone", "Kiryat Yam", "	Lod", "Maale Adumim", "Maalot Tarshiha", "Migdal HaEmek", "Modiin", "Nahariya", "Nazareth", "Nes Ziona", "Nesher", "Netanya", "Netivot", "Nof Hagalil", "Ofakim", "Or Akiva", "Or Yehuda", "Petah Tikva", "Qalansawe", "Raanana", "Rahat", "Ramat Hasharon", "Ramat-Gan", "Ramla" , "Rehovot", "Rishon Lezion", "Rosh Ha'ayin", "Sakhnin", "Sderot", "Shefaram", "Taibeh", "Tamra", "Tel Aviv", "Tiberias", "Tira", "Tirat Carmel", "Tsfat (Safed)", "Umm al-Fahm", "Yavne", "Yehud-Monosson", "Yokneam"
-  ]
+  { label: "All", value: "All" },
+  { label: "Basketball", value: "Basketball" },
+  { label: "Cycling", value: "Cycling" },
+  { label: "Football", value: "Football" },
+  { label: "Kitesurfing", value: "Kitesurfing" },
+  { label: "Running", value: "Running" },
+  { label: "Tennis", value: "Tennis" },
+  { label: "Swimming", value: "Swimming" },
+  { label: "Baseball", value: "Baseball" },
+  { label: "Volleyball", value: "Volleyball" },
+  { label: "Hiking", value: "Hiking" },
+  { label: "Snowboarding", value: "Snowboarding" },
+  { label: "Soccer", value: "Soccer" },
+  { label: "Surfing", value: "Surfing" },
+];

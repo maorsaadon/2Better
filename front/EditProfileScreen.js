@@ -37,8 +37,8 @@ const EditProfileScreen = () => {
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
-      await UserService.updateUserDetails(firstName, lastName, city, []);
-      navigation.replace("Profile"); // Go back to the Home screen after saving
+      await UserService.updateUserDetails(firstName, lastName, city);
+      navigation.replace("Home"); // Go back to the Home screen after saving
     } catch (error) {
       console.error("Error updating user details:", error);
     }

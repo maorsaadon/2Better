@@ -57,7 +57,6 @@ const RegisterScreen = () => {
             LastName: lastName,
             City: city,
             Email: email,
-            MyGroups: [],
           });
       })
       .catch((error) => alert(error.message));

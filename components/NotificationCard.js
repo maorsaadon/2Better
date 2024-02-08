@@ -19,12 +19,20 @@ import { GroupService } from "../back/NotificationsService";
 const screenWidth = Dimensions.get("window").width;
 
 const NotificationCard = ({ notification }) => {
-
+   const navigation = useNavigation();
     const addressee = notification?.Addressee ?? "Default Addressee"
     const content = notification?.Content ?? "Default Content"
     const type = notification?.Type ?? "Default Type"
-    const request = type == "Group joining request" ? true : false;
+    const groupName = notification?.groupName ?? "Default Name"
+    const request = type == "Group subscribe request" ? true : false;
 
+    const handleAcceptButton = () => {
+      try {
+          GroupService.handleSubscribeGroup(false, groupName);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
 
     return (
         <SafeAreaView>
@@ -44,7 +52,7 @@ const NotificationCard = ({ notification }) => {
             <Text style={styles.buttonText}>Accept</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleRejectButton(groupName)}
+            onPress={handleRejectButton}
             style={styles.rejectButton}
           >
             <Text style={styles.buttonText}>Reject</Text>

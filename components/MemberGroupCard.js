@@ -13,16 +13,23 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/core";
-import { GroupService } from "../back/GroupService";
-import { sportIconMapping_MaterialCommunityIcons, sportIconMapping_FontAwesome, sportIconMapping_FontAwesome5} from "../back/DataBase";
+import {
+  sportIconMapping_MaterialCommunityIcons,
+  sportIconMapping_FontAwesome,
+  sportIconMapping_FontAwesome5,
+} from "../back/DataBase";
+import NotificationService from "../back/NotificationsService";
+import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { serverTimestamp } from "firebase/firestore";
 
 const screenWidth = Dimensions.get("window").width;
 
-const GroupCard = ({ group }) => {
-  const navigation = useNavigation();
+const MemberGroupCard = ({ group }) => {
+  
   const groupName = group?.GroupName ?? "Default Name";
   const totalCapacity = parseInt(group.TotalCapacity, 10);
+
+  const content = "`" + userFirstName + " " + userLastName + "` wants to unsubscribe to your group `" + groupName +"`"
 
   const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -40,32 +47,12 @@ const GroupCard = ({ group }) => {
       );
     }
 
-    return null; // Return null if no icon is found
+    return null; 
   };
 
-  const handleAddNewMeeting = (groupName) => {
-    try {
-      navigation.replace("AddNewMeeting", { groupName });
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const deleteButton = (groupName) => {
-    try {
-      GroupService.handleDeleteGroup(groupName);
-      navigation.replace("MyGroups");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const handleEditButton = (groupName) => {
-    try {
-      navigation.replace("EditGroup", {groupName});
-    } catch (error) {
-      alert(error.message);
-    }
+  const handleUnsubscribePress = () =>{
+    NotificationService.handleAddNewNotification(group.LeaderEmail, content, "Group unsubscribe", serverTimestamp())
+    GroupService.handleSubscribeGroup(true, group.GroupName);
   };
 
   return (
@@ -93,23 +80,11 @@ const GroupCard = ({ group }) => {
           </View>
         </View>
         <View style={styles.cardBottomRow}>
-          <TouchableOpacity
-            onPress={() => handleAddNewMeeting(groupName)}
-            style={styles.addMeetingButton}
+          <TouchableOpacity 
+          style={styles.button}
+          onPress={handleUnsubscribePress}
           >
-            <Text style={styles.buttonText}>Add new meeting</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleEditButton(groupName)}
-            style={styles.editButton}
-          >
-            <Text style={styles.buttonText}>Edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => deleteButton(groupName)}
-            style={styles.deleteButton}
-          >
-            <Text style={styles.buttonText}>Delete</Text>
+            <Text style={styles.buttonText}>Unsubscribe</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -117,14 +92,13 @@ const GroupCard = ({ group }) => {
   );
 };
 
-export default GroupCard;
+export default MemberGroupCard;
 
 const styles = StyleSheet.create({
   cardBottomRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    gap: 10,
   },
   container: {
     backgroundColor: "#5B8BDF",
@@ -132,11 +106,12 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingTop: 30,
     gap: 15,
+    flex: 1,
   },
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#FFFFFF", 
+    backgroundColor: 'rgba(233, 241, 233, 0.7)', 
     borderRadius: 15, 
     marginVertical: 8,
     marginHorizontal: 16,
@@ -160,20 +135,20 @@ const styles = StyleSheet.create({
   },
   cardMiddleRow: {
     flexDirection: "row",
-    gap: 5,
+    gap: 15,
     alignItems: "center",
   },
   iconAndTextContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: 5,
     marginLeft: 0,
   },
   sportIcon: {
-    width: 30, // Adjust size as needed
-    height: 30, // Adjust size as needed
+    width: 30, 
+    height: 30, 
     resizeMode: "contain",
-    marginRight: 10, // Add some space between the icon and the text
+    marginRight: 10, 
   },
   title: {
     fontWeight: "bold",
@@ -189,7 +164,7 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   button: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: "#366A68",
     width: 120,
     paddingVertical: 10,
     borderRadius: 10,
@@ -198,27 +173,25 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
   },
-  addMeetingButton: {
-    backgroundColor: "#0782F9",
-    padding: 10, // Adjusted padding to make the button shorter
-    borderRadius: 10,
-    marginTop: 0,
-    marginLeft: 0,
+  participantContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
   },
-  deleteButton: {
-    backgroundColor: "red",
-    padding: 10, // Adjusted padding to make the button shorter
-    borderRadius: 10,
-    marginTop: 0,
-    width: 80,
-    marginLeft: 0,
+  slider: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 10,
+    minimumTrackTintColor: "black",
+    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    thumbTintColor: "white",
   },
-  editButton: {
-    backgroundColor: "green",
-    padding: 10, // Adjusted padding to make the button shorter
-    borderRadius: 10,
-    marginTop: 0,
-    width: 80,
-    marginLeft: 0,
+  participantText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "bold",
+    // Add margin to the left or right to space the text from the slider
+    marginHorizontal: 5,
   },
 });

@@ -1,5 +1,4 @@
 import {
-  Pressable,
   Text,
   View,
   SafeAreaView,
@@ -14,45 +13,24 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import CustomSlider from "./CustomSlider";
 import {
   sportIconMapping_MaterialCommunityIcons,
   sportIconMapping_FontAwesome,
   sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
-import { useNavigation } from "@react-navigation/core";
 import NotificationService from "../back/NotificationsService";
-import { auth } from "../back/firebase";
-import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
+
 
 const screenWidth = Dimensions.get("window").width;
 
 const ResultGroupCard = ({ group }) => {
 
-  const navigation = useNavigation();
   const groupName = group?.GroupName ?? "Default Name";
-  const currentParticipants = parseInt(group.Members, 10);
   const totalCapacity = parseInt(group.TotalCapacity, 10);
-  // const userEmail = auth.currentUser.email;
-  // const [isEditing, setIsEditing] = useState(false);
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
 
-  // useEffect(() => {
-  //   const fetchUserDetails = async () => {
-  //     try {
-  //       setFirstName(userFirstName);
-  //       setLastName(userLastName);
-  //     } catch (error) {
-  //       console.error("Error fetching user details:", error);
-  //     }
-  //   };
-
-  //   fetchUserDetails();
-  // }, []);
+  const content = "`" + userFirstName + " " + userLastName + "` wants to subscribe to your group `" + groupName +"`"
 
   const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -70,11 +48,11 @@ const ResultGroupCard = ({ group }) => {
       );
     }
 
-    return null; // Return null if no icon is found
+    return null; 
   };
 
-  const handleJoinPress = () =>{
-    NotificationService.handleAddNewNotification(group.LeaderEmail, content, "Group joining request", serverTimestamp())
+  const handleSubscribePress = () =>{
+    NotificationService.handleAddNewNotification(groupName, group.LeaderEmail, content, "Group subscribe request", serverTimestamp());
   };
 
   return (
@@ -96,21 +74,15 @@ const ResultGroupCard = ({ group }) => {
             <MaterialCommunityIcons name="email" size={22} color="black" />
             <Text>{group.LeaderEmail}</Text>
           </View>
-        </View>
-        <View style={styles.participantContainer}>
-          <Text style={styles.participantText}>{currentParticipants}</Text>
-          <CustomSlider
-            minimumValue={0}
-            maximumValue={totalCapacity}
-            value={currentParticipants}
-          />
-          <Text style={styles.participantText}>{totalCapacity}</Text>
-          <AntDesign name="user" size={22} color="black" />
+          <View style={styles.iconAndTextContainer}>
+            <AntDesign name="user" size={22} color="black" />
+            <Text>{totalCapacity}</Text>
+          </View>
         </View>
         <View style={styles.cardBottomRow}>
           <TouchableOpacity 
           style={styles.button}
-          onPress={handleJoinPress}
+          onPress={() => handleSubscribePress(groupName)}
           >
             <Text style={styles.buttonText}>Subscribe</Text>
           </TouchableOpacity>
@@ -139,18 +111,19 @@ const styles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#FFFFFF", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: 'rgba(233, 241, 233, 0.7)', 
+    borderRadius: 15, 
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 1 }, 
+    shadowOpacity: 0.22, 
+    shadowRadius: 2.22,
+    elevation: 3, 
+    borderWidth: 1,
     borderColor: "#E0E0E0",
+    gap: 10,
   },
   cardTopRow: {
     marginTop: 0, // Adjust as needed to move closer to the top
@@ -191,7 +164,7 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   button: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: "#366A68",
     width: 120,
     paddingVertical: 10,
     borderRadius: 10,

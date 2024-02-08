@@ -45,6 +45,7 @@ export const notificationService = {
         
         notifications.push({
           Addressee: notificationData.Addressee || "Unknown",
+          GroupName: notificationData.groupName || "Unknown",
           Content: notificationData.Content || "Unknown",
           Type: notificationData.Type || "Unknown",
           TimeStamp: timeStamp || "Unknown",
@@ -72,12 +73,14 @@ export const notificationService = {
     
   },
   
-  async handleAddNewNotification(addressee, content, type, timeStamp){
+  async handleAddNewNotification(addressee, groupName, content, type, timeStamp){
+    
     var ctr = 0;
     const NotificationRef = db.collection("Notifications").doc();
     
     NotificationRef.set({
       Addressee: addressee,
+      GroupName: groupName,
       Content: content,
       Type: type,
       TimeStamp: timeStamp,
@@ -122,7 +125,6 @@ export const notificationService = {
     }
   },
 
-  // ... other notification related methods
 };
 
 export default notificationService;
