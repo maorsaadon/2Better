@@ -10,6 +10,7 @@ TouchableOpacity,
 import {
 AntDesign,
 FontAwesome5,
+FontAwesome6,
 MaterialIcons,
 FontAwesome,
 MaterialCommunityIcons,
@@ -33,13 +34,11 @@ const groupName = meeting?.GroupName ?? "Default Name";
 // const currentParticipants = parseInt(meeting.Members, 10);
 // const totalCapacity = parseInt(meeting.TotalCapacity, 10);
 const currentParticipants = parseInt(3);
-const totalCapacity = parseInt(10);
+const totalCapacity = parseInt(meeting.TotalCapacity);
 
 const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
 
 const getSportIcon = (sportType) => {
-    console.log("the sport type is -->");
-    console.log(sportType);
     const iconName = sportIconMapping_FontAwesome5[sportType];
     if (iconName) {
     return <FontAwesome5 name={iconName} size={30} color="black" />;
@@ -79,8 +78,12 @@ return (
             <Text>{meeting.Location}</Text>
         </View>
         <View style={styles.iconAndTextContainer}>
-            <MaterialCommunityIcons name="calendar-clock" size={22} color="black" />
-            <Text> {/*meeting.Time*/} , {meeting.Date}</Text>
+            <FontAwesome6 name="calendar-days" size={20} color="black" />
+            <Text>{meeting.Date}</Text>
+        </View>
+        <View style={styles.iconAndTextContainer}>
+            <AntDesign name="clockcircle" size={20} color="black" />
+            <Text>{meeting.Time}</Text>
         </View>
         </View>
         <View style={styles.participantContainer}>
