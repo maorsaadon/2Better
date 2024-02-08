@@ -127,7 +127,7 @@ container: {
 card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#FFFFFF", // Assuming a white card background
+    backgroundColor: "#E9F1E9", // Assuming a white card background
     borderRadius: 15, // Rounded corners
     marginVertical: 8, // Adds vertical space between items
     marginHorizontal: 16, // Adds horizontal space and centers the card in the view
@@ -139,6 +139,7 @@ card: {
     elevation: 3, // Elevation for Android
     borderWidth: 1, // Border width
     borderColor: "#E0E0E0",
+    //opacity: 0.7, 
 },
 cardTopRow: {
     marginTop: 0, // Adjust as needed to move closer to the top
@@ -179,10 +180,11 @@ subTitle: {
     color: "gray",
 },
 button: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: "black",
     width: 120,
     paddingVertical: 10,
     borderRadius: 10,
+    opacity: 1,
 },
 buttonText: {
     alignSelf: "center",
