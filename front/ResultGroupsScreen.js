@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
-  TouchableWithoutFeedback,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import ResultGroupCard from "../components/ResultGroupCard";
 import myLogoPic from "../assets/default.png";
 import GroupService from "../back/GroupService";
@@ -15,19 +15,22 @@ import GroupService from "../back/GroupService";
 const ResultGroupScreen = ({ route, navigation }) => {
   const { selectedCity, selectedTypeOfSport } = route.params;
 
+  const [isLoading, setIsLoading] = useState(true);
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
     const fetchGroups = async () => {
-      console.log(`Fetching groups for sport: ${selectedTypeOfSport}, city: ${selectedCity}`);
+      console.log(
+        `Fetching groups for sport: ${selectedTypeOfSport}, city: ${selectedCity}`
+      );
       try {
         const fetchedGroups = await GroupService.getGroupsBySort(
           selectedTypeOfSport,
           selectedCity
         );
-  
-        console.log("Fetched Groups:", fetchedGroups); // Log the fetched groups
-  
+
+        console.log("Fetched Groups:", fetchedGroups); 
+
         if (fetchedGroups && fetchedGroups.length > 0) {
           setGroups(fetchedGroups);
           console.log("Fetched Groups:", groups);
@@ -36,16 +39,13 @@ const ResultGroupScreen = ({ route, navigation }) => {
         }
       } catch (error) {
         console.error("Error fetching groups:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
-  
+
     fetchGroups();
   }, [selectedCity, selectedTypeOfSport]); // Depend on selectedCity and selectedTypeOfSport
-
-  useEffect(() => {
-    console.log("Updated groups state:", groups);
-  }, [groups]);
-  
 
   const backButton = () => {
     try {
@@ -57,18 +57,23 @@ const ResultGroupScreen = ({ route, navigation }) => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity>
       <View style={styles.container}>
-        <ScrollView>
+        <View style={styles.back_container}>
+          <TouchableOpacity onPress={backButton} style={styles.backButton}>
+            <AntDesign name="back" size={30} color="#366A68" />
+          </TouchableOpacity>
+        </View>
+        {isLoading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <ScrollView style={{ paddingTop: 30 }}>
           <View style={styles.container}>
-            {/* Map over the groups array to render AppointmentCards */}
             {groups.map((group, index) => (
               <ResultGroupCard key={index} group={group} />
             ))}
           </View>
         </ScrollView>
+         )}
       </View>
     </ImageBackground>
   );
@@ -77,11 +82,16 @@ const ResultGroupScreen = ({ route, navigation }) => {
 export default ResultGroupScreen;
 
 export const styles = StyleSheet.create({
-  container: {
+  back_container: {
     flex: 1,
-    justifyContent: "flex-start", // Align items at the top
-    alignItems: "center",
-    paddingTop: 40, // Add padding to give some space at the top
+    justifyContent: "flex-start", 
+    flexDirection: "column",
+    gap: 35,
+    paddingTop: 30,
+  },
+  container: {
+    justifyContent: "flex-start",
+    paddingVertical: 40,
     flexDirection: "column",
     gap: 35,
   },
@@ -91,18 +101,6 @@ export const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
   },
-  backButton: {
-    backgroundColor: "#3B82F6",
-    width: "20%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 6,
-  },
-  backButtonText: {
-    alignSelf: "center",
-    color: "white",
-  },
   card: {
     width: "100%",
     backgroundColor: "rgba(255, 255, 255 , 0.4)",
@@ -111,6 +109,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30,
     flexDirection: "column",
     gap: 10,
+    marginTop: 1,
   },
   button: {
     backgroundColor: "#3B82F6",
@@ -123,8 +122,23 @@ export const styles = StyleSheet.create({
     color: "white",
   },
   logo: {
-    width: 70, // Adjust the width as needed
-    height: 70, // Adjust the height as needed
-    resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+    width: 70,
+    height: 70,
+    resizeMode: "contain",
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute", 
+    top: 20, 
+    left: -15, 
+  },
+
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });

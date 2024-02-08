@@ -1,16 +1,15 @@
-
 import React from "react";
-import { StyleSheet, } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AppScreen from "./front/AppScreen"
+import AppScreen from "./front/AppScreen";
 import LoginScreen from "./front/LoginScreen";
 import HomeScreen from "./front/HomeScreen";
 import RegisterScreen from "./front/RegisterScreen";
 import ProfileScreen from "./front/ProfileScreen";
 import EditProfileScreen from "./front/EditProfileScreen";
 import MyGroupScreen from "./front/MyGroupScreen";
-import FindNewGroupScreen from "./front/FindNewGroupScreen";
+import FindNewGroupsScreen from "./front/FindNewGroupsScreen";
 import NotificationsScreen from "./front/NotificationsScreen";
 import UpcomingMeetingScreen from "./front/UpcomingMeetingScreen";
 import AddNewMeetingScreen from "./front/AddNewMeetingScreen";
@@ -31,7 +30,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="MyGroups" component={MyGroupScreen} />
-        <Stack.Screen name="FindNewGroups" component={FindNewGroupScreen} />
+        <Stack.Screen name="FindNewGroups" component={FindNewGroupsScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen
           name="UpComingMeetings"
@@ -45,4 +44,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-

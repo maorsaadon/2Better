@@ -95,18 +95,14 @@ const AddNewMeetingScreen = ({ route }) => {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
 
-          {/* Back Button */}
           <TouchableOpacity onPress={backButton} style={styles.backButton}>
             <MaterialIcons name="chevron-left" size={30} color="white" />
           </TouchableOpacity>
           
-  
-          {/* Date buttom */}
           <TouchableOpacity onPress={() => { showDatePicker()}} style={[styles.button, styles.buttonOutline, styles.dateButtom]}>
             <Text>{selectedDate}</Text>
           </TouchableOpacity>
 
-          {/* Time buttom */}
           <TouchableOpacity onPress={() => { showTimePicker()}} style={[styles.button, styles.buttonOutline, styles.timeButtom]}>
             <Text>{selectedTime}</Text>
           </TouchableOpacity>

@@ -5,15 +5,136 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 export const GroupService = {
-  
-  async getGroup(groupName) {
+  async handleAddNewGroup(groupName, city, sportType, totalCapacity) {
+    const userEmail = auth.currentUser.email;
+    const docRef = db
+      .collection("Groups") // The collection name
+      .doc(groupName) // The document name
+      .set({
+        GroupName: groupName,
+        LeaderEmail: userEmail,
+        TotalCapacity: totalCapacity,
+        City: city,
+        SportType: sportType,
+        Members: [],
+      })
+      .catch((error) => {
+        console.error("Error creating group: ", error);
+        alert(error.message);
+      });
+  },
+
+  async handleDeleteGroup(groupName) {
+    const groupRef = db.collection("Groups").doc(groupName);
+    try {
+      const meetingSnapshot = await db
+        .collection("Meetings")
+        .where("GroupName", "==", groupName)
+        .get();
+
+      if (!meetingSnapshot.empty) {
+        for (const doc of meetingSnapshot.docs) {
+          await doc.ref.delete();
+        }
+      }
+
+      const groupDoc = await groupRef.get();
+
+      if (!groupDoc.exists) {
+        console.log(`No group found with ID: ${groupName}`);
+        return;
+      }
+
+      await groupRef.delete();
+      console.log(`Deleted group with ID: ${groupName}`);
+    } catch (error) {
+      console.error(
+        `Error deleting group with ID: ${groupName} and its meetings`,
+        error
+      );
+      throw error; // or handle the error as needed
+    }
+  },
+
+  async getMemberGroups() {
+    const groups = [];
+    try {
+      const userEmail = auth.currentUser.email;
+
+      let groupsRef = db
+        .collection("Groups")
+        .where("LeaderEmail", "!=", userEmail);
+
+      const snapshot = await groupsRef.get();
+
+      if (snapshot.empty) {
+        console.log("No matching groups found.");
+        return [];
+      }
+      
+      snapshot.forEach((doc) => {
+        const group = doc.data();
+        if (group.Members.includes(userEmail)) {
+          groups.push({
+            GroupName: group.GroupName || "Unknown",
+            LeaderEmail: group.LeaderEmail || "Unknown",
+            TotalCapacity: group.TotalCapacity || 10,
+            City: group.City || "Unknown",
+            SportType: group.SportType || "Unknown",
+            Members: group.Members?.length || 0,
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching meetings by user role: ", error);
+    }
+    return groups;
+  },
+
+  async getManagerGroups() {
+    const groups = [];
+    try {
+      const userEmail = auth.currentUser.email;
+      const groupsRef = db
+        .collection("Groups")
+        .where("LeaderEmail", "==", userEmail);
+
+      const snapshot = await groupsRef.get();
+
+      if (snapshot.empty) {
+        console.log("No matching groups found.");
+        return [];
+      }
+
+      snapshot.forEach((groupDoc) => {
+        const groupData = groupDoc.data();
+        const groupName = groupData.GroupName || "Unknown"; // Provide a default if groupName is missing
+
+        groups.push({
+          GroupName: groupName,
+          LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
+          TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
+          City: groupData.City || "Unknown", // Provide a default if city is missing
+          SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
+          Members: groupData.Members?.length || 0,
+        });
+      });
+
+      return groups;
+    } catch (error) {
+      console.error("Error getting groups by sport:", error);
+      throw error;
+    }
+  },
+
+  async getGroupByName(groupName) {
     try {
       const snapshot = await db.collection("Groups").doc(groupName).get(); // Add "await" here to wait for the snapshot
-  
+
       if (snapshot.exists) {
         const groupData = snapshot.data(); // Use "snapshot.data()" to access the document data
         console.log("groupData", groupData);
-  
+
         return {
           GroupName: groupData.GroupName || "Unknown",
           LeaderEmail: groupData.LeaderEmail || "Unknown",
@@ -30,12 +151,20 @@ export const GroupService = {
       console.error("Error fetching group: ", error);
     }
   },
-  async getGroups() {
+
+  async getGroupsBySort(sportType, city) {
     try {
       const userEmail = auth.currentUser.email;
-      const groupsRef = db
+      let groupsRef = db
         .collection("Groups")
-        .where("LeaderEmail", "==", userEmail);
+        .where("LeaderEmail", "!=", userEmail);
+
+      if (sportType != "All") {
+        groupsRef = groupsRef.where("SportType", "==", sportType);
+      }
+      if (city != "All") {
+        groupsRef = groupsRef.where("City", "==", city);
+      }
 
       const snapshot = await groupsRef.get();
 
@@ -46,34 +175,30 @@ export const GroupService = {
 
       const groups = [];
 
-      snapshot.forEach((groupDoc) => {
-        const groupData = groupDoc.data();
-        const groupName = groupData.GroupName || "Unknown"; // Provide a default if groupName is missing
-
+      snapshot.forEach((doc) => {
+        const group = doc.data();
         groups.push({
-          GroupName: groupName,
-          LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
-          TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
-          City: groupData.City || "Unknown", // Provide a default if city is missing
-          SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
-          Members: groupData.Members?.length || 0,
+          GroupName: group.GroupName || "Unknown",
+          LeaderEmail: group.LeaderEmail || "Unknown",
+          TotalCapacity: group.TotalCapacity || 10,
+          City: group.City || "Unknown",
+          SportType: group.SportType || "Unknown",
+          Members: group.Members?.length || 0,
         });
       });
 
       return groups;
     } catch (error) {
-      console.error("Error getting groups by sport:", error);
+      console.error("Error getting groups by sort:", error);
       throw error;
     }
   },
 
-  // Update group details
   async updateGroupDetails(groupName, city, sportType, totalCapacity) {
     try {
       console.log("City", city);
       const groupRef = db.collection("Groups").doc(groupName);
 
-      // Update the group document
       await groupRef.update({
         TotalCapacity: parseInt(totalCapacity),
         City: city,
@@ -86,135 +211,30 @@ export const GroupService = {
     }
   },
 
-  async handleAddNewGroup(groupName, city, sportType, totalCapacity) {
-    // Check if the user is logged in
+  async handleSubscribeGroup(isSubscribe, groupName) {
     const userEmail = auth.currentUser.email;
-    const docRef = db
-      .collection("Groups") // The collection name
-      .doc(groupName) // The document name
-      .set({
-        GroupName: groupName,
-        LeaderEmail: userEmail,
-        TotalCapacity: totalCapacity,
-        City: city,
-        SportType: sportType,
-        MeetingsGroup: [],
-        Members: [],
-      })
-      .catch((error) => {
-        console.error("Error creating group: ", error);
-        alert(error.message);
-      });
-
-    UserService.addUserGroup(groupName);
-  },
-
-  async handleDeleteGroup(groupName) {
-    const groupRef = db.collection("Groups").doc(groupName);
-
-    try {
-      UserService.removeUserGroup(groupName);
-
-      // Step 1: Retrieve the group document to get the array of meeting IDs
-      const groupDoc = await groupRef.get();
-
-      if (!groupDoc.exists) {
-        console.log(`No group found with ID: ${groupName}`);
-        return;
-      }
-
-      const groupData = groupDoc.data();
-      const meetingsArray = groupData.MeetingsGroup || [];
-
-      // Step 2: Delete all meetings from the 'Meetings' collection
-      for (const meetingId of meetingsArray) {
-        await db.collection("Meetings").doc(meetingId).delete();
-        console.log(`Deleted meeting with ID: ${meetingId}`);
-      }
-
-      // Step 3: Delete the group document itself
-      await groupRef.delete();
-      console.log(`Deleted group with ID: ${groupName}`);
-    } catch (error) {
-      console.error(
-        `Error deleting group with ID: ${groupName} and its meetings`,
-        error
-      );
-      throw error; // or handle the error as needed
-    }
-  },
-
-  async addGroupMeeting(meetingId, groupName) {
     try {
       const groupRef = db.collection("Groups").doc(groupName);
+      const groupSnapshot = await groupRef.get();
 
-      // Atomically add a new group ID to the 'MyGroups' array field
-
-      await groupRef.update({
-        MeetingsGroup: firebase.firestore.FieldValue.arrayUnion(meetingId),
-      });
-
-      console.log("Group ID added to user profile successfully");
-    } catch (error) {
-      console.error("Error adding meeting ID to group collection: ", error);
-    }
-  },
-
-  async removeGroupMeeting(meetingId, groupName) {
-    try {
-      const groupRef = db.collection("Groups").doc(groupName);
-
-      // Atomically remove the meeting ID from the 'MeetingsGroup' array field
-      await groupRef.update({
-        MeetingsGroup: firebase.firestore.FieldValue.arrayRemove(meetingId),
-      });
-
-      console.log(
-        `Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`
-      );
-    } catch (error) {
-      console.error(
-        `Error removing meeting ID: ${meetingId} from group ID: ${groupName}`,
-        error
-      );
-      // Handle the error accordingly
-    }
-  },
-
-  async getGroupsBySort(sportType, city) {
-    try {
-      const groupsRef = db
-        .collection("Groups")
-        .where("SportType", "==", sportType)
-        .where("City", "==", city);
-
-      const snapshot = await groupsRef.get();
-
-      if (snapshot.empty) {
-        console.log("No matching groups found.");
-        return [];
+      if (groupSnapshot.exists) {
+        const group = groupSnapshot.data();
+        if (group.LeaderEmail !== userEmail) {
+          if (isSubscribe) {
+            await groupRef.update({
+              Members: firebase.firestore.FieldValue.arrayRemove(userEmail),
+            });
+          } else {
+            await groupRef.update({
+              Members: firebase.firestore.FieldValue.arrayUnion(userEmail),
+            });
+          }
+        }
+      } else {
+        console.log("Group does not exist.");
       }
-
-      const groups = [];
-
-      snapshot.forEach((groupDoc) => {
-        const groupData = groupDoc.data();
-        const groupName = groupData.GroupName || "Unknown"; // Provide a default if groupName is missing
-
-        groups.push({
-          GroupName: groupName,
-          LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
-          TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
-          City: groupData.City || "Unknown", // Provide a default if city is missing
-          SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
-          Members: groupData.Members?.length || 0,
-        });
-      });
-
-      return groups;
     } catch (error) {
-      console.error("Error getting groups by sport:", error);
-      throw error;
+      console.error("Error subscribing or unsubscribing", error);
     }
   },
 };
