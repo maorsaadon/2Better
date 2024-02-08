@@ -42,20 +42,27 @@ const RegisterScreen = () => {
     return unsubscribe;
   }, []);
 
+  const isEmailValid = (email) => {
+    return /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(email);
+  };
+  
+  const isPasswordValid = (password) => {
+    return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password);
+  };
+
   const handleSignUp = () => {
     email = email.toLowerCase();
 
-    if (!/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(email)) {
+    if (!isEmailValid(email)) {
       alert("Please enter a valid email address.");
       return;
     }
   
-    // Check if password format is correct
-    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password)) {
+    if (!isPasswordValid(password)) {
       alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long.");
       return;
     }
-    
+
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
@@ -81,7 +88,7 @@ const RegisterScreen = () => {
     setEmail(text);
     setEmailVerfiy(false);
   
-    if (/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(text)) {
+    if (isEmailValid(text)) {
       setEmailVerfiy(true);
     }
   };
@@ -90,7 +97,7 @@ const RegisterScreen = () => {
     setPassword(text);
     setPasswordVerfiy(false);
 
-    if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(text)) {
+    if (isPasswordValid(text)) {
       setPasswordVerfiy(true);
     }
   };
