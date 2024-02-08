@@ -1,5 +1,3 @@
-
-
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
@@ -12,6 +10,7 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
+
 
 import myLogoPic from "../assets/entryPage.jpeg";
 

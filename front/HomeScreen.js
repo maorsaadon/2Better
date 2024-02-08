@@ -116,7 +116,7 @@ const HomeScreen = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           
           <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
-            <Entypo name="bell" size={30} color="black" opacity = '1' />
+            <Entypo name="bell" size={30} color="black" />
 
             {/* Badge view */}
             {notificationCounter > 0 && (
@@ -128,26 +128,26 @@ const HomeScreen = () => {
           </View>
       <View style={stylesHome.container}>
         <TouchableOpacity onPress={handleMyProfile} style={stylesHome.button}>
-        <FontAwesome name="user" size={30} color="black" opacity = '1' />
+        <FontAwesome name="user" size={30} color="black"  />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleMyGroups} style={stylesHome.button}>
-        <FontAwesome6 name="people-group" size={30} color="black" opacity = '1' />
+        <FontAwesome6 name="people-group" size={30} color="black"  />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleFindNewGroup} style={stylesHome.button}>
-        <MaterialIcons name="explore" size={30} color="black" opacity = '1' />
+        <MaterialIcons name="explore" size={30} color="black"  />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleUpcomingMeetings}
           style={stylesHome.button}
         >
-          <Entypo name="cake" size={30} color="black" opacity = '1' />
+          <Entypo name="cake" size={30} color="black"  />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleSignOut} style={stylesHome.button}>
-        <Entypo name="log-out" size={30} color="black" opacity = '1' />
+        <Entypo name="log-out" size={30} color="black"  />
         </TouchableOpacity>
       </View>
 
@@ -164,7 +164,7 @@ const stylesHome = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row', // Arrange buttons horizontally
     paddingHorizontal: 10, // Add some horizontal padding
-    paddingTop: 420, // Add some horizontal padding
+    paddingTop: 520, // Add some horizontal padding
   },
   button: {
     width: "20%",
@@ -205,7 +205,6 @@ const stylesHome = StyleSheet.create({
     marginTop: 5,
     marginLeft: 5,
     borderRadius: 50,
-    opacity: 1
   }
 })
 

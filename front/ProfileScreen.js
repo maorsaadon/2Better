@@ -10,7 +10,7 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { MaterialIcons , AntDesign} from "@expo/vector-icons";
+import { MaterialIcons , AntDesign , Entypo} from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
@@ -129,7 +129,10 @@ const ProfileScreen = () => {
           <Text style={styles.valueName}>
             {userFirstName} {userLastName}
           </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Entypo name="mail" size={30} color="black" />
           <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
+          </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <MaterialIcons name="location-on" size={26} color="black" />
