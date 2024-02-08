@@ -6,20 +6,33 @@ import {
   Button,
   View,
   ImageBackground,
+  TouchableOpacity,
+  Image,
+  Alert,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as ImagePicker from 'expo-image-picker';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import * as FileSystem from 'expo-file-system';
+import { auth } from '../back/firebase';
 
+
+
+
+
+export let imageUri = null;
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
 
   const navigation = useNavigation();
-  
+  const [selectedImage, setSelectedImage] = useState();
+
 
   const handleSave = async () => {
     try {
@@ -41,9 +54,103 @@ const EditProfileScreen = () => {
     }, [])
   );
 
+
+  const handleImageSelection = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+
+      imageUri = result.assets[0].uri
+      if (!imageUri) return;
+      setSelectedImage(imageUri);
+      try {
+        const { uri } = await FileSystem.getInfoAsync(imageUri);
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = () => {
+            resolve(xhr.response);
+          };
+          xhr.onerror = (e) => {
+            reject(new TypeError('Network request faild'));
+          };
+          xhr.responseType = 'blob';
+          xhr.open('GET', uri, true);
+          xhr.send(null);
+        });
+
+
+
+        const storage = getStorage();
+
+        const storageRef = ref(storage, `UsersProfilePics/${auth.currentUser.email}`);
+
+        // 'file' comes from the Blob or File API
+        uploadBytes(storageRef, blob).then((snapshot) => {
+          console.log('Uploaded a blob or file!');
+        });
+
+
+        Alert.alert("photo uploading");
+
+      } catch (error) {
+        console.error(error);
+      }
+      // const storage = getStorage();
+
+      // const storageRef = ref(storage, `UsersProfilePics/${firstName+ '2'} `);
+      // file = result.Image
+      // // 'file' comes from the Blob or File API
+      // uploadBytes(storageRef, file).then((snapshot) => {
+      //   console.log('Uploaded a blob or file!');
+      // });
+      // Function to upload image
+    }
+  };
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
+        <View
+          style={{
+            alignItems: "center",
+            marginVertical: 22,
+          }}
+        >
+          <TouchableOpacity onPress={handleImageSelection}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={{
+                height: 170,
+                width: 170,
+                borderRadius: 85,
+                borderWidth: 2,
+                borderColor: '#366A68',
+              }}
+            />
+
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 10,
+                zIndex: 9999,
+              }}
+            >
+              <MaterialIcons
+                name="photo-camera"
+                size={32}
+                color='#366A68'
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.label}>First Name:</Text>
         <TextInput
           style={styles.input}
@@ -77,6 +184,7 @@ const EditProfileScreen = () => {
   );
 };
 
+//export { imageUri };
 export default EditProfileScreen;
 
 const styles = StyleSheet.create({

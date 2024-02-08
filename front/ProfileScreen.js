@@ -7,14 +7,15 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { MaterialIcons , AntDesign , Entypo} from "@expo/vector-icons";
+import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
-import {styles} from "../components/StylesSheets"
-
+import { styles } from "../components/StylesSheets"
+import EditProfileScreen from '../front/EditProfileScreen'
+import { getStorage, ref ,getDownloadURL} from "firebase/storage";
 
 const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,22 +23,8 @@ const ProfileScreen = () => {
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
   //const photo = require("../assets/iconProfile.jpeg");
-  const [selectedImage, setSelectedImage] = useState();
+  const [imageUrl, setImageUrl] = useState(null);
 
-  const handleImageSelection = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
-    }
-  };
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -46,6 +33,16 @@ const ProfileScreen = () => {
         setCity(UserCity);
       } catch (error) {
         console.error("Error fetching user details:", error);
+      }
+      const storage = getStorage();
+      const storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
+      
+      try {
+        const url = await getDownloadURL(storageRef);
+        setImageUrl(url);
+        console.log(url)
+      } catch (error) {
+        console.error('Error retrieving image:', error);
       }
     };
 
@@ -85,18 +82,17 @@ const ProfileScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.button}>
-      <AntDesign name="back" size={30} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={backButton} style={styles.button}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
         <View
           style={{
             alignItems: "center",
             marginVertical: 22,
           }}
         >
-          <TouchableOpacity onPress={handleImageSelection}>
             <Image
-              source={{ uri: selectedImage }}
+              source={{ uri: imageUrl}}
               style={{
                 height: 170,
                 width: 170,
@@ -114,21 +110,16 @@ const ProfileScreen = () => {
                 zIndex: 9999,
               }}
             >
-              <MaterialIcons
-                name="photo-camera"
-                size={32}
-                color='#366A68'
-              />
             </View>
-          </TouchableOpacity>
+          
         </View>
         <View style={styles.userInfoContainer}>
           <Text style={styles.valueName}>
             {userFirstName} {userLastName}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Entypo name="mail" size={30} color="black" />
-          <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
+            <Entypo name="mail" size={30} color="black" />
+            <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

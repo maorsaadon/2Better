@@ -180,15 +180,12 @@ import MeetingCard from "../components/MeetingCard";
 
 const UpcomingMeetingsScreen = () => {
   const navigation = useNavigation();
-
-  const [memberMeetings, setMemberMeetings] = useState([]);
   const [leaderMeetings, setLeaderMeetings] = useState([]);
 
     
     useEffect(() => {
       const fetchMeetings = async () => {
-        const { memberMeetings, leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
-        setMemberMeetings(memberMeetings);
+        const {leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
         setLeaderMeetings(leaderMeetings);
       };
   

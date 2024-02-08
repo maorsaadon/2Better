@@ -30,6 +30,16 @@ const AddNewMeetingScreen = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState('Select Date');
   const [selectedTime, setSelectedTime] = useState('Select Time');
 
+
+  // Define a function to get the current date without time
+  const getToday = () => {
+    const today = new Date(); // This creates a new Date object representing the current date and time
+    today.setHours(0, 0, 0, 0); // This sets the time part of the today object to midnight
+    return today;
+  };
+
+  const minimumDate = getToday();
+
   const navigation = useNavigation();
 
   const backButton = () => {
@@ -110,6 +120,7 @@ const AddNewMeetingScreen = ({ route }) => {
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             mode="date"
+            minimumDate={minimumDate}
             onConfirm={handleDateConfirm}
             onCancel={hideDatePicker}
           />
