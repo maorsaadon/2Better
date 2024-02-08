@@ -173,7 +173,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, ImageBackground, Modal, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import myLogoPic from '../assets/2better-logo.jpeg';
+import myLogoPic from '../assets/default.png';
 import MeetingService from '../back/MeetingService';
 import MeetingCard from "../components/MeetingCard";
 

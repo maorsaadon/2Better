@@ -10,7 +10,7 @@ import {
   ImageBackground,
   Pressable,
 } from "react-native";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/default.png";
 import GroupService from "../back/GroupService";
 import { MaterialIcons } from "@expo/vector-icons";
 

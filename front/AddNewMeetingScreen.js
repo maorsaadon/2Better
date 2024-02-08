@@ -9,7 +9,7 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/default.png";
 import MeetingService from "../back/MeetingService";
 import NotificationService from "../back/NotificationsService";
 import { auth, db } from "../back/firebase";

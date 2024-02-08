@@ -7,8 +7,9 @@ import {
   View,
   ImageBackground,
 } from "react-native";
+import { MaterialIcons , Entypo , FontAwesome , FontAwesome6} from "@expo/vector-icons";
 import { auth } from "../back/firebase";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { db } from "../back/firebase";
@@ -112,40 +113,44 @@ const HomeScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          
+          <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
+            <Entypo name="bell" size={30} color="black" opacity = '1' />
+
+            {/* Badge view */}
+            {notificationCounter > 0 && (
+              <View style={stylesHome.badge}>
+                <Text style={stylesHome.badgeText}>{notificationCounter}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          </View>
       <View style={stylesHome.container}>
         <TouchableOpacity onPress={handleMyProfile} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>My Profile</Text>
+        <FontAwesome name="user" size={30} color="black" opacity = '1' />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleMyGroups} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>My Groups</Text>
+        <FontAwesome6 name="people-group" size={30} color="black" opacity = '1' />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleFindNewGroup} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Find a New Group</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleNotifications} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Notifications</Text>
-          {/* Badge view */}
-          {notificationCounter > 0 && (
-            <View style={stylesHome.badge}>
-              <Text style={stylesHome.badgeText}>{notificationCounter}</Text>
-            </View>
-          )}
+        <MaterialIcons name="explore" size={30} color="black" opacity = '1' />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleUpcomingMeetings}
           style={stylesHome.button}
         >
-          <Text style={stylesHome.buttonText}>Upcoming Meetings</Text>
+          <Entypo name="cake" size={30} color="black" opacity = '1' />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleSignOut} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Log out</Text>
+        <Entypo name="log-out" size={30} color="black" opacity = '1' />
         </TouchableOpacity>
       </View>
+
     </ImageBackground>
   );
 };
@@ -155,12 +160,14 @@ export default HomeScreen;
 const stylesHome = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'row', // Arrange buttons horizontally
+    paddingHorizontal: 10, // Add some horizontal padding
+    paddingTop: 420, // Add some horizontal padding
   },
   button: {
-    backgroundColor: "#0782F9",
-    width: "60%",
+    width: "20%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -192,6 +199,14 @@ const stylesHome = StyleSheet.create({
     color: 'white', // Number color
     fontWeight: 'bold',
   },
+  notificationBotton:{
+    padding: 10, 
+    borderRadius: 10,
+    marginTop: 5,
+    marginLeft: 5,
+    borderRadius: 50,
+    opacity: 1
+  }
 })
 
 //#################################################################

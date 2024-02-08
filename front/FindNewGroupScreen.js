@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/default.png";
 import { sportType_data, city_data } from "../back/DataBase";
 import { MaterialIcons } from "@expo/vector-icons";
 

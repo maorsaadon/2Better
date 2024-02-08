@@ -10,8 +10,8 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import myLogoPic from "../assets/profileImage.jpeg";
+import { MaterialIcons , AntDesign} from "@expo/vector-icons";
+import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
@@ -89,7 +89,7 @@ const ProfileScreen = () => {
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
       <TouchableOpacity onPress={backButton} style={styles.button}>
-      <MaterialIcons name="chevron-left" size={30} color="white" />
+      <AntDesign name="back" size={30} color="black" />
       </TouchableOpacity>
         <View
           style={{
@@ -105,7 +105,7 @@ const ProfileScreen = () => {
                 width: 170,
                 borderRadius: 85,
                 borderWidth: 2,
-                borderColor: '#000066',
+                borderColor: '#366A68',
               }}
             />
 
@@ -120,7 +120,7 @@ const ProfileScreen = () => {
               <MaterialIcons
                 name="photo-camera"
                 size={32}
-                color='#000066'
+                color='#366A68'
               />
             </View>
           </TouchableOpacity>

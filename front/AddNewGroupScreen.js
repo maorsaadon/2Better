@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from "react-native";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/default.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import GroupService from "../back/GroupService";
 import { sportType_data, city_data, cityNames } from "../back/DataBase";

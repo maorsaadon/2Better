@@ -10,14 +10,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   button: {
-    backgroundColor: "#000066",
     width: "20%",
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", // Use absolute positioning
     top: 0, // Align to the bottom
-    left: 0, // Align to the left
+    left: -38, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
   },
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonTextEdit: {
-    color: "#000066",
+    color: "#366A68",
     fontWeight: "700",
     fontSize: 16,
   },
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
   },
   label: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#366A68",
     color: "black",
     fontSize: 18,
     padding: 5,

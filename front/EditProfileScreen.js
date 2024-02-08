@@ -10,7 +10,7 @@ import {
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
-import myLogoPic from "../assets/profileImage.jpeg";
+import myLogoPic from "../assets/default.png";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const EditProfileScreen = () => {

@@ -12,7 +12,7 @@ import {
 import { notificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../back/firebase";
-import myLogoPic from "../assets/2better-logo.jpeg";
+import myLogoPic from "../assets/default.png";
 import NotificationCard from "../components/NotificationCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import {notificationCount} from "../back/DataBase";
