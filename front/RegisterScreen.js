@@ -11,10 +11,14 @@ import {
 } from "react-native";
 import { auth, db } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
+  const [emailVarify, setEmailVerfiy] = useState(false);
   const [password, setPassword] = useState("");
+  const [passwordVarify, setPasswordVerfiy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
@@ -61,42 +65,133 @@ const RegisterScreen = () => {
   const handleSignIn = () => {
     navigation.navigate("Login");
   };
+
+  function handleEmail(text) {
+    setEmail(text);
+    setEmailVerfiy(false);
+  
+    if (/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(text)) {
+      setEmailVerfiy(true);
+    }
+  };
+
+  function handlePassword(text) {
+    setPassword(text);
+    setPasswordVerfiy(false);
+
+    if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(text)) {
+      setPasswordVerfiy(true);
+    }
+  };
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="FirstName"
-            value={firstName}
-            onChangeText={(text) => setFirstName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="LastName"
-            value={lastName}
-            onChangeText={(text) => setLastName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
-          />
-
-          <TextInput
-            placeholder="City"
-            value={city}
-            onChangeText={(text) => setCity(text)}
-            style={styles.input}
-          />
+          {/* First name line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="person"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="FirstName"
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+              style={styles.input}
+            />
+          </View>
+          {/* Last name line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="person"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="LastName"
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
+              style={styles.input}
+            />
+          </View>
+          {/* Email line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="email"
+              color="#420475"
+              size={30}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              // onChangeText={(text) => setEmail(text)}
+              onChangeText={handleEmail}
+              style={styles.input}
+            />
+            {email.length > 0 && (
+              <View style={styles.checkIcon}>
+                {emailVarify ? (
+                  <MaterialIcons name="check-circle" color="green" size={30} />
+                ) : (
+                  <MaterialIcons name="error" color="red" size={30} />
+                )}
+              </View>
+            )}
+          </View>
+          {/* Warn line for example@gmail.com to tell the format of the mail */}
+          {email.length < 1 ? null : emailVarify ? null : (
+            <Text style={{ marginLeft: 20 , color: 'red'}} >example@gmail.com</Text>
+          )}
+          {/* Password line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="lock"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={handlePassword}
+              style={styles.passwordInput}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+              <View style={styles.checkShowIcon}>
+                {password.length < 1 ? null : 
+                <MaterialIcons
+                  name="remove-red-eye"
+                  color={passwordVarify ? 'green' : 'red'}
+                  size={30} 
+                />
+                }
+              </View>
+            </TouchableOpacity>
+          </View>
+          {/* Warn line for password to tell the format of the password */}
+          {password.length < 1 ? null : passwordVarify ? null : (
+            <Text style={{ marginLeft: 20 , color: 'red'}} >Uppercase, Lowercase, Number and 6 or more characters</Text>
+          )}
+          {/* City line */}
+          <View style={styles.inputRow}>
+            <MaterialIcons 
+              name="location-city"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="City"
+              value={city}
+              onChangeText={(text) => setCity(text)}
+              style={styles.input}
+            />
+          </View>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -131,10 +226,43 @@ const styles = StyleSheet.create({
     marginTop: 70,
     marginLeft: 25,
   },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  icon: {
+    position: 'absolute',
+    left: 5,
+    zIndex: 1,
+  },
+  checkIcon: {
+    position: 'absolute',
+    right: 5,
+    bottom: 10,
+    zIndex: 1,
+  },
+  checkShowIcon: {
+    position: 'absolute',
+    right: 5,
+    bottom: -18,
+    zIndex: 1,
+  },
   input: {
+    width: "100%",
     backgroundColor: "#C3D4D3",
-    paddingHorizontal: 15,
+    paddingHorizontal: 35,
     paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    borderColor: "#C3D4D3",
+    borderWidth: 2,
+  },
+  passwordInput: {
+    flex: 1,
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 35,
+    paddingVertical: 8, // Adjusted padding
     borderRadius: 10,
     marginTop: 5,
     borderColor: "#C3D4D3",
