@@ -34,16 +34,16 @@ const ProfileScreen = () => {
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
-      const storage = getStorage();
-      const storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
+      // const storage = getStorage();
+      // const storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
       
-      try {
-        const url = await getDownloadURL(storageRef);
-        setImageUrl(url);
-        console.log(url)
-      } catch (error) {
-        console.error('Error retrieving image:', error);
-      }
+      // try {
+      //   const url = await getDownloadURL(storageRef);
+      //   setImageUrl(url);
+      //   console.log(url)
+      // } catch (error) {
+      //   console.error('Error retrieving image:', error);
+      // }
     };
 
     fetchUserDetails();
