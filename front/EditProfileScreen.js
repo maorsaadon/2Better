@@ -6,12 +6,16 @@ import {
   Button,
   View,
   ImageBackground,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as ImagePicker from 'expo-image-picker';
+
 
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
@@ -19,7 +23,7 @@ const EditProfileScreen = () => {
   const [city, setCity] = useState("");
 
   const navigation = useNavigation();
-  
+  const [selectedImage, setSelectedImage] = useState();
 
   const handleSave = async () => {
     try {
@@ -40,10 +44,58 @@ const EditProfileScreen = () => {
       setCity(UserCity);
     }, [])
   );
+  const handleImageSelection = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
+      <View
+          style={{
+            alignItems: "center",
+            marginVertical: 22,
+          }}
+        >
+          <TouchableOpacity onPress={handleImageSelection}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={{
+                height: 170,
+                width: 170,
+                borderRadius: 85,
+                borderWidth: 2,
+                borderColor: '#366A68',
+              }}
+            />
+
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 10,
+                zIndex: 9999,
+              }}
+            >
+              <MaterialIcons
+                name="photo-camera"
+                size={32}
+                color='#366A68'
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.label}>First Name:</Text>
         <TextInput
           style={styles.input}

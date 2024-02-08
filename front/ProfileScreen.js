@@ -10,13 +10,13 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { MaterialIcons , AntDesign , Entypo} from "@expo/vector-icons";
+import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
-import {styles} from "../components/StylesSheets"
+import { styles } from "../components/StylesSheets"
 
 
 const ProfileScreen = () => {
@@ -88,9 +88,9 @@ const ProfileScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.button}>
-      <AntDesign name="back" size={30} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={backButton} style={styles.button}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
         <View
           style={{
             alignItems: "center",
@@ -117,11 +117,6 @@ const ProfileScreen = () => {
                 zIndex: 9999,
               }}
             >
-              <MaterialIcons
-                name="photo-camera"
-                size={32}
-                color='#366A68'
-              />
             </View>
           </TouchableOpacity>
         </View>
@@ -130,8 +125,8 @@ const ProfileScreen = () => {
             {userFirstName} {userLastName}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Entypo name="mail" size={30} color="black" />
-          <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
+            <Entypo name="mail" size={30} color="black" />
+            <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
