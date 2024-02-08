@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
@@ -15,8 +16,15 @@ import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import * as FileSystem from 'expo-file-system';
+import { auth } from '../back/firebase';
 
 
+
+
+
+export let imageUri = null;
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,11 +33,12 @@ const EditProfileScreen = () => {
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState();
 
+
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
       await UserService.updateUserDetails(firstName, lastName, city, []);
-      navigation.replace("Home"); // Go back to the Home screen after saving
+      navigation.replace("Profile"); // Go back to the Home screen after saving
     } catch (error) {
       console.error("Error updating user details:", error);
     }
@@ -44,6 +53,8 @@ const EditProfileScreen = () => {
       setCity(UserCity);
     }, [])
   );
+
+
   const handleImageSelection = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -55,14 +66,58 @@ const EditProfileScreen = () => {
     console.log(result);
 
     if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+
+      imageUri = result.assets[0].uri
+      if (!imageUri) return;
+      setSelectedImage(imageUri);
+      try {
+        const { uri } = await FileSystem.getInfoAsync(imageUri);
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = () => {
+            resolve(xhr.response);
+          };
+          xhr.onerror = (e) => {
+            reject(new TypeError('Network request faild'));
+          };
+          xhr.responseType = 'blob';
+          xhr.open('GET', uri, true);
+          xhr.send(null);
+        });
+
+
+
+        const storage = getStorage();
+
+        const storageRef = ref(storage, `UsersProfilePics/${auth.currentUser.email}`);
+
+        // 'file' comes from the Blob or File API
+        uploadBytes(storageRef, blob).then((snapshot) => {
+          console.log('Uploaded a blob or file!');
+        });
+
+
+        Alert.alert("photo uploading");
+
+      } catch (error) {
+        console.error(error);
+      }
+      // const storage = getStorage();
+
+      // const storageRef = ref(storage, `UsersProfilePics/${firstName+ '2'} `);
+      // file = result.Image
+      // // 'file' comes from the Blob or File API
+      // uploadBytes(storageRef, file).then((snapshot) => {
+      //   console.log('Uploaded a blob or file!');
+      // });
+      // Function to upload image
     }
   };
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-      <View
+        <View
           style={{
             alignItems: "center",
             marginVertical: 22,
@@ -129,6 +184,7 @@ const EditProfileScreen = () => {
   );
 };
 
+//export { imageUri };
 export default EditProfileScreen;
 
 const styles = StyleSheet.create({
