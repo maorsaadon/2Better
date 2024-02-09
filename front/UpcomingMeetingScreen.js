@@ -171,8 +171,9 @@
 
 //###################################################################################################33
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, ImageBackground, Modal, Pressable } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, ImageBackground, Modal, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
+import { AntDesign } from "@expo/vector-icons";
 import myLogoPic from '../assets/default.png';
 import MeetingService from '../back/MeetingService';
 import MeetingCard from "../components/MeetingCard";
@@ -181,6 +182,7 @@ import MeetingCard from "../components/MeetingCard";
 const UpcomingMeetingsScreen = () => {
   const navigation = useNavigation();
   const [leaderMeetings, setLeaderMeetings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
     
     useEffect(() => {
@@ -188,8 +190,16 @@ const UpcomingMeetingsScreen = () => {
         const {leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
         setLeaderMeetings(leaderMeetings);
       };
-  
+      // try{
+      //   fetchMeetings();
+      // }
+      // catch (error) {
+      //   console.error("Error fetching Meetings:", error);
+      // } finally {
+      //   setIsLoading(false);
+      // }
       fetchMeetings();
+      setIsLoading(false);
     }, []);
 
   const backButton = () => {
@@ -202,22 +212,23 @@ const UpcomingMeetingsScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity>
-      <View>
-        <Text style={styles.title}>Group as a leader</Text>
-      </View>
-        <View style={styles.container}>
-          <ScrollView>
-            <View style={styles.container}>
-              {/* Map over the groups array to render AppointmentCards */}
-              {leaderMeetings.map((meeting, index) => (
-                <MeetingCard key={index} meeting={meeting} isLeader={1} />
-              ))}
-            </View>
-          </ScrollView>
+          {isLoading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+            <ScrollView>
+              <View style={styles.container}>
+                {/* Map over the groups array to render AppointmentCards */}
+                {leaderMeetings.map((meeting, index) => (
+                  <MeetingCard key={index} meeting={meeting} isLeader={1} />
+                ))}
+              </View>
+            </ScrollView>
+            )}
         </View>
 
     </ImageBackground>
@@ -240,12 +251,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   backButton: {
-    backgroundColor: "#3B82F6",
     width: "20%",
-    padding: 15,
-    borderRadius: 50,
+    padding: 10,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 6,
+    position: "absolute", // Use absolute positioning
+    top: 0, // Align to the bottom
+    left: -38, // Align to the left
+    marginBottom: 10, // Optional margin to add some space from the bottom
+    marginLeft: 10, // Optional margin to add some space from the left
   },
   backButtonText: {
     alignSelf: "center",

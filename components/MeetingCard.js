@@ -107,6 +107,16 @@ return (
         >
             <Text style={styles.buttonText}>Join Meeting</Text>
         </TouchableOpacity>
+        
+        {meeting.IsLeader ? (
+        <TouchableOpacity 
+        style={styles.button}
+        onPress={handleJoinPress}
+        >
+            <Text style={styles.buttonText}>Edit</Text>
+        </TouchableOpacity>
+      ) : ( <Text/>
+        )}
         </View>
     </View>
     </SafeAreaView>
