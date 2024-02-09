@@ -131,6 +131,22 @@ export const MeetingService = {
     return { leaderMeetings };
     
   },
+
+  async addUserToMeeting(meetingId) {
+    try {
+      // Assuming 'Meetings' is the name of the collection where meetings are stored
+      const meetingRef = await db.collection("Meetings").doc(meetingId);
+      const currMembers = meetingRef.get();
+      // Update the user document
+      await meetingRef.update({
+        NumberOfMembers: currMembers.NumberOfMembers + 1,
+      });
+    } catch (error) {
+      console.error(`Error update meetings members!`, error);
+      // Handle the error accordingly
+    }
+  },
+
 };
 
 export default MeetingService;

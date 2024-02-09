@@ -185,21 +185,36 @@ const UpcomingMeetingsScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
     
+    // useEffect(() => {
+    //   const fetchMeetings = async () => {
+    //     const {leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
+    //     setLeaderMeetings(leaderMeetings);
+    //   };
+    //   // try{
+    //   //   fetchMeetings();
+    //   // }
+    //   // catch (error) {
+    //   //   console.error("Error fetching Meetings:", error);
+    //   // } finally {
+    //   //   setIsLoading(false);
+    //   // }
+    //   fetchMeetings();
+    //   setIsLoading(false);
+    // }, []);
+
     useEffect(() => {
       const fetchMeetings = async () => {
-        const {leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
-        setLeaderMeetings(leaderMeetings);
+        try {
+          const { leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
+          setLeaderMeetings(leaderMeetings);
+        } catch (error) {
+          console.error("Error fetching Meetings:", error);
+        } finally {
+          setIsLoading(false); // This ensures isLoading is set to false after fetching is done
+        }
       };
-      // try{
-      //   fetchMeetings();
-      // }
-      // catch (error) {
-      //   console.error("Error fetching Meetings:", error);
-      // } finally {
-      //   setIsLoading(false);
-      // }
+  
       fetchMeetings();
-      setIsLoading(false);
     }, []);
 
   const backButton = () => {
@@ -218,7 +233,7 @@ const UpcomingMeetingsScreen = () => {
         </TouchableOpacity>
 
           {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="black" />
         ) : (
             <ScrollView>
               <View style={styles.container}>
