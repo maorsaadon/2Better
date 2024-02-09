@@ -22,14 +22,15 @@ sportIconMapping_FontAwesome,
 sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
 // import { auth } from "../back/firebase";
-// import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 // import { serverTimestamp } from "firebase/firestore";
 
 const screenWidth = Dimensions.get("window").width;
 
 const MeetingCard = ({ meeting, isLeader }) => {
-
+    
+const [hasJoined, setHasJoined] = useState(false); // New state to track if joined
 const groupName = meeting?.GroupName ?? "Default Name";
 // const currentParticipants = parseInt(meeting.Members, 10);
 // const totalCapacity = parseInt(meeting.TotalCapacity, 10);
@@ -58,8 +59,12 @@ const getSportIcon = (sportType) => {
 };
 
 const handleJoinPress = () =>{
-    // NotificationService.handleAddNewNotification(group.LeaderEmail, content, "Group joining request", serverTimestamp())
-    console.log("Click on hendel Join Meeting!");
+    setHasJoined(true); // Set hasJoined to true when button is pressed
+    console.log("Click on Join Meeting!");
+};
+
+const handleEditPress = () =>{
+    console.log("Click on Edit!");
 };
 
 return (
@@ -101,12 +106,11 @@ return (
         <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={handleJoinPress}
-        >
+        {!hasJoined && ( // Only show if hasJoined is false
+          <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
             <Text style={styles.buttonText}>Join Meeting</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        )}
         
         {meeting.IsLeader ? (
         <TouchableOpacity 

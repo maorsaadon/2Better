@@ -124,6 +124,10 @@ export const MeetingService = {
         });
       }
 
+      // Sort leaderMeetings by Timestamp
+      // leaderMeetings.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
+
+
     } catch (error) {
       console.error("Error fetching meetings by user role: ", error);
     }
