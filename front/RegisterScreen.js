@@ -12,6 +12,7 @@ import {
 import { auth, db } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
+import { city_data } from "../back/DataBase";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
@@ -60,6 +61,14 @@ const RegisterScreen = () => {
   
     if (!isPasswordValid(password)) {
       alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long.");
+      return;
+    }
+
+    // Check if the entered city is in the predefined list
+    const isCityValid = city_data.find((cityObj) => cityObj.value === city);
+
+    if (!isCityValid) {
+      alert("Please enter a valid city");
       return;
     }
 
