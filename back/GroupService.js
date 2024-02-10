@@ -272,6 +272,10 @@ export const GroupService = {
 
   async getGroupsBySort(sportType, city) {
     try {
+      if (!auth.currentUser) {
+        console.error("No user is currently logged in.");
+        return [];
+      }
       const userEmail = auth.currentUser.email;
       const groupsRef = db.collection("Groups").where("LeaderEmail", "!=", userEmail);
   
@@ -325,8 +329,7 @@ export const GroupService = {
     }
   },
 
-  async handleSubscribeGroup(isSubscribe, groupName) {
-    const userEmail = auth.currentUser.email;
+  async handleJoinGroup(isSubscribe, groupName, userEmail = auth.currentUser.email) {
     try {
       const groupRef = db.collection("Groups").doc(groupName);
       const groupSnapshot = await groupRef.get();

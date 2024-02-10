@@ -21,13 +21,14 @@ import {
 import NotificationService from "../back/NotificationsService";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
-
+import { auth, db } from "../back/firebase";
 
 const screenWidth = Dimensions.get("window").width;
 
 const ResultGroupCard = ({ group }) => {
 
   const groupName = group?.GroupName ?? "Default Name";
+  const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
   const totalCapacity = parseInt(group.TotalCapacity, 10);
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to subscribe to your group `" + groupName +"`"
@@ -51,8 +52,8 @@ const ResultGroupCard = ({ group }) => {
     return null; 
   };
 
-  const handleSubscribePress = () =>{
-    NotificationService.handleAddNewNotification(groupName, group.LeaderEmail, content, "Group subscribe request", serverTimestamp());
+  const handleRequestPress = () =>{
+    NotificationService.handleAddNewNotification(groupName, content, "Group Join request", serverTimestamp(), auth.currentUser.email, groupLeaderEmail);
   };
 
   return (
@@ -82,9 +83,9 @@ const ResultGroupCard = ({ group }) => {
         <View style={styles.cardBottomRow}>
           <TouchableOpacity 
           style={styles.button}
-          onPress={() => handleSubscribePress(groupName)}
+          onPress={() => handleRequestPress(groupName)}
           >
-            <Text style={styles.buttonText}>Subscribe</Text>
+            <Text style={styles.buttonText}>Request</Text>
           </TouchableOpacity>
         </View>
       </View>

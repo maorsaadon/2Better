@@ -21,12 +21,15 @@ import {
 import NotificationService from "../back/NotificationsService";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
+import GroupService from "../back/GroupService";
+import { auth } from "../back/firebase";
 
 const screenWidth = Dimensions.get("window").width;
 
 const MemberGroupCard = ({ group }) => {
   
   const groupName = group?.GroupName ?? "Default Name";
+  const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
   const totalCapacity = parseInt(group.TotalCapacity, 10);
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to unsubscribe to your group `" + groupName +"`"
@@ -51,8 +54,8 @@ const MemberGroupCard = ({ group }) => {
   };
 
   const handleUnsubscribePress = () =>{
-    NotificationService.handleAddNewNotification(group.LeaderEmail, content, "Group unsubscribe", serverTimestamp())
-    GroupService.handleSubscribeGroup(true, group.GroupName);
+    NotificationService.handleAddNewNotification(groupName, content, "Group unsubscribe", serverTimestamp(), auth.currentUser.email, groupLeaderEmail)
+    GroupService.handleJoinGroup(true, group.GroupName);
   };
 
   return (

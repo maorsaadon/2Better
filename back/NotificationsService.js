@@ -34,7 +34,6 @@ export const notificationService = {
           Type: notificationData.Type || "Unknown",
           TimeStamp: timeStamp || "Unknown",
         });
-        console.log(timeStamp + " " + notificationData.Addressee);
       });
       
       notifications.sort((a, b) => {
@@ -57,34 +56,28 @@ export const notificationService = {
     
   },
   
-  async handleAddNewNotification(groupName, content, type, timeStamp) {
+  async handleAddNewNotification(groupName, content, type, timeStamp, from = "default mail", addressee = "default") {
     const groupLeaderEmail = await GroupService.getLeaderEmail(groupName);
-    const groupMembers = await GroupService.getMembers(groupName);
+    if( type === "New Meeting"){
+      const groupMembers = await GroupService.getMembers(groupName);
 
-    console.log("Group Leader Email = " + groupLeaderEmail);
-    
-    try {
-      // Create a new document reference for the leader notification
-      const leaderNotifRef = db.collection("Notifications").doc();
-      await leaderNotifRef.set({
-        Addressee: groupLeaderEmail,
-        GroupName: groupName,
-        Content: content,
-        Type: type,
-        TimeStamp: timeStamp,
-      });
-      // Assuming updateUserNotificationCounter is related to the leader, adjust as necessary
-      await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter() + 1);
-    } catch (error) {
-        console.error("Error creating Notification for leader: ", error);
-        alert(error.message);
-    }
-    
-    for (const member of groupMembers) {
-      console.log("Group Member Email = " + member);
-      
       try {
-          // Create a new document reference for each member notification
+        const leaderNotifRef = db.collection("Notifications").doc();
+        await leaderNotifRef.set({
+          Addressee: groupLeaderEmail,
+          GroupName: groupName,
+          Content: content,
+          Type: type,
+          TimeStamp: timeStamp,
+        });
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter() + 1);
+      } catch (error) {
+          console.error("Error creating Notification for leader: ", error);
+          alert(error.message);
+      }
+    
+      for (const member of groupMembers) {
+        try {
           const memberNotifRef = db.collection("Notifications").doc();
           await memberNotifRef.set({
             Addressee: member,
@@ -93,13 +86,30 @@ export const notificationService = {
             Type: type,
             TimeStamp: timeStamp,
           });
-          // Update notification counter for each member
           await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(member) + 1, member);
+        } catch (error) {
+            console.error("Error creating Notification for member: ", error);
+            alert(error.message);
+        }
+      }
+    }else{
+      try {
+        const NotificationRef = db.collection("Notifications").doc();
+        await NotificationRef.set({
+          Addressee: groupLeaderEmail,
+          GroupName: groupName,
+          Content: content,
+          Type: type,
+          TimeStamp: timeStamp,
+          From: from,
+        });
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter() + 1);
       } catch (error) {
-          console.error("Error creating Notification for member: ", error);
+          console.error("Error creating Notification for leader: ", error);
           alert(error.message);
       }
     }
+
   },
 };
 

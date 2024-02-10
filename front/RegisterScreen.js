@@ -85,6 +85,7 @@ const RegisterScreen = () => {
             LastName: lastName,
             City: city,
             Email: email,
+            NotificationCounter: 0,
           });
       })
       .catch((error) => alert(error.message));

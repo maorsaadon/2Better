@@ -37,9 +37,6 @@ const HomeScreen = () => {
     // fetchGroups();
   },[]);
   
-
-  console.log("notification Counter: " + userNotificationCounter);
-
   const handleSignOut = () => {
     auth
       .signOut()

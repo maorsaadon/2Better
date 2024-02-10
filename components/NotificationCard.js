@@ -19,16 +19,30 @@ import { GroupService } from "../back/GroupService";
 const screenWidth = Dimensions.get("window").width;
 
 const NotificationCard = ({ notification }) => {
-   const navigation = useNavigation();
-    const addressee = notification?.Addressee ?? "Default Addressee"
     const content = notification?.Content ?? "Default Content"
     const type = notification?.Type ?? "Default Type"
-    const groupName = notification?.groupName ?? "Default Name"
-    const request = type == "Group subscribe request" ? true : false;
+    const groupName = notification?.GroupName ?? "Default GroupName"
+    const request = type == "Group Join request" ? true : false
+    const from = notification?.From ?? "Default From"
+    const addressee = notification?.Addressee ?? "Default Addressee"
 
     const handleAcceptButton = () => {
       try {
-          GroupService.handleSubscribeGroup(false, groupName);
+        console.log(content);
+        console.log(type);
+        console.log(groupName);
+        console.log(request);
+        console.log(from);
+        console.log(addressee);
+          GroupService.handleJoinGroup(false, groupName, from);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    const handleRejectButton = () => {
+      try {
+          GroupService.handleJoinGroup(false, groupName, from);
       } catch (error) {
         alert(error.message);
       }
