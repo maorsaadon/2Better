@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import { auth, db } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
+//import myDefaultPic from '../assets/iconProfile.jpeg';
 import { MaterialIcons } from "@expo/vector-icons";
-import { city_data } from "../back/DataBase";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
@@ -43,38 +43,12 @@ const RegisterScreen = () => {
     return unsubscribe;
   }, []);
 
-  const isEmailValid = (email) => {
-    return /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(email);
-  };
-  
-  const isPasswordValid = (password) => {
-    return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password);
-  };
-
   const handleSignUp = () => {
     email = email.toLowerCase();
-
-    if (!isEmailValid(email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-  
-    if (!isPasswordValid(password)) {
-      alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long.");
-      return;
-    }
-
-    // Check if the entered city is in the predefined list
-    const isCityValid = city_data.find((cityObj) => cityObj.value === city);
-
-    if (!isCityValid) {
-      alert("Please enter a valid city");
-      return;
-    }
-
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
+        
         const user = userCredentials.user;
         console.log("Registered with:", email);
 
@@ -87,8 +61,12 @@ const RegisterScreen = () => {
             Email: email,
             NotificationCounter: 0,
           });
+
+        
       })
+
       .catch((error) => alert(error.message));
+
   };
   const handleSignIn = () => {
     navigation.navigate("Login");
@@ -98,7 +76,7 @@ const RegisterScreen = () => {
     setEmail(text);
     setEmailVerfiy(false);
   
-    if (isEmailValid(text)) {
+    if (/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(text)) {
       setEmailVerfiy(true);
     }
   };
@@ -117,7 +95,7 @@ const RegisterScreen = () => {
         <View style={styles.inputContainer}>
           {/* First name line */}
           <View style={styles.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="person"
               color="#420475"
               size={26}
@@ -132,7 +110,7 @@ const RegisterScreen = () => {
           </View>
           {/* Last name line */}
           <View style={styles.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="person"
               color="#420475"
               size={26}
@@ -147,7 +125,7 @@ const RegisterScreen = () => {
           </View>
           {/* Email line */}
           <View style={styles.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="email"
               color="#420475"
               size={30}
@@ -172,11 +150,11 @@ const RegisterScreen = () => {
           </View>
           {/* Warn line for example@gmail.com to tell the format of the mail */}
           {email.length < 1 ? null : emailVarify ? null : (
-            <Text style={{ marginLeft: 20 , color: 'red'}} >example@gmail.com</Text>
+            <Text style={{ marginLeft: 20, color: 'red' }} >example@gmail.com</Text>
           )}
           {/* Password line */}
           <View style={styles.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="lock"
               color="#420475"
               size={26}
@@ -191,23 +169,23 @@ const RegisterScreen = () => {
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <View style={styles.checkShowIcon}>
-                {password.length < 1 ? null : 
-                <MaterialIcons
-                  name="remove-red-eye"
-                  color={passwordVarify ? 'green' : 'red'}
-                  size={30} 
-                />
+                {password.length < 1 ? null :
+                  <MaterialIcons
+                    name="remove-red-eye"
+                    color={passwordVarify ? 'green' : 'red'}
+                    size={30}
+                  />
                 }
               </View>
             </TouchableOpacity>
           </View>
           {/* Warn line for password to tell the format of the password */}
           {password.length < 1 ? null : passwordVarify ? null : (
-            <Text style={{ marginLeft: 20 , color: 'red'}} >Uppercase, Lowercase, Number and 6 or more characters</Text>
+            <Text style={{ marginLeft: 20, color: 'red' }} >Uppercase, Lowercase, Number and 6 or more characters</Text>
           )}
           {/* City line */}
           <View style={styles.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="location-city"
               color="#420475"
               size={26}
@@ -336,14 +314,14 @@ const styles = StyleSheet.create({
   },
   buttonEdit: {
     position: 'absolute',
-    top: 55, 
-    left: 30, 
+    top: 55,
+    left: 30,
     width: "30%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
-  
+
   buttonTextEdit: {
     color: "#366A68",
     fontWeight: "700",

@@ -14,8 +14,8 @@ import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
 import { styles } from "../components/StylesSheets"
-import EditProfileScreen from '../front/EditProfileScreen'
-import { getStorage, ref ,getDownloadURL} from "firebase/storage";
+import EditProfileScreen, { changeImage } from '../front/EditProfileScreen'
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,16 +34,21 @@ const ProfileScreen = () => {
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
-      // const storage = getStorage();
-      // const storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
-      
-      // try {
-      //   const url = await getDownloadURL(storageRef);
-      //   setImageUrl(url);
-      //   console.log(url)
-      // } catch (error) {
-      //   console.error('Error retrieving image:', error);
-      // }
+      const storage = getStorage();
+      let storageRef;
+      if (!changeImage) {
+        storageRef = ref(storage, 'UsersProfilePics/' + 'iconProfile.jpeg');
+      }
+      else {
+        storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
+      }
+      try {
+        const url = await getDownloadURL(storageRef);
+        setImageUrl(url);
+        console.log(url)
+      } catch (error) {
+        console.error('Error retrieving image:', error);
+      }
     };
 
     fetchUserDetails();
@@ -91,27 +96,27 @@ const ProfileScreen = () => {
             marginVertical: 22,
           }}
         >
-            <Image
-              source={{ uri: imageUrl}}
-              style={{
-                height: 170,
-                width: 170,
-                borderRadius: 85,
-                borderWidth: 2,
-                borderColor: '#366A68',
-              }}
-            />
+          <Image
+            source={{ uri: imageUrl }}
+            style={{
+              height: 170,
+              width: 170,
+              borderRadius: 85,
+              borderWidth: 2,
+              borderColor: '#366A68',
+            }}
+          />
 
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 10,
-                zIndex: 9999,
-              }}
-            >
-            </View>
-          
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 10,
+              zIndex: 9999,
+            }}
+          >
+          </View>
+
         </View>
         <View style={styles.userInfoContainer}>
           <Text style={styles.valueName}>
