@@ -21,7 +21,7 @@ import {
 import NotificationService from "../back/NotificationsService";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../back/firebase";
+import { auth } from "../back/firebase";
 
 const screenWidth = Dimensions.get("window").width;
 

@@ -29,10 +29,11 @@ export const notificationService = {
         
         notifications.push({
           Addressee: notificationData.Addressee || "Unknown",
-          GroupName: notificationData.groupName || "Unknown",
+          GroupName: notificationData.GroupName || "Unknown",
           Content: notificationData.Content || "Unknown",
           Type: notificationData.Type || "Unknown",
           TimeStamp: timeStamp || "Unknown",
+          From: notificationData.From || "Unknown",
         });
       });
       

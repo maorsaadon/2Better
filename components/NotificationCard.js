@@ -13,8 +13,10 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/core";
 import { GroupService } from "../back/GroupService";
+import NotificationService from "../back/NotificationsService";
+import { serverTimestamp } from "firebase/firestore";
+import { auth } from "../back/firebase";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -24,25 +26,22 @@ const NotificationCard = ({ notification }) => {
     const groupName = notification?.GroupName ?? "Default GroupName"
     const request = type == "Group Join request" ? true : false
     const from = notification?.From ?? "Default From"
-    const addressee = notification?.Addressee ?? "Default Addressee"
 
     const handleAcceptButton = () => {
+      const acceptContent = `Your request to join ${groupName} has been accepted`
       try {
-        console.log(content);
-        console.log(type);
-        console.log(groupName);
-        console.log(request);
-        console.log(from);
-        console.log(addressee);
-          GroupService.handleJoinGroup(false, groupName, from);
+        GroupService.handleJoinGroup(false, groupName, from);
+        NotificationService.handleAddNewNotification(groupName, acceptContent, "Request accepted", serverTimestamp(), auth.currentUser.email, from);
       } catch (error) {
         alert(error.message);
       }
     };
-
+    
     const handleRejectButton = () => {
+      const rejectContent = `Your request to join ${groupName} has been denied`
       try {
-          GroupService.handleJoinGroup(false, groupName, from);
+          GroupService.handleJoinGroup(true, groupName, from);
+          NotificationService.handleAddNewNotification(groupName, rejectContent, "Request rejected", serverTimestamp(), auth.currentUser.email, from);
       } catch (error) {
         alert(error.message);
       }
