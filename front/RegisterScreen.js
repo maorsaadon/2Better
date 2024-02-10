@@ -11,8 +11,9 @@ import {
 } from "react-native";
 import { auth, db } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
-//import myDefaultPic from '../assets/iconProfile.jpeg';
 import { MaterialIcons } from "@expo/vector-icons";
+import { city_data } from "../back/DataBase";
+//import Autocomplete from "react-native-autocomplete-input";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
@@ -23,6 +24,10 @@ const RegisterScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
+
+  // const [query, setQuery] = useState("");
+  // const [data, setData] = useState([]);
+  // const [selectedCity, setSelectedCity] = useState(null);
 
   const navigation = useNavigation();
 
@@ -39,16 +44,48 @@ const RegisterScreen = () => {
         }
       }
     });
-
+    // if (query.trim().length > 0) {
+    //   const cities = findCity(query);
+    //   setData(cities);
+    // } else {
+    //   setData([]);
+    // }
     return unsubscribe;
+  // }, [query]);
   }, []);
+
+  const isEmailValid = (email) => {
+    return /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(email);
+  };
+  
+  const isPasswordValid = (password) => {
+    return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password);
+  };
 
   const handleSignUp = () => {
     email = email.toLowerCase();
+
+    if (!isEmailValid(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+  
+    if (!isPasswordValid(password)) {
+      alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long.");
+      return;
+    }
+
+    // Check if the entered city is in the predefined list
+    const isCityValid = city_data.find((cityObj) => cityObj.value === city);
+
+    if (!isCityValid) {
+      alert("Please enter a valid city");
+      return;
+    }
+
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
-        
         const user = userCredentials.user;
         console.log("Registered with:", email);
 
@@ -59,14 +96,9 @@ const RegisterScreen = () => {
             LastName: lastName,
             City: city,
             Email: email,
-            NotificationCounter: 0,
           });
-
-        
       })
-
       .catch((error) => alert(error.message));
-
   };
   const handleSignIn = () => {
     navigation.navigate("Login");
@@ -76,7 +108,7 @@ const RegisterScreen = () => {
     setEmail(text);
     setEmailVerfiy(false);
   
-    if (/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(text)) {
+    if (isEmailValid(text)) {
       setEmailVerfiy(true);
     }
   };
@@ -89,13 +121,36 @@ const RegisterScreen = () => {
       setPasswordVerfiy(true);
     }
   };
+
+  // const findCity = (query) => {
+  //   const regex = new RegExp(`${query.trim()}`, "i");
+  //   return city_data.filter((cityObj) => cityObj.label.search(regex) >= 0);
+  // };
+
+  // const handleCityChange = (text) => {
+  //   setQuery(text);
+  // };
+
+  // const renderCityItem = ({ item }) => (
+  //   <TouchableOpacity
+  //     onPress={() => {
+  //       setSelectedCity(item.label);
+  //       setQuery(item.label);
+  //       setData([]); // Hide suggestions after selecting a city
+  //     }}
+  //   >
+  //     <Text style={styles.autocompleteItem}>{item.label}</Text>
+  //   </TouchableOpacity>
+  // );
+
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
         <View style={styles.inputContainer}>
           {/* First name line */}
           <View style={styles.inputRow}>
-            <MaterialIcons
+            <MaterialIcons 
               name="person"
               color="#420475"
               size={26}
@@ -110,7 +165,7 @@ const RegisterScreen = () => {
           </View>
           {/* Last name line */}
           <View style={styles.inputRow}>
-            <MaterialIcons
+            <MaterialIcons 
               name="person"
               color="#420475"
               size={26}
@@ -125,7 +180,7 @@ const RegisterScreen = () => {
           </View>
           {/* Email line */}
           <View style={styles.inputRow}>
-            <MaterialIcons
+            <MaterialIcons 
               name="email"
               color="#420475"
               size={30}
@@ -150,11 +205,11 @@ const RegisterScreen = () => {
           </View>
           {/* Warn line for example@gmail.com to tell the format of the mail */}
           {email.length < 1 ? null : emailVarify ? null : (
-            <Text style={{ marginLeft: 20, color: 'red' }} >example@gmail.com</Text>
+            <Text style={{ marginLeft: 20 , color: 'red'}} >example@gmail.com</Text>
           )}
           {/* Password line */}
           <View style={styles.inputRow}>
-            <MaterialIcons
+            <MaterialIcons 
               name="lock"
               color="#420475"
               size={26}
@@ -169,23 +224,43 @@ const RegisterScreen = () => {
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <View style={styles.checkShowIcon}>
-                {password.length < 1 ? null :
-                  <MaterialIcons
-                    name="remove-red-eye"
-                    color={passwordVarify ? 'green' : 'red'}
-                    size={30}
-                  />
+                {password.length < 1 ? null : 
+                <MaterialIcons
+                  name="remove-red-eye"
+                  color={passwordVarify ? 'green' : 'red'}
+                  size={30} 
+                />
                 }
               </View>
             </TouchableOpacity>
           </View>
           {/* Warn line for password to tell the format of the password */}
           {password.length < 1 ? null : passwordVarify ? null : (
-            <Text style={{ marginLeft: 20, color: 'red' }} >Uppercase, Lowercase, Number and 6 or more characters</Text>
+            <Text style={{ marginLeft: 20 , color: 'red'}} >Uppercase, Lowercase, Number and 6 or more characters</Text>
           )}
+          {/* City Autocomplete */}
+          {/* <View style={styles.inputRow}>
+            <MaterialIcons
+              name="location-city"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <Autocomplete
+              placeholder="City"
+              data={data}
+              value={query}
+              onChangeText={handleCityChange}
+              flatListProps={{
+                keyExtractor: (_, index) => index.toString(),
+                renderItem: renderCityItem,
+              }}
+              style={styles.input}
+            />
+          </View> */}
           {/* City line */}
           <View style={styles.inputRow}>
-            <MaterialIcons
+            <MaterialIcons 
               name="location-city"
               color="#420475"
               size={26}
@@ -314,17 +389,26 @@ const styles = StyleSheet.create({
   },
   buttonEdit: {
     position: 'absolute',
-    top: 55,
-    left: 30,
+    top: 55, 
+    left: 30, 
     width: "30%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
-
+  
   buttonTextEdit: {
     color: "#366A68",
     fontWeight: "700",
     fontSize: 16,
   },
+  // autocompleteInput: {
+  //   width: "100%",
+  //   paddingHorizontal: 35,
+  //   paddingVertical: 10,
+  //   borderRadius: 10,
+  //   marginTop: 5,
+  //   borderColor: "#C3D4D3",  // Match the input text border color
+  //   borderWidth: 2,
+  // },
 });

@@ -16,6 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { styles } from "../components/StylesSheets"
 import EditProfileScreen, { changeImage } from '../front/EditProfileScreen'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { Alert } from 'react-native';
 
 const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -60,11 +61,28 @@ const ProfileScreen = () => {
 
   const handleDelete = async () => {
     try {
+
+      // Ask for user confirmation using Alert( if user press yes the resolve var will becmae true and then the confrimed will became true)
+      const confirmed = await new Promise(resolve => {
+        Alert.alert(
+            "Confirmation",
+            "Are you sure you want to delete your account? This action is irreversible.",
+            [
+                { text: "Cancel", onPress: () => resolve(false), style: "cancel" },
+                { text: "OK", onPress: () => resolve(true) }
+            ],
+            { cancelable: false }
+          );
+      });
+
+      // If user press cancel(the confirmed will became false)
+      if (!confirmed) {
+          console.log("User canceled account deletion");
+          return;
+      }
+
       // Call the deleteUserAccount function or any other method you have for account deletion
       await UserService.deleteUserAccount();
-
-      // Delete the user account in Firebase Authentication
-      await auth.currentUser.delete();
 
       // Navigate to the login screen or any other desired screen after account deletion
       navigation.replace("Login");

@@ -2,7 +2,7 @@ import { auth, db } from "../back/firebase";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { Alert } from 'react-native';
+
 
 var userFirstName = "";
 var userLastName = "";
@@ -86,30 +86,14 @@ export const UserService = {
   async deleteUserAccount() {
     try {
 
-      // Ask for user confirmation using Alert
-      const confirmed = await new Promise(resolve => {
-        Alert.alert(
-            "Confirmation",
-            "Are you sure you want to delete your account? This action is irreversible.",
-            [
-                { text: "Cancel", onPress: () => resolve(false), style: "cancel" },
-                { text: "OK", onPress: () => resolve(true) }
-            ],
-            { cancelable: false }
-          );
-      });
-
-      if (!confirmed) {
-          console.log("User canceled account deletion");
-          return;
-      }
-
-
       const userEmail = auth.currentUser.email;
       const userRef = db.collection("Users").doc(userEmail);
 
       // Delete the user document from the "Users" collection in Firestore
       await firebase.firestore().collection("Users").doc(userEmail).delete();
+
+      // Delete the user account in Firebase Authentication
+      await auth.currentUser.delete();
 
       console.log("User details deleted successfully");
     } catch (error) {
