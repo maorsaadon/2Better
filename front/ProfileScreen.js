@@ -14,8 +14,9 @@ import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
 import { styles } from "../components/StylesSheets"
-import EditProfileScreen from '../front/EditProfileScreen'
-import { getStorage, ref ,getDownloadURL} from "firebase/storage";
+import EditProfileScreen, { changeImage } from '../front/EditProfileScreen'
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { Alert } from 'react-native';
 
 const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,16 +35,21 @@ const ProfileScreen = () => {
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
-      // const storage = getStorage();
-      // const storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
-      
-      // try {
-      //   const url = await getDownloadURL(storageRef);
-      //   setImageUrl(url);
-      //   console.log(url)
-      // } catch (error) {
-      //   console.error('Error retrieving image:', error);
-      // }
+      const storage = getStorage();
+      let storageRef;
+      if (!changeImage) {
+        storageRef = ref(storage, 'UsersProfilePics/' + 'iconProfile.jpeg');
+      }
+      else {
+        storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
+      }
+      try {
+        const url = await getDownloadURL(storageRef);
+        setImageUrl(url);
+        console.log(url)
+      } catch (error) {
+        console.error('Error retrieving image:', error);
+      }
     };
 
     fetchUserDetails();
@@ -55,11 +61,28 @@ const ProfileScreen = () => {
 
   const handleDelete = async () => {
     try {
+
+      // Ask for user confirmation using Alert( if user press yes the resolve var will becmae true and then the confrimed will became true)
+      const confirmed = await new Promise(resolve => {
+        Alert.alert(
+            "Confirmation",
+            "Are you sure you want to delete your account? This action is irreversible.",
+            [
+                { text: "Cancel", onPress: () => resolve(false), style: "cancel" },
+                { text: "OK", onPress: () => resolve(true) }
+            ],
+            { cancelable: false }
+          );
+      });
+
+      // If user press cancel(the confirmed will became false)
+      if (!confirmed) {
+          console.log("User canceled account deletion");
+          return;
+      }
+
       // Call the deleteUserAccount function or any other method you have for account deletion
       await UserService.deleteUserAccount();
-
-      // Delete the user account in Firebase Authentication
-      await auth.currentUser.delete();
 
       // Navigate to the login screen or any other desired screen after account deletion
       navigation.replace("Login");
@@ -91,27 +114,27 @@ const ProfileScreen = () => {
             marginVertical: 22,
           }}
         >
-            <Image
-              source={{ uri: imageUrl}}
-              style={{
-                height: 170,
-                width: 170,
-                borderRadius: 85,
-                borderWidth: 2,
-                borderColor: '#366A68',
-              }}
-            />
+          <Image
+            source={{ uri: imageUrl }}
+            style={{
+              height: 170,
+              width: 170,
+              borderRadius: 85,
+              borderWidth: 2,
+              borderColor: '#366A68',
+            }}
+          />
 
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 10,
-                zIndex: 9999,
-              }}
-            >
-            </View>
-          
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 10,
+              zIndex: 9999,
+            }}
+          >
+          </View>
+
         </View>
         <View style={styles.userInfoContainer}>
           <Text style={styles.valueName}>

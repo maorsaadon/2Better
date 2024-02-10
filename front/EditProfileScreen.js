@@ -25,6 +25,7 @@ import { auth } from '../back/firebase';
 
 
 export let imageUri = null;
+export let changeImage = 0;
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -62,7 +63,7 @@ const EditProfileScreen = () => {
       aspect: [4, 4],
       quality: 1,
     });
-
+    changeImage = 1;
     console.log(result);
 
     if (!result.canceled) {

@@ -13,6 +13,7 @@ import { auth, db } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
 import { city_data } from "../back/DataBase";
+//import Autocomplete from "react-native-autocomplete-input";
 
 const RegisterScreen = () => {
   var [email, setEmail] = useState("");
@@ -23,6 +24,10 @@ const RegisterScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
+
+  // const [query, setQuery] = useState("");
+  // const [data, setData] = useState([]);
+  // const [selectedCity, setSelectedCity] = useState(null);
 
   const navigation = useNavigation();
 
@@ -39,8 +44,14 @@ const RegisterScreen = () => {
         }
       }
     });
-
+    // if (query.trim().length > 0) {
+    //   const cities = findCity(query);
+    //   setData(cities);
+    // } else {
+    //   setData([]);
+    // }
     return unsubscribe;
+  // }, [query]);
   }, []);
 
   const isEmailValid = (email) => {
@@ -85,7 +96,6 @@ const RegisterScreen = () => {
             LastName: lastName,
             City: city,
             Email: email,
-            NotificationCounter: 0,
           });
       })
       .catch((error) => alert(error.message));
@@ -111,6 +121,29 @@ const RegisterScreen = () => {
       setPasswordVerfiy(true);
     }
   };
+
+  // const findCity = (query) => {
+  //   const regex = new RegExp(`${query.trim()}`, "i");
+  //   return city_data.filter((cityObj) => cityObj.label.search(regex) >= 0);
+  // };
+
+  // const handleCityChange = (text) => {
+  //   setQuery(text);
+  // };
+
+  // const renderCityItem = ({ item }) => (
+  //   <TouchableOpacity
+  //     onPress={() => {
+  //       setSelectedCity(item.label);
+  //       setQuery(item.label);
+  //       setData([]); // Hide suggestions after selecting a city
+  //     }}
+  //   >
+  //     <Text style={styles.autocompleteItem}>{item.label}</Text>
+  //   </TouchableOpacity>
+  // );
+
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container} behavior="padding">
@@ -205,6 +238,26 @@ const RegisterScreen = () => {
           {password.length < 1 ? null : passwordVarify ? null : (
             <Text style={{ marginLeft: 20 , color: 'red'}} >Uppercase, Lowercase, Number and 6 or more characters</Text>
           )}
+          {/* City Autocomplete */}
+          {/* <View style={styles.inputRow}>
+            <MaterialIcons
+              name="location-city"
+              color="#420475"
+              size={26}
+              style={styles.icon}
+            />
+            <Autocomplete
+              placeholder="City"
+              data={data}
+              value={query}
+              onChangeText={handleCityChange}
+              flatListProps={{
+                keyExtractor: (_, index) => index.toString(),
+                renderItem: renderCityItem,
+              }}
+              style={styles.input}
+            />
+          </View> */}
           {/* City line */}
           <View style={styles.inputRow}>
             <MaterialIcons 
@@ -349,4 +402,13 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  // autocompleteInput: {
+  //   width: "100%",
+  //   paddingHorizontal: 35,
+  //   paddingVertical: 10,
+  //   borderRadius: 10,
+  //   marginTop: 5,
+  //   borderColor: "#C3D4D3",  // Match the input text border color
+  //   borderWidth: 2,
+  // },
 });
