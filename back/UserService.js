@@ -31,6 +31,38 @@ export const UserService = {
       console.error("Error fetching User: ", error);
     }
   },
+  
+  async getUserNotificationCounter(userEmail = auth.currentUser.email){
+    try {
+      const snapshot = await db.collection("Users").doc(userEmail).get();
+
+      if (snapshot.exists) {
+        const userData = snapshot.data();
+        return userData.NotificationCounter;
+
+      } else {
+        // Handle the case where the document does not exist
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.error("Error fetching User: ", error);
+    }
+  },
+
+  async updateUserNotificationCounter(counter = 0, userEmail = auth.currentUser.email){
+    try {
+      const userRef = db.collection("Users").doc(userEmail);
+
+      // Update the user document
+      await userRef.update({
+        NotificationCounter: counter
+      });
+
+      console.log("User NotificationCounter updated successfully");
+    } catch (error) {
+      console.error("Error updating user NotificationCounter: ", error);
+    }
+  },
 
   // Update user details
   async updateUserDetails(firstName, lastName, city) {

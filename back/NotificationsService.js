@@ -1,5 +1,6 @@
-// src/services/NotificationService.js
 import { db, auth } from "./firebase";
+import GroupService from "../back/GroupService";
+import UserService from "../back/UserService";
 
 
 export const notificationService = {
@@ -11,24 +12,7 @@ export const notificationService = {
         .collection("Notifications")
         .where("Addressee", "==", userEmail);
         
-        const counterRef = db
-          .collection("Notifications").doc("notificationCount");
-
-        const doc = await counterRef.get();
-        if (doc.exists) {
-          ctr = doc.data().counter; // This will print the counter value
-        } else {
-          console.log("No such document!");
-        }
-
-        try {
-          await counterRef.update({
-            counter: 0 // Set this to the new value you want for the counter
-          });
-          console.log(`Counter updated to: 0`);
-        } catch (error) {
-          console.error("Error updating counter: ", error);
-        }
+      UserService.updateUserNotificationCounter();
 
       const snapshot = await notificationRef.get();
 
@@ -73,58 +57,50 @@ export const notificationService = {
     
   },
   
-  async handleAddNewNotification(addressee, groupName, content, type, timeStamp){
+  async handleAddNewNotification(groupName, content, type, timeStamp) {
+    const groupLeaderEmail = await GroupService.getLeaderEmail(groupName);
+    const groupMembers = await GroupService.getMembers(groupName);
+
+    console.log("Group Leader Email = " + groupLeaderEmail);
     
-    var ctr = 0;
-    const NotificationRef = db.collection("Notifications").doc();
+    try {
+      // Create a new document reference for the leader notification
+      const leaderNotifRef = db.collection("Notifications").doc();
+      await leaderNotifRef.set({
+        Addressee: groupLeaderEmail,
+        GroupName: groupName,
+        Content: content,
+        Type: type,
+        TimeStamp: timeStamp,
+      });
+      // Assuming updateUserNotificationCounter is related to the leader, adjust as necessary
+      await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter() + 1);
+    } catch (error) {
+        console.error("Error creating Notification for leader: ", error);
+        alert(error.message);
+    }
     
-    NotificationRef.set({
-      Addressee: addressee,
-      GroupName: groupName,
-      Content: content,
-      Type: type,
-      TimeStamp: timeStamp,
-    }).catch((error) => {
-      console.error("Error creating Notification: ", error);
-      alert(error.message);
-    });
-
-    const counterRef = db
-    .collection("Notifications").doc("notificationCount");
-
-    const doc = await counterRef.get();
-    if (doc.exists) {
-      ctr = doc.data().counter; 
-    } else {
-      console.log("No such document!");
-    }
-
-    try {
-      await counterRef.update({
-        counter: ctr+1 // Set this to the new value you want for the counter
-      });
-      console.log(`Counter updated to: 0`);
-    } catch (error) {
-      console.error("Error updating counter: ", error);
-    }
-  
-  },
-
-  // Send a notification to a specific user
-  async sendNotification(toUserId, message) {
-    try {
-      await notificationCollection.add({
-        userId: toUserId,
-        message: message,
-        timestamp: new Date(),
-        // ... other notification fields
-      });
-    } catch (error) {
-      console.error("Error sending notification:", error);
-      throw error;
+    for (const member of groupMembers) {
+      console.log("Group Member Email = " + member);
+      
+      try {
+          // Create a new document reference for each member notification
+          const memberNotifRef = db.collection("Notifications").doc();
+          await memberNotifRef.set({
+            Addressee: member,
+            GroupName: groupName,
+            Content: content,
+            Type: type,
+            TimeStamp: timeStamp,
+          });
+          // Update notification counter for each member
+          await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(member) + 1, member);
+      } catch (error) {
+          console.error("Error creating Notification for member: ", error);
+          alert(error.message);
+      }
     }
   },
-
 };
 
 export default notificationService;

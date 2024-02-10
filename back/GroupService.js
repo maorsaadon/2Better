@@ -93,6 +93,40 @@ export const GroupService = {
     }
   },
 
+  async getLeaderEmail(groupName) {
+    const groupRef = db.collection("Groups").doc(groupName);
+    try {
+        const doc = await groupRef.get();
+        if (doc.exists) {
+            const groupData = doc.data();
+            return groupData.LeaderEmail || "Email not found"; // Returns a default message if no LeaderEmail field exists
+        } else {
+            console.log("No such Email!");
+            return "Email not found"; // Returns a message if the group does not exist
+        }
+    } catch (error) {
+        console.error("Error getting group leader email: ", error);
+        throw error; // Rethrow or handle error as needed
+    }
+},
+
+  async  getMembers(groupName) {
+    const groupRef = db.collection("Groups").doc(groupName);
+    try {
+        const doc = await groupRef.get();
+        if (doc.exists) {
+            const groupData = doc.data();
+            return groupData.Members || []; // Returns an empty array if no Members field exists
+        } else {
+            console.log("No such group!");
+            return []; // Returns an empty array if the group does not exist
+        }
+    } catch (error) {
+        console.error("Error getting group members: ", error);
+        throw error; // Rethrow or handle error as needed
+    }
+},
+
   async getMemberGroups() {
     const groups = [];
     try {
