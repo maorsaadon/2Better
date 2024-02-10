@@ -6,7 +6,8 @@ import { Alert } from 'react-native';
 
 var userFirstName = "";
 var userLastName = "";
-var UserCity = "";
+var userCity = "";
+var userNotificationCounter = 0;
 
 export const UserService = {
   // Fetch user details by UID
@@ -19,7 +20,8 @@ export const UserService = {
         const userData = snapshot.data();
         userFirstName = userData.FirstName;
         userLastName = userData.LastName;
-        UserCity = userData.City;
+        userCity = userData.City;
+        userNotificationCounter = userData.NotificationCounter;
 
       } else {
         // Handle the case where the document does not exist
@@ -87,6 +89,6 @@ export const UserService = {
 
 };
 
-export { userFirstName, userLastName, UserCity};
+export { userFirstName, userLastName, userCity, userNotificationCounter};
 
 export default UserService;

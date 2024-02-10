@@ -10,24 +10,19 @@ import {
 import { MaterialIcons , Entypo , FontAwesome , FontAwesome6} from "@expo/vector-icons";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { userFirstName, userLastName, UserCity, userNotificationCounter } from "../back/UserService";
 import UserService from "../back/UserService";
 import { db } from "../back/firebase";
 //import {stylesHome} from "../components/StylesSheets";
 
 const HomeScreen = () => {
   
-  const [notificationCounter, setNotificationCounter] = useState("");
   const navigation = useNavigation();
   
   useEffect(() => {
     // Fetch groups from the service
     const fetchData = async () => {
       await UserService.getUserDetails();
-    };
-    const fetchCounter = async () => {
-      const counter = await getNotificationCounter();
-      setNotificationCounter(counter);
     };
     // const fetchData = async () => {
       //   try {
@@ -39,28 +34,11 @@ const HomeScreen = () => {
     // };
   
     fetchData();
-    fetchCounter();
     // fetchGroups();
   },[]);
   
-  
-  const getNotificationCounter = async () =>{
-    try {
-      const counterRef = db
-          .collection("Notifications").doc("notificationCount");
 
-        const doc = await counterRef.get();
-        if (doc.exists) {
-          console.log(doc.data().counter);
-          return doc.data().counter;
-        } else {
-          console.log("No such document!");
-        }
-    } catch (error) {
-      
-    }
-  }
-  console.log("notification Counter: " + notificationCounter);
+  console.log("notification Counter: " + userNotificationCounter);
 
   const handleSignOut = () => {
     auth
@@ -119,9 +97,9 @@ const HomeScreen = () => {
             <Entypo name="bell" size={30} color="black" />
 
             {/* Badge view */}
-            {notificationCounter > 0 && (
+            {userNotificationCounter > 0 && (
               <View style={stylesHome.badge}>
-                <Text style={stylesHome.badgeText}>{notificationCounter}</Text>
+                <Text style={stylesHome.badgeText}>{userNotificationCounter}</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -185,15 +163,15 @@ const stylesHome = StyleSheet.create({
     justifyContent: "center",
   },
   badge: {
-    position: 'absolute', // Position the badge over the button
-    top: -10, // Adjust the position as needed
-    right: -10, // Adjust the position as needed
-    backgroundColor: 'red', // Badge color
-    borderRadius: 15, // Make it circular
-    width: 30, // Badge size
-    height: 30, // Badge size
-    justifyContent: 'center', // Center the number horizontally
-    alignItems: 'center', // Center the number vertically
+  position: 'absolute',
+  top: 20, // Move it down a bit
+  right: -10, // Move it to the left a bit
+  backgroundColor: 'red',
+  borderRadius: 15,
+  width: 30,
+  height: 30,
+  justifyContent: 'center',
+  alignItems: 'center',
   },
   badgeText: {
     color: 'white', // Number color

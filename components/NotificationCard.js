@@ -14,7 +14,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
-import { GroupService } from "../back/NotificationsService";
+import { GroupService } from "../back/GroupService";
 
 const screenWidth = Dimensions.get("window").width;
 

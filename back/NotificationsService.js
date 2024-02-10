@@ -94,7 +94,7 @@ export const notificationService = {
 
     const doc = await counterRef.get();
     if (doc.exists) {
-      ctr = doc.data().counter; // This will print the counter value
+      ctr = doc.data().counter; 
     } else {
       console.log("No such document!");
     }

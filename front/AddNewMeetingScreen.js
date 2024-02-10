@@ -23,7 +23,7 @@ const AddNewMeetingScreen = ({ route }) => {
   const [time, setTime] = useState(""); // var to firestore
   const [location, setLocation] = useState("");
   const userEmail = auth.currentUser.email;
-  const content = "" + groupName + " - " + date + ", "  + location;
+  const content = "" + groupName + ": at " + date + ", "  + time + " in - " + location;
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
@@ -53,7 +53,7 @@ const AddNewMeetingScreen = ({ route }) => {
   const AddButton = () => {
     try {
       MeetingService.handleAddNewMeeting(groupName, location, date, time);
-      NotificationService.handleAddNewNotification(userEmail, content, "New Meeting", serverTimestamp())
+      NotificationService.handleAddNewNotification(userEmail, groupName,  content, "New Meeting", serverTimestamp())
       navigation.replace("MyGroups");
     } catch (error) {
       alert(error.message);

@@ -15,7 +15,6 @@ import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import NotificationCard from "../components/NotificationCard";
 import { MaterialIcons } from "@expo/vector-icons";
-import {notificationCount} from "../back/DataBase";
 
 const NotificationsScreen = () => {
   //Aviv's Edit:

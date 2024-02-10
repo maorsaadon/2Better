@@ -56,6 +56,43 @@ export const GroupService = {
     }
   },
 
+  async addGroupMeeting(meetingId, groupName) {
+    try {
+      const groupRef = db.collection("Groups").doc(groupName);
+
+      // Atomically add a new group ID to the 'MyGroups' array field
+
+      await groupRef.update({
+        MeetingsGroup: firebase.firestore.FieldValue.arrayUnion(meetingId),
+      });
+
+      console.log("Group ID added to user profile successfully");
+    } catch (error) {
+      console.error("Error adding meeting ID to group collection: ", error);
+    }
+  },
+
+  async removeGroupMeeting(meetingId, groupName) {
+    try {
+      const groupRef = db.collection("Groups").doc(groupName);
+
+      // Atomically remove the meeting ID from the 'MeetingsGroup' array field
+      await groupRef.update({
+        MeetingsGroup: firebase.firestore.FieldValue.arrayRemove(meetingId),
+      });
+
+      console.log(
+        `Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`
+      );
+    } catch (error) {
+      console.error(
+        `Error removing meeting ID: ${meetingId} from group ID: ${groupName}`,
+        error
+      );
+      // Handle the error accordingly
+    }
+  },
+
   async getMemberGroups() {
     const groups = [];
     try {
