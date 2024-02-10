@@ -151,6 +151,35 @@ export const MeetingService = {
     }
   },
 
+  async isInTheMeeting(meetingId, memberEmail) {
+    try {
+      // Assuming 'Meetings' is the name of the collection where meetings are stored
+      const meetingRef = await db.collection("Meetings").doc(meetingId);
+      const meeting = meetingRef.get();
+      if (meeting.Members.includes(memberEmail))
+      {
+        return true;
+      }
+      else { return false ;}
+    } catch (error) {
+      console.error(`Error find meetings members!`, error);
+    }
+  },
+
+  async addUserToMeeting(meetingId, memberEmail) {
+    try {
+      // Assuming 'Meetings' is the name of the collection where meetings are stored
+      const meetingRef = await db.collection("Meetings").doc(meetingId);
+      const meeting = meetingRef.get();
+      if (!meeting.Members.includes(memberEmail))
+      {
+        return true;
+      }
+    } catch (error) {
+      console.error(`Error add user to the meeting!`, error);
+    }
+  },
+
 };
 
 export default MeetingService;
