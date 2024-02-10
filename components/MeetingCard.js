@@ -25,6 +25,7 @@ sportIconMapping_FontAwesome5,
 import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 // import { serverTimestamp } from "firebase/firestore";
+import MeetingService from '../back/MeetingService';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -60,7 +61,14 @@ const getSportIcon = (sportType) => {
 
 const handleJoinPress = () =>{
     setHasJoined(true); // Set hasJoined to true when button is pressed
+    MeetingService.addUserToMeeting(meeting.id, "aviya@test.com");
     console.log("Click on Join Meeting!");
+};
+
+const handleCancelPress = () =>{
+    setHasJoined(false); // Set hasJoined to true when button is pressed
+    MeetingService.removeUserFromMeetingMembers(meeting.id, "aviya@test.com");
+    console.log("Click on Cancel Meeting!");
 };
 
 const handleEditPress = () =>{
@@ -90,10 +98,10 @@ return (
             <AntDesign name="clockcircle" size={20} color="black" />
             <Text>{meeting.Time}</Text>
         </View>
-        <View style={styles.iconAndTextContainer}>
+        {/* <View style={styles.iconAndTextContainer}>
             <AntDesign name="clockcircle" size={20} color="black" />
             <Text>is Leader ? {meeting.IsLeader}</Text>
-        </View>
+        </View> */}
         </View>
         <View style={styles.participantContainer}>
         <Text style={styles.participantText}>{currentParticipants}</Text>
@@ -106,16 +114,22 @@ return (
         <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-        {!hasJoined && ( // Only show if hasJoined is false
+        {!hasJoined ? ( // Only show if hasJoined is false
+        //   <TouchableOpacity style={styles.button} onPress={handleJoinPress(meeting.id, "aviya@test.com")}>
           <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
             <Text style={styles.buttonText}>Join Meeting</Text>
+          </TouchableOpacity>
+        ) : ( // Only show if hasJoined is true
+        //   <TouchableOpacity style={styles.button} onPress={handleJoinPress(meeting.id, "aviya@test.com")}>
+          <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
+            <Text style={styles.buttonText}>Cancel Meeting</Text>
           </TouchableOpacity>
         )}
         
         {meeting.IsLeader ? (
         <TouchableOpacity 
         style={styles.button}
-        onPress={handleJoinPress}
+        onPress={handleEditPress}
         >
             <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>

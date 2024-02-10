@@ -1,6 +1,7 @@
 import { auth, db } from "./firebase";
 import { GroupService } from "./GroupService";
 
+
 export const MeetingService = {
 
   async fetchMeetingsData () {
@@ -171,12 +172,38 @@ export const MeetingService = {
       // Assuming 'Meetings' is the name of the collection where meetings are stored
       const meetingRef = await db.collection("Meetings").doc(meetingId);
       const meeting = meetingRef.get();
-      if (!meeting.Members.includes(memberEmail))
+      // if (!meeting.Members.includes(memberEmail))
+      if (1)
       {
-        return true;
+        // Update the Members array using arrayUnion to add userEmail without duplicates
+        await meetingRef.update({
+          // Members: firestore.FieldValue.arrayUnion(userEmail),
+          // NumberOfMembers: NumberOfMembers + 1
+          // NumberOfMembers:  "Aviya!!!"
+          // NumberOfMembers: db.FieldValue.increment(1)
+        });
+
+        console.log('User email added to meeting members successfully.');
       }
     } catch (error) {
       console.error(`Error add user to the meeting!`, error);
+    }
+  },
+
+  async removeUserFromMeetingMembers(meetingId, userEmail){
+    try {
+      // Reference to the specific Meeting document by its ID
+      const meetingRef = await db.collection('Meetings').doc(meetingId);
+  
+      // Update the Members array using arrayRemove to remove userEmail
+      await meetingRef.update({
+        // Members: firestore.FieldValue.arrayRemove(userEmail),
+        // NumberOfMembers: NumberOfMembers > 0 ? NumberOfMembers - 1 : 0
+      });
+  
+      console.log('User email removed from meeting members successfully.');
+    } catch (error) {
+      console.error('Error removing user from meeting members:', error);
     }
   },
 
