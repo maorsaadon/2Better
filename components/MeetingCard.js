@@ -21,7 +21,7 @@ sportIconMapping_MaterialCommunityIcons,
 sportIconMapping_FontAwesome,
 sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
-// import { auth } from "../back/firebase";
+import { auth } from "../back/firebase";
 import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 // import { serverTimestamp } from "firebase/firestore";
@@ -33,12 +33,30 @@ const screenWidth = Dimensions.get("window").width;
 
 const MeetingCard = ({ meeting, isLeader }) => {
 const navigation = useNavigation();
-const [hasJoined, setHasJoined] = useState(false); // New state to track if joined
 const groupName = meeting?.GroupName ?? "Default Name";
-const currentParticipants = parseInt(meeting.NumberOfMembers, 0);
+// const currentParticipants = parseInt(meeting.NumberOfMembers, 0);
+const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
 const totalCapacity = parseInt(meeting.TotalCapacity, 10);
 
 const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
+
+const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
+
+useEffect(() => {
+    
+    const checkUserInMeeting = async () => {
+        const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
+        setIsUserInMeeting(isInMeeting);
+      };
+
+    const checkNumberOfMembersINMeeting = async () => {
+        const num = await MeetingService.numOfMembers(meeting.id);
+        setCurrentParticipants(num);
+    };
+    
+    checkUserInMeeting();
+    checkNumberOfMembersINMeeting();
+  }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
 
 const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -60,20 +78,20 @@ const getSportIcon = (sportType) => {
 };
 
 const handleJoinPress = () =>{
-    setHasJoined(true); // Set hasJoined to true when button is pressed
+    setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
     MeetingService.addUserToMeeting(meeting.id, "aviya@test.com");
     console.log("Click on Join Meeting!");
 };
 
 const handleCancelPress = () =>{
-    setHasJoined(false); // Set hasJoined to true when button is pressed
+    setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
     MeetingService.removeUserFromMeetingMembers(meeting.id, "aviya@test.com");
     console.log("Click on Cancel Meeting!");
 };
 
 const handleEditPress = () =>{
     console.log("Click on Edit!");
-    // navigation.replace("EditMeetingScreen");
+    navigation.replace("EditMeetingScreen", {meeting});
 };
 
 return (
@@ -116,7 +134,8 @@ return (
         <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-        {!hasJoined ? ( // Only show if hasJoined is false
+        {/* {!hasJoined ? ( // Only show if hasJoined is false */}
+        {!isUserInMeeting  ? ( // Only show if hasJoined is false
           <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
             <Text style={styles.buttonText}>Join Meeting</Text>
           </TouchableOpacity>
