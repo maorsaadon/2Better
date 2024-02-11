@@ -26,11 +26,13 @@ import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 // import { serverTimestamp } from "firebase/firestore";
 import MeetingService from '../back/MeetingService';
+import { useNavigation } from '@react-navigation/core';
+
 
 const screenWidth = Dimensions.get("window").width;
 
 const MeetingCard = ({ meeting, isLeader }) => {
-    
+const navigation = useNavigation();
 const [hasJoined, setHasJoined] = useState(false); // New state to track if joined
 const groupName = meeting?.GroupName ?? "Default Name";
 const currentParticipants = parseInt(meeting.NumberOfMembers, 0);
@@ -71,6 +73,7 @@ const handleCancelPress = () =>{
 
 const handleEditPress = () =>{
     console.log("Click on Edit!");
+    // navigation.replace("EditMeetingScreen");
 };
 
 return (
@@ -106,8 +109,8 @@ return (
         <CustomSlider
             minimumValue={0}
             maximumValue={totalCapacity}
-            // value={currentParticipants}
-            value={meeting.NumberOfMembers}
+            value={currentParticipants}
+            // value={meeting.NumberOfMembers}
         />
         <Text style={styles.participantText}>{totalCapacity}</Text>
         <AntDesign name="user" size={22} color="black" />

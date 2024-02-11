@@ -75,6 +75,8 @@ export const MeetingService = {
       Date: date,
       Time: time,
       Timestamp: timestamp,
+      NumberOfMembers : 0,
+      Members: [],
     }).catch((error) => {
       console.error("Error creating Meeting: ", error);
       alert(error.message);
