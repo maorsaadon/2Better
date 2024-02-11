@@ -16,6 +16,7 @@ import AddNewMeetingScreen from "./front/AddNewMeetingScreen";
 import AddNewGroupScreen from "./front/AddNewGroupScreen";
 import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
+import EditMeetingScreen from "./front/EditMeetingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ export default function App() {
         <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
         <Stack.Screen name="ResultGroups" component={ResultGroupsScreen} />
         <Stack.Screen name="EditGroup" component={EditGroupScreen} />
+        <Stack.Screen name="EditMeetingScreen" component={EditMeetingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

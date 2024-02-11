@@ -1,5 +1,8 @@
 import { auth, db } from "./firebase";
 import { GroupService } from "./GroupService";
+import "firebase/compat/firestore";
+import firebase from "firebase/compat/app";
+
 
 
 export const MeetingService = {
@@ -63,14 +66,41 @@ export const MeetingService = {
       console.error("Error updating Meeting details: ", error);
     }
   },
+  // Update meeting details
+  async updateMeetingDetails(MeetingID, date, time, location) {
+    try {
+      const meetingRef = db.collection("Meetings").doc(MeetingID);
 
-  async handleAddNewMeeting(groupName, location, date, time) {
+      const snapshot = await meetingRef.get();
+
+      if (snapshot.exists) {
+        // If the document exists, update the meeting details
+        await meetingRef.update({
+          Date: date,
+          Time: time,
+          Location: location,
+        });
+  
+        console.log("Meeting details updated successfully");
+      } else {
+        console.log("Meeting document does not exist");
+        // Handle the case where the document doesn't exist, if needed
+      }
+    } catch (error) {
+      console.error("Error updating Meeting details: ", error);
+    }
+  },
+
+  async handleAddNewMeeting(groupName, location, date, time , timestamp) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
     MeetingRef.set({
       GroupName: groupName,
       Location: location,
       Date: date,
       Time: time,
+      Timestamp: timestamp,
+      NumberOfMembers : 0,
+      Members: [],
     }).catch((error) => {
       console.error("Error creating Meeting: ", error);
       alert(error.message);
@@ -100,16 +130,16 @@ export const MeetingService = {
     try {
       // Fetch all groups to determine user's role
       const groupsSnapshot = await db.collection('Groups').get();
-      var isLeader2 = '0';
+      var isLeader2 = 0;
       groupsSnapshot.forEach(doc => {
         const group = doc.data();
         if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
           // User is a member but not the leader
-          isLeader2 = '0';
+          isLeader2 = 0;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         } else if (group.LeaderEmail === userEmail) {
           // User is the leader
-          isLeader2 = '1';
+          isLeader2 = 1;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         }
       });
@@ -126,7 +156,7 @@ export const MeetingService = {
       }
 
       // Sort leaderMeetings by Timestamp
-      // leaderMeetings.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
+      leaderMeetings.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
 
 
     } catch (error) {
@@ -137,31 +167,36 @@ export const MeetingService = {
     
   },
 
-  async addUserToMeeting(meetingId) {
-    try {
-      // Assuming 'Meetings' is the name of the collection where meetings are stored
-      const meetingRef = await db.collection("Meetings").doc(meetingId);
-      const currMembers = meetingRef.get();
-      // Update the user document
-      await meetingRef.update({
-        NumberOfMembers: currMembers.NumberOfMembers + 1,
-      });
-    } catch (error) {
-      console.error(`Error update meetings members!`, error);
-      // Handle the error accordingly
-    }
-  },
-
   async isInTheMeeting(meetingId, memberEmail) {
     try {
       // Assuming 'Meetings' is the name of the collection where meetings are stored
       const meetingRef = await db.collection("Meetings").doc(meetingId);
-      const meeting = meetingRef.get();
-      if (meeting.Members.includes(memberEmail))
-      {
-        return true;
-      }
-      else { return false ;}
+      const snapshot = await meetingRef.get();
+      if(snapshot.exists) {
+        const meeting = snapshot.data();      
+        if (meeting.Members.includes(memberEmail))
+        {
+          // console.log(`THE ANS IS --> ${meeting.GroupName}, ${true} `);
+          return true;
+        } else {
+          // console.log(`THE ANS IS --> ${meeting.GroupNsame}, ${false} `);
+          return false;
+        }
+    }
+    } catch (error) {
+      console.error(`Error find meetings members!`, error);
+    }
+  },
+
+  async numOfMembers(meetingId) {
+    try {
+      // Assuming 'Meetings' is the name of the collection where meetings are stored
+      const meetingRef = await db.collection("Meetings").doc(meetingId);
+      const snapshot = await meetingRef.get();
+      if(snapshot.exists) {
+        const meeting = snapshot.data();      
+        return meeting.NumberOfMembers;
+    }
     } catch (error) {
       console.error(`Error find meetings members!`, error);
     }
@@ -170,40 +205,53 @@ export const MeetingService = {
   async addUserToMeeting(meetingId, memberEmail) {
     try {
       // Assuming 'Meetings' is the name of the collection where meetings are stored
-      const meetingRef = await db.collection("Meetings").doc(meetingId);
-      const meeting = meetingRef.get();
-      // if (!meeting.Members.includes(memberEmail))
-      if (1)
-      {
-        // Update the Members array using arrayUnion to add userEmail without duplicates
-        await meetingRef.update({
-          // Members: firestore.FieldValue.arrayUnion(userEmail),
-          // NumberOfMembers: NumberOfMembers + 1
-          // NumberOfMembers:  "Aviya!!!"
-          // NumberOfMembers: db.FieldValue.increment(1)
-        });
+      const meetingRef = db.collection("Meetings").doc(meetingId);
+      const snapshot = await meetingRef.get();
+      var currNum = 0;
+      if(snapshot.exists) {
+        const meeting = snapshot.data();
+        currNum = meeting.NumberOfMembers;
+      
+        if (!meeting.Members.includes(memberEmail))
+        {
+          // Update the Members array using arrayUnion to add userEmail without duplicates
+          await meetingRef.update({
+            Members: firebase.firestore.FieldValue.arrayUnion(memberEmail),
+            NumberOfMembers: firebase.firestore.FieldValue.increment(1)
+          });
 
-        console.log('User email added to meeting members successfully.');
-      }
+          console.log('User email added to meeting members successfully.');
+        }
+    }
     } catch (error) {
       console.error(`Error add user to the meeting!`, error);
     }
   },
 
-  async removeUserFromMeetingMembers(meetingId, userEmail){
+  async removeUserFromMeetingMembers(meetingId, memberEmail){
     try {
-      // Reference to the specific Meeting document by its ID
-      const meetingRef = await db.collection('Meetings').doc(meetingId);
+      const meetingRef = db.collection("Meetings").doc(meetingId);
+      const snapshot = await meetingRef.get();
   
-      // Update the Members array using arrayRemove to remove userEmail
-      await meetingRef.update({
-        // Members: firestore.FieldValue.arrayRemove(userEmail),
-        // NumberOfMembers: NumberOfMembers > 0 ? NumberOfMembers - 1 : 0
-      });
+      if (snapshot.exists) {
+        const meeting = snapshot.data();
   
-      console.log('User email removed from meeting members successfully.');
+        if (meeting.Members && meeting.Members.includes(memberEmail)) {
+          // Remove the userEmail from the Members array and decrement NumberOfMembers atomically
+          await meetingRef.update({
+            Members: firebase.firestore.FieldValue.arrayRemove(memberEmail),
+            NumberOfMembers: firebase.firestore.FieldValue.increment(-1)
+          });
+  
+          console.log('User email removed from meeting members successfully.');
+        } else {
+          console.log('User email not found in the meeting members.');
+        }
+      } else {
+        console.log('Meeting does not exist.');
+      }
     } catch (error) {
-      console.error('Error removing user from meeting members:', error);
+      console.error(`Error removing user from the meeting!`, error);
     }
   },
 

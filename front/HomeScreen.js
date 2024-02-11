@@ -7,7 +7,7 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import { MaterialIcons , Entypo , FontAwesome , FontAwesome6} from "@expo/vector-icons";
+import { MaterialIcons, Entypo, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity, userNotificationCounter } from "../back/UserService";
@@ -16,27 +16,27 @@ import { db } from "../back/firebase";
 //import {stylesHome} from "../components/StylesSheets";
 
 const HomeScreen = () => {
-  
+
   const navigation = useNavigation();
-  
+
   useEffect(() => {
     // Fetch groups from the service
     const fetchData = async () => {
       await UserService.getUserDetails();
     };
     // const fetchData = async () => {
-      //   try {
+    //   try {
     //     const data = await UserService.getUserDetails();
     //     // Handle the data
     //   } catch (error) {
-      //     console.error('Error fetching data:', error);
+    //     console.error('Error fetching data:', error);
     //   }
     // };
-  
+
     fetchData();
     // fetchGroups();
-  },[]);
-  
+  }, []);
+
   const handleSignOut = () => {
     auth
       .signOut()
@@ -88,41 +88,44 @@ const HomeScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          
-          <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
-            <Entypo name="bell" size={30} color="black" />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
-            {/* Badge view */}
-            {userNotificationCounter > 0 && (
-              <View style={stylesHome.badge}>
-                <Text style={stylesHome.badgeText}>{userNotificationCounter}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-          </View>
-      <View style={stylesHome.container}>
-        <TouchableOpacity onPress={handleMyProfile} style={stylesHome.button}>
-        <FontAwesome name="user" size={30} color="black"  />
+        <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
+          <Entypo name="bell" size={30} color="black" />
+
+          {/* Badge view */}
+          {userNotificationCounter > 0 && (
+            <View style={stylesHome.badge}>
+              <Text style={stylesHome.badgeText}>{userNotificationCounter}</Text>
+            </View>
+          )}
         </TouchableOpacity>
 
+
+      </View>
+      <TouchableOpacity onPress={handleMyProfile} style={stylesHome.profileButton}>
+        <FontAwesome name="user" size={30} color="black" />
+      </TouchableOpacity>
+      <View style={stylesHome.container}>
+
+
         <TouchableOpacity onPress={handleMyGroups} style={stylesHome.button}>
-        <FontAwesome6 name="people-group" size={30} color="black"  />
+          <FontAwesome6 name="people-group" size={30} color="black" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleFindNewGroup} style={stylesHome.button}>
-        <MaterialIcons name="explore" size={30} color="black"  />
+          <MaterialIcons name="explore" size={30} color="black" />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleUpcomingMeetings}
           style={stylesHome.button}
         >
-          <Entypo name="cake" size={30} color="black"  />
+          <Entypo name="cake" size={30} color="black" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleSignOut} style={stylesHome.button}>
-        <Entypo name="log-out" size={30} color="black"  />
+          <Entypo name="log-out" size={30} color="black" />
         </TouchableOpacity>
       </View>
 
@@ -160,25 +163,32 @@ const stylesHome = StyleSheet.create({
     justifyContent: "center",
   },
   badge: {
-  position: 'absolute',
-  top: 20, // Move it down a bit
-  right: -10, // Move it to the left a bit
-  backgroundColor: 'red',
-  borderRadius: 15,
-  width: 30,
-  height: 30,
-  justifyContent: 'center',
-  alignItems: 'center',
+    position: 'absolute',
+    top: 20, // Move it down a bit
+    right: -10, // Move it to the left a bit
+    backgroundColor: 'red',
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   badgeText: {
     color: 'white', // Number color
     fontWeight: 'bold',
   },
-  notificationBotton:{
-    padding: 10, 
+  notificationBotton: {
+    padding: 10,
     borderRadius: 10,
     marginTop: 5,
     marginLeft: 5,
+    borderRadius: 50,
+  },
+  profileButton: {
+    padding: 10,
+    borderRadius: 10,
+    marginTop: -50,
+    marginLeft: 345,
     borderRadius: 50,
   }
 })

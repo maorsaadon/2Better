@@ -92,6 +92,7 @@ export const notificationService = {
             console.error("Error creating Notification for member: ", error);
             alert(error.message);
         }
+        console.log(`${member} : ${await UserService.getUserNotificationCounter(member)}`);
       }
     }else{
       try {

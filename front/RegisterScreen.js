@@ -274,10 +274,10 @@ const RegisterScreen = () => {
         </ScrollView>
       </KeyboardAvoidingView>
     </ImageBackground>
-  );
-};
+  )
+}
 
-export default RegisterScreen;
+export default RegisterScreen
 
 const styles = StyleSheet.create({
   backgroundImage: {
