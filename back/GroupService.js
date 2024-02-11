@@ -291,8 +291,8 @@ export const GroupService = {
       snapshot.forEach((doc) => {
         const group = doc.data();
         // Perform filtering in application code
-        const matchesSportType = sportType === "All" || group.SportType === sportType;
-        const matchesCity = city === "All" || group.City === city;
+        const matchesSportType = sportType === "" || group.SportType === sportType;
+        const matchesCity = city === "" || group.City === city;
         if (matchesSportType && matchesCity) {
           groups.push({
             GroupName: group.GroupName || "Unknown",

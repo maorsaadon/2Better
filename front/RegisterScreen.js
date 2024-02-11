@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -7,113 +6,93 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  SafeAreaView,
+  ScrollView,
+  Keyboard,
+  LogBox,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import { auth, db } from "../back/firebase";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
-import { city_data } from "../back/DataBase";
-//import Autocomplete from "react-native-autocomplete-input";
+import { cityData } from "../back/DataBase";
+import UserService from "../back/UserService";
+import Autocomplete from "react-native-autocomplete-input";
 
 const RegisterScreen = () => {
-  var [email, setEmail] = useState("");
-  const [emailVarify, setEmailVerfiy] = useState(false);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVarify, setPasswordVerfiy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
-
-  // const [query, setQuery] = useState("");
-  // const [data, setData] = useState([]);
-  // const [selectedCity, setSelectedCity] = useState(null);
-
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        try {
-          auth
-            .signOut();
-          navigation.navigate("Login");
-        }
-        catch (error) {
-          alert(error.message);
-        }
-      }
-    });
-    // if (query.trim().length > 0) {
-    //   const cities = findCity(query);
-    //   setData(cities);
-    // } else {
-    //   setData([]);
-    // }
-    return unsubscribe;
-  // }, [query]);
-  }, []);
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    if (query.trim().length > 0) {
+      setData(
+        cityData.filter((cityObj) =>
+          cityObj.label.toLowerCase().includes(query.trim().toLowerCase())
+        )
+      );
+    } else {
+      setData([]);
+    }
+  }, [query]);
 
   const isEmailValid = (email) => {
     return /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(email);
   };
-  
+
   const isPasswordValid = (password) => {
     return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password);
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     email = email.toLowerCase();
 
     if (!isEmailValid(email)) {
       alert("Please enter a valid email address.");
       return;
     }
-  
+
     if (!isPasswordValid(password)) {
-      alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long.");
+      alert(
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long."
+      );
       return;
     }
 
     // Check if the entered city is in the predefined list
-    const isCityValid = city_data.find((cityObj) => cityObj.value === city);
+    const isCityValid = cityData.find((cityObj) => cityObj.value === city);
 
     if (!isCityValid) {
       alert("Please enter a valid city");
       return;
     }
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Registered with:", email);
-
-        db.collection("Users") // The collection name
-          .doc(email) // The document name
-          .set({
-            FirstName: firstName,
-            LastName: lastName,
-            City: city,
-            Email: email,
-          });
-      })
-      .catch((error) => alert(error.message));
+    UserService.createUserAccount(email, password, firstName, lastName, city);
+    navigation.replace("Home");
   };
   const handleSignIn = () => {
     navigation.navigate("Login");
   };
 
-  function handleEmail(text) {
+  const handleEmail = (text) => {
     setEmail(text);
     setEmailVerfiy(false);
-  
+
     if (isEmailValid(text)) {
       setEmailVerfiy(true);
     }
   };
 
-  function handlePassword(text) {
+  const handlePassword = (text) => {
     setPassword(text);
     setPasswordVerfiy(false);
 
@@ -122,174 +101,178 @@ const RegisterScreen = () => {
     }
   };
 
-  // const findCity = (query) => {
-  //   const regex = new RegExp(`${query.trim()}`, "i");
-  //   return city_data.filter((cityObj) => cityObj.label.search(regex) >= 0);
-  // };
+  const findCity = (query) => {
+    const regex = new RegExp(`${query.trim()}`, "i");
+    return cityData.filter((cityObj) => cityObj.label.search(regex) >= 0);
+  };
 
-  // const handleCityChange = (text) => {
-  //   setQuery(text);
-  // };
+  const handleCityChange = (text) => {
+    setQuery(text);
+  };
 
-  // const renderCityItem = ({ item }) => (
-  //   <TouchableOpacity
-  //     onPress={() => {
-  //       setSelectedCity(item.label);
-  //       setQuery(item.label);
-  //       setData([]); // Hide suggestions after selecting a city
-  //     }}
-  //   >
-  //     <Text style={styles.autocompleteItem}>{item.label}</Text>
-  //   </TouchableOpacity>
-  // );
+  const handleCitySelect = (itemLabel) => {
+    setCity(itemLabel);
+    setQuery(itemLabel);
+    setData([]);
+    Keyboard.dismiss(); // Dismiss the keyboard and suggestions
+  };
 
+  const renderCityItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handleCitySelect(item.label)}>
+      <Text style={styles.itemText}>{item.label}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.container} behavior="padding">
-        <View style={styles.inputContainer}>
-          {/* First name line */}
-          <View style={styles.inputRow}>
-            <MaterialIcons 
-              name="person"
-              color="#420475"
-              size={26}
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="FirstName"
-              value={firstName}
-              onChangeText={(text) => setFirstName(text)}
-              style={styles.input}
-            />
-          </View>
-          {/* Last name line */}
-          <View style={styles.inputRow}>
-            <MaterialIcons 
-              name="person"
-              color="#420475"
-              size={26}
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="LastName"
-              value={lastName}
-              onChangeText={(text) => setLastName(text)}
-              style={styles.input}
-            />
-          </View>
-          {/* Email line */}
-          <View style={styles.inputRow}>
-            <MaterialIcons 
-              name="email"
-              color="#420475"
-              size={30}
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="Email"
-              value={email}
-              // onChangeText={(text) => setEmail(text)}
-              onChangeText={handleEmail}
-              style={styles.input}
-            />
-            {email.length > 0 && (
-              <View style={styles.checkIcon}>
-                {emailVarify ? (
-                  <MaterialIcons name="check-circle" color="green" size={30} />
-                ) : (
-                  <MaterialIcons name="error" color="red" size={30} />
-                )}
-              </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <ScrollView keyboardShouldPersistTaps="handled">
+          <View style={styles.container}>
+            {/* First name line */}
+            <View style={styles.inputRow}>
+              <MaterialIcons
+                name="person"
+                color="#420475"
+                size={26}
+                style={styles.icon}
+              />
+              <TextInput
+                placeholder="FirstName"
+                value={firstName}
+                onChangeText={(text) => setFirstName(text)}
+                style={styles.input}
+              />
+            </View>
+            {/* Last name line */}
+            <View style={styles.inputRow}>
+              <MaterialIcons
+                name="person"
+                color="#420475"
+                size={26}
+                style={styles.icon}
+              />
+              <TextInput
+                placeholder="LastName"
+                value={lastName}
+                onChangeText={(text) => setLastName(text)}
+                style={styles.input}
+              />
+            </View>
+            {/* Email line */}
+            <View style={styles.inputRow}>
+              <MaterialIcons
+                name="email"
+                color="#420475"
+                size={30}
+                style={styles.icon}
+              />
+              <TextInput
+                placeholder="Email"
+                value={email}
+                // onChangeText={(text) => setEmail(text)}
+                onChangeText={handleEmail}
+                style={styles.input}
+              />
+              {email.length > 0 && (
+                <View style={styles.checkIcon}>
+                  {emailVarify ? (
+                    <MaterialIcons
+                      name="check-circle"
+                      color="green"
+                      size={30}
+                    />
+                  ) : (
+                    <MaterialIcons name="error" color="red" size={30} />
+                  )}
+                </View>
+              )}
+            </View>
+            {/* Warn line for example@gmail.com to tell the format of the mail */}
+            {email.length < 1 ? null : emailVarify ? null : (
+              <Text style={{ marginLeft: 20, color: "red" }}>
+                example@gmail.com
+              </Text>
             )}
-          </View>
-          {/* Warn line for example@gmail.com to tell the format of the mail */}
-          {email.length < 1 ? null : emailVarify ? null : (
-            <Text style={{ marginLeft: 20 , color: 'red'}} >example@gmail.com</Text>
-          )}
-          {/* Password line */}
-          <View style={styles.inputRow}>
-            <MaterialIcons 
-              name="lock"
-              color="#420475"
-              size={26}
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={handlePassword}
-              style={styles.passwordInput}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <View style={styles.checkShowIcon}>
-                {password.length < 1 ? null : 
-                <MaterialIcons
-                  name="remove-red-eye"
-                  color={passwordVarify ? 'green' : 'red'}
-                  size={30} 
+            {/* Password line */}
+            <View style={styles.inputRow}>
+              <MaterialIcons
+                name="lock"
+                color="#420475"
+                size={26}
+                style={styles.icon}
+              />
+              <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={handlePassword}
+                style={styles.input}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <View style={styles.checkShowIcon}>
+                  {password.length < 1 ? null : (
+                    <MaterialIcons
+                      name="remove-red-eye"
+                      color={passwordVarify ? "green" : "red"}
+                      size={30}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
+            </View>
+            {/* Warn line for password to tell the format of the password */}
+            {password.length < 1 ? null : passwordVarify ? null : (
+              <Text style={{ marginLeft: 20, color: "red" }}>
+                Uppercase, Lowercase, Number and 6 or more characters
+              </Text>
+            )}
+            <View style={styles.inputRow}>
+              <MaterialIcons
+                name="location-city"
+                color="#420475"
+                size={26}
+                style={styles.icon}
+              />
+              {/* <ScrollView> */}
+              <View>
+                <Autocomplete
+                  data={data}
+                  defaultValue={query}
+                  onChangeText={setQuery}
+                  placeholder="City"
+                  flatListProps={{
+                    keyExtractor: (_, index) => index.toString(),
+                    renderItem: renderCityItem,
+                    style: { maxHeight: 200 },
+                  }}
+                  style={styles.autocomplete}
+                  inputContainerStyle={styles.inputAutocomplete}
                 />
-                }
               </View>
-            </TouchableOpacity>
+            </View>
+            <View style={[styles.buttonContainer, {marginTop: query ? 200 : 0}]}>
+              <TouchableOpacity
+                onPress={handleSignUp}
+                style={styles.buttonRegister}
+              >
+                <Text style={styles.buttonTextRegister}>Register</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{flexDirection: 'row', gap: 15, alignItems: 'center'}}>
+              <Text>Already have an account?</Text>
+              <TouchableOpacity
+                onPress={handleSignIn}
+                style={styles.buttonSignIn}
+              >
+                <Text style={styles.buttonTextSignIn}>Sign in</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          {/* Warn line for password to tell the format of the password */}
-          {password.length < 1 ? null : passwordVarify ? null : (
-            <Text style={{ marginLeft: 20 , color: 'red'}} >Uppercase, Lowercase, Number and 6 or more characters</Text>
-          )}
-          {/* City Autocomplete */}
-          {/* <View style={styles.inputRow}>
-            <MaterialIcons
-              name="location-city"
-              color="#420475"
-              size={26}
-              style={styles.icon}
-            />
-            <Autocomplete
-              placeholder="City"
-              data={data}
-              value={query}
-              onChangeText={handleCityChange}
-              flatListProps={{
-                keyExtractor: (_, index) => index.toString(),
-                renderItem: renderCityItem,
-              }}
-              style={styles.input}
-            />
-          </View> */}
-          {/* City line */}
-          <View style={styles.inputRow}>
-            <MaterialIcons 
-              name="location-city"
-              color="#420475"
-              size={26}
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="City"
-              value={city}
-              onChangeText={(text) => setCity(text)}
-              style={styles.input}
-            />
-          </View>
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={handleSignUp}
-            style={styles.button}
-          >
-            <Text style={styles.buttonOutlineText}>Register</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity onPress={handleSignIn} style={styles.buttonEdit}>
-            <Text style={styles.buttonTextEdit}>Sign in</Text>
-          </TouchableOpacity>
-        </View>
-
-      </SafeAreaView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -297,118 +280,99 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 140,
+    gap: 10,
   },
-  inputContainer: {
-    width: "80%",
-    marginTop: 70,
-    marginLeft: 25,
+  input: {
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 35,
+    paddingVertical: 5,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 10,
+    minWidth: "80%",
+    fontSize: 16,
+  },
+  inputAutocomplete: {
+    backgroundColor: "#C3D4D3",
+    borderColor: "#C3D4D3",
+    paddingHorizontal: 35,
+    borderRadius: 10,
+    marginTop: 10,
+    minWidth: "90%",
+    height: 30,
+  },
+  autocomplete: {
+    height: 30,
+    backgroundColor: "#C3D4D3",
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2,
   },
   inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'relative',
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginTop: 5,
+    color: "#000", // text color
   },
   icon: {
-    position: 'absolute',
+    position: "absolute",
     left: 5,
-    zIndex: 1,
+    zIndex: 2,
   },
   checkIcon: {
-    position: 'absolute',
+    position: "absolute",
     right: 5,
     bottom: 10,
     zIndex: 1,
   },
   checkShowIcon: {
-    position: 'absolute',
+    position: "absolute",
     right: 5,
     bottom: -18,
     zIndex: 1,
   },
-  input: {
-    width: "100%",
-    backgroundColor: "#C3D4D3",
-    paddingHorizontal: 35,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-    borderColor: "#C3D4D3",
-    borderWidth: 2,
-  },
-  passwordInput: {
-    flex: 1,
-    backgroundColor: "#C3D4D3",
-    paddingHorizontal: 35,
-    paddingVertical: 8, // Adjusted padding
-    borderRadius: 10,
-    marginTop: 5,
-    borderColor: "#C3D4D3",
-    borderWidth: 2,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  button: {
+  buttonRegister: {
+    top: 20,
     backgroundColor: "#366A68",
     width: "100%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    marginBottom: 30
   },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
-  buttonText: {
+  buttonTextRegister: {
     color: "white",
     fontWeight: "700",
     fontSize: 16,
   },
-  buttonOutlineText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
+  buttonSignIn: {
+    // position: "absolute",
+    // top: 20,
+    // left: 25,
+    // width: "30%",
+    // padding: 15,
+    // borderRadius: 10,
+    // alignItems: "center",
   },
-  //###############################
-  backgroundImage: {
-    flex: 1,
-    width: "105%",
-    height: "100%",
-    marginLeft: -19,
-    justifyContent: "center",
-    // alignItems: 'center',
-  },
-  buttonEdit: {
-    position: 'absolute',
-    top: 55, 
-    left: 30, 
-    width: "30%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  
-  buttonTextEdit: {
+  buttonTextSignIn: {
     color: "#366A68",
     fontWeight: "700",
     fontSize: 16,
   },
-  // autocompleteInput: {
-  //   width: "100%",
-  //   paddingHorizontal: 35,
-  //   paddingVertical: 10,
-  //   borderRadius: 10,
-  //   marginTop: 5,
-  //   borderColor: "#C3D4D3",  // Match the input text border color
-  //   borderWidth: 2,
-  // },
 });

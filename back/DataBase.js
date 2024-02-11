@@ -21,12 +21,7 @@ export const sportIconMapping_MaterialCommunityIcons = {
   Surfing: "surfing",
 };
 
-// export const cityNames = [
-//   "Afula", "Akko", "Arad", "Ariel", "Ashdod", "Ashkelon","Baqa al-Gharbiyye", "Bat Yam", "Beer Sheva", "Beit Shean", "Beit Shemesh", "Betar Illit", "Bnei Berak", "Dimona", "Eilat", "Elad", "Givatayim", "Hadera", "Haifa", "Harish", "Herzliya", "Hod HaSharon", "Holon", "Jerusalem", "Karmiel", "Kfar Sava", "Kiryat Ata", "Kiryat Bialik", "Kiryat Gat", "Kiryat Malachi", "Kiryat Motzkin", "Kiryat Ono", "Kiryat Shemone", "Kiryat Yam", "	Lod", "Maale Adumim", "Maalot Tarshiha", "Migdal HaEmek", "Modiin", "Nahariya", "Nazareth", "Nes Ziona", "Nesher", "Netanya", "Netivot", "Nof Hagalil", "Ofakim", "Or Akiva", "Or Yehuda", "Petah Tikva", "Qalansawe", "Raanana", "Rahat", "Ramat Hasharon", "Ramat-Gan", "Ramla" , "Rehovot", "Rishon Lezion", "Rosh Ha'ayin", "Sakhnin", "Sderot", "Shefaram", "Taibeh", "Tamra", "Tel Aviv", "Tiberias", "Tira", "Tirat Carmel", "Tsfat (Safed)", "Umm al-Fahm", "Yavne", "Yehud-Monosson", "Yokneam"
-// ]
-
-export const city_data = [
-  { label: "All", value: "All" },
+export const cityData = [
   { label: "Afula", value: "Afula" },
   { label: "Akko", value: "Akko" },
   { label: "Arad", value: "Arad" },
@@ -102,8 +97,7 @@ export const city_data = [
   { label: "Yokneam", value: "Yokneam" },
 ];
 
-export const sportType_data = [
-  { label: "All", value: "All" },
+export const sportTypeData = [
   { label: "Basketball", value: "Basketball" },
   { label: "Cycling", value: "Cycling" },
   { label: "Football", value: "Football" },

@@ -3,14 +3,55 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-
 var userFirstName = "";
 var userLastName = "";
 var userCity = "";
 var userNotificationCounter = 0;
 
 export const UserService = {
-  // Fetch user details by UID
+  async createUserAccount(email, password, firstName, lastName, city) {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Registered with:", user.email);
+
+        db.collection("Users").doc(email).set({
+          FirstName: firstName,
+          LastName: lastName,
+          City: city,
+          Email: email,
+          ImageUpload: 0,
+          NotificationCounter: 0,
+        });
+      })
+      .catch((error) => alert(error.message));
+  },
+
+  async login(email, password) {
+    try {
+      const normalizedEmail = email.trim().toLowerCase();
+      const userCredential = await auth.signInWithEmailAndPassword(
+        normalizedEmail,
+        password
+      );
+
+      const user = userCredential.user;
+      return {
+        success: true,
+        data: {
+          email: user.email,
+        },
+      };
+    } catch (error) {
+      console.error("Login error:", error);
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  },
+
   async getUserDetails() {
     try {
       const userEmail = auth.currentUser.email;
@@ -22,7 +63,6 @@ export const UserService = {
         userLastName = userData.LastName;
         userCity = userData.City;
         userNotificationCounter = userData.NotificationCounter;
-
       } else {
         // Handle the case where the document does not exist
         console.log("No such document!");
@@ -31,15 +71,14 @@ export const UserService = {
       console.error("Error fetching User: ", error);
     }
   },
-  
-  async getUserNotificationCounter(userEmail = auth.currentUser.email){
+
+  async getUserNotificationCounter(userEmail = auth.currentUser.email) {
     try {
       const snapshot = await db.collection("Users").doc(userEmail).get();
 
       if (snapshot.exists) {
         const userData = snapshot.data();
         return userData.NotificationCounter;
-
       } else {
         // Handle the case where the document does not exist
         console.log("No such document!");
@@ -49,13 +88,16 @@ export const UserService = {
     }
   },
 
-  async updateUserNotificationCounter(counter = 0, userEmail = auth.currentUser.email){
+  async updateUserNotificationCounter(
+    counter = 0,
+    userEmail = auth.currentUser.email
+  ) {
     try {
       const userRef = db.collection("Users").doc(userEmail);
 
       // Update the user document
       await userRef.update({
-        NotificationCounter: counter
+        NotificationCounter: counter,
       });
 
       console.log("User NotificationCounter updated successfully");
@@ -85,7 +127,6 @@ export const UserService = {
 
   async deleteUserAccount() {
     try {
-
       const userEmail = auth.currentUser.email;
       const userRef = db.collection("Users").doc(userEmail);
 
@@ -102,9 +143,8 @@ export const UserService = {
       // Handle the error accordingly
     }
   },
-
 };
 
-export { userFirstName, userLastName, userCity, userNotificationCounter};
+export { userFirstName, userLastName, userCity, userNotificationCounter };
 
 export default UserService;

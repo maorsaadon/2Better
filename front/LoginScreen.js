@@ -11,6 +11,7 @@ import {
 } from "react-native";
 //import styles from "../components/StylesSheets";
 import { auth } from "../back/firebase";
+import UserService from "../back/UserService";
 
 import myLogoPic from "../assets/loginPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -33,15 +34,13 @@ const LoginScreen = () => {
   }, []);
 
 
-  const handleLogin = () => {
-    email = email.toLowerCase();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Logged in with:", user.email);
-      })
-      .catch((error) => alert(error.message));
+  const handleLogin = async () => {
+    const response = await UserService.login(email, password);
+    if (response.success) {
+      console.log("Login successful:", response.data);
+    } else {
+      alert("Login failed: " + response.message);
+    }
   };
   const handleSignUp = () => {
     navigation.navigate("Register");
