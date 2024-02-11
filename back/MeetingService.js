@@ -64,13 +64,14 @@ export const MeetingService = {
     }
   },
 
-  async handleAddNewMeeting(groupName, location, date, time) {
+  async handleAddNewMeeting(groupName, location, date, time , timestamp) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
     MeetingRef.set({
       GroupName: groupName,
       Location: location,
       Date: date,
       Time: time,
+      Timestamp: timestamp,
     }).catch((error) => {
       console.error("Error creating Meeting: ", error);
       alert(error.message);

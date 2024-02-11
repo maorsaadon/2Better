@@ -30,6 +30,8 @@ const AddNewMeetingScreen = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState('Select Date');
   const [selectedTime, setSelectedTime] = useState('Select Time');
 
+  const [DateTimeStamp, setDateTimeStamp] = useState(new Date());
+
 
   // Define a function to get the current date without time
   const getToday = () => {
@@ -52,7 +54,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
   const AddButton = () => {
     try {
-      MeetingService.handleAddNewMeeting(groupName, location, date, time);
+      MeetingService.handleAddNewMeeting(groupName, location, date, time , DateTimeStamp);
       NotificationService.handleAddNewNotification(groupName,  content, "New Meeting", serverTimestamp())
       navigation.replace("MyGroups");
     } catch (error) {
@@ -72,6 +74,7 @@ const AddNewMeetingScreen = ({ route }) => {
   {/* Change date selected */}
   const handleDateConfirm = (date) => {
     const dt= new Date(date);
+    setDateTimeStamp(dt);
     const dateAlone = dt.toISOString().split('T');
     const splitDate= dateAlone[0].split('-');
     const correctFormatDate = splitDate[2] + "/" + splitDate[1] + "/" + splitDate[0];
