@@ -82,7 +82,6 @@ const AddNewMeetingScreen = ({ route }) => {
   const handleDateConfirm = (date) => {
     const dt= new Date(date);
     const dateAlone = dt.toISOString().split('T');
-    setDateString(dateAlone);
     const splitDate= dateAlone[0].split('-');
 
     setYear(splitDate[0]); 
@@ -108,13 +107,12 @@ const AddNewMeetingScreen = ({ route }) => {
   const handleTimeConfirm = (date) => {
     const dt= new Date(date);
     const timeAlone = dt.toLocaleTimeString();
-    setTimeString(timeAlone);
     const splitTime = timeAlone.split(':');
 
     setHours(splitTime[0]);
     setMinutes(splitTime[1]);
     setSeconds(splitTime[2]);
-    
+
     const correctFormatTime = splitTime[0] + ':' + splitTime[1];
     setSelectedTime(correctFormatTime);
     setTime(correctFormatTime);  // This var to update in firestore
