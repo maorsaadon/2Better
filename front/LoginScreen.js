@@ -11,7 +11,6 @@ import {
 } from "react-native";
 //import styles from "../components/StylesSheets";
 import { auth } from "../back/firebase";
-import UserService from "../back/UserService";
 
 import myLogoPic from "../assets/loginPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -34,13 +33,15 @@ const LoginScreen = () => {
   }, []);
 
 
-  const handleLogin = async () => {
-    const response = await UserService.login(email, password);
-    if (response.success) {
-      console.log("Login successful:", response.data);
-    } else {
-      alert("Login failed: " + response.message);
-    }
+  const handleLogin = () => {
+    email = email.toLowerCase();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Logged in with:", user.email);
+      })
+      .catch((error) => alert(error.message));
   };
   const handleSignUp = () => {
     navigation.navigate("Register");
@@ -53,8 +54,8 @@ const LoginScreen = () => {
           <View style={styles.inputRow}>
             <MaterialIcons 
               name="email"
-              color="#420475"
-              size={30}
+              color="#366A68"
+              size={20}
               style={styles.icon}
             />
             <TextInput
@@ -68,8 +69,8 @@ const LoginScreen = () => {
           <View style={styles.inputRow}>
             <MaterialIcons 
               name="lock"
-              color="#420475"
-              size={26}
+              color="#366A68"
+              size={20}
               style={styles.icon}
             />
             <TextInput
@@ -85,7 +86,7 @@ const LoginScreen = () => {
                 <MaterialIcons
                   name="remove-red-eye"
                   color= "black"
-                  size={30} 
+                  size={20} 
                 />
                 }
               </View>

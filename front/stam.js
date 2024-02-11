@@ -21,7 +21,7 @@ import UserService from "../back/UserService";
 import Autocomplete from "react-native-autocomplete-input";
 
 const RegisterScreen = () => {
-  var [email, setEmail] = useState("");
+  let [email, setEmail] = useState("");
   const [emailVarify, setEmailVerfiy] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordVarify, setPasswordVerfiy] = useState(false);

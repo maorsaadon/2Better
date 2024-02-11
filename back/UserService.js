@@ -29,47 +29,33 @@ export const UserService = {
       .catch((error) => alert(error.message));
   },
 
-  async login(email, password) {
-    try {
-      const normalizedEmail = email.trim().toLowerCase();
-      const userCredential = await auth.signInWithEmailAndPassword(
-        normalizedEmail,
-        password
-      );
-
-      const user = userCredential.user;
-      return {
-        success: true,
-        data: {
-          email: user.email,
-        },
-      };
-    } catch (error) {
-      console.error("Login error:", error);
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
-  },
-
   async getUserDetails() {
     try {
-      const userEmail = auth.currentUser.email;
-      const snapshot = await db.collection("Users").doc(userEmail).get();
-
-      if (snapshot.exists) {
-        const userData = snapshot.data();
-        userFirstName = userData.FirstName;
-        userLastName = userData.LastName;
-        userCity = userData.City;
-        userNotificationCounter = userData.NotificationCounter;
+      // Check if the user is signed in
+      if (auth.currentUser) {
+        const userEmail = auth.currentUser.email;
+        // Ensure the email is not null or undefined
+        if (userEmail) {
+          const snapshot = await db.collection("Users").doc(userEmail).get();
+          if (snapshot.exists) {
+            const userData = snapshot.data();
+            // Assuming these are global variables, but consider using setState or return the userData
+            userFirstName = userData.FirstName;
+            userLastName = userData.LastName;
+            userCity = userData.City;
+            userNotificationCounter = userData.NotificationCounter;
+          } else {
+            // Handle the case where the document does not exist
+            console.log("No such document!");
+          }
+        } else {
+          console.log("User email is null or undefined.");
+        }
       } else {
-        // Handle the case where the document does not exist
-        console.log("No such document!");
+        console.log("No user is currently signed in.");
       }
     } catch (error) {
-      console.error("Error fetching User: ", error);
+      console.error("Error fetching user details: ", error);
     }
   },
 

@@ -21,7 +21,8 @@ import UserService from "../back/UserService";
 import Autocomplete from "react-native-autocomplete-input";
 
 const RegisterScreen = () => {
-  const [email, setEmail] = useState("");
+  let [email, setEmail] = useState("");
+  const [emailVarify, setEmailVerfiy] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordVarify, setPasswordVerfiy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -68,7 +69,6 @@ const RegisterScreen = () => {
       return;
     }
 
-    // Check if the entered city is in the predefined list
     const isCityValid = cityData.find((cityObj) => cityObj.value === city);
 
     if (!isCityValid) {
@@ -77,10 +77,11 @@ const RegisterScreen = () => {
     }
 
     UserService.createUserAccount(email, password, firstName, lastName, city);
+
     navigation.replace("Home");
   };
   const handleSignIn = () => {
-    navigation.navigate("Login");
+    navigation.replace("Login");
   };
 
   const handleEmail = (text) => {
@@ -101,15 +102,6 @@ const RegisterScreen = () => {
     }
   };
 
-  const findCity = (query) => {
-    const regex = new RegExp(`${query.trim()}`, "i");
-    return cityData.filter((cityObj) => cityObj.label.search(regex) >= 0);
-  };
-
-  const handleCityChange = (text) => {
-    setQuery(text);
-  };
-
   const handleCitySelect = (itemLabel) => {
     setCity(itemLabel);
     setQuery(itemLabel);
@@ -126,17 +118,15 @@ const RegisterScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        <ScrollView keyboardShouldPersistTaps="handled">
           <View style={styles.container}>
             {/* First name line */}
             <View style={styles.inputRow}>
               <MaterialIcons
                 name="person"
-                color="#420475"
-                size={26}
+                color="#366A68"
+                size={20}
                 style={styles.icon}
               />
               <TextInput
@@ -150,8 +140,8 @@ const RegisterScreen = () => {
             <View style={styles.inputRow}>
               <MaterialIcons
                 name="person"
-                color="#420475"
-                size={26}
+                color="#366A68"
+                size={20}
                 style={styles.icon}
               />
               <TextInput
@@ -165,8 +155,8 @@ const RegisterScreen = () => {
             <View style={styles.inputRow}>
               <MaterialIcons
                 name="email"
-                color="#420475"
-                size={30}
+                color="#366A68"
+                size={20}
                 style={styles.icon}
               />
               <TextInput
@@ -182,7 +172,7 @@ const RegisterScreen = () => {
                     <MaterialIcons
                       name="check-circle"
                       color="green"
-                      size={30}
+                      size={20}
                     />
                   ) : (
                     <MaterialIcons name="error" color="red" size={30} />
@@ -200,8 +190,8 @@ const RegisterScreen = () => {
             <View style={styles.inputRow}>
               <MaterialIcons
                 name="lock"
-                color="#420475"
-                size={26}
+                color="#366A68"
+                size={20}
                 style={styles.icon}
               />
               <TextInput
@@ -217,7 +207,7 @@ const RegisterScreen = () => {
                     <MaterialIcons
                       name="remove-red-eye"
                       color={passwordVarify ? "green" : "red"}
-                      size={30}
+                      size={20}
                     />
                   )}
                 </View>
@@ -232,12 +222,12 @@ const RegisterScreen = () => {
             <View style={styles.inputRow}>
               <MaterialIcons
                 name="location-city"
-                color="#420475"
-                size={26}
+                color="#366A68"
+                size={20}
                 style={styles.icon}
               />
               {/* <ScrollView> */}
-              <View>
+              <View style={styles.autocompleteContainer}>
                 <Autocomplete
                   data={data}
                   defaultValue={query}
@@ -246,14 +236,15 @@ const RegisterScreen = () => {
                   flatListProps={{
                     keyExtractor: (_, index) => index.toString(),
                     renderItem: renderCityItem,
-                    style: { maxHeight: 200 },
+                    style: { maxHeight: 200,  zIndex: 2 },
                   }}
                   style={styles.autocomplete}
                   inputContainerStyle={styles.inputAutocomplete}
+
                 />
               </View>
             </View>
-            <View style={[styles.buttonContainer, {marginTop: query ? 200 : 0}]}>
+            <View>
               <TouchableOpacity
                 onPress={handleSignUp}
                 style={styles.buttonRegister}
@@ -261,8 +252,8 @@ const RegisterScreen = () => {
                 <Text style={styles.buttonTextRegister}>Register</Text>
               </TouchableOpacity>
             </View>
-            <View style={{flexDirection: 'row', gap: 15, alignItems: 'center'}}>
-              <Text>Already have an account?</Text>
+            <View>
+              {/* <Text>Already have an account?</Text> */}
               <TouchableOpacity
                 onPress={handleSignIn}
                 style={styles.buttonSignIn}
@@ -271,7 +262,6 @@ const RegisterScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
       </KeyboardAvoidingView>
     </ImageBackground>
   )
@@ -289,16 +279,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 140,
-    gap: 10,
+    paddingTop: 60,
+    gap: 5,
   },
   input: {
     backgroundColor: "#C3D4D3",
     paddingHorizontal: 35,
-    paddingVertical: 5,
+    paddingVertical: 0,
     borderRadius: 10,
     padding: 10,
-    marginTop: 10,
+    marginTop: 5,
     minWidth: "80%",
     fontSize: 16,
   },
@@ -308,12 +298,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35,
     borderRadius: 10,
     marginTop: 10,
-    minWidth: "90%",
+    minWidth: "50%",
     height: 30,
   },
+  
   autocomplete: {
+    minWidth: "80%", // Ensure it spans the width of the screen
+    height: 20,
+    backgroundColor: "#C3D4D3",
+    zIndex: 2,
+  },
+
+  autocompleteContainer: {
+    minWidth: "80%", // Ensure it spans the width of the screen
     height: 30,
     backgroundColor: "#C3D4D3",
+    zIndex: 2,
   },
   itemText: {
     fontSize: 15,
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
   icon: {
     position: "absolute",
     left: 5,
-    zIndex: 2,
+    zIndex: 3,
   },
   checkIcon: {
     position: "absolute",
@@ -348,13 +348,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   buttonRegister: {
-    top: 20,
+    top: 50,
     backgroundColor: "#366A68",
     width: "100%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginBottom: 30
+    marginBottom: 50,
   },
   buttonTextRegister: {
     color: "white",
@@ -362,13 +362,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonSignIn: {
-    // position: "absolute",
-    // top: 20,
-    // left: 25,
-    // width: "30%",
-    // padding: 15,
-    // borderRadius: 10,
-    // alignItems: "center",
+    position: "absolute",
+    left: 25,
+    width: "30%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonTextSignIn: {
     color: "#366A68",
