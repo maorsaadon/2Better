@@ -16,6 +16,7 @@ import { city_data } from "../back/DataBase";
 //import Autocomplete from "react-native-autocomplete-input";
 
 const RegisterScreen = () => {
+  var changeImage = 0;
   var [email, setEmail] = useState("");
   const [emailVarify, setEmailVerfiy] = useState(false);
   const [password, setPassword] = useState("");

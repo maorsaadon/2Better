@@ -18,14 +18,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import * as FileSystem from 'expo-file-system';
-import { auth } from '../back/firebase';
+import { auth , db} from '../back/firebase';
 
-
-
-
-
-export let imageUri = null;
-export let changeImage = 0;
 const EditProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -33,12 +27,13 @@ const EditProfileScreen = () => {
 
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState();
-
+  const snapshot = db.collection("Users").doc(userEmail);
 
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
       await UserService.updateUserDetails(firstName, lastName, city);
+      await snapshot.update({changeImage : 1});
       navigation.replace("Home"); // Go back to the Home screen after saving
     } catch (error) {
       console.error("Error updating user details:", error);

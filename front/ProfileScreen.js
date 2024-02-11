@@ -11,7 +11,7 @@ import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
-import { auth } from "../back/firebase";
+import { auth , db } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
 import { styles } from "../components/StylesSheets"
 import EditProfileScreen, { changeImage } from '../front/EditProfileScreen'
@@ -25,7 +25,10 @@ const ProfileScreen = () => {
   const [city, setCity] = useState("");
   //const photo = require("../assets/iconProfile.jpeg");
   const [imageUrl, setImageUrl] = useState(null);
-
+  const snapshot = db.collection("Users").doc(userEmail).get();
+  if (snapshot.exists) {
+    const data = snapshot.data();
+  }
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -37,8 +40,8 @@ const ProfileScreen = () => {
       }
       const storage = getStorage();
       let storageRef;
-      if (!changeImage) {
-        storageRef = ref(storage, 'UsersProfilePics/' + 'iconProfile.jpeg');
+      if (!data.changeImage) {
+        storageRef = ref(storage, 'UsersProfilePics/' + 'defaultProfile.jpeg');
       }
       else {
         storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
