@@ -21,19 +21,18 @@ import * as FileSystem from 'expo-file-system';
 import { auth , db} from '../back/firebase';
 
 const EditProfileScreen = () => {
+  const userEmail = auth.currentUser.email;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
 
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState();
-  const snapshot = db.collection("Users").doc(userEmail);
 
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
-      await UserService.updateUserDetails(firstName, lastName, city);
-      await snapshot.update({changeImage : 1});
+      await UserService.updateUserImage();
       navigation.replace("Home"); // Go back to the Home screen after saving
     } catch (error) {
       console.error("Error updating user details:", error);

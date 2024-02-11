@@ -187,8 +187,8 @@ const stylesHome = StyleSheet.create({
   profileButton: {
     padding: 10,
     borderRadius: 10,
-    marginTop: 5,
-    marginRight: 5,
+    marginTop: -50,
+    marginLeft: 345,
     borderRadius: 50,
   }
 })

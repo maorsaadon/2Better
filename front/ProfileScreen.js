@@ -9,26 +9,25 @@ import {
 } from "react-native";
 import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { userFirstName, userLastName, UserCity,userImageUpload } from "../back/UserService";
 import UserService from "../back/UserService";
-import { auth , db } from "../back/firebase";
+import { auth, db } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
 import { styles } from "../components/StylesSheets"
 import EditProfileScreen, { changeImage } from '../front/EditProfileScreen'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Alert } from 'react-native';
 
+
 const ProfileScreen = () => {
+  const userEmail = auth.currentUser.email;
   const [isEditing, setIsEditing] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
   //const photo = require("../assets/iconProfile.jpeg");
   const [imageUrl, setImageUrl] = useState(null);
-  const snapshot = db.collection("Users").doc(userEmail).get();
-  if (snapshot.exists) {
-    const data = snapshot.data();
-  }
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -37,10 +36,11 @@ const ProfileScreen = () => {
         setCity(UserCity);
       } catch (error) {
         console.error("Error fetching user details:", error);
-      }
+      } 
       const storage = getStorage();
-      let storageRef;
-      if (!data.changeImage) {
+      var storageRef;
+      
+      if (userImageUpload == 0) {
         storageRef = ref(storage, 'UsersProfilePics/' + 'defaultProfile.jpeg');
       }
       else {
@@ -53,6 +53,8 @@ const ProfileScreen = () => {
       } catch (error) {
         console.error('Error retrieving image:', error);
       }
+
+      console.log(userImageUpload);
     };
 
     fetchUserDetails();
@@ -68,20 +70,20 @@ const ProfileScreen = () => {
       // Ask for user confirmation using Alert( if user press yes the resolve var will becmae true and then the confrimed will became true)
       const confirmed = await new Promise(resolve => {
         Alert.alert(
-            "Confirmation",
-            "Are you sure you want to delete your account? This action is irreversible.",
-            [
-                { text: "Cancel", onPress: () => resolve(false), style: "cancel" },
-                { text: "OK", onPress: () => resolve(true) }
-            ],
-            { cancelable: false }
-          );
+          "Confirmation",
+          "Are you sure you want to delete your account? This action is irreversible.",
+          [
+            { text: "Cancel", onPress: () => resolve(false), style: "cancel" },
+            { text: "OK", onPress: () => resolve(true) }
+          ],
+          { cancelable: false }
+        );
       });
 
       // If user press cancel(the confirmed will became false)
       if (!confirmed) {
-          console.log("User canceled account deletion");
-          return;
+        console.log("User canceled account deletion");
+        return;
       }
 
       // Call the deleteUserAccount function or any other method you have for account deletion
@@ -141,7 +143,7 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.userInfoContainer}>
           <Text style={styles.valueName}>
-            {userFirstName} {userLastName}
+            {userFirstName}{ } {userLastName}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Entypo name="mail" size={30} color="black" />

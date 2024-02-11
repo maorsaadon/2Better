@@ -8,6 +8,7 @@ var userFirstName = "";
 var userLastName = "";
 var userCity = "";
 var userNotificationCounter = 0;
+var userImageUpload = 0;
 
 export const UserService = {
   // Fetch user details by UID
@@ -48,7 +49,24 @@ export const UserService = {
       console.error("Error fetching User: ", error);
     }
   },
+  async updateUserImage()
+  {
+    const userEmail = auth.currentUser.email
+    try {
+      const userRef = db.collection("Users").doc(userEmail);
+      userImageUpload = 1;
+      // Update the user document
+      await userRef.update({
+        ImageUpload : userImageUpload
+      });
 
+      console.log("User userImageUpload updated successfully");
+    } catch (error) {
+      console.error("Error updating user NotificationCounter: ", error);
+    }
+
+  }
+  ,
   async updateUserNotificationCounter(counter = 0, userEmail = auth.currentUser.email){
     try {
       const userRef = db.collection("Users").doc(userEmail);
@@ -105,6 +123,6 @@ export const UserService = {
 
 };
 
-export { userFirstName, userLastName, userCity, userNotificationCounter};
+export { userFirstName, userLastName, userCity, userNotificationCounter , userImageUpload};
 
 export default UserService;
