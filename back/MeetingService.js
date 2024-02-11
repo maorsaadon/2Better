@@ -66,6 +66,30 @@ export const MeetingService = {
       console.error("Error updating Meeting details: ", error);
     }
   },
+  // Update meeting details
+  async updateMeetingDetails(MeetingID, date, time, location) {
+    try {
+      const meetingRef = db.collection("Meetings").doc(MeetingID);
+
+      const snapshot = await meetingRef.get();
+
+      if (snapshot.exists) {
+        // If the document exists, update the meeting details
+        await meetingRef.update({
+          Date: date,
+          Time: time,
+          Location: location,
+        });
+  
+        console.log("Meeting details updated successfully");
+      } else {
+        console.log("Meeting document does not exist");
+        // Handle the case where the document doesn't exist, if needed
+      }
+    } catch (error) {
+      console.error("Error updating Meeting details: ", error);
+    }
+  },
 
   async handleAddNewMeeting(groupName, location, date, time , timestamp) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
