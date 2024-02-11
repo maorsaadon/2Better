@@ -26,17 +26,17 @@ import React, { useEffect, useState } from "react";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 // import { serverTimestamp } from "firebase/firestore";
 import MeetingService from '../back/MeetingService';
+import { useNavigation } from '@react-navigation/core';
+
 
 const screenWidth = Dimensions.get("window").width;
 
 const MeetingCard = ({ meeting, isLeader }) => {
-    
+const navigation = useNavigation();
 const [hasJoined, setHasJoined] = useState(false); // New state to track if joined
 const groupName = meeting?.GroupName ?? "Default Name";
-// const currentParticipants = parseInt(meeting.Members, 10);
-// const totalCapacity = parseInt(meeting.TotalCapacity, 10);
-const currentParticipants = parseInt(3);
-const totalCapacity = parseInt(meeting.TotalCapacity);
+const currentParticipants = parseInt(meeting.NumberOfMembers, 0);
+const totalCapacity = parseInt(meeting.TotalCapacity, 10);
 
 const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
 
@@ -73,6 +73,7 @@ const handleCancelPress = () =>{
 
 const handleEditPress = () =>{
     console.log("Click on Edit!");
+    // navigation.replace("EditMeetingScreen");
 };
 
 return (
@@ -86,22 +87,22 @@ return (
         </View>
         </View>
         <View style={styles.cardMiddleRow}>
-        <View style={styles.iconAndTextContainer}>
-            <MaterialIcons name="location-on" size={22} color="black" />
-            <Text>{meeting.Location}</Text>
-        </View>
-        <View style={styles.iconAndTextContainer}>
-            <FontAwesome6 name="calendar-days" size={20} color="black" />
-            <Text>{meeting.Date}</Text>
-        </View>
-        <View style={styles.iconAndTextContainer}>
-            <AntDesign name="clockcircle" size={20} color="black" />
-            <Text>{meeting.Time}</Text>
-        </View>
-        {/* <View style={styles.iconAndTextContainer}>
-            <AntDesign name="clockcircle" size={20} color="black" />
-            <Text>is Leader ? {meeting.IsLeader}</Text>
-        </View> */}
+            <View style={styles.iconAndTextContainer}>
+                <MaterialIcons name="location-on" size={22} color="black" />
+                <Text>{meeting.Location}</Text>
+            </View>
+            <View style={styles.iconAndTextContainer}>
+                <FontAwesome6 name="calendar-days" size={20} color="black" />
+                <Text>{meeting.Date}</Text>
+            </View>
+            <View style={styles.iconAndTextContainer}>
+                <AntDesign name="clockcircle" size={20} color="black" />
+                <Text>{meeting.Time}</Text>
+            </View>
+            {/* <View style={styles.iconAndTextContainer}>
+                <AntDesign name="clockcircle" size={20} color="black" />
+                <Text>is Leader ? {meeting.IsLeader}</Text>
+            </View> */}
         </View>
         <View style={styles.participantContainer}>
         <Text style={styles.participantText}>{currentParticipants}</Text>
@@ -109,28 +110,24 @@ return (
             minimumValue={0}
             maximumValue={totalCapacity}
             value={currentParticipants}
+            // value={meeting.NumberOfMembers}
         />
         <Text style={styles.participantText}>{totalCapacity}</Text>
         <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
         {!hasJoined ? ( // Only show if hasJoined is false
-        //   <TouchableOpacity style={styles.button} onPress={handleJoinPress(meeting.id, "aviya@test.com")}>
           <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
             <Text style={styles.buttonText}>Join Meeting</Text>
           </TouchableOpacity>
         ) : ( // Only show if hasJoined is true
-        //   <TouchableOpacity style={styles.button} onPress={handleJoinPress(meeting.id, "aviya@test.com")}>
           <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
             <Text style={styles.buttonText}>Cancel Meeting</Text>
           </TouchableOpacity>
         )}
         
         {meeting.IsLeader ? (
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={handleEditPress}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleEditPress}>
             <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>
       ) : ( <Text/>

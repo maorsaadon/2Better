@@ -1,5 +1,8 @@
 import { auth, db } from "./firebase";
 import { GroupService } from "./GroupService";
+import "firebase/compat/firestore";
+import firebase from "firebase/compat/app";
+
 
 
 export const MeetingService = {
@@ -64,13 +67,16 @@ export const MeetingService = {
     }
   },
 
-  async handleAddNewMeeting(groupName, location, date, time) {
+  async handleAddNewMeeting(groupName, location, date, time , timestamp) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
     MeetingRef.set({
       GroupName: groupName,
       Location: location,
       Date: date,
       Time: time,
+      Timestamp: timestamp,
+      NumberOfMembers : 0,
+      Members: [],
     }).catch((error) => {
       console.error("Error creating Meeting: ", error);
       alert(error.message);
@@ -100,16 +106,16 @@ export const MeetingService = {
     try {
       // Fetch all groups to determine user's role
       const groupsSnapshot = await db.collection('Groups').get();
-      var isLeader2 = '0';
+      var isLeader2 = 0;
       groupsSnapshot.forEach(doc => {
         const group = doc.data();
         if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
           // User is a member but not the leader
-          isLeader2 = '0';
+          isLeader2 = 0;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         } else if (group.LeaderEmail === userEmail) {
           // User is the leader
-          isLeader2 = '1';
+          isLeader2 = 1;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         }
       });
@@ -137,21 +143,6 @@ export const MeetingService = {
     
   },
 
-  async addUserToMeeting(meetingId) {
-    try {
-      // Assuming 'Meetings' is the name of the collection where meetings are stored
-      const meetingRef = await db.collection("Meetings").doc(meetingId);
-      const currMembers = meetingRef.get();
-      // Update the user document
-      await meetingRef.update({
-        NumberOfMembers: currMembers.NumberOfMembers + 1,
-      });
-    } catch (error) {
-      console.error(`Error update meetings members!`, error);
-      // Handle the error accordingly
-    }
-  },
-
   async isInTheMeeting(meetingId, memberEmail) {
     try {
       // Assuming 'Meetings' is the name of the collection where meetings are stored
@@ -170,21 +161,25 @@ export const MeetingService = {
   async addUserToMeeting(meetingId, memberEmail) {
     try {
       // Assuming 'Meetings' is the name of the collection where meetings are stored
-      const meetingRef = await db.collection("Meetings").doc(meetingId);
-      const meeting = meetingRef.get();
-      // if (!meeting.Members.includes(memberEmail))
-      if (1)
-      {
-        // Update the Members array using arrayUnion to add userEmail without duplicates
-        await meetingRef.update({
-          // Members: firestore.FieldValue.arrayUnion(userEmail),
-          // NumberOfMembers: NumberOfMembers + 1
-          // NumberOfMembers:  "Aviya!!!"
-          // NumberOfMembers: db.FieldValue.increment(1)
-        });
+      const meetingRef = db.collection("Meetings").doc(meetingId);
+      const snapshot = await meetingRef.get();
+      var currNum = 0;
+      if(snapshot.exists) {
+        const meeting = snapshot.data();
+        currNum = meeting.NumberOfMembers;
+      
+        if (!meeting.Members.includes(memberEmail))
+        {
+          // Update the Members array using arrayUnion to add userEmail without duplicates
+          await meetingRef.update({
+            Members: firebase.firestore.FieldValue.arrayUnion(memberEmail),
+            // NumberOfMembers: currNum + 1
+            NumberOfMembers: firebase.firestore.FieldValue.increment(1)
+          });
 
-        console.log('User email added to meeting members successfully.');
-      }
+          console.log('User email added to meeting members successfully.');
+        }
+    }
     } catch (error) {
       console.error(`Error add user to the meeting!`, error);
     }
