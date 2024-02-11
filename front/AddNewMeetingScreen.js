@@ -30,6 +30,13 @@ const AddNewMeetingScreen = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState('Select Date');
   const [selectedTime, setSelectedTime] = useState('Select Time');
 
+  const [year, setYear] = useState("");
+  const [month, setMonth] = useState("");
+  const [day, setDay] = useState("");
+  const [hours, setHours] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("");
+  
 
   // Define a function to get the current date without time
   const getToday = () => {
@@ -52,7 +59,9 @@ const AddNewMeetingScreen = ({ route }) => {
 
   const AddButton = () => {
     try {
-      MeetingService.handleAddNewMeeting(groupName, location, date, time);
+      const combinedDate = new Date(year, month - 1, day, hours, minutes, seconds);
+
+      MeetingService.handleAddNewMeeting(groupName, location, date, time , combinedDate);
       NotificationService.handleAddNewNotification(groupName,  content, "New Meeting", serverTimestamp())
       navigation.replace("MyGroups");
     } catch (error) {
@@ -73,7 +82,13 @@ const AddNewMeetingScreen = ({ route }) => {
   const handleDateConfirm = (date) => {
     const dt= new Date(date);
     const dateAlone = dt.toISOString().split('T');
+    setDateString(dateAlone);
     const splitDate= dateAlone[0].split('-');
+
+    setYear(splitDate[0]); 
+    setMonth(splitDate[1]);
+    setDay(splitDate[2]);
+
     const correctFormatDate = splitDate[2] + "/" + splitDate[1] + "/" + splitDate[0];
     setSelectedDate(correctFormatDate);
     setDate(correctFormatDate); // This var to update in firestore
@@ -93,7 +108,13 @@ const AddNewMeetingScreen = ({ route }) => {
   const handleTimeConfirm = (date) => {
     const dt= new Date(date);
     const timeAlone = dt.toLocaleTimeString();
+    setTimeString(timeAlone);
     const splitTime = timeAlone.split(':');
+
+    setHours(splitTime[0]);
+    setMinutes(splitTime[1]);
+    setSeconds(splitTime[2]);
+    
     const correctFormatTime = splitTime[0] + ':' + splitTime[1];
     setSelectedTime(correctFormatTime);
     setTime(correctFormatTime);  // This var to update in firestore
