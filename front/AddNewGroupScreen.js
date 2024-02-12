@@ -44,13 +44,6 @@ const AddNewGroupScreen = () => {
       alert(error.message);
     }
   };
-  const backButton = () => {
-    try {
-      navigation.replace("MyGroups");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const AddButton = () => {
     try {
