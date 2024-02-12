@@ -11,11 +11,13 @@ import {
   LogBox,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import DropDownPicker from "react-native-dropdown-picker";
 import { cityData } from "../back/DataBase";
 import UserService from "../back/UserService";
 import Autocomplete from "react-native-autocomplete-input";
@@ -29,22 +31,13 @@ const RegisterScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
-  const [query, setQuery] = useState("");
-  const [data, setData] = useState([]);
+  const [isOpenCity, setIsOpenCity] = useState(false);
+
   const navigation = useNavigation();
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    if (query.trim().length > 0) {
-      setData(
-        cityData.filter((cityObj) =>
-          cityObj.label.toLowerCase().includes(query.trim().toLowerCase())
-        )
-      );
-    } else {
-      setData([]);
-    }
-  }, [query]);
+  });
 
   const isEmailValid = (email) => {
     return /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{1,}$/.test(email);
@@ -66,13 +59,6 @@ const RegisterScreen = () => {
       alert(
         "Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long."
       );
-      return;
-    }
-
-    const isCityValid = cityData.find((cityObj) => cityObj.value === city);
-
-    if (!isCityValid) {
-      alert("Please enter a valid city");
       return;
     }
 
@@ -102,218 +88,186 @@ const RegisterScreen = () => {
     }
   };
 
-  const handleCitySelect = (itemLabel) => {
-    setCity(itemLabel);
-    setQuery(itemLabel);
-    setData([]);
-    Keyboard.dismiss(); // Dismiss the keyboard and suggestions
+  const handleCityPress = (item) => {
+    setCity(item.value);
   };
-
-  const renderCityItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleCitySelect(item.label)}>
-      <Text style={styles.itemText}>{item.label}</Text>
-    </TouchableOpacity>
-  );
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <KeyboardAvoidingView
-        style={styles.container}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          setIsOpenCity(false);
+        }}
       >
-          <View style={styles.container}>
-            {/* First name line */}
-            <View style={styles.inputRow}>
-              <MaterialIcons
-                name="person"
-                color="#366A68"
-                size={20}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="FirstName"
-                value={firstName}
-                onChangeText={(text) => setFirstName(text)}
-                style={styles.input}
-              />
-            </View>
-            {/* Last name line */}
-            <View style={styles.inputRow}>
-              <MaterialIcons
-                name="person"
-                color="#366A68"
-                size={20}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="LastName"
-                value={lastName}
-                onChangeText={(text) => setLastName(text)}
-                style={styles.input}
-              />
-            </View>
-            {/* Email line */}
-            <View style={styles.inputRow}>
-              <MaterialIcons
-                name="email"
-                color="#366A68"
-                size={20}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Email"
-                value={email}
-                // onChangeText={(text) => setEmail(text)}
-                onChangeText={handleEmail}
-                style={styles.input}
-              />
-              {email.length > 0 && (
-                <View style={styles.checkIcon}>
-                  {emailVarify ? (
-                    <MaterialIcons
-                      name="check-circle"
-                      color="green"
-                      size={20}
-                    />
-                  ) : (
-                    <MaterialIcons name="error" color="red" size={30} />
-                  )}
-                </View>
-              )}
-            </View>
-            {/* Warn line for example@gmail.com to tell the format of the mail */}
-            {email.length < 1 ? null : emailVarify ? null : (
-              <Text style={{ marginLeft: 20, color: "red" }}>
-                example@gmail.com
-              </Text>
-            )}
-            {/* Password line */}
-            <View style={styles.inputRow}>
-              <MaterialIcons
-                name="lock"
-                color="#366A68"
-                size={20}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={handlePassword}
-                style={styles.input}
-                secureTextEntry={!showPassword}
-              />
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <View style={styles.checkShowIcon}>
-                  {password.length < 1 ? null : (
-                    <MaterialIcons
-                      name="remove-red-eye"
-                      color={passwordVarify ? "green" : "red"}
-                      size={20}
-                    />
-                  )}
-                </View>
-              </TouchableOpacity>
-            </View>
-            {/* Warn line for password to tell the format of the password */}
-            {password.length < 1 ? null : passwordVarify ? null : (
-              <Text style={{ marginLeft: 20, color: "red" }}>
-                Uppercase, Lowercase, Number and 6 or more characters
-              </Text>
-            )}
-            <View style={styles.inputRow}>
-              <MaterialIcons
-                name="location-city"
-                color="#366A68"
-                size={20}
-                style={styles.icon}
-              />
-              {/* <ScrollView> */}
-              <View style={styles.autocompleteContainer}>
-                <Autocomplete
-                  data={data}
-                  defaultValue={query}
-                  onChangeText={setQuery}
-                  placeholder="City"
-                  flatListProps={{
-                    keyExtractor: (_, index) => index.toString(),
-                    renderItem: renderCityItem,
-                    style: { maxHeight: 200,  zIndex: 2 },
-                  }}
-                  style={styles.autocomplete}
-                  inputContainerStyle={styles.inputAutocomplete}
-
-                />
-              </View>
-            </View>
-            <View>
-              <TouchableOpacity
-                onPress={handleSignUp}
-                style={styles.buttonRegister}
-              >
-                <Text style={styles.buttonTextRegister}>Register</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              {/* <Text>Already have an account?</Text> */}
-              <TouchableOpacity
-                onPress={handleSignIn}
-                style={styles.buttonSignIn}
-              >
-                <Text style={styles.buttonTextSignIn}>Sign in</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={styles.container}>
+          <View style={styles.inputRow}>
+            <MaterialIcons
+              name="person"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="FirstName"
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+              style={styles.input}
+            />
           </View>
-      </KeyboardAvoidingView>
-    </ImageBackground>
-  )
-}
+          <View style={styles.inputRow}>
+            <MaterialIcons
+              name="person"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="LastName"
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.inputRow}>
+            <MaterialIcons
+              name="email"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              // onChangeText={(text) => setEmail(text)}
+              onChangeText={handleEmail}
+              style={styles.input}
+            />
+            {email.length > 0 && (
+              <View style={styles.checkIcon}>
+                {emailVarify ? (
+                  <MaterialIcons name="check-circle" color="green" size={20} />
+                ) : (
+                  <MaterialIcons name="error" color="red" size={30} />
+                )}
+              </View>
+            )}
+          </View>
+          {email.length < 1 ? null : emailVarify ? null : (
+            <Text style={{ marginLeft: 20, color: "red" }}>
+              example@gmail.com
+            </Text>
+          )}
+          <View style={styles.inputRow}>
+            <MaterialIcons
+              name="lock"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={handlePassword}
+              style={styles.input}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+              <View style={styles.checkShowIcon}>
+                {password.length < 1 ? null : (
+                  <MaterialIcons
+                    name="remove-red-eye"
+                    color={passwordVarify ? "green" : "red"}
+                    size={20}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
+          {password.length < 1 ? null : passwordVarify ? null : (
+            <Text style={{ marginLeft: 20, color: "red" }}>
+              Uppercase, Lowercase, Number and 6 or more characters
+            </Text>
+          )}
 
-export default RegisterScreen
+          <View style={styles.dropContainer}>
+            <MaterialIcons
+              name="location-city"
+              color="#366A68"
+              size={20}
+              style={styles.iconCity}
+            />
+            <DropDownPicker
+              listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
+              items={cityData}
+              open={isOpenCity}
+              setOpen={() => setIsOpenCity(!isOpenCity)}
+              value={city}
+              setValue={setCity}
+              dropDownDirection="DOWN"
+              showArrowIcon={false}
+              mode="BADGE"
+              badgeColors={"#2C64C6"}
+              badgeDotColors={["white"]}
+              badgeTextStyle={{ color: "white" }}
+              placeholder="Select city"
+              placeholderStyle={styles.placeHolderStyle}
+              style={styles.dropdownStyle}
+              itemStyle={styles.dropdownItemStyle}
+              dropDownStyle={styles.dropdownListStyle}
+              searchable={true}
+              searchPlaceholder="Search..."
+              onSelectItem={(item) => handleCityPress(item)}
+            />
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={handleSignUp}
+              style={styles.buttonRegister}
+            >
+              <Text style={styles.buttonTextRegister}>Register</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            {/* <Text>Already have an account?</Text> */}
+            <TouchableOpacity
+              onPress={handleSignIn}
+              style={styles.buttonSignIn}
+            >
+              <Text style={styles.buttonTextSignIn}>Sign in</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
+  );
+};
+
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: "100%",
-    height: "100%",
+    height: "105%",
+    top: -10,
   },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 60,
+    paddingTop: 120,
     gap: 5,
   },
   input: {
     backgroundColor: "#C3D4D3",
     paddingHorizontal: 35,
-    paddingVertical: 0,
+    paddingVertical: 5,
     borderRadius: 10,
     padding: 10,
     marginTop: 5,
     minWidth: "80%",
+    color: "#A9A9A9",
     fontSize: 16,
-  },
-  inputAutocomplete: {
-    backgroundColor: "#C3D4D3",
-    borderColor: "#C3D4D3",
-    paddingHorizontal: 35,
-    borderRadius: 10,
-    marginTop: 10,
-    minWidth: "50%",
-    height: 30,
-  },
-  
-  autocomplete: {
-    minWidth: "80%", // Ensure it spans the width of the screen
-    height: 20,
-    backgroundColor: "#C3D4D3",
-    zIndex: 2,
-  },
-
-  autocompleteContainer: {
-    minWidth: "80%", // Ensure it spans the width of the screen
-    height: 30,
-    backgroundColor: "#C3D4D3",
-    zIndex: 2,
   },
   itemText: {
     fontSize: 15,
@@ -328,11 +282,17 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 10,
     marginTop: 5,
-    color: "#000", // text color
+    
   },
   icon: {
     position: "absolute",
     left: 5,
+    zIndex: 3,
+  },
+  iconCity: {
+    position: "absolute",
+    left: -25,
+    top: 20,
     zIndex: 3,
   },
   checkIcon: {
@@ -348,13 +308,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   buttonRegister: {
-    top: 50,
+    top: 0,
     backgroundColor: "#366A68",
     width: "100%",
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    marginBottom: 50,
   },
   buttonTextRegister: {
     color: "white",
@@ -366,6 +325,7 @@ const styles = StyleSheet.create({
     left: 25,
     width: "30%",
     padding: 15,
+    top: 30,
     borderRadius: 10,
     alignItems: "center",
   },
@@ -373,5 +333,40 @@ const styles = StyleSheet.create({
     color: "#366A68",
     fontWeight: "700",
     fontSize: 16,
+  },
+  dropContainer:{
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
+    width: "70%",
+  },
+  dropdownStyle: {
+    backgroundColor: "#C3D4D3",
+    borderColor: "#C3D4D3",
+    borderRadius: 10,
+    alignSelf: "flex-end",
+    zIndex: 1,
+    marginTop : 15,
+    width: '125%',
+    left: 35,
+  },
+  dropdownItemStyle: {
+    justifyContent: "flex-start",
+    textAlign: "left",
+    
+  },
+  dropdownListStyle: {
+    borderColor: "#C3D4D3",
+    borderWidth: 3,
+    
+  },
+  placeHolderStyle: {
+    color: "#A9A9A9",
+    textAlign: "left",
+    left: 40,
+    backgroundColor: "#C3D4D3",
+    fontSize: 16,
+    zIndex: 1,
+    maxWidth: 80,
   },
 });

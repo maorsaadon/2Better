@@ -57,16 +57,16 @@ const ResultGroupScreen = ({ route, navigation }) => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <View style={styles.back_container}>
+      <View style={styles.back_container}>
           <TouchableOpacity onPress={backButton} style={styles.backButton}>
             <AntDesign name="back" size={30} color="#366A68" />
           </TouchableOpacity>
         </View>
+      <View style={styles.container}>
         {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#366A68"/>
       ) : (
-        <ScrollView style={{ paddingTop: 30 }}>
+        <ScrollView style={{ paddingTop: 10 }}>
           <View style={styles.container}>
             {groups.map((group, index) => (
               <ResultGroupCard key={index} group={group} />
@@ -87,7 +87,6 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-start", 
     flexDirection: "column",
     gap: 35,
-    paddingTop: 30,
   },
   container: {
     justifyContent: "flex-start",
@@ -132,7 +131,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", 
-    top: 20, 
+    top: 0, 
     left: -15, 
   },
 
