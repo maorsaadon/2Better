@@ -22,20 +22,40 @@ import React, { useEffect, useState } from "react";
 const screenWidth = Dimensions.get("window").width;
 
 const NotificationCard = ({ notification }) => {
-  const [handled, setHandled] = useState(false);
   const content = notification?.Content ?? "Default Content"
   const type = notification?.Type ?? "Default Type"
   const groupName = notification?.GroupName ?? "Default GroupName"
-  const request = type === "Group Join request" ? true : false
   const from = notification?.From ?? "Default From"
+  const request = type === "Group Join request" ? true : false
+  const [handled, setHandled] = type === "Group Join request" ? useState(notification.Handled) : useState(false);
+  const [requestAnswer, setRequestAnswer] = type === "Group Join request" ? useState(notification.RequestAnswer) : useState("");
 
-  
+  if(type === "Group Join request"){
+    
+    useEffect(() => {
+      const checkIfHandled = async () => {
+        const handle = await NotificationService.isHandled(notification.id);
+        setHandled(handle);
+      };
+
+      const checkAnswer = async () => {
+        const answer = await NotificationService.requestAnswer(notification.id);
+        setRequestAnswer(answer);
+      };
+    
+      checkIfHandled(), checkAnswer();
+    },[notification.id, notification.Handled]);
+  }
+
   const handleAcceptButton = () => {
     const acceptContent = `Your request to join ${groupName} has been accepted`
     try {
       GroupService.handleJoinGroup(false, groupName, from);
       NotificationService.handleAddNewNotification(groupName, acceptContent, "Request accepted", serverTimestamp(), auth.currentUser.email, from);
+      NotificationService.updateHandledField(from, groupName);
+      NotificationService.updateRequestAnswerField(from, groupName, "Accepted");
       setHandled(true);
+      setRequestAnswer("Accepted");
     } catch (error) {
       alert(error.message);
     }
@@ -46,7 +66,10 @@ const NotificationCard = ({ notification }) => {
     try {
       GroupService.handleJoinGroup(true, groupName, from);
       NotificationService.handleAddNewNotification(groupName, rejectContent, "Request rejected", serverTimestamp(), auth.currentUser.email, from);
+      NotificationService.updateHandledField(from, groupName);
+      NotificationService.updateRequestAnswerField(from, groupName, "Rejected");      
       setHandled(true);
+      setRequestAnswer("Rejected");
     } catch (error) {
       alert(error.message);
     }
@@ -76,9 +99,13 @@ const NotificationCard = ({ notification }) => {
           <Text style={styles.buttonText}>Reject</Text>
           </TouchableOpacity>
           </View>
-          ) : request ? (
+          ) : request && requestAnswer == "Accepted" ? (
             <View style={styles.cardBottomRow}>
-            <Text style={styles.buttonText}>{type}</Text>
+            <Text style={styles.acceptText}>You've accepted the request</Text>
+          </View>
+          ) : request && requestAnswer == "Rejected" ? (
+            <View style={styles.cardBottomRow}>
+            <Text style={styles.rejectText}>You've denied the request</Text>
           </View>
           ) : null}
       </View>
@@ -144,6 +171,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 0,
     marginLeft: 0,
+  },
+  acceptText: {
+    color: "green",
+    fontSize: 18,
+    alignSelf: "flex-start",
+  },
+  rejectText: {
+    color: "red",
+    fontSize: 18,
+    alignSelf: "flex-start",
   },
 });
   

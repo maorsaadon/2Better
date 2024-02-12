@@ -8,19 +8,21 @@ import {
   ImageBackground,
   ScrollView,
   Animated,
+  ActivityIndicator,
 } from "react-native";
-import { notificationService } from "../back/NotificationsService";
+import { NotificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import NotificationCard from "../components/NotificationCard";
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const NotificationsScreen = () => {
   //Aviv's Edit:
   /************************************************* */
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // const [showNotification, setShowNotification] = useState(false);
   // const notificationHeight = useRef(new Animated.Value(-100)).current; // Start off-screen
@@ -52,7 +54,7 @@ const NotificationsScreen = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const userNotifications = await notificationService.getUserNotifications();
+        const userNotifications = await NotificationService.getUserNotifications();
         if (userNotifications && userNotifications.length > 0) {
           setNotifications(userNotifications);
         } else {
@@ -60,6 +62,8 @@ const NotificationsScreen = () => {
         }
       } catch (error) {
         console.error("Error fetching Notifications:", error);
+      } finally {
+        setIsLoading(false); // This ensures isLoading is set to false after fetching is done
       }
     };
 
@@ -93,10 +97,13 @@ const NotificationsScreen = () => {
     //   )}
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.button}>
-        <MaterialIcons name="chevron-left" size={30} color="white" />
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <AntDesign name="back" size={30} color="black" />
       </TouchableOpacity>
-        <View style={styles.container}>
+      
+      {isLoading ? (
+          <ActivityIndicator size="large" color="black" />
+        ) : (
           <ScrollView>
             <View style={styles.container}>
               {notifications.slice().reverse().map((notification, index) => (
@@ -104,8 +111,8 @@ const NotificationsScreen = () => {
               ))}
             </View>
           </ScrollView>
+        )}
         </View>
-      </View>
     </ImageBackground>
   // </View>
   );
@@ -127,8 +134,6 @@ const styles = StyleSheet.create({
   notificationText: {
     fontSize: 16,
   },
-
-
   button: {
     backgroundColor: "#0782F9",
     width: "20%",
@@ -143,6 +148,17 @@ const styles = StyleSheet.create({
     position: "absolute", // This is good for positioning the button.
     top: 0,
     left: 0,
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute", // Use absolute positioning
+    top: -45, // Align to the bottom
+    left: -18, // Align to the left
+    marginBottom: 10, // Optional margin to add some space from the bottom
+    marginLeft: 10, // Optional margin to add some space from the left
   },
   buttonText: {
     color: "black",

@@ -3,7 +3,7 @@ import GroupService from "../back/GroupService";
 import UserService from "../back/UserService";
 
 
-export const notificationService = {
+export const NotificationService = {
   // Fetch notifications for a specific user
   async getUserNotifications() {
     try {
@@ -21,7 +21,7 @@ export const notificationService = {
         return [];
       }
 
-      const notifications = [];
+      let notifications = [];
       
       snapshot.forEach((notificationDoc) => {
         const notificationData = notificationDoc.data();
@@ -34,6 +34,7 @@ export const notificationService = {
           Type: notificationData.Type || "Unknown",
           TimeStamp: timeStamp || "Unknown",
           From: notificationData.From || "Unknown",
+          id: notificationDoc.id
         });
       });
       
@@ -57,7 +58,7 @@ export const notificationService = {
     
   },
   
-  async handleAddNewNotification(groupName, content, type, timeStamp, from = "default mail", addressee = "default") {
+  async handleAddNewNotification(groupName, content, type, timeStamp, from = "default mail", addressee = auth.currentUser.email) {
     const groupLeaderEmail = await GroupService.getLeaderEmail(groupName);
     if( type === "New Meeting"){
       const groupMembers = await GroupService.getMembers(groupName);
@@ -71,7 +72,7 @@ export const notificationService = {
           Type: type,
           TimeStamp: timeStamp,
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter() + 1);
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
       } catch (error) {
           console.error("Error creating Notification for leader: ", error);
           alert(error.message);
@@ -94,7 +95,7 @@ export const notificationService = {
         }
         console.log(`${member} : ${await UserService.getUserNotificationCounter(member)}`);
       }
-    }else{
+    }else if( type === "Group Join request"){
       try {
         const NotificationRef = db.collection("Notifications").doc();
         await NotificationRef.set({
@@ -104,15 +105,119 @@ export const notificationService = {
           Type: type,
           TimeStamp: timeStamp,
           From: from,
+          Handled: false,
+          RequestAnswer: "did not Answer yet"
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter() + 1);
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+      } catch (error) {
+          console.error("Error creating Notification for leader: ", error);
+          alert(error.message);
+      }
+    }else{
+      try {
+        const NotificationRef = db.collection("Notifications").doc();
+        await NotificationRef.set({
+          Addressee: addressee,
+          GroupName: groupName,
+          Content: content,
+          Type: type,
+          TimeStamp: timeStamp,
+          From: from,
+        });
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
       } catch (error) {
           console.error("Error creating Notification for leader: ", error);
           alert(error.message);
       }
     }
-
   },
+
+  async updateHandledField(from, groupName, handled = true){
+    try {
+      const querySnapshot = await db.collection("Notifications")
+                                     .where('From', '==', from)
+                                     .where('GroupName', '==', groupName)
+                                     .where('Type', '==', `Group Join request`)
+                                     .get();
+  
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach((doc) => {
+          const docRef = doc.ref; // Get the DocumentReference
+          docRef.update({ // Update the document
+            Handled: handled
+          }).then(() => {
+            console.log(`Notification ${doc.id} 'Handled' field updated successfully`);
+          }).catch((error) => {
+            console.error(`Error updating Notification ${doc.id} 'Handled' field: `, error);
+          });
+        });
+      } else {
+        console.log('No matching documents found');
+      }
+    } catch (error) {
+      console.error("Error updating Notification 'Handled' field: ", error);
+    }
+  },
+
+  async updateRequestAnswerField(from, groupName, requestAnswer){
+    try {
+      const querySnapshot = await db.collection("Notifications")
+                                     .where('From', '==', from)
+                                     .where('GroupName', '==', groupName)
+                                     .where('Type', '==', `Group Join request`)
+                                     .get();
+  
+      // Check if the querySnapshot is not empty
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach((doc) => {
+          const docRef = doc.ref; // Get the DocumentReference
+          docRef.update({ // Update the document
+            RequestAnswer: requestAnswer
+          }).then(() => {
+            console.log(`Notification ${doc.id} 'RequestAnswer' field updated successfully`);
+          }).catch((error) => {
+            console.error(`Error updating Notification ${doc.id} 'RequestAnswer' field: `, error);
+          });
+        });
+      } else {
+        console.log('No matching documents found');
+      }
+    } catch (error) {
+      console.error("Error updating Notification 'RequestAnswer' field: ", error);
+    }
+  },
+
+  async isHandled(notificationId) {
+    try {
+      const notificationsRef = await db.collection("Notifications").doc(notificationId);
+      const snapshot = await notificationsRef.get();
+      if(snapshot.exists) {
+        const notification = snapshot.data();      
+        if (notification.Handled)
+        {
+          return true;
+        } else {
+          return false;
+        }
+    }
+    } catch (error) {
+      console.error(`Error find meetings members!`, error);
+    }
+  },
+
+  async requestAnswer(notificationId) {
+    try {
+      const notificationsRef = await db.collection("Notifications").doc(notificationId);
+      const snapshot = await notificationsRef.get();
+      if(snapshot.exists) {
+        const notification = snapshot.data();      
+        return notification.RequestAnswer;
+    }
+    } catch (error) {
+      console.error(`Error find meetings members!`, error);
+    }
+  },
+
 };
 
-export default notificationService;
+export default NotificationService;

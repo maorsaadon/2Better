@@ -31,7 +31,7 @@ const ResultGroupCard = ({ group }) => {
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
   const totalCapacity = parseInt(group.TotalCapacity, 10);
 
-  const content = "`" + userFirstName + " " + userLastName + "` wants to subscribe to your group `" + groupName +"`"
+  const content = "`" + userFirstName + " " + userLastName + "` wants to join your group: `" + groupName +"`"
 
   const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];

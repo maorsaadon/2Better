@@ -146,6 +146,6 @@ export const UserService = {
   },
 };
 
-export { userFirstName, userLastName, userCity, userNotificationCounter , userImageUpload};
+export { userFirstName, userLastName, userCity, userImageUpload};
 
 export default UserService;
