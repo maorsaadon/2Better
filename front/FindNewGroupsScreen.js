@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    textAlign: "center",
     width: "70%",
     gap: 20,
   },
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
   },
   dropStyleContainer:{
     marginBottom: 16,
+    textAlign: "center",
     zIndex: 1,
   },
   backButton: {
@@ -173,6 +175,7 @@ const styles = StyleSheet.create({
   dropContainer:{
     justifyContent: "center",
     alignItems: "center",
+    textAlign: "center",
     width: "70%",
   },
   dropdownStyle: {
@@ -181,28 +184,30 @@ const styles = StyleSheet.create({
     width: "125%",
     borderWidth: 3,
     borderRadius: 10,
-    textAlign: "left",
+    textAlign: "center",
     alignSelf: "flex-end",
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
-    textAlign: "left",
+    textAlign: "center",
     
   },
   dropdownListStyle: {
     borderColor: "#C3D4D3",
     borderWidth: 3,
-    textAlign: "left",
+    textAlign: "center",
     paddingLeft:50,
   },
   dropdownContainer: {
     height: 40,
     width: "80%",
     marginBottom: 16,
+    textAlign: "center",
     zIndex: 2,
   },
   placeHolderStyle: {
     color: "#A9A9A9",
+    textAlign: "center",
     textAlign: "center",
   },
   icon: {

@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center", // Centers children horizontally
     justifyContent: "center", // Aligns children from the top
     paddingTop: 50,
+    zIndex:1,
   },
   input: {
     borderColor: "#C3D4D3",

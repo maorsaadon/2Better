@@ -85,9 +85,11 @@ const EditGroupScreen = ({ route }) => {
   // Render group details and update button
   return (
     <View style={styles.overlay}>
+      <View style={styles.backContainer}>
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
+      </View>
       <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCity(false);
@@ -155,7 +157,7 @@ const EditGroupScreen = ({ route }) => {
               badgeTextStyle={{ color: "white" }}
               placeholder="Select type of sport"
               placeholderStyle={styles.placeHolderStyle}
-              style={[styles.dropdownStyle, { zIndex: 5000 }]}
+              style={[styles.dropdownStyle, { zIndex: 2 }]}
               itemStyle={styles.dropdownItemStyle}
               dropDownStyle={styles.dropdownListStyle}
               searchable={false}
@@ -187,7 +189,7 @@ const EditGroupScreen = ({ route }) => {
               badgeTextStyle={{ color: "white" }}
               placeholder="Select city"
               placeholderStyle={styles.placeHolderStyle}
-              style={[styles.dropdownStyle, { zIndex: 5000 }]}
+              style={[styles.dropdownStyle, { zIndex: 2 }]}
               itemStyle={styles.dropdownItemStyle}
               dropDownStyle={styles.dropdownListStyle}
               searchable={false}
@@ -218,8 +220,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
+  backContainer: {
+    flex: 1,
+    flexDirection: "column",
+    paddingBottom: 20,
+  },
 
   container: {
+    top: -250,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -258,8 +266,8 @@ const styles = StyleSheet.create({
   iconDrop: {
     position: "absolute",
     left: -25,
-    top: 20,
-    zIndex: 1001,
+    top: 25,
+    zIndex: 1,
   },
   saveButton: {
     top: 0,
@@ -284,12 +292,11 @@ const styles = StyleSheet.create({
     left: -15,
   },
   dropContainer: {
-    marginTop: -10,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 3,
+    marginBottom: 16,
+    textAlign: "center",
+    zIndex: 1,
     width: "70%",
-    zIndex: 10,
+    
   },
   dropdownStyle: {
     backgroundColor: "#C3D4D3",
@@ -299,7 +306,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: "124%",
     left: 35,
-    zIndex: 1000,
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
