@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import ResultGroupCard from "../components/ResultGroupCard";
-import myLogoPic from "../assets/default.png";
 import GroupService from "../back/GroupService";
 
 const ResultGroupScreen = ({ route, navigation }) => {
