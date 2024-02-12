@@ -76,7 +76,7 @@ const GroupsStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MyGroups" component={MyGroupScreen} />
       <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
-      <Stack.Screen name="AddNew" component={AddNewMeetingScreen} />
+      <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
       <Stack.Screen name="EditGroup" component={EditGroupScreen} />
       
     </Stack.Navigator>
@@ -140,7 +140,7 @@ const HomeStack = () => {
       <Tab.Screen name="My Groups" component={GroupsStack} />
       <Tab.Screen name="Explore Group" component={FindNewGroupsStack} />    
       <Tab.Screen name="Meetings" component={MeetingStack} />
-      <Tab.Screen name="Log Out" component={NotificationsScreen} />
+      <Tab.Screen name="Log Out" component={AppScreen} />
 
     </Tab.Navigator>
   );

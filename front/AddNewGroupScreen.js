@@ -37,6 +37,13 @@ const AddNewGroupScreen = () => {
     setSelectedCity(item.value);
   };
 
+  const backButton = () => {
+    try {
+      navigation.replace("MyGroups");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const AddButton = () => {
     try {
@@ -53,10 +60,9 @@ const AddNewGroupScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity onPress={backButton} style={styles.button}>
-      <MaterialIcons name="chevron-left" size={30} color="white" />
+    <SafeAreaView style={styles.safeArea}>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
       <TouchableWithoutFeedback
         onPress={() => {
