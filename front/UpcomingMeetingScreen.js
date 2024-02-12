@@ -207,8 +207,8 @@ const UpcomingMeetingsScreen = () => {
     useEffect(() => {
       const fetchMeetings = async () => {
         try {
-          // const { leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
-          const { leaderMeetings } = await MeetingService.functionToHomeScreen();
+          const { leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
+          // const { leaderMeetings } = await MeetingService.functionToHomeScreen();
           setLeaderMeetings(leaderMeetings);
         } catch (error) {
           console.error("Error fetching Meetings:", error);
@@ -242,8 +242,8 @@ const UpcomingMeetingsScreen = () => {
               <View style={styles.container}>
                 {/* Map over the groups array to render AppointmentCards */}
                 {leaderMeetings.map((meeting, index) => (
-                  // <MeetingCard key={index} meeting={meeting} />
-                  <HomeCard key={index} meeting={meeting} />
+                  <MeetingCard key={index} meeting={meeting} />
+                  // <HomeCard key={index} meeting={meeting} />
                 ))}
               </View>
             </ScrollView>
