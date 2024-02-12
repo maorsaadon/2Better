@@ -31,15 +31,11 @@ import { useNavigation } from '@react-navigation/core';
 
 const screenWidth = Dimensions.get("window").width;
 
-const MeetingCard = ({ meeting, isLeader }) => {
+const MeetingCard = ({ meeting }) => {
 const navigation = useNavigation();
 const groupName = meeting?.GroupName ?? "Default Name";
-// const currentParticipants = parseInt(meeting.NumberOfMembers, 0);
 const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
 const totalCapacity = parseInt(meeting.TotalCapacity, 10);
-
-const content = "`" + userFirstName + " " + userLastName + "` wants to join `" + groupName +"`"
-
 const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
 
 useEffect(() => {
@@ -48,14 +44,8 @@ useEffect(() => {
         const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
         setIsUserInMeeting(isInMeeting);
       };
-
-    const checkNumberOfMembersINMeeting = async () => {
-        const num = await MeetingService.numOfMembers(meeting.id);
-        setCurrentParticipants(num);
-    };
     
     checkUserInMeeting();
-    checkNumberOfMembersINMeeting();
   }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
 
 const getSportIcon = (sportType) => {
@@ -79,12 +69,14 @@ const getSportIcon = (sportType) => {
 
 const handleJoinPress = () =>{
     setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
+    setCurrentParticipants(currentParticipants+1);
     MeetingService.addUserToMeeting(meeting.id, "aviya@test.com");
     console.log("Click on Join Meeting!");
 };
 
 const handleCancelPress = () =>{
     setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
+    setCurrentParticipants(currentParticipants-1);
     MeetingService.removeUserFromMeetingMembers(meeting.id, "aviya@test.com");
     console.log("Click on Cancel Meeting!");
 };
@@ -117,10 +109,7 @@ return (
                 <AntDesign name="clockcircle" size={20} color="black" />
                 <Text>{meeting.Time}</Text>
             </View>
-            {/* <View style={styles.iconAndTextContainer}>
-                <AntDesign name="clockcircle" size={20} color="black" />
-                <Text>is Leader ? {meeting.IsLeader}</Text>
-            </View> */}
+
         </View>
         <View style={styles.participantContainer}>
         <Text style={styles.participantText}>{currentParticipants}</Text>
@@ -128,7 +117,6 @@ return (
             minimumValue={0}
             maximumValue={totalCapacity}
             value={currentParticipants}
-            // value={meeting.NumberOfMembers}
         />
         <Text style={styles.participantText}>{totalCapacity}</Text>
         <AntDesign name="user" size={22} color="black" />

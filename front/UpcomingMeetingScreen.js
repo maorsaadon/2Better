@@ -239,7 +239,7 @@ const UpcomingMeetingsScreen = () => {
               <View style={styles.container}>
                 {/* Map over the groups array to render AppointmentCards */}
                 {leaderMeetings.map((meeting, index) => (
-                  <MeetingCard key={index} meeting={meeting} isLeader={1} />
+                  <MeetingCard key={index} meeting={meeting} />
                 ))}
               </View>
             </ScrollView>
