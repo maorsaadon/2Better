@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity,userImageUpload, userCity } from "../back/UserService";
+import { userFirstName, userLastName, UserCity, userImageUpload, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth, db } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';

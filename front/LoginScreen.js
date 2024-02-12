@@ -10,8 +10,8 @@ import {
   SafeAreaView,
 } from "react-native";
 //import styles from "../components/StylesSheets";
-import { auth } from "../back/firebase";
-
+import { auth , db } from "../back/firebase";
+import { userImageUpload } from "../back/UserService";
 import myLogoPic from "../assets/loginPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
 

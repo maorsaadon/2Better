@@ -79,12 +79,12 @@ export const UserService = {
     const userEmail = auth.currentUser.email
     try {
       const userRef = db.collection("Users").doc(userEmail);
-      userImageUpload = 1;
+
       // Update the user document
       await userRef.update({
-        ImageUpload : userImageUpload
+        ImageUpload : 1
       });
-
+      userImageUpload = userRef.ImageUpload;
       console.log("User userImageUpload updated successfully");
     } catch (error) {
       console.error("Error updating user NotificationCounter: ", error);

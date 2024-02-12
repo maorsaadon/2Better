@@ -14,7 +14,7 @@ import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from "../back/firebase";
 import { styles } from "./ResultGroupsScreen";
 //import {stylesHome} from "../components/StylesSheets";
@@ -22,19 +22,19 @@ import { styles } from "./ResultGroupsScreen";
 const HomeScreen = () => {
 
   const navigation = useNavigation();
+  const [userNotificationCounter, setNotificationCounter] = useState(0);
   //const Tab = createBottomTabNavigator();
   useEffect(() => {
     const fetchData = async () => {
       await UserService.getUserDetails();
     };
-    // const fetchData = async () => {
-    //   try {
-    //     const data = await UserService.getUserDetails();
-    //     // Handle the data
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
+
+    const userRef = doc(db, 'Users', auth.currentUser.email);
+
+    const unsubscribe = onSnapshot(userRef, (doc) => {
+      const data = doc.data();
+      setNotificationCounter(data.NotificationCounter)
+    });
 
     fetchData();
     return () => unsubscribe();
@@ -113,8 +113,8 @@ export default HomeScreen;
 
 const stylesHome = StyleSheet.create({
   container: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 600
   },
   backgroundImage: {

@@ -19,7 +19,7 @@ import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { cityData } from "../back/DataBase";
 import UserService from "../back/UserService";
-
+import { auth } from '../back/firebase'
 const RegisterScreen = () => {
   let [email, setEmail] = useState("");
   const [emailVarify, setEmailVerfiy] = useState(false);
@@ -36,6 +36,7 @@ const RegisterScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        
         navigation.replace("Home")
       }
     })

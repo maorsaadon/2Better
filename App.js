@@ -47,6 +47,7 @@
 //   );
 // }
 import React from "react";
+
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -67,6 +68,8 @@ import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { auth } from '/Users/ashwal/Desktop/RN/2Better/back/firebase';
+import { StackActions } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,16 +104,9 @@ const FindNewGroupsStack = () => {
   );
 };
 
-const handleSignOut = () => {
-  auth
-    .signOut()
-    .then(() => {
-      navigation.replace("Entry");
-    })
-    .catch((error) => alert(error.message));
-};
 
-const HomeStack = () => {
+
+const HomeStack = ({ navigation }) => {
   return (
     <Tab.Navigator screenOptions= {({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
@@ -126,7 +122,7 @@ const HomeStack = () => {
         } else if (route.name === 'Meetings') {
           iconName = focused ? 'calendar' : 'calendar-outline';
         } else if (route.name === 'Log Out') {
-          iconName = focused ? 'exit' : 'exit-outline';
+          iconName = focused ? 'exit' :'exit-outline' ;
         }
         return <Ionicons name={iconName} size={size} color={color} />;
       },
@@ -141,7 +137,7 @@ const HomeStack = () => {
       <Tab.Screen name="My Groups" component={GroupsStack} />
       <Tab.Screen name="Explore Group" component={FindNewGroupsStack} />    
       <Tab.Screen name="Meetings" component={MeetingStack} />
-      <Tab.Screen name="Log Out" component={AppScreen} />
+      <Tab.Screen name="Log Out" component = {AppScreen}  options={{ tabBarStyle: { display: 'none' } }}/>
 
     </Tab.Navigator>
   );
@@ -151,7 +147,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Entry" component={AppScreen} />
+        <Stack.Screen name="Entry" component={AppScreen}/>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="MyGroup" component={MyGroupScreen} />
