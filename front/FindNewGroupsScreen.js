@@ -10,11 +10,11 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import myLogoPic from "../assets/2better-logo.jpeg";
-import { sportTypeData, cityData } from "../back/DataBase";
-import { MaterialIcons } from "@expo/vector-icons";
+import { sportTypeDataSearch, cityDataSearch } from "../back/DataBase";
+import { MaterialIcons,MaterialCommunityIcons } from "@expo/vector-icons";
 
 const FindNewGroupScreen = ({ navigation }) => {
   const [selectedCity, setSelectedCity] = useState(null);
@@ -58,7 +58,7 @@ const FindNewGroupScreen = ({ navigation }) => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
-      <MaterialIcons name="chevron-left" size={30} color="white" />
+        <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
       <TouchableWithoutFeedback
         onPress={() => {
@@ -67,64 +67,74 @@ const FindNewGroupScreen = ({ navigation }) => {
         }}
       >
         <View style={styles.container}>
-          <DropDownPicker
-            listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
-            items={sportTypeData}
-            open={isOpenTypeOfSport}
-            setOpen={() => setIsOpenTypeOfSport(!isOpenTypeOfSport)}
-            value={selectedTypeOfSport}
-            setValue={setSelectedTypeOfSport}
-            dropDownDirection="DOWN"
-            showArrowIcon={true}
-            mode="BADGE"
-            badgeColors={"#2C64C6"}
-            badgeDotColors={["white"]}
-            badgeTextStyle={{ color: "white" }}
-            placeholder="Select type of sport"
-            placeholderStyle={styles.placeHolderStyle}
-            containerStyle={[styles.dropdownContainer, { zIndex: 3 }]}
-            style={styles.dropdownStyle}
-            itemStyle={styles.dropdownItemStyle}
-            dropDownStyle={styles.dropdownListStyle}
-            searchable={true}
-            searchPlaceholder="Search..."
-            onSelectItem={(item) => handleTypeOfSportPress(item)}
-          />
+          <View>
+            <MaterialCommunityIcons
+            name="arm-flex"
+            color="#366A68"
+            size={20}
+            style={styles.icon}
+            />
+            <DropDownPicker
+              listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
+              items={sportTypeDataSearch}
+              open={isOpenTypeOfSport}
+              setOpen={() => setIsOpenTypeOfSport(!isOpenTypeOfSport)}
+              value={selectedTypeOfSport}
+              setValue={setSelectedTypeOfSport}
+              dropDownDirection="DOWN"
+              showArrowIcon={true}
+              mode="BADGE"
+              badgeColors={"#2C64C6"}
+              badgeDotColors={["white"]}
+              badgeTextStyle={{ color: "white" }}
+              placeholder="Select type of sport"
+              placeholderStyle={styles.placeHolderStyle}
+              containerStyle={[styles.dropdownContainer, { zIndex: 1 }]}
+              style={styles.dropdownStyle}
+              itemStyle={styles.dropdownItemStyle}
+              dropDownStyle={styles.dropdownListStyle}
+              searchable={true}
+              searchPlaceholder="Search..."
+              onSelectItem={(item) => handleTypeOfSportPress(item)}
+            />
+          </View>
 
-          <DropDownPicker
-            listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
-            items={cityData}
-            open={isOpenCity}
-            setOpen={() => setIsOpenCity(!isOpenCity)}
-            value={selectedCity}
-            setValue={setSelectedCity}
-            dropDownDirection="DOWN"
-            showArrowIcon={true}
-            mode="BADGE"
-            badgeColors={"#2C64C6"}
-            badgeDotColors={["white"]}
-            badgeTextStyle={{ color: "white" }}
-            placeholder="Select city"
-            placeholderStyle={styles.placeHolderStyle}
-            containerStyle={styles.dropdownContainer}
-            style={styles.dropdownStyle}
-            itemStyle={styles.dropdownItemStyle}
-            dropDownStyle={styles.dropdownListStyle}
-            searchable={true}
-            searchPlaceholder="Search..."
-            onSelectItem={(item) => handleCityPress(item)}
-          />
+          <View>
+            <MaterialIcons
+              name="location-city"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <DropDownPicker
+              listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
+              items={cityDataSearch}
+              open={isOpenCity}
+              setOpen={() => setIsOpenCity(!isOpenCity)}
+              value={selectedCity}
+              setValue={setSelectedCity}
+              dropDownDirection="DOWN"
+              showArrowIcon={true}
+              mode="BADGE"
+              badgeColors={"#2C64C6"}
+              badgeDotColors={["white"]}
+              badgeTextStyle={{ color: "white" }}
+              placeholder="Select city"
+              placeholderStyle={styles.placeHolderStyle}
+              // containerStyle={styles.dropdownContainer}
+              style={styles.dropdownStyle}
+              itemStyle={styles.dropdownItemStyle}
+              dropDownStyle={styles.dropdownListStyle}
+              searchable={true}
+              searchPlaceholder="Search..."
+              onSelectItem={(item) => handleCityPress(item)}
+            />
+          </View>
 
-          <Pressable
-            style={[styles.button, styles.pressableWithMargin]}
-            onPress={handleSearchPress}
-          >
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>
-                <FontAwesome name="search" size={24} color="white" /> serch
-                meeting
-              </Text>
-            </View>
+          <Pressable style={styles.buttonSearch} onPress={handleSearchPress}>
+            <Text style={styles.buttonTextSearch}>
+              <FontAwesome name="search" size={20} color="white" /> Search Group
+            </Text>
           </Pressable>
         </View>
       </TouchableWithoutFeedback>
@@ -137,11 +147,11 @@ export default FindNewGroupScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start", 
+    justifyContent: "center",
     alignItems: "center",
-    paddingTop: 40, 
-    flexDirection: "column",
-    gap: 17,
+    left: 60,
+    gap: 20,
+    width: "70%",
   },
   backgroundImage: {
     flex: 1,
@@ -150,52 +160,58 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   backButton: {
-    backgroundColor: "#2C64C6",
-    width: "15%",
-    padding: 5, // Adjusted padding to make the button shorter
+    width: "20%",
+    padding: 10,
     borderRadius: 10,
-    marginTop: 5,
-    marginLeft: 5,
+    alignItems: "center",
+    position: "absolute",
+    top: 5,
+    left: -15,
   },
-  logo: {
-    width: 100, // Adjust the width as needed
-    height: 100, // Adjust the height as needed
-    resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+  buttonSearch: {
+    top: 50,
+    backgroundColor: "#366A68",
+    width: "70%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 50,
   },
-  button: {
-    backgroundColor: "#2C64C6",
-    width: 300,
-    paddingVertical: 12,
-    borderRadius: 20,
-  },
-  buttonText: {
+  buttonTextSearch: {
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
     textAlign: "center",
     color: "white",
   },
-  pressableWithMargin: {
-    marginRight: 25,
-  },
   dropdownStyle: {
-    backgroundColor: "white",
-    borderColor: "#2C64C6",
+    backgroundColor: "#C3D4D3",
+    borderColor: "#C3D4D3",
     borderWidth: 3,
     borderRadius: 10,
     textAlign: "left",
     alignSelf: "flex-end",
+    zIndex: 1,
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
     textAlign: "left",
   },
   dropdownListStyle: {
-    borderColor: "#2C64C6",
+    borderColor: "#C3D4D3",
     borderWidth: 3,
     textAlign: "left",
   },
   placeHolderStyle: {
     color: "#A9A9A9",
-    textAlign: "left",
+    textAlign: "center",
+    backgroundColor: "#C3D4D3",
+    zIndex: 1,
   },
+  icon: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    zIndex: 3,
+  },
+
 });
