@@ -7,16 +7,14 @@ import {
   TouchableOpacity,
   View,
   LogBox,
-  ImageBackground,
   SafeAreaView,
   TouchableWithoutFeedback,
   Platform,
 } from "react-native";
-import myLogoPic from "../assets/default.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import GroupService from "../back/GroupService";
 import { sportTypeData, cityData} from "../back/DataBase";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 
 const AddNewGroupScreen = () => {
   const navigation = useNavigation();
@@ -62,10 +60,9 @@ const AddNewGroupScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity onPress={backButton} style={styles.button}>
-      <MaterialIcons name="chevron-left" size={30} color="white" />
+    <SafeAreaView style={styles.safeArea}>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
         <TouchableWithoutFeedback
         onPress={() => {
@@ -135,16 +132,15 @@ const AddNewGroupScreen = () => {
           />
         </View>
         </TouchableWithoutFeedback>
-        <View style={styles.buttonContainer}>
+        
           <TouchableOpacity
             onPress={AddButton}
-            style={[styles.button, styles.buttonOutline]}
+            style={styles.addButton}
           >
-            <Text style={styles.buttonOutlineText}>Add</Text>
+            <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
-        </View>
+      
       </SafeAreaView>
-    </ImageBackground>
   );
 };
 
@@ -155,6 +151,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center', // Center children horizontally
     justifyContent: 'center', // Center children vertically
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
   backgroundImage: {
     flex: 1,
@@ -171,22 +168,32 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
   },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 10,
+    left: -15,
+  },
   inputContainer: {
     flex: 1,
     width: "80%", // Adjusted to take the full width
     alignItems: "center", // Centers children horizontally
     justifyContent: "center", // Aligns children from the top
     paddingTop: 50,
+    zIndex:1,
   },
   input: {
-    backgroundColor: "white",
+    borderColor: "#C3D4D3",
+    backgroundColor: "#C3D4D3",
     width: "80%", // Adjusted to a consistent width for all inputs
     borderRadius: 20,
     color: "black",
     marginTop: 10,
     borderWidth: 1,
     padding: 15, // Increased padding for better touch area
-    borderColor: "#3B82F6",
     marginBottom: 10, // Adds space between inputs
   },
   dropdownContainer: {
@@ -195,10 +202,10 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   dropdownStyle: {
-    backgroundColor: "white",
+    borderColor: "#C3D4D3",
+    backgroundColor: "#C3D4D3",
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#3B82F6",
     padding: 15, // Adjust padding to match inputs
   },
   dropdownItemStyle: {
@@ -211,11 +218,7 @@ const styles = StyleSheet.create({
   placeHolderStyle: {
     color: "#A9A9A9",
   },
-  buttonContainer: {
-    width: "80%", // Ensure the container takes full width
-    alignItems: "center", // Center the button horizontally
-    marginTop: 20, // Space from the last input or dropdown
-  },
+ 
   button: {
     width: "80%", // Match the width of inputs and dropdowns
     padding: 15, // Comfortable padding for tapping
@@ -227,232 +230,19 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
   },
+
+  addButton: {
+    backgroundColor: "#366A68",
+    top: -200,
+    width: "40%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  addButtonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
 });
 
-
-// import React, { useState } from "react";
-// import {
-//   StyleSheet,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   View,
-//   FlatList,
-//   ImageBackground,
-// } from "react-native";
-// import myLogoPic from "../assets/default.png";
-// import { cityData, sportTypeData } from "../back/DataBase"; // Ensure these are correctly formatted
-// import { MaterialIcons } from "@expo/vector-icons";
-// import { useNavigation } from "@react-navigation/core";
-
-// const AddNewGroupScreen = () => {
-//   const navigation = useNavigation();
-
-//   const [groupName, setGroupName] = useState("");
-//   const [totalCapacity, setTotalCapacity] = useState("");
-//   const [selectedCity, setSelectedCity] = useState("");
-//   const [citySuggestions, setCitySuggestions] = useState([]);
-//   const [selectedSportType, setSelectedSportType] = useState("");
-//   const [sportTypeSuggestions, setSportTypeSuggestions] = useState([]);
-
-//   // Filter cities based on user input
-//   const handleCitySearch = (text) => {
-//     setSelectedCity(text);
-//     if (!text) {
-//       setCitySuggestions([]);
-//       return;
-//     }
-//     const filtered = cityData.filter((item) =>
-//       item.label.toLowerCase().includes(text.toLowerCase())
-//     );
-//     setCitySuggestions(filtered);
-//   };
-
-//   // Select city from suggestions
-//   const handleCitySelect = (city) => {
-//     setSelectedCity(city.label);
-//     setCitySuggestions([]);
-//   };
-
-//   // Filter sport types based on user input
-//   const handleSportTypeSearch = (text) => {
-//     setSelectedSportType(text);
-//     if (!text) {
-//       setSportTypeSuggestions([]);
-//       return;
-//     }
-//     const filtered = sportTypeData.filter((item) =>
-//       item.label.toLowerCase().includes(text.toLowerCase())
-//     );
-//     setSportTypeSuggestions(filtered);
-//   };
-
-//   // Select sport type from suggestions
-//   const handleSportTypeSelect = (sportType) => {
-//     setSelectedSportType(sportType.label);
-//     setSportTypeSuggestions([]);
-//   };
-
-//   const backButton = () => {
-//     navigation.goBack();
-//   };
-
-//   // Add group action
-//   const AddButton = async () => {
-//     try {
-//       // Assuming GroupService.handleAddNewGroup() is an asynchronous operation
-//       await GroupService.handleAddNewGroup(
-//         groupName,
-//         selectedCity,
-//         selectedSportType,
-//         totalCapacity
-//       );
-//       navigation.goBack();
-//     } catch (error) {
-//       alert(error.message);
-//     }
-//   };
-
-//   return (
-//     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-//       <TouchableOpacity onPress={backButton} style={styles.backButton}>
-//         <MaterialIcons name="chevron-left" size={30} color="white" />
-//       </TouchableOpacity>
-//       <View style={styles.inputContainer}>
-//         <TextInput
-//           placeholder="Group name"
-//           value={groupName}
-//           onChangeText={setGroupName}
-//           style={styles.input}
-//         />
-//         <TextInput
-//           placeholder="Maximum num of participants"
-//           keyboardType="numeric"
-//           value={totalCapacity}
-//           onChangeText={setTotalCapacity}
-//           style={styles.input}
-//         />
-//         <TextInput
-//           placeholder="Select type of sport"
-//           value={selectedSportType}
-//           onChangeText={handleSportTypeSearch}
-//           style={styles.input}
-//         />
-//         {sportTypeSuggestions.length > 0 && (
-//           <FlatList
-//             data={sportTypeSuggestions}
-//             keyExtractor={(item) => item.value}
-//             renderItem={({ item }) => (
-//               <TouchableOpacity onPress={() => handleSportTypeSelect(item)} style={styles.item}>
-//                 <Text>{item.label}</Text>
-//               </TouchableOpacity>
-//             )}
-//             style={styles.list}
-//           />
-//         )}
-//         <TextInput
-//           placeholder="Select city"
-//           value={selectedCity}
-//           onChangeText={handleCitySearch}
-//           style={styles.input}
-//         />
-//         {citySuggestions.length > 0 && (
-//           <FlatList
-//             data={citySuggestions}
-//             keyExtractor={(item) => item.value}
-//             renderItem={({ item }) => (
-//               <TouchableOpacity onPress={() => handleCitySelect(item)} style={styles.item}>
-//                 <Text>{item.label}</Text>
-//               </TouchableOpacity>
-//             )}
-//             style={styles.list}
-//           />
-//         )}
-//         <TouchableOpacity onPress={AddButton} style={styles.addButton}>
-//           <Text style={styles.buttonText}>Add</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </ImageBackground>
-//   );
-// };
-
-// export default AddNewGroupScreen;
-
-// const styles = StyleSheet.create({
-//   safeArea: {
-//     flex: 1,
-//     alignItems: 'center', // Center children horizontally
-//     justifyContent: 'center', // Center children vertically
-//   },
-//   backgroundImage: {
-//     flex: 1,
-//     width: "100%",
-//     height: "100%",
-//   },
-//   backButton: {
-//     alignSelf: "flex-start", // Aligns the button to the start of its container
-//     position: "absolute", // Positions the button absolutely within its container
-//     top: 10, // Adjusts the distance from the top
-//     left: 10, // Adjusts the distance from the left
-//     backgroundColor: "#0782F9",
-//     padding: 10,
-//     borderRadius: 10,
-//     margin: 10,
-//   },
-//   inputContainer: {
-//     flex: 1,
-//     width: "80%", // Adjusted to take the full width
-//     alignItems: "center", // Centers children horizontally
-//     justifyContent: "center", // Aligns children from the top
-//     paddingTop: 50,
-//   },
-//   input: {
-//     backgroundColor: "white",
-//     width: "80%", // Adjusted to a consistent width for all inputs
-//     borderRadius: 20,
-//     color: "black",
-//     marginTop: 10,
-//     borderWidth: 1,
-//     padding: 15, // Increased padding for better touch area
-//     borderColor: "#3B82F6",
-//     marginBottom: 10, // Adds space between inputs
-//   },
-//   dropdownContainer: {
-//     width: "80%", // Ensure dropdowns are also the same width as inputs
-//     marginBottom: 10, // Consistent spacing
-//     zIndex: 2,
-//   },
-//   dropdownStyle: {
-//     backgroundColor: "white",
-//     borderRadius: 20,
-//     borderWidth: 1,
-//     borderColor: "#3B82F6",
-//     padding: 15, // Adjust padding to match inputs
-//   },
-//   dropdownItemStyle: {
-//     justifyContent: "flex-start",
-//   },
-//   dropdownListStyle: {
-//     borderColor: "#2C64C6",
-//     borderWidth: 1,
-//   },
-//   placeHolderStyle: {
-//     color: "#A9A9A9",
-//   },
-//   buttonContainer: {
-//     width: "80%", // Ensure the container takes full width
-//     alignItems: "center", // Center the button horizontally
-//     marginTop: 20, // Space from the last input or dropdown
-//   },
-//   button: {
-//     width: "80%", // Match the width of inputs and dropdowns
-//     padding: 15, // Comfortable padding for tapping
-//     borderRadius: 20,
-//     alignItems: "center", // Center text within the button
-//     backgroundColor: "#0782F9", // Example button color
-//   },
-//   buttonOutlineText: {
-//     color: "white",
-//     fontWeight: "700",
-//   },
-// });

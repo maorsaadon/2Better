@@ -3,13 +3,12 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  ImageBackground,
+  SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import ResultGroupCard from "../components/ResultGroupCard";
-import myLogoPic from "../assets/default.png";
 import GroupService from "../back/GroupService";
 
 const ResultGroupScreen = ({ route, navigation }) => {
@@ -29,7 +28,7 @@ const ResultGroupScreen = ({ route, navigation }) => {
           selectedCity
         );
 
-        console.log("Fetched Groups:", fetchedGroups); 
+        console.log("Fetched Groups:", fetchedGroups);
 
         if (fetchedGroups && fetchedGroups.length > 0) {
           setGroups(fetchedGroups);
@@ -56,49 +55,50 @@ const ResultGroupScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.back_container}>
-          <TouchableOpacity onPress={backButton} style={styles.backButton}>
-            <AntDesign name="back" size={30} color="#366A68" />
-          </TouchableOpacity>
-        </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.backContainer}>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <AntDesign name="back" size={30} color="#366A68" />
+      </TouchableOpacity>
+      </View>
       <View style={styles.container}>
         {isLoading ? (
-        <ActivityIndicator size="large" color="#366A68"/>
-      ) : (
-        <ScrollView style={{ paddingTop: 10 }}>
-          <View style={styles.container}>
-            {groups.map((group, index) => (
-              <ResultGroupCard key={index} group={group} />
-            ))}
-          </View>
-        </ScrollView>
-         )}
+          <ActivityIndicator size="large" color="#366A68" />
+        ) : (
+          <ScrollView style={{ paddingTop: 10 }}>
+            <View style={styles.container}>
+              {groups.map((group, index) => (
+                <ResultGroupCard key={index} group={group} />
+              ))}
+            </View>
+          </ScrollView>
+        )}
       </View>
-    </ImageBackground>
+      </SafeAreaView>
   );
 };
 
 export default ResultGroupScreen;
 
 export const styles = StyleSheet.create({
-  back_container: {
+  backContainer: {
     flex: 1,
-    justifyContent: "flex-start", 
+    justifyContent: "flex-start",
     flexDirection: "column",
-    gap: 35,
+    paddingBottom: 40,
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
+  },
+  safeArea: {
+    justifyContent: "flex-start",
+    flexDirection: "column",
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
   container: {
     justifyContent: "flex-start",
-    paddingVertical: 40,
+    paddingTop: 30,
     flexDirection: "column",
     gap: 35,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   card: {
     width: "100%",
@@ -130,9 +130,9 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", 
-    top: 0, 
-    left: -15, 
+    position: "absolute",
+    top: 0,
+    left: -15,
   },
 
   buttonText: {

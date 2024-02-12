@@ -206,7 +206,7 @@ import {
       marginLeft: 0,
     },
     deleteButton: {
-      backgroundColor: "#8EBFB3",
+      backgroundColor: "#460811",
       padding: 10, 
       borderRadius: 10,
       marginTop: 0,

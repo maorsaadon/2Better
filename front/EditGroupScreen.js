@@ -9,19 +9,29 @@ import {
   View,
   ImageBackground,
   Pressable,
+  TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
-import myLogoPic from "../assets/default.png";
 import GroupService from "../back/GroupService";
-import { MaterialIcons } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  FontAwesome,
+  AntDesign,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import DropDownPicker from "react-native-dropdown-picker";
+import { cityData, sportTypeData } from "../back/DataBase";
 
 const EditGroupScreen = ({ route }) => {
   const { groupName } = route.params;
 
   const navigation = useNavigation();
   const [leaderEmail, setLeaderEmail] = useState("");
-  const [totalCapacity, setTotalCapacity] = useState("");
-  const [sportType, setSportType] = useState("");
+  const [totalCapacity, setTotalCapacity] = useState(0);
   const [city, setCity] = useState("");
+  const [isOpenCity, setIsOpenCity] = useState(false);
+  const [sportType, setSportType] = useState("");
+  const [isOpenTypeOfSport, setIsOpenTypeOfSport] = useState(false);
 
   useEffect(() => {
     const fetchGroupDetails = async () => {
@@ -30,8 +40,6 @@ const EditGroupScreen = ({ route }) => {
         if (data) {
           setLeaderEmail(data.LeaderEmail);
           setTotalCapacity(data.TotalCapacity);
-          setSportType(data.SportType);
-          setCity(data.City);
         } else {
           // Handle the case where the group data is not found
           console.log("No group data found for:", groupName);
@@ -41,7 +49,7 @@ const EditGroupScreen = ({ route }) => {
       }
     };
     fetchGroupDetails();
-  }, [groupName]);
+  }, [groupName, city, sportType]);
 
   const handleSave = async () => {
     try {
@@ -58,6 +66,14 @@ const EditGroupScreen = ({ route }) => {
     }
   };
 
+  const handleTypeOfSportPress = (item) => {
+    setSportType(item.value);
+  };
+
+  const handleCityPress = (item) => {
+    setCity(item.value);
+  };
+
   const backButton = () => {
     try {
       navigation.replace("MyGroups");
@@ -68,121 +84,245 @@ const EditGroupScreen = ({ route }) => {
 
   // Render group details and update button
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.button}>
-      <MaterialIcons name="chevron-left" size={30} color="white" />
+    <View style={styles.overlay}>
+      <View style={styles.backContainer}>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
-
-        <Text style={styles.label}>Group Name:</Text>
-        <Text style={styles.input}>{groupName}</Text>
-
-        <Text style={styles.label}>Leader Email:</Text>
-        <Text style={styles.input}>{leaderEmail}</Text>
-
-        <Text style={styles.label}>TotalCapacity:</Text>
-        <TextInput
-          style={styles.input}
-          value={totalCapacity}
-          onChangeText={(text) => setTotalCapacity(text)}
-        />
-        <Text style={styles.label}>Sport Type:</Text>
-        <TextInput
-          style={styles.input}
-          value={sportType}
-          onChangeText={(text) => setSportType(text)}
-        />
-
-        <Text style={styles.label}>City:</Text>
-        <TextInput
-          style={styles.input}
-          value={city}
-          onChangeText={(text) => setCity(text)}
-        />
-        <View style={styles.buttonsRow}>
-          <Pressable style={styles.saveButton} onPress={handleSave}>
-            <Text style={styles.buttonText}>Save</Text>
-          </Pressable>
-        </View>
       </View>
-    </ImageBackground>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          setIsOpenCity(false);
+          setIsOpenTypeOfSport(false);
+        }}
+      >
+        <View style={styles.container}>
+          <Text style={styles.label}>Group Name:</Text>
+          <View style={styles.inputRow}>
+            <FontAwesome
+              name="group"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <Text style={styles.input}>{groupName}</Text>
+          </View>
+
+          <Text style={styles.label}>Leader Email:</Text>
+          <View style={styles.inputRow}>
+            <MaterialIcons
+              name="email"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <Text style={styles.input}>{leaderEmail}</Text>
+          </View>
+
+          <Text style={styles.label}>TotalCapacity:</Text>
+          <View style={styles.inputRow}>
+            <MaterialIcons
+              name="person"
+              color="#366A68"
+              size={20}
+              style={styles.icon}
+            />
+            <TextInput
+              value={String(totalCapacity)}
+              onChangeText={(text) => setTotalCapacity(parseInt(text) || 0)}
+              style={styles.input}
+            />
+          </View>
+
+          <Text style={styles.label}>Sport Type:</Text>
+          <View style={styles.dropContainer}>
+            <MaterialCommunityIcons
+              name="arm-flex"
+              color="#366A68"
+              size={20}
+              style={styles.iconDrop}
+            />
+            <DropDownPicker
+              listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
+              items={sportTypeData}
+              open={isOpenTypeOfSport}
+              setOpen={() => setIsOpenTypeOfSport(!isOpenTypeOfSport)}
+              value={sportType}
+              setValue={setSportType}
+              dropDownDirection="Top"
+              showArrowIcon={false}
+              mode="BADGE"
+              badgeColors={"#2C64C6"}
+              badgeDotColors={["white"]}
+              badgeTextStyle={{ color: "white" }}
+              placeholder="Select type of sport"
+              placeholderStyle={styles.placeHolderStyle}
+              style={[styles.dropdownStyle, { zIndex: 2 }]}
+              itemStyle={styles.dropdownItemStyle}
+              dropDownStyle={styles.dropdownListStyle}
+              searchable={false}
+              searchPlaceholder="Search..."
+              onSelectItem={(item) => handleTypeOfSportPress(item)}
+            />
+          </View>
+
+          <Text style={styles.label}>City:</Text>
+          <View style={styles.dropContainer}>
+            <MaterialIcons
+              name="location-city"
+              color="#366A68"
+              size={20}
+              style={styles.iconDrop}
+            />
+            <DropDownPicker
+              listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
+              items={cityData}
+              open={isOpenCity}
+              setOpen={() => setIsOpenCity(!isOpenCity)}
+              value={city}
+              setValue={setCity}
+              dropDownDirection="Top"
+              showArrowIcon={false}
+              mode="BADGE"
+              badgeColors={"#2C64C6"}
+              badgeDotColors={["white"]}
+              badgeTextStyle={{ color: "white" }}
+              placeholder="Select city"
+              placeholderStyle={styles.placeHolderStyle}
+              style={[styles.dropdownStyle, { zIndex: 2 }]}
+              itemStyle={styles.dropdownItemStyle}
+              dropDownStyle={styles.dropdownListStyle}
+              searchable={false}
+              searchPlaceholder="Search..."
+              onSelectItem={(item) => handleCityPress(item)}
+            />
+          </View>
+
+          <View style={styles.buttonsRow}>
+            <Pressable style={styles.saveButton} onPress={handleSave}>
+              <Text style={styles.saveButtonText}>Save</Text>
+            </Pressable>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   label: {
-    backgroundColor: "white",
-    width: "40%",
-    overflow: "hidden",
-    borderRadius: 20,
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    left: -120,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+  },
+  backContainer: {
+    flex: 1,
+    flexDirection: "column",
+    paddingBottom: 20,
+  },
+
+  container: {
+    top: -250,
+    flex: 1,
     alignItems: "center",
-    fontSize: 20,
-    marginTop: 8,
-    borderWidth: 1,
-    padding: 10,
-    color: "black",
-    borderColor: "black",
+    justifyContent: "center",
+    gap: 10,
   },
   input: {
-    backgroundColor: "black",
-    overflow: "hidden",
-    width: "60%",
-    borderRadius: 20,
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 35,
+    paddingVertical: 5,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 5,
+    minWidth: "80%",
+    color: "#A9A9A9",
+    fontSize: 16,
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2,
+  },
+  inputRow: {
+    flexDirection: "row",
     alignItems: "center",
-    fontSize: 20,
-    marginTop: 20,
-    borderWidth: 1,
-    padding: 8,
-    color: "white",
-    borderColor: "white",
+    position: "relative",
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginTop: 5,
+  },
+  icon: {
+    position: "absolute",
+    left: 5,
+    zIndex: 3,
+  },
+  iconDrop: {
+    position: "absolute",
+    left: -25,
+    top: 25,
+    zIndex: 1,
   },
   saveButton: {
-    backgroundColor: "#3B82F6",
-    width: "40%",
-    padding: 15,
-    borderRadius: 50,
+    top: 0,
+    backgroundColor: "#366A68",
+    width: "100%",
+    padding: 10,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 10,
+  },
+  saveButtonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
   },
   backButton: {
-    backgroundColor: "#3B82F6",
     width: "20%",
-    padding: 15,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 6,
-  },
-  buttonText: {
-    alignSelf: "center",
-    color: "white",
-  },
-  buttonsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: 30,
-  },
-  buttonText: {
-    alignSelf: "center",
-    color: "white",
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  value: {
-    backgroundColor: "white",
-    paddingHorizontal: 25,
-    paddingVertical: 10,
+    padding: 10,
     borderRadius: 10,
-    marginTop: 10,
-    borderColor: "#0782F9",
-    borderWidth: 2,
+    alignItems: "center",
+    position: "absolute",
+    top: 10,
+    left: -15,
+  },
+  dropContainer: {
+    marginBottom: 16,
+    textAlign: "center",
+    zIndex: 1,
+    width: "70%",
+    
+  },
+  dropdownStyle: {
+    backgroundColor: "#C3D4D3",
+    borderColor: "#C3D4D3",
+    borderRadius: 10,
+    alignSelf: "flex-end",
+    marginTop: 15,
+    width: "124%",
+    left: 35,
+  },
+  dropdownItemStyle: {
+    justifyContent: "flex-start",
+    textAlign: "left",
+  },
+  dropdownListStyle: {
+    borderColor: "#C3D4D3",
+    borderWidth: 3,
+  },
+  placeHolderStyle: {
+    color: "#A9A9A9",
+    textAlign: "left",
+    left: 40,
+    backgroundColor: "#C3D4D3",
+    fontSize: 16,
+    maxWidth: 200,
+    zIndex: 1,
   },
 });
 
