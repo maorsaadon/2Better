@@ -68,14 +68,14 @@ const getSportIcon = (sportType) => {
 const handleJoinPress = () =>{
     setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
     setCurrentParticipants(currentParticipants+1);
-    MeetingService.addUserToMeeting(meeting.id, "aviya@test.com");
+    MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
     console.log("Click on Join Meeting!");
 };
 
 const handleCancelPress = () =>{
     setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
     setCurrentParticipants(currentParticipants-1);
-    MeetingService.removeUserFromMeetingMembers(meeting.id, "aviya@test.com");
+    MeetingService.removeUserFromMeetingMembers(meeting.id, auth.currentUser.email);
     console.log("Click on Cancel Meeting!");
 };
 
