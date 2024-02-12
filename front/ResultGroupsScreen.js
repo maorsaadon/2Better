@@ -86,26 +86,20 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     flexDirection: "column",
-    gap: 35,
     paddingBottom: 40,
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   safeArea: {
     justifyContent: "flex-start",
-    paddingVertical: 40,
     flexDirection: "column",
     backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
   container: {
     justifyContent: "flex-start",
-    paddingVertical: 40,
+    paddingTop: 30,
     flexDirection: "column",
     gap: 35,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   card: {
     width: "100%",
