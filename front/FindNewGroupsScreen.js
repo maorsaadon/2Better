@@ -5,14 +5,13 @@ import {
   LogBox,
   Pressable,
   TouchableWithoutFeedback,
-  ImageBackground,
+  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   Platform,
 } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
-import myLogoPic from "../assets/2better-logo.jpeg";
 import { sportTypeDataSearch, cityDataSearch } from "../back/DataBase";
 import { MaterialIcons,MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -56,7 +55,7 @@ const FindNewGroupScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+    <SafeAreaView style={styles.safeArea}>
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
@@ -67,7 +66,7 @@ const FindNewGroupScreen = ({ navigation }) => {
         }}
       >
         <View style={styles.container}>
-          <View>
+          <View style={styles.dropStyleContainer}>
             <MaterialCommunityIcons
             name="arm-flex"
             color="#366A68"
@@ -99,7 +98,7 @@ const FindNewGroupScreen = ({ navigation }) => {
             />
           </View>
 
-          <View>
+          <View style={styles.dropStyleContainer}>
             <MaterialIcons
               name="location-city"
               color="#366A68"
@@ -138,7 +137,7 @@ const FindNewGroupScreen = ({ navigation }) => {
           </Pressable>
         </View>
       </TouchableWithoutFeedback>
-    </ImageBackground>
+      </SafeAreaView>
   );
 };
 
@@ -149,15 +148,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    left: 60,
-    gap: 20,
     width: "70%",
+    gap: 20,
   },
-  backgroundImage: {
+  safeArea: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
+    alignItems: 'center', // Center children horizontally
+    justifyContent: 'center', // Center children vertically
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+  },
+  dropStyleContainer:{
+    marginBottom: 16,
+    zIndex: 1,
   },
   backButton: {
     width: "20%",
@@ -171,18 +173,16 @@ const styles = StyleSheet.create({
   dropContainer:{
     justifyContent: "center",
     alignItems: "center",
-    gap: 20,
     width: "70%",
   },
   dropdownStyle: {
     backgroundColor: "#C3D4D3",
     borderColor: "#C3D4D3",
+    width: "125%",
+    borderWidth: 3,
     borderRadius: 10,
+    textAlign: "left",
     alignSelf: "flex-end",
-    zIndex: 1,
-    marginTop : 15,
-    width: '125%',
-    left: 35,
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
@@ -192,16 +192,18 @@ const styles = StyleSheet.create({
   dropdownListStyle: {
     borderColor: "#C3D4D3",
     borderWidth: 3,
-    
+    textAlign: "left",
+    paddingLeft:50,
+  },
+  dropdownContainer: {
+    height: 40,
+    width: "80%",
+    marginBottom: 16,
+    zIndex: 2,
   },
   placeHolderStyle: {
     color: "#A9A9A9",
-    textAlign: "left",
-    left: 40,
-    backgroundColor: "#C3D4D3",
-    fontSize: 16,
-    zIndex: 1,
-    maxWidth: 80,
+    textAlign: "center",
   },
   icon: {
     position: "absolute",
@@ -209,5 +211,19 @@ const styles = StyleSheet.create({
     left: 10,
     zIndex: 3,
   },
+  buttonSearch: {
+    top: 0,
+    backgroundColor: "#366A68",
+    width: "70%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonTextSearch: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+
 
 });
