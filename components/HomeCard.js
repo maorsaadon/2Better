@@ -1,11 +1,11 @@
 import {
+    Pressable,
     Text,
     View,
     SafeAreaView,
     StyleSheet,
     Dimensions,
     TouchableOpacity,
-    Animated,
     } from "react-native";
     import {
     AntDesign,
@@ -29,23 +29,22 @@ import {
     
     const screenWidth = Dimensions.get("window").width;
     
-    const MeetingCard = ({ meeting }) => {
+    const HomeCard = ({ meeting }) => {
     const navigation = useNavigation();
     const groupName = meeting?.GroupName ?? "Default Name";
     const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
     const totalCapacity = parseInt(meeting.TotalCapacity, 10);
-    // const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined  
-    const position = new Animated.Value(0); // Initial position
-
-    // useEffect(() => {
+    const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
+    
+    useEffect(() => {
         
-    //     const checkUserInMeeting = async () => {
-    //         const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
-    //         setIsUserInMeeting(isInMeeting);
-    //       };
+        const checkUserInMeeting = async () => {
+            const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
+            setIsUserInMeeting(isInMeeting);
+          };
         
-    //     checkUserInMeeting();
-    //   }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
+        checkUserInMeeting();
+      }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
     
     const getSportIcon = (sportType) => {
         const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -69,19 +68,15 @@ import {
     const handleJoinPress = () =>{
         setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
         setCurrentParticipants(currentParticipants+1);
-        MeetingService.addUserToMeeting(meeting.id, "aviya@test.com");
+        MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
         console.log("Click on Join Meeting!");
-
-        // Start the swipe animation
-        Animated.timing(position, {
-            toValue: 100, // Move 100 pixels to the right
-            duration: 300, // Animation duration in milliseconds
-            useNativeDriver: true, // Use native driver for better performance
-        }).start();
     };
-
-    const cardStyle = {
-        transform: [{ translateX: position }], // Apply animated position to the card
+    
+    const handleCancelPress = () =>{
+        setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
+        setCurrentParticipants(currentParticipants-1);
+        MeetingService.removeUserFromMeetingMembers(meeting.id, auth.currentUser.email);
+        console.log("Click on Cancel Meeting!");
     };
     
     const handleEditPress = () =>{
@@ -91,58 +86,61 @@ import {
     
     return (
         <SafeAreaView>
-            <Animated.View style={[styles.card, cardStyle]}>
-                <View style={styles.card}>
-                    <View style={styles.cardTopRow}>
-                    {getSportIcon(meeting.SportType)}
-                    <View>
-                        <Text style={styles.title}>{groupName}</Text>
-                        <Text style={styles.subTitle}>{meeting.SportType}</Text>
-                    </View>
-                    </View>
-                    <View style={styles.cardMiddleRow}>
-                        <View style={styles.iconAndTextContainer}>
-                            <MaterialIcons name="location-on" size={22} color="black" />
-                            <Text>{meeting.Location}</Text>
-                        </View>
-                        <View style={styles.iconAndTextContainer}>
-                            <FontAwesome6 name="calendar-days" size={20} color="black" />
-                            <Text>{meeting.Date}</Text>
-                        </View>
-                        <View style={styles.iconAndTextContainer}>
-                            <AntDesign name="clockcircle" size={20} color="black" />
-                            <Text>{meeting.Time}</Text>
-                        </View>
-            
-                    </View>
-                    <View style={styles.participantContainer}>
-                    <Text style={styles.participantText}>{currentParticipants}</Text>
-                    <CustomSlider
-                        minimumValue={0}
-                        maximumValue={totalCapacity}
-                        value={currentParticipants}
-                    />
-                    <Text style={styles.participantText}>{totalCapacity}</Text>
-                    <AntDesign name="user" size={22} color="black" />
-                    </View>
-                    <View style={styles.cardBottomRow}>
-                    <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
-                        <Text style={styles.buttonText}>Join Meeting</Text>
-                    </TouchableOpacity>          
-                    {meeting.IsLeader ? (
-                    <TouchableOpacity style={styles.button} onPress={handleEditPress}>
-                        <Text style={styles.buttonText}>Edit</Text>
-                    </TouchableOpacity>
-                ) : ( <Text/>
-                    )}
-                    </View>
+        <View style={styles.card}>
+            <View style={styles.cardTopRow}>
+            {getSportIcon(meeting.SportType)}
+            <View>
+                <Text style={styles.title}>{groupName}</Text>
+                <Text style={styles.subTitle}>{meeting.SportType}</Text>
+            </View>
+            </View>
+            <View style={styles.cardMiddleRow}>
+                <View style={styles.iconAndTextContainer}>
+                    <MaterialIcons name="location-on" size={22} color="black" />
+                    <Text>{meeting.Location}</Text>
                 </View>
-            </Animated.View>
+                <View style={styles.iconAndTextContainer}>
+                    <FontAwesome6 name="calendar-days" size={20} color="black" />
+                    <Text>{meeting.Date}</Text>
+                </View>
+                <View style={styles.iconAndTextContainer}>
+                    <AntDesign name="clockcircle" size={20} color="black" />
+                    <Text>{meeting.Time}</Text>
+                </View>
+    
+            </View>
+            <View style={styles.participantContainer}>
+            <Text style={styles.participantText}>{currentParticipants}</Text>
+            <CustomSlider
+                minimumValue={0}
+                maximumValue={totalCapacity}
+                value={currentParticipants}
+            />
+            <Text style={styles.participantText}>{totalCapacity}</Text>
+            <AntDesign name="user" size={22} color="black" />
+            </View>
+            <View style={styles.cardBottomRow}>
+            {!isUserInMeeting  ? ( // Only show if isUserInMeeting is false
+              <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
+                <Text style={styles.buttonText}>Join Meeting</Text>
+              </TouchableOpacity>
+            ) : ( // Only show if hasJoined is true
+                <Text/>
+            )}
+            
+            {meeting.IsLeader ? (
+            <TouchableOpacity style={styles.button} onPress={handleEditPress}>
+                <Text style={styles.buttonText}>Edit</Text>
+            </TouchableOpacity>
+          ) : ( <Text/>
+            )}
+            </View>
+        </View>
         </SafeAreaView>
     );
     };
     
-    export default MeetingCard;
+    export default HomeCard;
     
     const styles = StyleSheet.create({
     cardBottomRow: {
