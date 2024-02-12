@@ -134,6 +134,7 @@ const HomeStack = () => {
       tabBarOptions={{
         activeTintColor: '#366A68',
         inactiveTintColor: 'gray',
+
       }}
     >
       <Tab.Screen name="Home Page" component={HomeScreen} />

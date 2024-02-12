@@ -47,8 +47,10 @@ const FindNewGroupScreen = ({ navigation }) => {
   };
 
 
+
   return (
     <SafeAreaView style={styles.safeArea}>
+
       <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCity(false);

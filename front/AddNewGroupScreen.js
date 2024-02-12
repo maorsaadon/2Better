@@ -44,6 +44,13 @@ const AddNewGroupScreen = () => {
       alert(error.message);
     }
   };
+  const backButton = () => {
+    try {
+      navigation.replace("MyGroups");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const AddButton = () => {
     try {
@@ -64,7 +71,7 @@ const AddNewGroupScreen = () => {
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
-      <TouchableWithoutFeedback
+        <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCities(false);
           setIsOpenSportTypes(false);
