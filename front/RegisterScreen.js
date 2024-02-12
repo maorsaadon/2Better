@@ -34,7 +34,13 @@ const RegisterScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace("Home")
+      }
+    })
+
+    return unsubscribe;
   }, [city]);
 
   const isEmailValid = (email) => {
