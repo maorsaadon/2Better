@@ -12,8 +12,8 @@ import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity, userNotificationCounter } from "../back/UserService";
 import UserService from "../back/UserService";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { db } from "../back/firebase";
 //import {stylesHome} from "../components/StylesSheets";
@@ -21,7 +21,7 @@ import { db } from "../back/firebase";
 const HomeScreen = () => {
 
   const navigation = useNavigation();
-  const Tab = createBottomTabNavigator();
+  //const Tab = createBottomTabNavigator();
   useEffect(() => {
     // Fetch groups from the service
     const fetchData = async () => {
