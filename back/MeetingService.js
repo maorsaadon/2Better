@@ -256,6 +256,51 @@ export const MeetingService = {
     }
   },
 
+  async functionToHomeScreen() {
+    let leaderMeetings = [];
+    let leaderGroupNames = [];
+    const userEmail = auth.currentUser.email;
+
+
+    try {
+      // Fetch all groups to determine user's role
+      const groupsSnapshot = await db.collection('Groups').get();
+      var isLeader2 = 0;
+      groupsSnapshot.forEach(doc => {
+        const group = doc.data();
+        if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
+          // User is a member but not the leader
+          isLeader2 = 0;
+          leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
+        } else if (group.LeaderEmail === userEmail) {
+          // User is the leader
+          isLeader2 = 1;
+          leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
+        }
+      });
+
+            // Fetch meetings for groups where user is the leader
+      for (const group of leaderGroupNames) {
+        const meetingsSnapshot = await db.collection('Meetings')
+                                          .where('GroupName', '==', group.groupName)
+                                          .get();
+        meetingsSnapshot.forEach(doc => {
+          const meetingData = doc.data();
+          if(!meetingData.Members.includes(auth.currentUser.email)){
+            leaderMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, IsLeader: group.isLeader,   id: doc.id });
+          }
+          });
+      }
+      // Sort leaderMeetings by Timestamp
+      leaderMeetings.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
+    } catch (error) {
+      console.error("Error fetching meetings by user role: ", error);
+    }
+    
+    return { leaderMeetings };
+    
+  },
+
 };
 
 export default MeetingService;

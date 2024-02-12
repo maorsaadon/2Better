@@ -177,6 +177,8 @@ import { AntDesign } from "@expo/vector-icons";
 import myLogoPic from '../assets/default.png';
 import MeetingService from '../back/MeetingService';
 import MeetingCard from "../components/MeetingCard";
+import HomeCard from "../components/HomeCard";
+
 
 
 const UpcomingMeetingsScreen = () => {
@@ -206,6 +208,7 @@ const UpcomingMeetingsScreen = () => {
       const fetchMeetings = async () => {
         try {
           const { leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
+          // const { leaderMeetings } = await MeetingService.functionToHomeScreen();
           setLeaderMeetings(leaderMeetings);
         } catch (error) {
           console.error("Error fetching Meetings:", error);
@@ -240,6 +243,7 @@ const UpcomingMeetingsScreen = () => {
                 {/* Map over the groups array to render AppointmentCards */}
                 {leaderMeetings.map((meeting, index) => (
                   <MeetingCard key={index} meeting={meeting} />
+                  // <HomeCard key={index} meeting={meeting} />
                 ))}
               </View>
             </ScrollView>
