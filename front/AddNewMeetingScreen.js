@@ -19,16 +19,18 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const AddNewMeetingScreen = ({ route }) => {
   const { groupName } = route.params;
-  const [date, setDate] = useState(""); // var to firestore
-  const [time, setTime] = useState(""); // var to firestore
+  // const [date, setDate] = useState(""); // var to notification
+  // const [time, setTime] = useState(""); // var to notification
   const [location, setLocation] = useState("");
   const userEmail = auth.currentUser.email;
-  const content = "" + groupName + ": at " + date + ", "  + time + " in - " + location;
+  // const content = "" + groupName + ": at " + date + ", "  + time + " in - " + location;
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('Select Date');
   const [selectedTime, setSelectedTime] = useState('Select Time');
+
+  const content = "" + groupName + ": at " + selectedDate + ", "  + selectedTime + " in - " + location;
 
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
@@ -61,7 +63,7 @@ const AddNewMeetingScreen = ({ route }) => {
     try {
       const combinedDate = new Date(year, month - 1, day, hours, minutes, seconds);
 
-      MeetingService.handleAddNewMeeting(groupName, location, date, time , combinedDate);
+      MeetingService.handleAddNewMeeting(groupName, location, selectedDate, selectedTime , combinedDate);
       NotificationService.handleAddNewNotification(groupName,  content, "New Meeting", serverTimestamp())
       navigation.replace("MyGroups");
     } catch (error) {
@@ -90,7 +92,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
     const correctFormatDate = splitDate[2] + "/" + splitDate[1] + "/" + splitDate[0];
     setSelectedDate(correctFormatDate);
-    setDate(correctFormatDate); // This var to update in firestore
+    // setDate(correctFormatDate); // This var to update in notification
     hideDatePicker();
   };
 
@@ -115,7 +117,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
     const correctFormatTime = splitTime[0] + ':' + splitTime[1];
     setSelectedTime(correctFormatTime);
-    setTime(correctFormatTime);  // This var to update in firestore
+    // setTime(correctFormatTime);  // This var to update in notification
     hideTimePicker();
   };
 

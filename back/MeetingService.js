@@ -67,7 +67,7 @@ export const MeetingService = {
     }
   },
   // Update meeting details
-  async updateMeetingDetails(MeetingID, date, time, location) {
+  async updateMeetingDetails(MeetingID, date, time, location, timestamp) {
     try {
       const meetingRef = db.collection("Meetings").doc(MeetingID);
 
@@ -79,6 +79,7 @@ export const MeetingService = {
           Date: date,
           Time: time,
           Location: location,
+          Timestamp: timestamp,
         });
   
         console.log("Meeting details updated successfully");
