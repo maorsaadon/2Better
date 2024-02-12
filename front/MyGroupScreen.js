@@ -46,18 +46,10 @@ const MyGroupsScreen = () => {
     fetchGroups();
   }, [isManagerView]);
 
-  const backButton = () => {
-    console.log("Add New Group button pressed");
-    try {
-      navigation.replace("Home");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const handleAddNewGroup = () => {
     try {
-      navigation.replace("AddNewGroup");
+      navigation.navigate("AddNewGroup");
     } catch (error) {
       alert(error.message);
     }
@@ -66,9 +58,6 @@ const MyGroupsScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <AntDesign name="back" size={24} color="#366A68" />
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setIsManagerView(true)}
           style={[
@@ -94,11 +83,11 @@ const MyGroupsScreen = () => {
         <View style={styles.container}>
           {isManagerView
             ? ManagerGroups.map((group, index) => (
-                <ManagerGroupCard key={index} group={group} />
-              ))
+              <ManagerGroupCard key={index} group={group} />
+            ))
             : MemberGroups.map((group, index) => (
-                <MemberGroupCard key={index} group={group} />
-              ))}
+              <MemberGroupCard key={index} group={group} />
+            ))}
         </View>
       </ScrollView>
       {isManagerView && (

@@ -74,10 +74,11 @@ const Tab = createBottomTabNavigator();
 const GroupsStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="MyGroup" component={MyGroupScreen} />
+      <Stack.Screen name="MyGroups" component={MyGroupScreen} />
+      <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
       <Stack.Screen name="AddNew" component={AddNewMeetingScreen} />
       <Stack.Screen name="EditGroup" component={EditGroupScreen} />
-      <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
+      
     </Stack.Navigator>
   );
 };
@@ -89,6 +90,24 @@ const MeetingStack = () => {
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
     </Stack.Navigator>
   );
+};
+
+const FindNewGroupsStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="FindNewGroups" component={FindNewGroupsScreen} />
+      <Stack.Screen name="ResultGroups" component={ResultGroupsScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const handleSignOut = () => {
+  auth
+    .signOut()
+    .then(() => {
+      navigation.replace("Entry");
+    })
+    .catch((error) => alert(error.message));
 };
 
 const HomeStack = () => {
@@ -119,7 +138,7 @@ const HomeStack = () => {
     >
       <Tab.Screen name="Home Page" component={HomeScreen} />
       <Tab.Screen name="My Groups" component={GroupsStack} />
-      <Tab.Screen name="Explore Group" component={FindNewGroupsScreen} />    
+      <Tab.Screen name="Explore Group" component={FindNewGroupsStack} />    
       <Tab.Screen name="Meetings" component={MeetingStack} />
       <Tab.Screen name="Log Out" component={NotificationsScreen} />
 
@@ -134,10 +153,13 @@ export default function App() {
         <Stack.Screen name="Entry" component={AppScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="MyGroup" component={MyGroupScreen} />
         <Stack.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
+        
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

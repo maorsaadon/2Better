@@ -46,19 +46,17 @@ const FindNewGroupScreen = ({ navigation }) => {
     }
   };
 
-  const backButton = () => {
-    try {
-      navigation.replace("Home");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   return (
+<<<<<<< HEAD
     <SafeAreaView style={styles.safeArea}>
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
+=======
+    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+
+>>>>>>> 49ad25d7 (navigate bar)
       <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCity(false);

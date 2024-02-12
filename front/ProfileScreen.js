@@ -61,7 +61,7 @@ const ProfileScreen = () => {
   }, []);
 
   const handleEdit = () => {
-    navigation.navigate("EditProfile");
+    navigation.replace("EditProfile");
   };
 
   const handleDelete = async () => {
