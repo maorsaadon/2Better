@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
-import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { userFirstName, userLastName, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,9 +22,9 @@ import { auth , db} from '../back/firebase';
 
 const EditProfileScreen = () => {
   const userEmail = auth.currentUser.email;
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [city, setCity] = useState("");
+  const [firstName, setFirstName] = useState(userFirstName);
+  const [lastName, setLastName] = useState(userLastName);
+  const [city, setCity] = useState(userCity);
 
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState();
@@ -33,6 +33,7 @@ const EditProfileScreen = () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
       await UserService.updateUserImage();
+      await UserService.updateUserDetails(firstName, lastName, city, []);
       navigation.replace("Home"); // Go back to the Home screen after saving
     } catch (error) {
       console.error("Error updating user details:", error);
@@ -40,14 +41,14 @@ const EditProfileScreen = () => {
   };
 
   // Use useFocusEffect to update the state when the screen gains focus
-  useFocusEffect(
-    useCallback(() => {
-      // Set initial values when the screen gains focus
-      setFirstName(userFirstName);
-      setLastName(userLastName);
-      setCity(UserCity);
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // Set initial values when the screen gains focus
+  //     setFirstName(userFirstName);
+  //     setLastName(userLastName);
+  //     setCity(UserCity);
+  //   }, [])
+  // );
 
 
   const handleImageSelection = async () => {
