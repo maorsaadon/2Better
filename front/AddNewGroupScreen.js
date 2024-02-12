@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import GroupService from "../back/GroupService";
-import { sportTypeData, cityData} from "../back/DataBase";
+import { sportTypeData, cityData } from "../back/DataBase";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 
 const AddNewGroupScreen = () => {
@@ -64,7 +64,7 @@ const AddNewGroupScreen = () => {
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
-        <TouchableWithoutFeedback
+      <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCities(false);
           setIsOpenSportTypes(false);
@@ -131,16 +131,14 @@ const AddNewGroupScreen = () => {
             onSelectItem={(item) => handleCityPress(item)}
           />
         </View>
-        </TouchableWithoutFeedback>
-        
-          <TouchableOpacity
-            onPress={AddButton}
-            style={styles.addButton}
-          >
-            <Text style={styles.addButtonText}>Add</Text>
-          </TouchableOpacity>
-      
-      </SafeAreaView>
+      </TouchableWithoutFeedback>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={AddButton} style={styles.addButton}>
+          <Text style={styles.addButtonText}>Add</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -149,8 +147,8 @@ export default AddNewGroupScreen;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    alignItems: 'center', // Center children horizontally
-    justifyContent: 'center', // Center children vertically
+    alignItems: "center", // Center children horizontally
+    justifyContent: "center", // Center children vertically
     backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
   backgroundImage: {
@@ -177,13 +175,19 @@ const styles = StyleSheet.create({
     top: 10,
     left: -15,
   },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+  },
   inputContainer: {
     flex: 1,
     width: "80%", // Adjusted to take the full width
     alignItems: "center", // Centers children horizontally
     justifyContent: "center", // Aligns children from the top
     paddingTop: 50,
-    zIndex:1,
+    zIndex: 1,
   },
   input: {
     borderColor: "#C3D4D3",
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
   placeHolderStyle: {
     color: "#A9A9A9",
   },
- 
+
   button: {
     width: "80%", // Match the width of inputs and dropdowns
     padding: 15, // Comfortable padding for tapping
@@ -233,11 +237,12 @@ const styles = StyleSheet.create({
 
   addButton: {
     backgroundColor: "#366A68",
-    top: -100,
     width: "40%",
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
+    paddingBottom: 30,
+    top: -30,
   },
   addButtonText: {
     color: "white",
@@ -245,4 +250,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
