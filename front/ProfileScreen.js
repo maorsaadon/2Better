@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity,userImageUpload } from "../back/UserService";
+import { userFirstName, userLastName, UserCity,userImageUpload, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth, db } from "../back/firebase";
 import * as ImagePicker from 'expo-image-picker';
@@ -152,11 +152,13 @@ const ProfileScreen = () => {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <MaterialIcons name="location-on" size={26} color="black" />
-          <View>
+          <Text style={styles.valueNew}>{userCity}</Text>
+
+          {/* <View>
             <Text style={styles.valueNew}>
               {city}
             </Text>
-          </View>
+          </View> */}
         </View>
         <TouchableOpacity onPress={handleEdit} style={styles.buttonEdit}>
           <Text style={styles.buttonTextEdit}>Edit User</Text>

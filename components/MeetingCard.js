@@ -23,8 +23,6 @@ sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
 import { auth } from "../back/firebase";
 import React, { useEffect, useState } from "react";
-import { userFirstName, userLastName, UserCity } from "../back/UserService";
-// import { serverTimestamp } from "firebase/firestore";
 import MeetingService from '../back/MeetingService';
 import { useNavigation } from '@react-navigation/core';
 
@@ -122,8 +120,7 @@ return (
         <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-        {/* {!hasJoined ? ( // Only show if hasJoined is false */}
-        {!isUserInMeeting  ? ( // Only show if hasJoined is false
+        {!isUserInMeeting  ? ( // Only show if isUserInMeeting is false
           <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
             <Text style={styles.buttonText}>Join Meeting</Text>
           </TouchableOpacity>
