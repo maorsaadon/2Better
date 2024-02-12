@@ -271,7 +271,7 @@
 // });
 
 import { useNavigation } from "@react-navigation/core";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -289,6 +289,7 @@ import NotificationService from "../back/NotificationsService";
 import { auth, db } from "../back/firebase";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import MeetingDetails from './AddNewMeetingScreen';
 
 
 
@@ -301,12 +302,18 @@ const EditMeetingScreen = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState(meeting.Date);
   const [selectedTime, setSelectedTime] = useState(meeting.Time);
 
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [hours, setHours] = useState("");
-  const [minutes, setMinutes] = useState("");
-  const [seconds, setSeconds] = useState("");
+  console.log(meeting.Date);
+  console.log(meeting.Time);
+
+  const [year, setYear] = useState(meeting.Date.split('/')[2]);
+  const [month, setMonth] = useState(meeting.Date.split('/')[1]);
+  const [day, setDay] = useState(meeting.Date.split('/')[0]);
+  const [hours, setHours] = useState(meeting.Time.split(':')[0]);
+  const [minutes, setMinutes] = useState(meeting.Time.split(':')[1]);
+  const [seconds, setSeconds] = useState('00');
+
+
+  const content = "" + meeting.groupName + ": at " + selectedDate + ", "  + selectedTime + " in - " + location;
 
   const navigation = useNavigation();
 
@@ -377,7 +384,7 @@ const EditMeetingScreen = ({ route }) => {
         await MeetingService.updateMeetingDetails(meeting.id, selectedDate, selectedTime, location, combinedDate);
         
         // Handle other operations as needed (e.g., notification)
-        // NotificationService.handleAddNewNotification(meeting.GroupName, content, "Meeting Updated", serverTimestamp());
+        //NotificationService.handleAddNewNotification(meeting.groupName, content, "Meeting Updated", serverTimestamp());
       
         // Navigate back to the UpComingMeetings screen
         navigation.replace("UpComingMeetings");
