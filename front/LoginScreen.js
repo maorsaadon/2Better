@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderWidth: 2,
     borderColor: "#366A68",
+    textAlign: "left",
   },
   buttonContainer: {
     width: "80%",

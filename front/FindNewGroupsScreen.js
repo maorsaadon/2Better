@@ -121,7 +121,7 @@ const FindNewGroupScreen = ({ navigation }) => {
               badgeTextStyle={{ color: "white" }}
               placeholder="Select city"
               placeholderStyle={styles.placeHolderStyle}
-              // containerStyle={styles.dropdownContainer}
+              containerStyle={[styles.dropdownContainer, { zIndex: 1 }]}
               style={styles.dropdownStyle}
               itemStyle={styles.dropdownItemStyle}
               dropDownStyle={styles.dropdownListStyle}
@@ -165,47 +165,43 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute",
-    top: 5,
+    top: 10,
     left: -15,
   },
-  buttonSearch: {
-    top: 50,
-    backgroundColor: "#366A68",
-    width: "70%",
-    padding: 15,
-    borderRadius: 10,
+  dropContainer:{
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 50,
-  },
-  buttonTextSearch: {
-    fontWeight: "bold",
-    fontSize: 15,
-    textAlign: "center",
-    color: "white",
+    gap: 20,
+    width: "70%",
   },
   dropdownStyle: {
     backgroundColor: "#C3D4D3",
     borderColor: "#C3D4D3",
-    borderWidth: 3,
     borderRadius: 10,
-    textAlign: "left",
     alignSelf: "flex-end",
     zIndex: 1,
+    marginTop : 15,
+    width: '125%',
+    left: 35,
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
     textAlign: "left",
+    
   },
   dropdownListStyle: {
     borderColor: "#C3D4D3",
     borderWidth: 3,
-    textAlign: "left",
+    
   },
   placeHolderStyle: {
     color: "#A9A9A9",
-    textAlign: "center",
+    textAlign: "left",
+    left: 40,
     backgroundColor: "#C3D4D3",
+    fontSize: 16,
     zIndex: 1,
+    maxWidth: 80,
   },
   icon: {
     position: "absolute",
