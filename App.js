@@ -67,7 +67,10 @@ import AddNewGroupScreen from "./front/AddNewGroupScreen";
 import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { auth } from '/Users/ashwal/Desktop/RN/2Better/back/firebase';
+import { StackActions } from '@react-navigation/native';
+import UserService from "./back/UserService";
 
 const Stack = createNativeStackNavigator();
 
@@ -110,20 +113,21 @@ const HomeStack = ({ navigation }) => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home Page") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "My Groups") {
-            iconName = focused ? "people" : "people-outline";
-          } else if (route.name === "Explore Group") {
-            iconName = focused ? "compass" : "compass-outline";
-          } else if (route.name === "Meetings") {
-            iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "Log Out") {
-            iconName = focused ? "exit" :"exit-outline" ;
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
+        if (route.name === 'Home Page') {
+          iconName = focused ? 'home' : 'home-outline';
+        } else if (route.name === 'My Groups') {
+          iconName = focused ? 'people' : 'people-outline';
+        } else if (route.name === 'Explore Group') {
+          iconName = focused ? 'compass' : 'compass-outline';
+        } else if (route.name === 'Meetings') {
+          iconName = focused ? 'calendar' : 'calendar-outline';
+        } else if (route.name === 'Log Out') {
+          iconName = focused ? 'exit' :'exit-outline' ;
+          UserService.logout(); 
+        }
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+    })}
       tabBarOptions={{
         activeTintColor: "#366A68",
         inactiveTintColor: "gray",

@@ -32,8 +32,14 @@ const EditProfileScreen = () => {
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
+<<<<<<< HEAD
       await UserService.updateUserDetails(firstName, lastName, city);
       navigation.replace("Home"); // Go back to the Home screen after saving
+=======
+      
+      await UserService.updateUserDetails(firstName, lastName, city, []);
+      navigation.replace("Profile"); // Go back to the Home screen after saving
+>>>>>>> f7f0202a (profile)
     } catch (error) {
       console.error("Error updating user details:", error);
     }
@@ -58,6 +64,9 @@ const EditProfileScreen = () => {
       quality: 1,
     });
     await UserService.updateUserImage();
+=======
+    
+>>>>>>> f7f0202a (profile)
     console.log(result);
 
     if (!result.canceled) {
@@ -90,14 +99,11 @@ const EditProfileScreen = () => {
         uploadBytes(storageRef, blob).then((snapshot) => {
           console.log('Uploaded a blob or file!');
         });
-
-
-        Alert.alert("photo uploading");
-
+      await UserService.updateUserImage();
       } catch (error) {
         console.error(error);
       }
-
+      
     }
   };
 

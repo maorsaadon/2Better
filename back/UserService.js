@@ -60,6 +60,7 @@ export const UserService = {
             userFirstName = userData.FirstName;
             userLastName = userData.LastName;
             userCity = userData.City;
+            userImageUpload = userData.ImageUpload;
             userNotificationCounter = userData.NotificationCounter;
           } else {
             // Handle the case where the document does not exist
@@ -100,8 +101,12 @@ export const UserService = {
       await userRef.update({
         ImageUpload : 1
       });
+<<<<<<< HEAD
 
       userImageUpload = userRef.ImageUpload;
+=======
+      userImageUpload = 1;
+>>>>>>> f7f0202a (profile)
       console.log("User userImageUpload updated successfully");
     } catch (error) {
       console.error("Error updating user NotificationCounter: ", error);
@@ -160,6 +165,14 @@ export const UserService = {
       throw error; // Rethrow the error to be caught by the calling function
       // Handle the error accordingly
     }
+  },
+  async logout() {
+    auth
+    .signOut()
+    .then(() => {
+      console.log("User Log out")
+    })
+    .catch((error) => alert(error.message));
   },
 };
 
