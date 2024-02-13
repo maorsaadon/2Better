@@ -51,6 +51,7 @@ export const UserService = {
       // Check if the user is signed in
       if (auth.currentUser) {
         const userEmail = auth.currentUser.email;
+        console.log("log in :", userEmail);
         // Ensure the email is not null or undefined
         if (userEmail) {
           const snapshot = await db.collection("Users").doc(userEmail).get();

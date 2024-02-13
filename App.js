@@ -50,7 +50,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon from 'react-native-ionicons'
+import { Ionicons } from '@expo/vector-icons';
 
 import AppScreen from "./front/AppScreen";
 import LoginScreen from "./front/LoginScreen";
@@ -105,6 +105,8 @@ const FindNewGroupsStack = () => {
 
 
 const HomeStack = ({ navigation }) => {
+  
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -121,9 +123,9 @@ const HomeStack = ({ navigation }) => {
           iconName = focused ? 'calendar' : 'calendar-outline';
         } else if (route.name === 'Log Out') {
           iconName = focused ? 'exit' :'exit-outline' ;
-          UserService.logout(); 
+          // UserService.logout(); 
         }
-        return <Icon name={iconName} size={size} color={color} />;
+        return <Ionicons name={iconName} size={size} color={color} />;
       },
     })}
       tabBarOptions={{
