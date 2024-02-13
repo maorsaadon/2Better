@@ -101,8 +101,12 @@ export const UserService = {
         ImageUpload : 1
         ImageUpload : 1
       });
+<<<<<<< HEAD
 
       userImageUpload = userRef.ImageUpload;
+=======
+      userImageUpload = 1;
+>>>>>>> f7f0202a (profile)
       console.log("User userImageUpload updated successfully");
     } catch (error) {
       console.error("Error updating user NotificationCounter: ", error);

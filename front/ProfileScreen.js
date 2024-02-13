@@ -54,7 +54,7 @@ const ProfileScreen = () => {
         console.error('Error retrieving image:', error);
       }
 
-      console.log(userImageUpload);
+      console.log(" The number is ",userImageUpload);
     };
 
     fetchUserDetails();
