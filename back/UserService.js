@@ -60,6 +60,7 @@ export const UserService = {
             userFirstName = userData.FirstName;
             userLastName = userData.LastName;
             userCity = userData.City;
+            userImageUpload = userData.ImageUpload;
             userNotificationCounter = userData.NotificationCounter;
           } else {
             // Handle the case where the document does not exist
@@ -165,6 +166,14 @@ export const UserService = {
       throw error; // Rethrow the error to be caught by the calling function
       // Handle the error accordingly
     }
+  },
+  async logout() {
+    auth
+    .signOut()
+    .then(() => {
+      console.log("User Log out")
+    })
+    .catch((error) => alert(error.message));
   },
 };
 
