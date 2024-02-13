@@ -58,6 +58,7 @@ const EditProfileScreen = () => {
       quality: 1,
     });
     await UserService.updateUserImage();
+    await UserService.updateUserImage();
     console.log(result);
 
     if (!result.canceled) {
@@ -97,15 +98,7 @@ const EditProfileScreen = () => {
       } catch (error) {
         console.error(error);
       }
-      // const storage = getStorage();
 
-      // const storageRef = ref(storage, `UsersProfilePics/${firstName+ '2'} `);
-      // file = result.Image
-      // // 'file' comes from the Blob or File API
-      // uploadBytes(storageRef, file).then((snapshot) => {
-      //   console.log('Uploaded a blob or file!');
-      // });
-      // Function to upload image
     }
   };
 
@@ -220,3 +213,12 @@ const styles = StyleSheet.create({
   },
 });
 
+      // const storage = getStorage();
+
+      // const storageRef = ref(storage, `UsersProfilePics/${firstName+ '2'} `);
+      // file = result.Image
+      // // 'file' comes from the Blob or File API
+      // uploadBytes(storageRef, file).then((snapshot) => {
+      //   console.log('Uploaded a blob or file!');
+      // });
+      // Function to upload image

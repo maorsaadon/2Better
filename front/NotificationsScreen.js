@@ -19,7 +19,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 const NotificationsScreen = () => {
   //Aviv's Edit:
-  /************************************************* */
+  /***************** */
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

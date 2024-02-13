@@ -46,18 +46,10 @@ const MyGroupsScreen = () => {
     fetchGroups();
   }, [isManagerView]);
 
-  const backButton = () => {
-    console.log("Add New Group button pressed");
-    try {
-      navigation.replace("Home");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const handleAddNewGroup = () => {
     try {
-      navigation.replace("AddNewGroup");
+      navigation.navigate("AddNewGroup");
     } catch (error) {
       alert(error.message);
     }
@@ -91,11 +83,11 @@ const MyGroupsScreen = () => {
         <View style={styles.container}>
           {isManagerView
             ? ManagerGroups.map((group, index) => (
-                <ManagerGroupCard key={index} group={group} />
-              ))
+              <ManagerGroupCard key={index} group={group} />
+            ))
             : MemberGroups.map((group, index) => (
-                <MemberGroupCard key={index} group={group} />
-              ))}
+              <MemberGroupCard key={index} group={group} />
+            ))}
         </View>
       </ScrollView>
       {isManagerView && (

@@ -60,6 +60,7 @@ const HomeScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
       <View style={stylesHome.container}>
+      <View style={stylesHome.container}>
 
         <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
           <Entypo name="bell" size={30} color="black" />
@@ -67,8 +68,13 @@ const HomeScreen = () => {
 
         <TouchableOpacity onPress={handleMyProfile} style={stylesHome.profileButton}>
           <FontAwesome name="user" size={30} color="black" />
+        <TouchableOpacity onPress={handleMyProfile} style={stylesHome.profileButton}>
+          <FontAwesome name="user" size={30} color="black" />
         </TouchableOpacity>
       </View>
+
+
+
 
     </ImageBackground>
   );
@@ -98,6 +104,8 @@ const stylesHome = StyleSheet.create({
   profileButton: {
     padding: 10,
     borderRadius: 10,
+    marginTop: 0,
+    marginLeft: 280,
     marginTop: 0,
     marginLeft: 280,
     borderRadius: 50,

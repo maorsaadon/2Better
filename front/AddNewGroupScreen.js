@@ -64,7 +64,7 @@ const AddNewGroupScreen = () => {
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
-      <TouchableWithoutFeedback
+        <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCities(false);
           setIsOpenSportTypes(false);
