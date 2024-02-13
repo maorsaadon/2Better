@@ -32,8 +32,7 @@ const EditProfileScreen = () => {
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
-      await UserService.updateUserImage();
-      await UserService.updateUserDetails(firstName, lastName, city, []);
+      await UserService.updateUserDetails(firstName, lastName, city);
       navigation.replace("Home"); // Go back to the Home screen after saving
     } catch (error) {
       console.error("Error updating user details:", error);
@@ -58,7 +57,7 @@ const EditProfileScreen = () => {
       aspect: [4, 4],
       quality: 1,
     });
-    changeImage = 1;
+    await UserService.updateUserImage();
     console.log(result);
 
     if (!result.canceled) {

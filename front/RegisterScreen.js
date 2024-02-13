@@ -6,14 +6,12 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  ScrollView,
-  Keyboard,
   LogBox,
-  KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../back/firebase";
 import myLogoPic from "../assets/registerPage.png";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -34,13 +32,7 @@ const RegisterScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigation.replace("Home")
-      }
-    })
-
-    return unsubscribe;
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, [city]);
 
   const isEmailValid = (email) => {
@@ -67,8 +59,9 @@ const RegisterScreen = () => {
     }
 
     UserService.createUserAccount(email, password, firstName, lastName, city);
+    
+    await navigation.replace("Login");
 
-    navigation.replace("Home");
   };
   const handleSignIn = () => {
     navigation.replace("Login");

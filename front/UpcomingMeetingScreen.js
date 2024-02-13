@@ -220,21 +220,9 @@ const UpcomingMeetingsScreen = () => {
       fetchMeetings();
     }, []);
 
-  const backButton = () => {
-    try {
-      navigation.replace("Home");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <AntDesign name="back" size={30} color="black" />
-        </TouchableOpacity>
-
           {isLoading ? (
           <ActivityIndicator size="large" color="black" />
         ) : (

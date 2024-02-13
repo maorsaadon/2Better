@@ -10,7 +10,8 @@ import {
   SafeAreaView,
 } from "react-native";
 //import styles from "../components/StylesSheets";
-import { auth } from "../back/firebase";
+import { auth , db } from "../back/firebase";
+import { userImageUpload } from "../back/UserService";
 
 import myLogoPic from "../assets/loginPage.png";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,16 +23,6 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace("Home");
-      }
-    });
-
-    return unsubscribe;
-  }, []);
-
 
   const handleLogin = () => {
     email = email.toLowerCase();
@@ -40,6 +31,7 @@ const LoginScreen = () => {
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with:", user.email);
+        navigation.replace("Home");
       })
       .catch((error) => alert(error.message));
   };

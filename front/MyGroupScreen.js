@@ -66,9 +66,6 @@ const MyGroupsScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <AntDesign name="back" size={24} color="#366A68" />
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setIsManagerView(true)}
           style={[

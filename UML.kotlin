@@ -1,0 +1,32 @@
+@startuml
+!theme blueprint
+
+object "User1 : User" as User1 {
+  Email = "Maor1997@gmai.com"
+  FirstName = "Maor"
+  LastName = "Saadon"
+  City = "Ariel"
+  ImageUpload = "image.png"
+  NotificationCounter = 2
+}
+
+object "Group1 : Group" as Group1 {
+  GroupName = "Maor the queen"
+  LeaderEmail = "Maor1997@gmai.com"
+  SportType = "Running"
+  City = "Ariel"
+  TotalCapacity = 15
+}
+
+object "Meeting1 : Meeting" as Meeting1 {
+  Date = "2/3/24"
+  Time = "20:00"
+  Location = "My House"
+  GroupName = "Maor the queen"
+  NumberOfMembers = 5
+}
+
+User1 -- Group1 : Member of
+Group1 -- Meeting1 : Schedules
+Meeting1 -- User1 : Attended by
+@enduml

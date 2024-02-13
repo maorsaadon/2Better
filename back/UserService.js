@@ -15,7 +15,6 @@ export const UserService = {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log("Registered with:", user.email);
 
         db.collection("Users").doc(email).set({
           FirstName: firstName,
@@ -25,8 +24,26 @@ export const UserService = {
           ImageUpload: 0,
           NotificationCounter: 0,
         });
+
+        console.log("Registered with:", user.email);
       })
       .catch((error) => alert(error.message));
+      
+      auth
+    .signOut()
+    .then(() => {
+      console.log("LogOutFrom");
+    })
+    .catch((error) => alert(error.message));
+    
+  },
+  async logout() {
+    auth
+    .signOut()
+    .then(() => {
+      console.log("LogOutFrom");
+    })
+    .catch((error) => alert(error.message));
   },
 
   async getUserDetails() {
@@ -80,11 +97,11 @@ export const UserService = {
     try {
       const userRef = db.collection("Users").doc(userEmail);
       userImageUpload = 1;
-      // Update the user document
       await userRef.update({
-        ImageUpload : userImageUpload
+        ImageUpload : 1
       });
 
+      userImageUpload = userRef.ImageUpload;
       console.log("User userImageUpload updated successfully");
     } catch (error) {
       console.error("Error updating user NotificationCounter: ", error);

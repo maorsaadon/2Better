@@ -86,6 +86,7 @@ const AddNewMeetingScreen = ({ route }) => {
     const dateAlone = dt.toISOString().split('T');
     const splitDate= dateAlone[0].split('-');
 
+    // this vars to timestamp
     setYear(splitDate[0]); 
     setMonth(splitDate[1]);
     setDay(splitDate[2]);
@@ -111,6 +112,7 @@ const AddNewMeetingScreen = ({ route }) => {
     const timeAlone = dt.toLocaleTimeString();
     const splitTime = timeAlone.split(':');
 
+    // this vars to timestamp
     setHours(splitTime[0]);
     setMinutes(splitTime[1]);
     setSeconds(splitTime[2]);
