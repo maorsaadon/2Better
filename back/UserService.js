@@ -99,7 +99,6 @@ export const UserService = {
       userImageUpload = 1;
       await userRef.update({
         ImageUpload : 1
-        ImageUpload : 1
       });
 
       userImageUpload = userRef.ImageUpload;

@@ -18,7 +18,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import * as FileSystem from 'expo-file-system';
-import { auth , db} from '../back/firebase';
+import { auth } from '../back/firebase';
 
 const EditProfileScreen = () => {
   const userEmail = auth.currentUser.email;
@@ -57,7 +57,6 @@ const EditProfileScreen = () => {
       aspect: [4, 4],
       quality: 1,
     });
-    await UserService.updateUserImage();
     await UserService.updateUserImage();
     console.log(result);
 

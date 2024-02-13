@@ -2,15 +2,13 @@ import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ImageBackground,
 } from "react-native";
-import { MaterialIcons, Entypo, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
+import {Entypo, FontAwesome } from "@expo/vector-icons";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { doc, onSnapshot } from 'firebase/firestore';
 
@@ -60,7 +58,6 @@ const HomeScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
       <View style={stylesHome.container}>
-      <View style={stylesHome.container}>
 
         <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
           <Entypo name="bell" size={30} color="black" />
@@ -68,14 +65,8 @@ const HomeScreen = () => {
 
         <TouchableOpacity onPress={handleMyProfile} style={stylesHome.profileButton}>
           <FontAwesome name="user" size={30} color="black" />
-        <TouchableOpacity onPress={handleMyProfile} style={stylesHome.profileButton}>
-          <FontAwesome name="user" size={30} color="black" />
         </TouchableOpacity>
       </View>
-
-
-
-
     </ImageBackground>
   );
 };
