@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState} from "react";
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { useNavigation, useFocusEffect } from "@react-navigation/core";
+import { useNavigation} from "@react-navigation/core";
 import { userFirstName, userLastName, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
@@ -32,14 +32,8 @@ const EditProfileScreen = () => {
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
-<<<<<<< HEAD
       await UserService.updateUserDetails(firstName, lastName, city);
-      navigation.replace("Home"); // Go back to the Home screen after saving
-=======
-      
-      await UserService.updateUserDetails(firstName, lastName, city, []);
       navigation.replace("Profile"); // Go back to the Home screen after saving
->>>>>>> f7f0202a (profile)
     } catch (error) {
       console.error("Error updating user details:", error);
     }
@@ -64,9 +58,6 @@ const EditProfileScreen = () => {
       quality: 1,
     });
     await UserService.updateUserImage();
-=======
-    
->>>>>>> f7f0202a (profile)
     console.log(result);
 
     if (!result.canceled) {

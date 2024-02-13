@@ -11,10 +11,8 @@ import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity, userImageUpload, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
-import { auth, db } from "../back/firebase";
-import * as ImagePicker from 'expo-image-picker';
+import { auth} from "../back/firebase";
 import { styles } from "../components/StylesSheets"
-import EditProfileScreen, { changeImage } from '../front/EditProfileScreen'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Alert } from 'react-native';
 

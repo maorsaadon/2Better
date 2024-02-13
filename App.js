@@ -68,8 +68,6 @@ import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { auth } from '/Users/ashwal/Desktop/RN/2Better/back/firebase';
-import { StackActions } from '@react-navigation/native';
 import UserService from "./back/UserService";
 
 const Stack = createNativeStackNavigator();
