@@ -50,8 +50,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from 'react-native-ionicons'
 
-import Ionicons from "react-native-vector-icons/Ionicons";
 import AppScreen from "./front/AppScreen";
 import LoginScreen from "./front/LoginScreen";
 import HomeScreen from "./front/HomeScreen";
@@ -67,7 +67,7 @@ import AddNewGroupScreen from "./front/AddNewGroupScreen";
 import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import UserService from "./back/UserService";
 
 const Stack = createNativeStackNavigator();
@@ -123,7 +123,7 @@ const HomeStack = ({ navigation }) => {
           iconName = focused ? 'exit' :'exit-outline' ;
           UserService.logout(); 
         }
-        return <Ionicons name={iconName} size={size} color={color} />;
+        return <Icon name={iconName} size={size} color={color} />;
       },
     })}
       tabBarOptions={{
