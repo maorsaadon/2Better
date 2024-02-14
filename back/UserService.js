@@ -37,7 +37,7 @@ export const UserService = {
     .catch((error) => alert(error.message));
     
   },
-  async logout() {
+  async logOut() {
     auth
     .signOut()
     .then(() => {
@@ -163,14 +163,7 @@ export const UserService = {
       // Handle the error accordingly
     }
   },
-  async logout() {
-    auth
-    .signOut()
-    .then(() => {
-      console.log("User Log out")
-    })
-    .catch((error) => alert(error.message));
-  },
+
 };
 
 export { userFirstName, userLastName, userCity, userImageUpload};

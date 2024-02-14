@@ -123,7 +123,7 @@ const HomeStack = ({ navigation }) => {
           iconName = focused ? 'calendar' : 'calendar-outline';
         } else if (route.name === 'Log Out') {
           iconName = focused ? 'exit' :'exit-outline' ;
-          // UserService.logout(); 
+          // UserService.logOut(); 
         }
         return <Ionicons name={iconName} size={size} color={color} />;
       },
