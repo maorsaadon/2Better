@@ -10,6 +10,20 @@ var userNotificationCounter = 0;
 var userImageUpload = 0;
 
 export const UserService = {
+
+  async isEmailInAuth(email) {
+    try {
+      const methods = await auth.fetchSignInMethodsForEmail(email);
+
+      // If methods array is not empty, it means the email is in use
+      return methods.length > 0;
+    } catch (error) {
+      // Handle errors or return false
+      console.error("Error checking email existence:", error);
+      return false;
+    }
+  },
+  
   async createUserAccount(email, password, firstName, lastName, city) {
     auth
       .createUserWithEmailAndPassword(email, password)

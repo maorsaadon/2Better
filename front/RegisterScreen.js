@@ -16,6 +16,7 @@ import { MaterialIcons} from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { cityData } from "../back/DataBase";
 import UserService from "../back/UserService";
+import { auth } from "../back/firebase";
 
 
 const RegisterScreen = () => {
@@ -32,7 +33,14 @@ const RegisterScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace("Login");
+      }
+    })
+  
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    return unsubscribe
   }, [city]);
 
   const isEmailValid = (email) => {
@@ -58,9 +66,18 @@ const RegisterScreen = () => {
       return;
     }
 
-    UserService.createUserAccount(email, password, firstName, lastName, city);
+    // Check if the email is already in use
+    const emailInUse = await UserService.isEmailInAuth(email);
+
+    if (emailInUse) {
+      // If the email is already in use, show an alert and return without proceeding
+      alert("Email is already in use! Please use another email.");
+      return;
+    }
+
+    await UserService.createUserAccount(email, password, firstName, lastName, city);
     
-    await navigation.replace("Login");
+    // await navigation.replace("Login");
 
   };
   const handleSignIn = () => {

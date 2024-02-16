@@ -81,7 +81,7 @@ const handleCancelPress = () =>{
 
 const handleEditPress = () =>{
     console.log("Click on Edit!");
-    navigation.replace("EditMeetingScreen", {meeting});
+    navigation.replace("EditMeeting", {meeting});
 };
 
 return (
