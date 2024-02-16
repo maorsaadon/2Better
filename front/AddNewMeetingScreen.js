@@ -321,6 +321,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Platform,
 } from "react-native";
 import myLogoPic from "../assets/default.png";
 import MeetingService from "../back/MeetingService";
@@ -335,6 +336,8 @@ const AddNewMeetingScreen = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
 
+
+  const isIphone = Platform.OS === 'ios';
 
   const navigation = useNavigation();
 
@@ -361,12 +364,29 @@ const AddNewMeetingScreen = ({ route }) => {
     const correctFormatTime = splitTime[0] + ':' + splitTime[1];
     return correctFormatTime;
   };
+
+  const handleDateConfirmIphone = (selectedDate) => {
+    // const dt= new Date(selectedDate);
+    const dateAlone = selectedDate.toLocaleDateString();
+    return dateAlone;
+  };
   
   const AddButton = () => {
     try {
-      // string of date and time
-      const stringDate = handleDateConfirm(selectedDate);
-      const stringTime = handleTimeConfirm(selectedTime);
+
+      let stringDate;
+      let stringTime;
+
+      if(isIphone){
+        // string of date and time
+        stringDate = handleDateConfirmIphone(selectedDate);
+        stringTime = handleTimeConfirm(selectedTime);
+      }
+      else{
+        // string of date and time
+        stringDate = handleDateConfirm(selectedDate);
+        stringTime = handleTimeConfirm(selectedTime);
+      }
   
       // timestamp
       const combinedDateTimestamp = new Date(selectedDate);
