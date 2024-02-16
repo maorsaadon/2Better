@@ -398,6 +398,7 @@ const AddNewMeetingScreen = ({ route }) => {
             time={selectedTime}
             setTime={setSelectedTime}
           />
+          
           <View style={styles.LocationTextInputContainer}>
             <TextInput
               placeholder="Location"

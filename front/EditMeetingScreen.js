@@ -288,7 +288,7 @@ import MeetingService from "../back/MeetingService";
 import NotificationService from "../back/NotificationsService";
 import { auth, db } from "../back/firebase";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DatePickerWithTime from '../components/DateTimePicker';
 import MeetingDetails from './AddNewMeetingScreen';
 
 
@@ -296,98 +296,60 @@ import MeetingDetails from './AddNewMeetingScreen';
 const EditMeetingScreen = ({ route }) => {
   const { meeting } = route.params;
   console.log(meeting);
-  const [location, setLocation] = useState(meeting.Location);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(meeting.Date);
-  const [selectedTime, setSelectedTime] = useState(meeting.Time);
+  const [location, setLocation] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(meeting.Date);
+  // const [selectedTime, setSelectedTime] = useState(meeting.Time);
 
-  console.log(meeting.Date);
-  console.log(meeting.Time);
-
-  const [year, setYear] = useState(meeting.Date.split('/')[2]);
-  const [month, setMonth] = useState(meeting.Date.split('/')[1]);
-  const [day, setDay] = useState(meeting.Date.split('/')[0]);
-  const [hours, setHours] = useState(meeting.Time.split(':')[0]);
-  const [minutes, setMinutes] = useState(meeting.Time.split(':')[1]);
-  const [seconds, setSeconds] = useState('00');
-
-
-  const content = "" + meeting.groupName + ": at " + selectedDate + ", "  + selectedTime + " in - " + location;
 
   const navigation = useNavigation();
 
   const backButton = () => {
       try {
-        navigation.replace("UpComingMeetings");
+        navigation.replace("Meeting");
       } catch (error) {
         alert(error.message);
       }
   };
 
-  {/* open and close calander modal */}
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
+  const handleDateConfirm = (selectedDate) => {
+    const dt= new Date(selectedDate);
+    const dateAlone = dt.toLocaleDateString();
+    const splitDate = dateAlone.split('.');
+    const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
+    return correctFormatDate;
   };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-
-  const handleDateConfirm = (date) => {
-      const dt= new Date(date);
-      const dateAlone = dt.toISOString().split('T');
-      const splitDate= dateAlone[0].split('-');
   
-      setYear(splitDate[0]); 
-      setMonth(splitDate[1]);
-      setDay(splitDate[2]);
-  
-      const correctFormatDate = splitDate[2] + "/" + splitDate[1] + "/" + splitDate[0];
-      setSelectedDate(correctFormatDate);
-      // setDate(correctFormatDate); // This var to update in firestore
-      hideDatePicker();
-  };
-
-  {/* open and close clock time modal */}
-  const showTimePicker = () => {
-    setTimePickerVisibility(true);
-  };
-
-  const hideTimePicker = () => {
-    setTimePickerVisibility(false);
-  };
-
-  {/* Change time selected */}
-  const handleTimeConfirm = (date) => {
-      const dt= new Date(date);
-      const timeAlone = dt.toLocaleTimeString();
-      const splitTime = timeAlone.split(':');
-
-      setHours(splitTime[0]);
-      setMinutes(splitTime[1]);
-      setSeconds(splitTime[2]);
-
-      const correctFormatTime = splitTime[0] + ':' + splitTime[1];
-      setSelectedTime(correctFormatTime);
-      // setTime(correctFormatTime);  // This var to update in firestore
-      hideTimePicker();
+  const handleTimeConfirm = (selectedTime) => {
+    const dt= new Date(selectedTime);
+    const timeAlone = selectedTime.toLocaleTimeString();
+    const splitTime = timeAlone.split(':');
+    const correctFormatTime = splitTime[0] + ':' + splitTime[1];
+    return correctFormatTime;
   };
 
   const handleEditButton = async () => {
       try {
 
-        const combinedDate = new Date(year, month - 1, day, hours, minutes, seconds);
+        // string of date and time
+        const stringDate = handleDateConfirm(selectedDate);
+        const stringTime = handleTimeConfirm(selectedTime);
+    
+        // timestamp
+        const combinedDateTimestamp = new Date(selectedDate);
+        combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
 
         // Update the meeting details
-        await MeetingService.updateMeetingDetails(meeting.id, selectedDate, selectedTime, location, combinedDate);
+        await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp);
+
+        //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
         
         // Handle other operations as needed (e.g., notification)
         //NotificationService.handleAddNewNotification(meeting.groupName, content, "Meeting Updated", serverTimestamp());
       
         // Navigate back to the UpComingMeetings screen
-        navigation.replace("UpComingMeetings");
+        navigation.replace("Meeting");
       } catch (error) {
         alert(error.message);
       }
@@ -402,35 +364,21 @@ const EditMeetingScreen = ({ route }) => {
               <AntDesign name="back" size={30} color="black" />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { showDatePicker()}} style={[styles.button, styles.buttonOutline, styles.dateButtom]}>
-              <Text>{selectedDate}</Text>
-            </TouchableOpacity>
-  
-            <TouchableOpacity onPress={() => { showTimePicker()}} style={[styles.button, styles.buttonOutline, styles.timeButtom]}>
-              <Text>{selectedTime}</Text>
-            </TouchableOpacity>
-  
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              minimumDate={new Date()} // Set minimum date to today
-              onConfirm={handleDateConfirm}
-              onCancel={hideDatePicker}
+            <DatePickerWithTime
+              date={selectedDate}
+              setDate={setSelectedDate}
+              time={selectedTime}
+              setTime={setSelectedTime}
             />
-  
-            <DateTimePickerModal
-              isVisible={isTimePickerVisible}
-              mode="time"
-              onConfirm={handleTimeConfirm}
-              onCancel={hideTimePicker}
-            />
-  
-            <TextInput
-              placeholder="Location"
-              value={location}
-              onChangeText={(text) => setLocation(text)}
-              style={styles.input}
-            />
+
+            <View style={styles.LocationTextInputContainer}>
+              <TextInput
+                placeholder="Location"
+                value={location}
+                onChangeText={(text) => setLocation(text)}
+                style={styles.input}
+              />
+            </View>
           </View>
   
           <View style={styles.buttonContainer}>
@@ -467,7 +415,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", // Use absolute positioning
-    top: -140, // Align to the bottom
+    top: -250, // Align to the bottom
     left: -40, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
@@ -475,6 +423,11 @@ const styles = StyleSheet.create({
   backButtonText: {
     alignSelf: "center",
     color: "white",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
     width: "80%",
@@ -485,14 +438,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    borderColor: "black",
+    borderColor: "#0782F9",
     borderWidth: 2,
+  },
+  LocationTextInputContainer:{
+    bottom: -150,
   },
   buttonContainer: {
     width: "60%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
+    bottom: -180,
   },
   button: {
     backgroundColor: "#0782F9",
@@ -504,51 +461,20 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "black",
+    borderColor: "#0782F9",
     borderWidth: 2,
   },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
   buttonOutlineText: {
-    color: "black",
+    color: "#0782F9",
     fontWeight: "700",
     fontSize: 16,
   },
-  //###############################
   backgroundImage: {
     flex: 1,
     width: "100%",
     height: "100%",
     justifyContent: "center",
-    // alignItems: 'center',
   },
-  //###############################
-  dateButtom: {
-    backgroundColor: "white",
-    width: '80%',
-    height: 50,
-    borderWidth: 0.5,
-    borderRadius: 20,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  timeButtom: {
-    backgroundColor: "white",
-    width: '80%',
-    height: 50,
-    borderWidth: 0.5,
-    borderRadius: 20,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50,
-  }
 
 
 });
