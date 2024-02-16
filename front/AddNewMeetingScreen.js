@@ -347,15 +347,15 @@ const AddNewMeetingScreen = ({ route }) => {
   };
 
   const handleDateConfirm = (selectedDate) => {
-    const dt= new Date(selectedDate);
-    const dateAlone = dt.toLocaleDateString();
+    // const dt= new Date(selectedDate);
+    const dateAlone = selectedDate.toLocaleDateString();
     const splitDate = dateAlone.split('.');
     const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
     return correctFormatDate;
   };
   
   const handleTimeConfirm = (selectedTime) => {
-    const dt= new Date(selectedTime);
+    // const dt= new Date(selectedTime);
     const timeAlone = selectedTime.toLocaleTimeString();
     const splitTime = timeAlone.split(':');
     const correctFormatTime = splitTime[0] + ':' + splitTime[1];

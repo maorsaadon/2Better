@@ -23,13 +23,15 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
     const [selectedStringDate, setSelectedStringDate] = useState("select Date");
     const [selectedStringTime, setSelectedStringTime] = useState("select time");
 
-    const handleChange = (event, selectedDate) => {
+    const handleChangeAndroid = (event, selectedDate) => {
         setShow(false);
         setDate(selectedDate);
 
         const dateAlone = selectedDate.toLocaleDateString();
+        console.log(dateAlone);
         const splitDate = dateAlone.split('.');
         const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
+        console.log(correctFormatDate);
         setSelectedStringDate(correctFormatDate);
     }
 
@@ -42,6 +44,14 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
 
         setSelectedStringTime(selectedTime.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' }));
     }
+
+    const handleChangeIphone = (event, selectedDate) => {
+      setShow(false);
+      setDate(selectedDate);
+
+      const dateAlone = selectedDate.toLocaleDateString();
+      setSelectedStringDate(dateAlone);
+  }
 
     const renderAndroid = () => 
     <View style={styles.container}>
@@ -56,7 +66,7 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
                 value={date}
                 minimumDate={minimumDate}
                 display='default'
-                onChange={handleChange}
+                onChange={handleChangeAndroid}
             />}
             <TouchableOpacity onPress={() => setShowTime(true)} style={[styles.button, styles.buttonOutline, styles.timeButtom]}>
                 {/* <View style={[styles.button, styles.buttonOutline, styles.timeButtom]}> */}
@@ -68,15 +78,26 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
     </View>
 
     const renderIOS = () =>
-        <DateTimePicker
-            value={date}
-            mode="datetime"
-            is24Hour={true}
-            display="default"
-            onChange={(event, date) => {
-                if (date) setDate(date);
-            }}
-        />
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => setShow(true)} style={[styles.button, styles.buttonOutline, styles.dateButtom]}>
+          <Text>{selectedStringDate}</Text>
+      </TouchableOpacity>
+      {show && (
+          <DateTimePicker
+              mode="date"
+              value={date}
+              minimumDate={minimumDate}
+              display="default"
+              onChange={handleChangeIphone}
+          />
+      )}
+      <TouchableOpacity onPress={() => setShowTime(true)} style={[styles.button, styles.buttonOutline, styles.timeButtom]}>
+          <Text>{selectedStringTime}</Text>
+      </TouchableOpacity>
+      {showTime && (
+          <RNDateTimePicker mode="time" value={time} onChange={handleTimeChange} is24Hour={true} />
+      )}
+    </View>
 
     return isIphone ? renderIOS() : renderAndroid();
 }

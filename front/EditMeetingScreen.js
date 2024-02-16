@@ -282,6 +282,7 @@ import {
   ImageBackground,
   Button,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import myLogoPic from "../assets/default.png";
 import MeetingService from "../back/MeetingService";
@@ -302,6 +303,7 @@ const EditMeetingScreen = ({ route }) => {
   // const [selectedDate, setSelectedDate] = useState(meeting.Date);
   // const [selectedTime, setSelectedTime] = useState(meeting.Time);
 
+  const isIphone = Platform.OS === 'ios';
 
   const navigation = useNavigation();
 
@@ -329,12 +331,27 @@ const EditMeetingScreen = ({ route }) => {
     return correctFormatTime;
   };
 
+  const handleDateConfirmIphone = (selectedDate) => {
+    const dt= new Date(selectedDate);
+    const dateAlone = dt.toLocaleDateString();
+    console.log(dateAlone);
+    return dateAlone;
+  };
+
   const handleEditButton = async () => {
       try {
-
-        // string of date and time
-        const stringDate = handleDateConfirm(selectedDate);
-        const stringTime = handleTimeConfirm(selectedTime);
+        let stringDate;
+        let stringTime;
+        if(isIphone){
+          // string of date and time
+          stringDate = handleDateConfirmIphone(selectedDate);
+          stringTime = handleTimeConfirm(selectedTime);
+        }
+        else{
+          // string of date and time
+          stringDate = handleDateConfirm(selectedDate);
+          stringTime = handleTimeConfirm(selectedTime);
+        }
     
         // timestamp
         const combinedDateTimestamp = new Date(selectedDate);
