@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute",
-    top: 10,
+    top: 40,
     left: -15,
   },
   dropContainer: {

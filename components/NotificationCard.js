@@ -48,7 +48,7 @@ const NotificationCard = ({ notification }) => {
   }
 
   const handleAcceptButton = () => {
-    const acceptContent = `Your request to join ${groupName} has been accepted`
+    const acceptContent = `You are now a group member in ${groupName} `
     try {
       GroupService.handleJoinGroup(false, groupName, from);
       NotificationService.handleAddNewNotification(groupName, acceptContent, "Request accepted", serverTimestamp(), auth.currentUser.email, from);

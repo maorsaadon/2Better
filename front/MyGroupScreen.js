@@ -62,7 +62,7 @@ const MyGroupsScreen = () => {
           onPress={() => setIsManagerView(true)}
           style={[
             styles.toggleButton,
-            isManagerView && styles.toggleButtonActive,
+            !isManagerView && styles.toggleButtonActive,
           ]}
         >
           <Text style={styles.buttonText}>MY GROUP AS</Text>
@@ -72,7 +72,7 @@ const MyGroupsScreen = () => {
           onPress={() => setIsManagerView(false)}
           style={[
             styles.toggleButton,
-            !isManagerView && styles.toggleButtonActive,
+            isManagerView && styles.toggleButtonActive,
           ]}
         >
           <Text style={styles.buttonText}>MY GROUP AS</Text>

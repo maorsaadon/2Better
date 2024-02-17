@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Text
 } from "react-native";
 import {Entypo, FontAwesome } from "@expo/vector-icons";
 import { auth } from "../back/firebase";
@@ -18,7 +19,7 @@ const HomeScreen = () => {
 
   const navigation = useNavigation();
   const [userNotificationCounter, setNotificationCounter] = useState(0);
-  console.log(`NotificationCounter = ${userNotificationCounter}`);
+  // console.log(`NotificationCounter = ${userNotificationCounter}`);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +62,13 @@ const HomeScreen = () => {
 
         <TouchableOpacity onPress={handleNotifications} style={stylesHome.notificationBotton}>
           <Entypo name="bell" size={30} color="black" />
+
+              {/* Badge view */}
+              {userNotificationCounter > 0 && (
+            <View style={stylesHome.badge}>
+              <Text style={stylesHome.badgeText}>{userNotificationCounter}</Text>
+            </View>
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleMyProfile} style={stylesHome.profileButton}>
@@ -100,7 +108,22 @@ const stylesHome = StyleSheet.create({
     marginTop: 0,
     marginLeft: 280,
     borderRadius: 50,
-  }
+  },
+  badge: {
+    position: 'absolute',
+    top: 20, // Move it down a bit
+    right: -10, // Move it to the left a bit
+    backgroundColor: 'red',
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: 'white', // Number color
+    fontWeight: 'bold',
+  },
 })
 
     // const fetchData = async () => {

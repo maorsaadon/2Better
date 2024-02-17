@@ -145,8 +145,6 @@ export const NotificationService = {
           const docRef = doc.ref; // Get the DocumentReference
           docRef.update({ // Update the document
             Handled: handled
-          }).then(() => {
-            console.log(`Notification ${doc.id} 'Handled' field updated successfully`);
           }).catch((error) => {
             console.error(`Error updating Notification ${doc.id} 'Handled' field: `, error);
           });
@@ -173,8 +171,6 @@ export const NotificationService = {
           const docRef = doc.ref; // Get the DocumentReference
           docRef.update({ // Update the document
             RequestAnswer: requestAnswer
-          }).then(() => {
-            console.log(`Notification ${doc.id} 'RequestAnswer' field updated successfully`);
           }).catch((error) => {
             console.error(`Error updating Notification ${doc.id} 'RequestAnswer' field: `, error);
           });

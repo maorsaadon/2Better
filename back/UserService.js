@@ -134,7 +134,7 @@ export const UserService = {
         NotificationCounter: counter,
       });
 
-      console.log("User NotificationCounter updated successfully");
+      // console.log("User NotificationCounter updated successfully");
     } catch (error) {
       console.error("Error updating user NotificationCounter: ", error);
     }

@@ -16,6 +16,8 @@ import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import NotificationCard from "../components/NotificationCard";
 import { AntDesign } from "@expo/vector-icons";
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from "../back/firebase";
 
 const NotificationsScreen = () => {
   //Aviv's Edit:
@@ -23,35 +25,33 @@ const NotificationsScreen = () => {
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [latestNotification, setLatestNotification] = useState(null);
+  const slideAnim = useRef(new Animated.Value(-100)).current; // Initial position off-screen
 
-  // const [showNotification, setShowNotification] = useState(false);
-  // const notificationHeight = useRef(new Animated.Value(-100)).current; // Start off-screen
+  const slideNotification = () => {
+    // Slide in
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      // Stay visible for 2 seconds then slide out
+      setTimeout(() => {
+        Animated.timing(slideAnim, {
+          toValue: -100,
+          duration: 500,
+          useNativeDriver: true,
+        }).start();
+      }, 6000);
+    });
+  };
 
-  // const triggerNotification = () => {
-  //   // Show the notification
-  //   setShowNotification(true);
-  //   // Start the animation
-  //   Animated.timing(notificationHeight, {
-  //     toValue: 0, // Slide down to just within the top of the screen
-  //     duration: 500, // Duration of the animation in milliseconds
-  //     useNativeDriver: true,
-  //   }).start(() => {
-  //     // After a delay, slide the notification back up
-  //     setTimeout(() => {
-  //       Animated.timing(notificationHeight, {
-  //         toValue: -100, // Slide back up off-screen
-  //         duration: 500, // Duration of the animation in milliseconds
-  //         useNativeDriver: true,
-  //       }).start(() => {
-  //         setShowNotification(false); // Hide the notification
-  //       });
-  //     }, 3000); // Time before the notification slides back up
-  //   });
-  // };
-
-  
   // Fetch user notifications when the component is mounted
   useEffect(() => {
+    // if (latestNotification) {
+    //   slideNotification();
+    // }
+
     const fetchNotifications = async () => {
       try {
         const userNotifications = await NotificationService.getUserNotifications();
@@ -67,8 +67,40 @@ const NotificationsScreen = () => {
       }
     };
 
+    // const unsubscribe = db.collection('Notifications')
+    //   .where('Addressee', '==', auth.currentUser.email)
+    //   .onSnapshot(snapshot => {
+    //     const updatedNotifications = snapshot.docs.map(doc => ({
+    //       id: doc.id,
+    //       ...doc.data()
+    //     }));
+    //     setNotifications(updatedNotifications);
+    //     new Promise(resolve => setTimeout(resolve, 1000));
+    //     setLatestNotification(notifications[notifications.length-1])
+    //   });
+    
+
     fetchNotifications();
-  }, []);
+    return () => unsubscribe();
+  }, [latestNotification]);
+
+  const pressedNotification = (notification) => {
+    if(notification.Type === "New Meeting"){
+      try {
+        navigation.navigate('Home', { screen: 'Meetings' });
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    if(notification.Type === "Request accepted"){
+      try {
+        navigation.navigate('Home', { screen: 'My Groups' });
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+ }
 
   const backButton = () => {
     try {
@@ -79,42 +111,50 @@ const NotificationsScreen = () => {
   };
 
   return (
-    // <View style={{ flex: 1 }}>
-    //   {showNotification && (
-    //     <Animated.View
-    //       style={{
-    //         position: 'absolute',
-    //         top: notificationHeight, // Animated
-    //         left: 0,
-    //         right: 0,
-    //         // ... other styles for your notification ...
-    //       }}
-    //     >
-    //     {notifications.slice().reverse().map((notification) => (
-    //     <NotificationCard key={0} notification={notification} />
-    //     ))}
-    //     </Animated.View>
-    //   )}
+      <View style={{ flex: 1 }}>
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
-        <AntDesign name="back" size={30} color="black" />
-      </TouchableOpacity>
-      
-      {isLoading ? (
-          <ActivityIndicator size="large" color="black" />
-        ) : (
-          <ScrollView>
-            <View style={styles.container}>
-              {notifications.slice().reverse().map((notification, index) => (
-                <NotificationCard key={index} notification={notification} />
-              ))}
-            </View>
-          </ScrollView>
-        )}
+        <View style={styles.container}>
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
+        
+        {isLoading ? (
+            <ActivityIndicator size="large" color="black" />
+          ) : (
+            <ScrollView>
+              <View style={styles.container}>
+                {notifications.slice().reverse().map((notification, index) => (
+                <TouchableOpacity onPress={() => pressedNotification(notification)}>
+                    <NotificationCard key={index} notification={notification} />
+                </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+          )}
+          </View>
+      </ImageBackground>
+      <Animated.View
+        style={{
+          transform: [{ translateY: slideAnim }],
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 50, // Adjust as needed
+          backgroundColor: 'blue', // Customize
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+          <View style={styles.container}>
+            {latestNotification?(
+            <TouchableOpacity onPress={() => pressedNotification(notifications[notifications.length - 1])}>
+                <NotificationCard notification={notifications[notifications.length - 1]} />
+            </TouchableOpacity>
+          ):null}
         </View>
-    </ImageBackground>
-  // </View>
+      </Animated.View>
+  </View>
   );
 };
 
@@ -155,7 +195,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", // Use absolute positioning
-    top: -45, // Align to the bottom
+    top: -15, // Align to the bottom
     left: -18, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
