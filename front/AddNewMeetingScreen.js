@@ -349,21 +349,36 @@ const AddNewMeetingScreen = ({ route }) => {
     }
   };
 
-  const handleDateConfirm = (selectedDate) => {
-    // const dt= new Date(selectedDate);
-    const dateAlone = selectedDate.toLocaleDateString();
-    const splitDate = dateAlone.split('.');
-    const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
-    return correctFormatDate;
+  // Function to return the date alone
+  function getDateFromTimestamp(timestamp) {
+    const date = timestamp.toISOString().split('T')[0].split("-");
+    const correctDate = date[2] + "/" + date[1] + "/" + date[0];
+    return correctDate;
   };
+
+  // Function to return the time alone
+  function getTimeFromTimestamp(timestamp) {
+    const time = timestamp.toTimeString().split(' ')[0].split(':');
+    const correctTime = time[0] + ":" + time[1];
+    return correctTime;
+  };
+
+  // const handleDateConfirm = (selectedDate) => {
+  //   // const dt= new Date(selectedDate);
+  //   console.log(selectedDate);
+  //   const dateAlone = selectedDate.toLocaleDateString();
+  //   const splitDate = dateAlone.split('.');
+  //   const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
+  //   return correctFormatDate;
+  // };
   
-  const handleTimeConfirm = (selectedTime) => {
-    // const dt= new Date(selectedTime);
-    const timeAlone = selectedTime.toLocaleTimeString();
-    const splitTime = timeAlone.split(':');
-    const correctFormatTime = splitTime[0] + ':' + splitTime[1];
-    return correctFormatTime;
-  };
+  // const handleTimeConfirm = (selectedTime) => {
+  //   // const dt= new Date(selectedTime);
+  //   const timeAlone = selectedTime.toLocaleTimeString();
+  //   const splitTime = timeAlone.split(':');
+  //   const correctFormatTime = splitTime[0] + ':' + splitTime[1];
+  //   return correctFormatTime;
+  // };
 
   const handleDateConfirmIphone = (selectedDate) => {
     // const dt= new Date(selectedDate);
@@ -377,20 +392,23 @@ const AddNewMeetingScreen = ({ route }) => {
       let stringDate;
       let stringTime;
 
-      if(isIphone){
-        // string of date and time
-        stringDate = handleDateConfirmIphone(selectedDate);
-        stringTime = handleTimeConfirm(selectedTime);
-      }
-      else{
-        // string of date and time
-        stringDate = handleDateConfirm(selectedDate);
-        stringTime = handleTimeConfirm(selectedTime);
-      }
+      // if(isIphone){
+      //   // string of date and time
+      //   stringDate = handleDateConfirmIphone(selectedDate);
+      //   stringTime = handleTimeConfirm(selectedTime);
+      // }
+      // else{
+      //   // string of date and time
+      //   stringDate = handleDateConfirm(selectedDate);
+      //   stringTime = handleTimeConfirm(selectedTime);
+      // }
   
       // timestamp
       const combinedDateTimestamp = new Date(selectedDate);
       combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
+
+      stringDate = getDateFromTimestamp(combinedDateTimestamp);
+      stringTime = getTimeFromTimestamp(combinedDateTimestamp);
   
       MeetingService.handleAddNewMeeting(groupName, location, stringDate, stringTime, combinedDateTimestamp);
 
