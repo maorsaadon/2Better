@@ -66,13 +66,6 @@ const getSportIcon = (sportType) => {
     return null; // Return null if no icon is found
 };
 
-const handleJoinPress = () =>{
-    setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
-    setCurrentParticipants(currentParticipants+1);
-    MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
-    console.log("Click on Join Meeting!");
-};
-
 const handleCancelPress = () =>{
     setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
     setCurrentParticipants(currentParticipants-1);
@@ -131,15 +124,9 @@ return (
         <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={styles.cardBottomRow}>
-        {!isUserInMeeting  ? ( // Only show if isUserInMeeting is false
-          <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
-            <Text style={styles.buttonText}>Join Meeting</Text>
-          </TouchableOpacity>
-        ) : ( // Only show if hasJoined is true
           <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
             <Text style={styles.buttonText}>Cancel Meeting</Text>
           </TouchableOpacity>
-        )}
         
         {meeting.IsLeader ? (
         <TouchableOpacity style={styles.button} onPress={handleEditPress}>
@@ -232,14 +219,7 @@ subTitle: {
 },
 button: {
     backgroundColor: "black",
-    width: 110,
-    paddingVertical: 10,
-    borderRadius: 10,
-    opacity: 1,
-},
-deleteButton: {
-    backgroundColor: "red",
-    width: 100,
+    width: 120,
     paddingVertical: 10,
     borderRadius: 10,
     opacity: 1,

@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
+    Alert,
     } from "react-native";
     import {
     AntDesign,
@@ -66,10 +67,11 @@ import {
     };
     
     const handleJoinPress = () =>{
-        setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
-        setCurrentParticipants(currentParticipants+1);
-        MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
-        console.log("Click on Join Meeting!");
+        Alert.alert("This is only a request, please wait to approve");
+        // setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
+        // setCurrentParticipants(currentParticipants+1);
+        // MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
+        // console.log("Click on Join Meeting!");
     };
     
     const handleCancelPress = () =>{
@@ -122,17 +124,10 @@ import {
             <View style={styles.cardBottomRow}>
             {!isUserInMeeting  ? ( // Only show if isUserInMeeting is false
               <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
-                <Text style={styles.buttonText}>Join Meeting</Text>
+                <Text style={styles.buttonText}>Join</Text>
               </TouchableOpacity>
             ) : ( // Only show if hasJoined is true
                 <Text/>
-            )}
-            
-            {meeting.IsLeader ? (
-            <TouchableOpacity style={styles.button} onPress={handleEditPress}>
-                <Text style={styles.buttonText}>Edit</Text>
-            </TouchableOpacity>
-          ) : ( <Text/>
             )}
             </View>
         </View>
@@ -211,7 +206,7 @@ import {
         color: "gray",
     },
     button: {
-        backgroundColor: "black",
+        backgroundColor: "#366A68",
         width: 120,
         paddingVertical: 10,
         borderRadius: 10,

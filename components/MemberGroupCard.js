@@ -114,19 +114,18 @@ const styles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: 'rgba(233, 241, 233, 0.7)', 
-    borderRadius: 15, 
-    marginVertical: 8,
-    marginHorizontal: 16,
-    padding: 16, 
-    shadowColor: "#000", 
-    shadowOffset: { width: 0, height: 1 }, 
-    shadowOpacity: 0.22, 
-    shadowRadius: 2.22,
-    elevation: 3, 
-    borderWidth: 1,
+    backgroundColor: "#E9F1E9", // Assuming a white card background
+    borderRadius: 15, // Rounded corners
+    marginVertical: 8, // Adds vertical space between items
+    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
+    padding: 16, // Internal spacing between the border and content
+    shadowColor: "#000", // Shadow color
+    shadowOffset: { width: 0, height: 1 }, // Shadow position
+    shadowOpacity: 0.22, // Shadow opacity
+    shadowRadius: 2.22, // Shadow blur radius
+    elevation: 3, // Elevation for Android
+    borderWidth: 1, // Border width
     borderColor: "#E0E0E0",
-    gap: 10,
   },
   cardTopRow: {
     marginTop: 0, 

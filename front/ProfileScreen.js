@@ -88,7 +88,7 @@ const ProfileScreen = () => {
       await UserService.deleteUserAccount();
 
       // Navigate to the login screen or any other desired screen after account deletion
-      navigation.replace("Login");
+      navigation.replace("Entry");
     } catch (error) {
       console.error("Error deleting account:", error);
     }
@@ -97,19 +97,21 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
 
-  const backButton = () => {
-    try {
-      navigation.replace("Home");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  const logOutTo =() => {
+    auth
+    .signOut()
+    .then(() => {
+      navigation.replace("Entry");
+      console.log("Log Out From User");
+    })
+    .catch((error) => alert(error.message));
+  }
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={backButton} style={styles.button}>
-          <AntDesign name="back" size={30} color="black" />
+        <TouchableOpacity onPress={logOutTo} style={styles.buttonLogOut}>
+          <Entypo name="log-out" size={30} color="black" />
         </TouchableOpacity>
         <View
           style={{

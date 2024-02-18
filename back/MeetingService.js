@@ -149,6 +149,7 @@ export const MeetingService = {
       for (const group of leaderGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
                                           .where('GroupName', '==', group.groupName)
+                                          // .where('Members', 'array-contains', userEmail)
                                           .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
@@ -257,7 +258,7 @@ export const MeetingService = {
   },
 
   async functionToHomeScreen() {
-    let leaderMeetings = [];
+    let homeMeetings = [];
     let leaderGroupNames = [];
     const userEmail = auth.currentUser.email;
 
@@ -268,13 +269,9 @@ export const MeetingService = {
       var isLeader2 = 0;
       groupsSnapshot.forEach(doc => {
         const group = doc.data();
-        if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
+        if (group.LeaderEmail !== userEmail) {
           // User is a member but not the leader
           isLeader2 = 0;
-          leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
-        } else if (group.LeaderEmail === userEmail) {
-          // User is the leader
-          isLeader2 = 1;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         }
       });
@@ -287,17 +284,17 @@ export const MeetingService = {
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
           if(!meetingData.Members.includes(auth.currentUser.email)){
-            leaderMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, IsLeader: group.isLeader,   id: doc.id });
+            homeMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, IsLeader: group.isLeader,   id: doc.id });
           }
           });
       }
-      // Sort leaderMeetings by Timestamp
-      leaderMeetings.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
+      // Sort homeMeetings by Timestamp
+      homeMeetings.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
     } catch (error) {
       console.error("Error fetching meetings by user role: ", error);
     }
     
-    return { leaderMeetings };
+    return { homeMeetings };
     
   },
 

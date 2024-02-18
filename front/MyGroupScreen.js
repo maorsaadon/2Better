@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#366A68",
     paddingVertical: 10,
     borderBottomWidth: 2, // Add underline to indicate this part can be tapped
-    borderBottomColor: "black", // Make the underline transparent initially
+    borderBottomColor: "#366A68", // Make the underline transparent initially
     alignItems: "center",
     justifyContent: "center",
   },
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#366A68",
     paddingVertical: 10,
     borderBottomWidth: 2, // Add underline to indicate this part can be tapped
-    borderBottomColor: "black", // Make the underline transparent initially
+    borderBottomColor: "#366A68", // Make the underline transparent initially
     alignItems: "center",
     justifyContent: "center",
   },
