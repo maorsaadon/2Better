@@ -374,6 +374,11 @@ const EditMeetingScreen = ({ route }) => {
       }
   };
 
+  const handleMembersListButton = () => {
+    console.log("Click on members list");
+    navigation.navigate("MeetingMembersList" , {meeting} );
+  };
+
   return (
       <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
         <SafeAreaView style={styles.safeArea} behavior="padding">
@@ -399,10 +404,16 @@ const EditMeetingScreen = ({ route }) => {
               />
             </View>
           </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleMembersListButton} style={[styles.button, styles.buttonOutline]}>
+              <Text style={styles.buttonOutlineText}>Members list</Text>
+            </TouchableOpacity>
+          </View>
   
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleEditButton} style={[styles.button, styles.buttonOutline]}>
-              <Text style={styles.buttonOutlineText}>Edit</Text>
+              <Text style={styles.buttonOutlineText}>Save</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>

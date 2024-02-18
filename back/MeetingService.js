@@ -301,6 +301,39 @@ export const MeetingService = {
     
   },
 
+  async  getMembers(MeetingID) {
+    const groupRef = db.collection("Meetings").doc(MeetingID);
+    try {
+        const doc = await groupRef.get();
+        if (doc.exists) {
+            const groupData = doc.data();
+            return groupData.Members || []; // Returns an empty array if no Members field exists
+        } else {
+            console.log("No such group!");
+            return []; // Returns an empty array if the group does not exist
+        }
+    } catch (error) {
+        console.error("Error getting group members: ", error);
+        throw error; // Rethrow or handle error as needed
+    }
+},
+
+async getMemberDetails(email) {
+  try {
+    const snapshot = await db.collection("Users").doc(email).get();
+    if (snapshot.exists) {
+      const userData = snapshot.data();
+      return userData; // Return the member details
+    } else {
+      console.log("No such document!");
+      return null; // Return null if the document does not exist
+    }
+  } catch (error) {
+    console.error("Error fetching user details: ", error);
+    throw error; // Throw the error to be caught in the calling function
+  }
+},
+
 };
 
 export default MeetingService;

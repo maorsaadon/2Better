@@ -67,6 +67,7 @@ import AddNewGroupScreen from "./front/AddNewGroupScreen";
 import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
+import MeetingMembersListScreen from "./front/MeetingMembersList";
 
 import UserService from "./back/UserService";
 
@@ -90,6 +91,7 @@ const MeetingStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Meeting" component={UpcomingMeetingScreen} />
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
+      <Stack.Screen name="MeetingMembersList" component={MeetingMembersListScreen} />
     </Stack.Navigator>
   );
 };

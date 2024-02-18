@@ -25,6 +25,7 @@ import { auth } from "../back/firebase";
 import React, { useEffect, useState } from "react";
 import MeetingService from '../back/MeetingService';
 import { useNavigation } from '@react-navigation/core';
+import GroupService from "../back/GroupService";
 
 
 const screenWidth = Dimensions.get("window").width;
@@ -84,6 +85,16 @@ const handleEditPress = () =>{
     navigation.replace("EditMeeting", {meeting});
 };
 
+const handleDeletePress = () =>{
+
+    // GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
+
+    // MeetingService.handleDeleteMeeting(meeting.id);
+
+    // console.log('Click on Delete!');
+    
+};
+
 return (
     <SafeAreaView>
     <View style={styles.card}>
@@ -133,6 +144,13 @@ return (
         {meeting.IsLeader ? (
         <TouchableOpacity style={styles.button} onPress={handleEditPress}>
             <Text style={styles.buttonText}>Edit</Text>
+        </TouchableOpacity>
+      ) : ( <Text/>
+        )}
+
+        {meeting.IsLeader ? (
+        <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
+            <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
       ) : ( <Text/>
         )}
@@ -214,7 +232,14 @@ subTitle: {
 },
 button: {
     backgroundColor: "black",
-    width: 120,
+    width: 110,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
+},
+deleteButton: {
+    backgroundColor: "red",
+    width: 100,
     paddingVertical: 10,
     borderRadius: 10,
     opacity: 1,
