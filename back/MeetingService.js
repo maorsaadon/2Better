@@ -269,13 +269,9 @@ export const MeetingService = {
       var isLeader2 = 0;
       groupsSnapshot.forEach(doc => {
         const group = doc.data();
-        if (group.Members.includes(userEmail) && group.LeaderEmail !== userEmail) {
+        if (group.LeaderEmail !== userEmail) {
           // User is a member but not the leader
           isLeader2 = 0;
-          leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
-        } else if (group.LeaderEmail === userEmail) {
-          // User is the leader
-          isLeader2 = 1;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         }
       });

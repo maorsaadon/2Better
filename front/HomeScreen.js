@@ -80,6 +80,9 @@ const HomeScreen = () => {
           )}
         </TouchableOpacity>
 
+        <Text style={stylesHome.buttonText}>Let`s find a new activity</Text>
+      </View>
+      <View style={stylesHome.scrollContainer}>
         {isLoading ? (
           <ActivityIndicator size="large" color="black" />
         ) : (
@@ -103,8 +106,9 @@ const stylesHome = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 600,
+    marginTop: 20,
   },
+
   // backgroundImage: {
   //   flex: 1,
   //   width: "100%",
@@ -131,7 +135,7 @@ const stylesHome = StyleSheet.create({
     position: "absolute",
     top: 20,
     right: -10,
-    backgroundColor: "red",
+    backgroundColor: "#8B1B1B",
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -146,7 +150,7 @@ const stylesHome = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start", // Align items at the top
     alignItems: "center",
-    paddingTop: 40, // Add padding to give some space at the top
+    paddingTop: 30, // Add padding to give some space at the top
     flexDirection: "column",
     gap: 35,
   },
@@ -228,5 +232,12 @@ const stylesHome = StyleSheet.create({
     width: 70, // Adjust the width as needed
     height: 70, // Adjust the height as needed
     resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "black",
+    fontSize: 20,
+    marginLeft: 40,
+    marginTop:30 , 
   },
 });
