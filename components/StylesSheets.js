@@ -9,14 +9,14 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginLeft: 20,
   },
-  button: {
+  buttonLogOut: {
     width: "20%",
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", // Use absolute positioning
     top: 50, // Align to the bottom
-    left: -38, // Align to the left
+    left: 300, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
   },
