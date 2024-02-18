@@ -329,7 +329,9 @@ const EditMeetingScreen = ({ route }) => {
         stringDate = await MeetingService.getDateFromTimestamp(combinedDateTimestamp);
         stringTime = await MeetingService.getTimeFromTimestamp(combinedDateTimestamp);
     
-        MeetingService.handleAddNewMeeting(groupName, location, stringDate, stringTime, combinedDateTimestamp);
+        // Update the meeting details
+        await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp);
+
 
         //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
         
