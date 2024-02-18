@@ -219,7 +219,7 @@ subTitle: {
 },
 button: {
     backgroundColor: "black",
-    width: 120,
+    width: 110,
     paddingVertical: 10,
     borderRadius: 10,
     opacity: 1,
@@ -227,6 +227,13 @@ button: {
 buttonText: {
     alignSelf: "center",
     color: "white",
+},
+deleteButton: {
+    backgroundColor: "red",
+    width: 100,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
 },
 participantContainer: {
     flexDirection: "row",
