@@ -186,29 +186,10 @@ const UpcomingMeetingsScreen = () => {
   const [leaderMeetings, setLeaderMeetings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-    
-    // useEffect(() => {
-    //   const fetchMeetings = async () => {
-    //     const {leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
-    //     setLeaderMeetings(leaderMeetings);
-    //   };
-    //   // try{
-    //   //   fetchMeetings();
-    //   // }
-    //   // catch (error) {
-    //   //   console.error("Error fetching Meetings:", error);
-    //   // } finally {
-    //   //   setIsLoading(false);
-    //   // }
-    //   fetchMeetings();
-    //   setIsLoading(false);
-    // }, []);
-
     useEffect(() => {
       const fetchMeetings = async () => {
         try {
           const { leaderMeetings } = await MeetingService.fetchMeetingsByUserRole();
-          // const { leaderMeetings } = await MeetingService.functionToHomeScreen();
           setLeaderMeetings(leaderMeetings);
         } catch (error) {
           console.error("Error fetching Meetings:", error);
