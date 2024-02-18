@@ -315,52 +315,21 @@ const EditMeetingScreen = ({ route }) => {
       }
   };
 
-  const handleDateConfirm = (selectedDate) => {
-    // const dt= new Date(selectedDate);
-    const dateAlone = selectedDate.toLocaleDateString();
-    const splitDate = dateAlone.split('.');
-    const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
-    return correctFormatDate;
-  };
-  
-  const handleTimeConfirm = (selectedTime) => {
-    // const dt= new Date(selectedTime);
-    const timeAlone = selectedTime.toLocaleTimeString();
-    const splitTime = timeAlone.split(':');
-    const correctFormatTime = splitTime[0] + ':' + splitTime[1];
-    return correctFormatTime;
-  };
-
-  const handleDateConfirmIphone = (selectedDate) => {
-    // const dt= new Date(selectedDate);
-    const dateAlone = selectedDate.toLocaleDateString();
-    console.log(dateAlone);
-    return dateAlone;
-  };
-
   const handleEditButton = async () => {
       try {
 
         let stringDate;
         let stringTime;
-        
-        if(isIphone){
-          // string of date and time
-          stringDate = handleDateConfirmIphone(selectedDate);
-          stringTime = handleTimeConfirm(selectedTime);
-        }
-        else{
-          // string of date and time
-          stringDate = handleDateConfirm(selectedDate);
-          stringTime = handleTimeConfirm(selectedTime);
-        }
     
         // timestamp
         const combinedDateTimestamp = new Date(selectedDate);
         combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
 
-        // Update the meeting details
-        await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp);
+      // Await the asynchronous functions
+        stringDate = await MeetingService.getDateFromTimestamp(combinedDateTimestamp);
+        stringTime = await MeetingService.getTimeFromTimestamp(combinedDateTimestamp);
+    
+        MeetingService.handleAddNewMeeting(groupName, location, stringDate, stringTime, combinedDateTimestamp);
 
         //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
         
@@ -406,8 +375,8 @@ const EditMeetingScreen = ({ route }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleMembersListButton} style={[styles.button, styles.buttonOutline]}>
-              <Text style={styles.buttonOutlineText}>Members list</Text>
+            <TouchableOpacity onPress={handleMembersListButton} style={[styles.Memberbutton , styles.MemberButtonOutline ,{ alignSelf: "center" , }]}>
+              <Text style={styles.MemberButtonOutlineText}>Members list</Text>
             </TouchableOpacity>
           </View>
   
@@ -445,7 +414,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", // Use absolute positioning
-    top: -250, // Align to the bottom
+    top: -200, // Align to the bottom
     left: -40, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
@@ -488,11 +457,31 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
+  Memberbutton:{
+    backgroundColor: "white",
+    width: 150,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
+    top: -30,
+  },
+  MemberButtonOutline: {
+    backgroundColor: "white",
+    marginTop: 1,
+    borderColor: "#0782F9",
+    borderWidth: 2,
+  },
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
     borderColor: "#0782F9",
     borderWidth: 2,
+  },
+  MemberButtonOutlineText:{
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
+    alignSelf: 'center',
   },
   buttonOutlineText: {
     color: "#0782F9",

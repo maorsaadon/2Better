@@ -331,6 +331,20 @@ async getMemberDetails(email) {
   }
 },
 
+// Function to return the date alone
+async getDateFromTimestamp(timestamp) {
+  const date = timestamp.toISOString().split('T')[0].split("-");
+  const correctDate = date[2] + "/" + date[1] + "/" + date[0];
+  return correctDate;
+},
+
+// Function to return the time alone
+async getTimeFromTimestamp(timestamp) {
+  const time = timestamp.toTimeString().split(' ')[0].split(':');
+  const correctTime = time[0] + ":" + time[1];
+  return correctTime;
+},
+
 };
 
 export default MeetingService;
