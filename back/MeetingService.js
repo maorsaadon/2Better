@@ -269,21 +269,23 @@ export const MeetingService = {
       var isLeader2 = 0;
       groupsSnapshot.forEach(doc => {
         const group = doc.data();
-        if (group.LeaderEmail !== userEmail) {
+        if (group.LeaderEmail !== userEmail && group.Members.includes(userEmail)) {
           // User is a member but not the leader
           isLeader2 = 0;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         }
       });
 
-            // Fetch meetings for groups where user is the leader
+      // Fetch meetings for groups where user is the leader
       for (const group of leaderGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
                                           .where('GroupName', '==', group.groupName)
                                           .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
-          if(!meetingData.Members.includes(auth.currentUser.email)){
+          const meetingDate = new Date(meetingData.Date);
+          const currentDate = new Date();
+          if(!meetingData.Members.includes(auth.currentUser.email) ){ //&& meetingDate > currentDate}
             homeMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, IsLeader: group.isLeader,   id: doc.id });
           }
           });
