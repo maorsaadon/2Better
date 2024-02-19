@@ -1,5 +1,5 @@
 
-import {StyleSheet} from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const stylesProfile = StyleSheet.create({
   container: {
@@ -65,7 +65,7 @@ const stylesProfile = StyleSheet.create({
     fontSize: 16,
     flexDirection: "row",
     fontSize: 28,
-    marginLeft: 4,
+    marginLeft: 35,
   },
   valueNew: {
     fontSize: 16,
@@ -83,111 +83,111 @@ const stylesProfile = StyleSheet.create({
 });
 const stylesAboutUs = StyleSheet.create({
   containerScroll: {
-      flexDirection: "row",
-      alignItems: "center",
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      top: 100,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    top: 100,
   },
   container1: {
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 150,
-      bottom: 80,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 150,
+    bottom: 80,
   },
   container2: {
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 110,
-      bottom: 80,
-      left: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 110,
+    bottom: 80,
+    left: 20,
   },
   container3: {
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 110,
-      bottom: 80,
-      left: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 110,
+    bottom: 80,
+    left: 10,
   },
   containerEnd: {
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 30,
-      bottom: 80,
-      left: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    bottom: 80,
+    left: 40,
   },
   defualtTopTextEdit: {
-      color: "black",
-      fontWeight: "600",
-      fontStyle: "italic",
-      fontSize: 22,
-      right: 65,
-      bottom: 90,
+    color: "black",
+    fontWeight: "600",
+    fontStyle: "italic",
+    fontSize: 22,
+    right: 65,
+    bottom: 90,
   },
   defualtTopTextEdit3: {
-      color: "black",
-      fontWeight: "600",
-      fontStyle: "italic",
-      fontSize: 22,
-      right: 15,
-      bottom: 90,
+    color: "black",
+    fontWeight: "600",
+    fontStyle: "italic",
+    fontSize: 22,
+    right: 15,
+    bottom: 90,
   },
   topTextEdit: {
-      color: "black",
-      fontWeight: "700",
-      fontSize: 40,
-      right: 70,
-      bottom: 10,
+    color: "black",
+    fontWeight: "700",
+    fontSize: 40,
+    right: 70,
+    bottom: 10,
   },
   defualtTextEdit: {
-      color: "black",
-      fontSize: 16,
-      marginLeft: 40,
-      marginBottom: 140,
-  },    
+    color: "black",
+    fontSize: 16,
+    marginLeft: 40,
+    marginBottom: 140,
+  },
   defualtTextEdit1: {
-      color: "black",
-      fontSize: 16,
-      marginLeft: 30,
-      marginTop: -80,
+    color: "black",
+    fontSize: 16,
+    marginLeft: 30,
+    marginTop: -80,
   },
   defualtTextEdit2: {
-      color: "black",
-      fontSize: 16,
-      marginLeft: 10,
-      marginTop: -80,
+    color: "black",
+    fontSize: 16,
+    marginLeft: 10,
+    marginTop: -80,
   },
   defualtTextEdit3: {
-      color: "black",
-      fontSize: 16,
-      marginLeft: 30,
-      marginTop: -80,
+    color: "black",
+    fontSize: 16,
+    marginLeft: 30,
+    marginTop: -80,
   },
-  endTextEdit:{
-      color: "black",
-      fontSize: 17,
-      fontWeight: "600",
+  endTextEdit: {
+    color: "black",
+    fontSize: 17,
+    fontWeight: "600",
   },
   backgroundImage: {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "center",
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
   },
   backButton: {
-      width: "20%",
-      padding: 10,
-      borderRadius: 10,
-      alignItems: "center",
-      position: "absolute",
-      top: 30,
-      left: -18,
-      marginBottom: 10,
-      marginLeft: 10,
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 30,
+    left: -18,
+    marginBottom: 10,
+    marginLeft: 10,
   },
 });
 const stylesHome = StyleSheet.create({
@@ -225,12 +225,6 @@ const stylesHome = StyleSheet.create({
     marginTop: 10,
     marginBottom: -100,
   },
-  // backgroundImage: {
-  //   flex: 1,
-  //   width: "100%",
-  //   height: "100%",
-  //   justifyContent: "center",
-  // },
   notificationBotton: {
     padding: 10,
     borderRadius: 10,
@@ -369,4 +363,108 @@ const stylesHome = StyleSheet.create({
   },
 });
 
-export {stylesProfile , stylesAboutUs ,stylesHome}
+const screenWidth = Dimensions.get("window").width;
+const stylesHomeCard = StyleSheet.create({
+  cardBottomRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  container: {
+    backgroundColor: "#5B8BDF",
+    alignItems: "center",
+    paddingBottom: 40,
+    paddingTop: 30,
+    gap: 15,
+  },
+  card: {
+    width: screenWidth - 32,
+    marginTop: -30,
+    backgroundColor: "#E9F1E9", // Assuming a white card background
+    borderRadius: 15, // Rounded corners
+    marginVertical: 8, // Adds vertical space between items
+    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
+    padding: 16, // Internal spacing between the border and content
+    shadowColor: "#000", // Shadow color
+    shadowOffset: { width: 0, height: 1 }, // Shadow position
+    shadowOpacity: 0.22, // Shadow opacity
+    shadowRadius: 2.22, // Shadow blur radius
+    elevation: 3, // Elevation for Android
+    borderWidth: 1, // Border width
+    borderColor: "#E0E0E0",
+    //opacity: 0.7, 
+  },
+  cardTopRow: {
+    marginTop: 0, // Adjust as needed to move closer to the top
+    marginLeft: 0, // Adjust as needed for left alignment
+    alignSelf: "flex-start", // Align self to the start of the cross axis
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  cardMiddleRow: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  iconAndTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginLeft: 0,
+  },
+  sportIcon: {
+    width: 30, // Adjust size as needed
+    height: 30, // Adjust size as needed
+    resizeMode: "contain",
+    marginRight: 10, // Add some space between the icon and the text
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 18,
+    alignSelf: "flex-start",
+    marginLeft: 0,
+  },
+  subTitle: {
+    opacity: 0.6,
+    alignSelf: "flex-start",
+    marginLeft: 0,
+    fontSize: 16,
+    color: "gray",
+  },
+  button: {
+    backgroundColor: "#366A68",
+    width: 120,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  participantContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+  },
+  slider: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 10,
+    minimumTrackTintColor: "black",
+    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    thumbTintColor: "white",
+  },
+  participantText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "bold",
+    // Add margin to the left or right to space the text from the slider
+    marginHorizontal: 5,
+  },
+});
+
+
+export { stylesProfile, stylesAboutUs, stylesHome, stylesHomeCard }

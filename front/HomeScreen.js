@@ -24,7 +24,9 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [userNotificationCounter, setNotificationCounter] = useState(0);
   const [homeMeetings, setHomeMeetings] = useState([]);
+  const [homeMeetingsSuggestions, setHomeMeetingsSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingSugg, setIsLoadingSugg] = useState(true);
   // console.log(`NotificationCounter = ${userNotificationCounter}`);
 
   useEffect(() => {
@@ -43,6 +45,8 @@ const HomeScreen = () => {
       try {
         const { homeMeetings } = await MeetingService.functionToHomeScreen();
         setHomeMeetings(homeMeetings);
+        // const { homeMeetingsSuggestions } = await MeetingService.functionToHomeScreenS();
+        // setHomeMeetingsSuggestions(homeMeetingsSuggestions);
       } catch (error) {
         console.error("Error fetching Meetings:", error);
       } finally {
@@ -50,7 +54,20 @@ const HomeScreen = () => {
       }
     };
 
+    const fetchSuggestions = async () => {
+      try {
+        const response = await MeetingService.getSeuggestions(); // Assuming MeetingService.getSeuggestions() returns an object with a key 'homeMeetingsSuggestions'
+        const { homeMeetingsSuggestions } = response;
+        setHomeMeetingsSuggestions(homeMeetingsSuggestions);
+        console.log(homeMeetingsSuggestions)
+      } catch (error) {
+        console.error("Error fetching Meetings:", error);
+      } finally {
+        setIsLoadingSugg(false); // This ensures isLoading is set to false after fetching is done
+      }
+    };
     fetchMeetings();
+    fetchSuggestions();
     fetchData();
     return () => unsubscribe();
   }, []);
@@ -128,13 +145,13 @@ const HomeScreen = () => {
             <Text style={stylesHome.buttonTextPage}>Explore new activities</Text>
           </View>
           <View style={stylesHome.scrollContainer}>
-            {isLoading ? (
+            {isLoadingSugg ? (
               <ActivityIndicator size="large" color="black" />
             ) : (
               <ScrollView horizontal={true} >
                 <View style={stylesHome.scrollContainer}>
-                  {Array.isArray(homeMeetings) &&
-                    homeMeetings.map((meeting, index) => (
+                  {Array.isArray(homeMeetingsSuggestions) &&
+                    homeMeetingsSuggestions.map((meeting, index) => (
                       <HomeCard key={index} meeting={meeting} />
                     ))}
                 </View>

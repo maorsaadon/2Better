@@ -150,7 +150,7 @@ const ProfileScreen = () => {
             <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' , marginRight: 100}}>
           <MaterialIcons name="location-on" size={26} color="black" />
           <Text style={stylesProfile.valueNew}>{userCity}</Text>
 
