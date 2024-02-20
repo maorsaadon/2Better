@@ -355,11 +355,11 @@ const EditMeetingScreen = ({ route }) => {
 
     GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
 
-    // MeetingService.handleDeleteMeeting(meeting.id);
+    MeetingService.handleDeleteMeeting(meeting.id);
 
     console.log('Click on Delete!');
 
-    // navigation.replace("Meeting");
+    navigation.replace("Meeting");
     
   };
 
