@@ -7,7 +7,15 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome5,
+  FontAwesome6,
+  MaterialIcons,
+  FontAwesome,
+  MaterialCommunityIcons,
+  Entypo,
+  } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity, userImageUpload, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
@@ -161,10 +169,18 @@ const ProfileScreen = () => {
           </View> */}
         </View>
         <TouchableOpacity onPress={handleEdit} style={stylesProfile.buttonEdit}>
+          <FontAwesome5 name="user-edit" size={30} color="black" />
           <Text style={stylesProfile.buttonTextEdit}>Edit User</Text>
         </TouchableOpacity>
 
+        <View style={stylesProfile.orContainer}>
+            <View style={stylesProfile.line} />
+              <Text style={stylesProfile.orText}>Or</Text>
+            <View style={stylesProfile.line} />
+          </View>
+
         <TouchableOpacity onPress={handleDelete} style={stylesProfile.buttonDelete}>
+          <AntDesign name="deleteuser" size={30} color="black" />
           <Text style={stylesProfile.buttonText}>Delete Account</Text>
         </TouchableOpacity>
 

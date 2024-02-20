@@ -296,7 +296,7 @@ import GroupService from "../back/GroupService";
 
 
 const EditMeetingScreen = ({ route }) => {
-  const { meeting } = route.params;
+  const { meeting, group } = route.params;
   console.log(meeting);
   const [location, setLocation] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -310,7 +310,7 @@ const EditMeetingScreen = ({ route }) => {
 
   const backButton = () => {
       try {
-        navigation.replace("Meeting");
+        navigation.replace("GroupMeetings" , {group});
       } catch (error) {
         alert(error.message);
       }
@@ -342,8 +342,8 @@ const EditMeetingScreen = ({ route }) => {
         // Handle other operations as needed (e.g., notification)
         //NotificationService.handleAddNewNotification(meeting.groupName, content, "Meeting Updated", serverTimestamp());
       
-        // Navigate back to the UpComingMeetings screen
-        navigation.replace("Meeting");
+        // Navigate back to the MyGroups screen
+        navigation.replace("MyGroups");
       } catch (error) {
         alert(error.message);
       }
@@ -391,24 +391,24 @@ const EditMeetingScreen = ({ route }) => {
               />
             </View>
           </View>
-
-          <View style={styles.buttonContainer}>
-            {/* <TouchableOpacity onPress={handleMembersListButton} style={[styles.Memberbutton , styles.MemberButtonOutline ,{ alignSelf: "center" , }]}>
-              <Text style={styles.MemberButtonOutlineText}>Members list</Text>
-            </TouchableOpacity> */}
-
-            <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
-            <Text style={styles.buttonText}>Delete meeting</Text>
-          </TouchableOpacity>
-          </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleEditButton} style={[styles.button, styles.buttonOutline]}>
               <Text style={styles.buttonOutlineText}>Save</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.orContainer}>
+            <View style={styles.line} />
+              <Text style={styles.orText}>or</Text>
+            <View style={styles.line} />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
+              <Text style={styles.buttonText}>Delete meeting</Text>
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
       </ImageBackground>
-  );
+    );
 };
     
   
@@ -477,6 +477,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    top: -20,
   },
   Memberbutton:{
     backgroundColor: "white",
@@ -526,6 +527,25 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
+  },
+  orContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10, // Adjust as needed
+    top: 180,
+  },
+  orText: {
+    color: 'black',
+    paddingHorizontal: 10, // Adjust as needed
+    fontSize: 20,
+    fontStyle: "italic",
+  },
+  line: {
+    flex: 1,
+    height: 2,
+    backgroundColor: 'black',
+    marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
   },
 
 

@@ -30,8 +30,10 @@ import {
   
   const screenWidth = Dimensions.get("window").width;
   
-  const MeetingCard = ({ meeting }) => {
+  const ManagerMeetingCard = ({ meeting , group}) => {
   const navigation = useNavigation();
+  console.log(meeting);
+  console.log(group);
   const groupName = meeting?.GroupName ?? "Default Name";
   const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
   const totalCapacity = parseInt(meeting.TotalCapacity, 10);
@@ -88,22 +90,31 @@ import {
   
       return null; // Return null if no icon is found
   };
+
+  const handleJoinPress = () => {
+        
+    //Alert.alert("This is only a request, please wait to approve");
+    setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
+    setCurrentParticipants(currentParticipants + 1);
+    MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
+    console.log("Click on Join Meeting!");
+};
   
   const handleCancelPress = () =>{
       setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
       setCurrentParticipants(currentParticipants-1);
-      MeetingService.removeUserFromMeetingMembers(meeting.id, auth.currentUser.email);
+      MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
       console.log("Click on Cancel Meeting!");
   };
   
   const handleEditPress = () =>{
       console.log("Click on Edit!");
-      navigation.replace("EditMeeting", {meeting});
+      navigation.replace("EditMeeting", {meeting , group});
   };
   
   const handleMembersListButton = () => {
       console.log("Click on members list");
-      navigation.navigate("MeetingMembersList" , {meeting} );
+      navigation.replace("MeetingMembersList" , {meeting , group} );
   };
   
   // const handleDeletePress = () =>{
@@ -153,13 +164,19 @@ import {
               <AntDesign name="user"
                           size={22} 
                           color="black" 
-                          onPress={meeting.IsLeader ? handleMembersListButton : () => {}}>
+                          onPress={handleMembersListButton}>
               </AntDesign>
           </View>
           <View style={styles.cardBottomRow}>
-            <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
-              <Text style={styles.buttonText}>Cancel Meeting</Text>
-            </TouchableOpacity>
+            {!isUserInMeeting ? ( // Only show if isUserInMeeting is false
+                        <TouchableOpacity style={styles.button} onPress={handleJoinPress}>
+                           <Text style={styles.buttonText}>Join</Text>
+                        </TouchableOpacity>
+                    ) : ( // Only show if hasJoined is true
+                    <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
+                    <Text style={styles.buttonText}>UnJoin</Text>
+                 </TouchableOpacity>
+                    )}
           
           <TouchableOpacity style={styles.button} onPress={handleEditPress}>
               <Text style={styles.buttonText}>Edit</Text>
@@ -171,7 +188,7 @@ import {
   );
   };
   
-  export default MeetingCard;
+  export default ManagerMeetingCard;
   
   const styles = StyleSheet.create({
   cardBottomRow: {
