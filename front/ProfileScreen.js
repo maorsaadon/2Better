@@ -12,7 +12,7 @@ import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity, userImageUpload, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth} from "../back/firebase";
-import { styles } from "../components/StylesSheets"
+import { stylesProfile } from "../components/StylesSheets"
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Alert } from 'react-native';
 
@@ -108,9 +108,9 @@ const ProfileScreen = () => {
   }
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={logOutTo} style={styles.buttonLogOut}>
+    <ImageBackground source={myLogoPic} style={stylesProfile.backgroundImage}>
+      <View style={stylesProfile.container}>
+        <TouchableOpacity onPress={logOutTo} style={stylesProfile.buttonLogOut}>
           <Entypo name="log-out" size={30} color="black" />
         </TouchableOpacity>
         <View
@@ -141,18 +141,18 @@ const ProfileScreen = () => {
           </View>
 
         </View>
-        <View style={styles.userInfoContainer}>
-          <Text style={styles.valueName}>
+        <View style={stylesProfile.userInfoContainer}>
+          <Text style={stylesProfile.valueName}>
             {userFirstName}{ } {userLastName}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Entypo name="mail" size={30} color="black" />
-            <Text style={styles.valueNew}>{auth.currentUser?.email}</Text>
+            <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' , marginRight: 100}}>
           <MaterialIcons name="location-on" size={26} color="black" />
-          <Text style={styles.valueNew}>{userCity}</Text>
+          <Text style={stylesProfile.valueNew}>{userCity}</Text>
 
           {/* <View>
             <Text style={styles.valueNew}>
@@ -160,12 +160,12 @@ const ProfileScreen = () => {
             </Text>
           </View> */}
         </View>
-        <TouchableOpacity onPress={handleEdit} style={styles.buttonEdit}>
-          <Text style={styles.buttonTextEdit}>Edit User</Text>
+        <TouchableOpacity onPress={handleEdit} style={stylesProfile.buttonEdit}>
+          <Text style={stylesProfile.buttonTextEdit}>Edit User</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleDelete} style={styles.buttonDelete}>
-          <Text style={styles.buttonText}>Delete Account</Text>
+        <TouchableOpacity onPress={handleDelete} style={stylesProfile.buttonDelete}>
+          <Text style={stylesProfile.buttonText}>Delete Account</Text>
         </TouchableOpacity>
 
 
@@ -175,85 +175,3 @@ const ProfileScreen = () => {
 };
 
 export default ProfileScreen;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     marginTop: 0,
-//     marginLeft: 20,
-//   },
-//   button: {
-//     backgroundColor: "#000066",
-//     width: "20%",
-//     padding: 15,
-//     borderRadius: 10,
-//     alignItems: "center",
-//     position: "absolute", // Use absolute positioning
-//     top: 0, // Align to the bottom
-//     left: 0, // Align to the left
-//     marginBottom: 10, // Optional margin to add some space from the bottom
-//     marginLeft: 10, // Optional margin to add some space from the left
-//   },
-//   buttonDelete: {
-//     backgroundColor: "#990000",
-//     width: "40%",
-//     padding: 15,
-//     borderRadius: 10,
-//     alignItems: "center",
-//     marginTop: 50,
-//   },
-//   buttonText: {
-//     color: "white",
-//     fontWeight: "700",
-//     fontSize: 16,
-//   },
-//   buttonTextEdit: {
-//     color: "#000066",
-//     fontWeight: "700",
-//     fontSize: 16,
-//   },
-//   backgroundImage: {
-//     flex: 1,
-//     width: "100%",
-//     height: "100%",
-//     justifyContent: "center",
-//   },
-//   input: {
-//     width: "100%",
-//     margin: 10,
-//     padding: 10,
-//     borderWidth: 1,
-//     borderColor: "gray",
-//   },
-//   label: {
-//     backgroundColor: "#0782F9",
-//     color: "black",
-//     fontSize: 18,
-//     padding: 5,
-//     borderRadius: 10,
-//     fontWeight: "bold",
-//     marginTop: 10,
-//   },
-//   valueName: {
-//     fontWeight: "bold",
-//     fontSize: 16,
-//     flexDirection: "row",
-//     fontSize: 28,
-//     marginLeft: 4,
-//   },
-//   valueNew: {
-//     fontSize: 16,
-//     flexDirection: "row",
-//     fontSize: 22,
-//     marginLeft: 4,
-//   },
-//   buttonEdit: {
-//     width: "30%",
-//     padding: 15,
-//     borderRadius: 10,
-//     alignItems: "center",
-//     marginTop: 50,
-//   }
-// });

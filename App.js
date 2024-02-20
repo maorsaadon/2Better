@@ -21,6 +21,7 @@ import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
 import MeetingMembersListScreen from "./front/MeetingMembersList";
+import AboutUsScreen from "./front/AboutUsScreen";
 
 import UserService from "./back/UserService";
 
@@ -87,11 +88,12 @@ const HomeStack = ({ navigation }) => {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+        tabBarActiveTintColor: '#366A68', // Active tab text color
+        tabBarInactiveTintColor: 'gray', // Inactive tab text color
+        tabBarStyle: { // Style for the tab bar
+          display: 'flex'
+        }
       })}
-      tabBarOptions={{
-        activeTintColor: "#366A68",
-        inactiveTintColor: "gray",
-      }}
     >
       <Tab.Screen name="Home Page" component={HomeScreen} options={{ headerShown: false }} />
       <Tab.Screen name="My Groups" component={GroupsStack} options={{ headerShown: false }} />
@@ -102,6 +104,7 @@ const HomeStack = ({ navigation }) => {
   );
 };
 
+
 export default function App() {
   return (
 
@@ -111,14 +114,9 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MyGroup" component={MyGroupScreen} options={{ headerShown: false }} />
-        <Stack.Screen
-          name="Home"
-          component={HomeStack}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
-
+        <Stack.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
+        <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

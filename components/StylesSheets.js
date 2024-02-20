@@ -1,7 +1,7 @@
 
-import {StyleSheet} from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
-const styles = StyleSheet.create({
+const stylesProfile = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flexDirection: "row",
     fontSize: 28,
-    marginLeft: 4,
+    marginLeft: 35,
   },
   valueNew: {
     fontSize: 16,
@@ -81,92 +81,390 @@ const styles = StyleSheet.create({
     marginTop: 50,
   }
 });
+const stylesAboutUs = StyleSheet.create({
+  containerScroll: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 
-export {styles}
-// const styles = StyleSheet.create({
-//         container: {
-//           flex: 1,
-//           justifyContent: "center",
-//           alignItems: "center",
-//         },
-//         inputContainer: {
-//           width: "60%",
-//         },
-//         input: {
-//           backgroundColor: "white",
-//           paddingHorizontal: 15,
-//           paddingVertical: 10,
-//           borderRadius: 10,
-//           marginTop: 5,
-//           borderWidth: 2,
-//           borderColor: "#366A68",
-//         },
-//         buttonContainer: {
-//           width: "60%",
-//           justifyContent: "center",
-//           alignItems: "center",
-//           marginTop: 40,
-//         },
-//         button: {
-//           backgroundColor: "#366A68",
-//           width: "100%", // This will make the button fill the container
-//           padding: 15,
-//           borderRadius: 10,
-//           alignItems: "center",
-//         },
-//         buttonOutline: {
-//           backgroundColor: "white",
-//           marginTop: 5,
-//           borderColor: "#366A68",
-//           borderWidth: 2,
-//           width: "100%", // This ensures the outlined button also fills the container
-//         },
-//         buttonText: {
-//           color: "white",
-//           fontWeight: "700",
-//           fontSize: 16,
-//         },
-//         buttonOutlineText: {
-//           color: "#366A68",
-//           fontWeight: "700",
-//           fontSize: 16,
-//         },
-//         //###############################
-//         backgroundImage: {
-//           flex: 1,
-//           width: "100%",
-//           height: "100%",
-//           justifyContent: "center",
-//         },
-//         //###############################
-//       });
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    top: 100,
+  },
+  container1: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 150,
+    bottom: 80,
+  },
+  container2: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 110,
+    bottom: 80,
+    left: 20,
+  },
+  container3: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 110,
+    bottom: 80,
+    left: 10,
+  },
+  containerEnd: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    bottom: 80,
+    left: 40,
+  },
+  defualtTopTextEdit: {
+    color: "black",
+    fontWeight: "600",
+    fontStyle: "italic",
+    fontSize: 22,
+    right: 65,
+    bottom: 90,
+  },
+  defualtTopTextEdit3: {
+    color: "black",
+    fontWeight: "600",
+    fontStyle: "italic",
+    fontSize: 22,
+    right: 15,
+    bottom: 90,
+  },
+  topTextEdit: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 40,
+    right: 70,
+    bottom: 10,
+  },
+  defualtTextEdit: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 40,
+    marginBottom: 140,
+  },
+  defualtTextEdit1: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 30,
+    marginTop: -80,
+  },
+  defualtTextEdit2: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 10,
+    marginTop: -80,
+  },
+  defualtTextEdit3: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 30,
+    marginTop: -80,
+  },
+  endTextEdit: {
+    color: "black",
+    fontSize: 17,
+    fontWeight: "600",
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 30,
+    left: -18,
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+});
+const stylesHome = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  containerText: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: -250,
+    marginBottom: -20,
+  },
+  containerTextSupport: {
+    flexDirection: "row",
+    marginTop: 100,
+    marginBottom: 30,
+    marginLeft: -50,
+  },
+  containerTextUS: {
+    flexDirection: "row",
+    marginTop: -10,
+    marginBottom: 30,
+    marginLeft: -50,
+  },
+  containerScrollers: {
+    marginTop: 80,
+  },
+  containerIcons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: -100,
+  },
+  notificationBotton: {
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    marginLeft: 5,
+    borderRadius: 50,
+  },
+  profileButton: {
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 0,
+    marginLeft: 280,
+    marginTop: 0,
+    marginLeft: 280,
+    borderRadius: 50,
+  },
+  badge: {
+    position: "absolute",
+    top: 20,
+    right: -10,
+    backgroundColor: "#8B1B1B",
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  badgeText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  scrollContainer: {
+    flex: 1,
+    //justifyContent: "flex-start", // Align items at the top
+    alignItems: "center",
+    paddingTop: 30, // Add padding to give some space at the top
+    flexDirection: "row",
+    gap: 35,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute", // Use absolute positioning
+    top: 0, // Align to the bottom
+    left: -18, // Align to the left
+    marginBottom: 10, // Optional margin to add some space from the bottom
+    marginLeft: 10, // Optional margin to add some space from the left
+  },
+  backButtonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  card: {
+    width: "100%",
+    backgroundColor: "rgba(255, 255, 255 , 0.4)",
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    flexDirection: "column",
+    gap: 10,
+  },
+  cardTopRow: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  cardMiddleRow: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  iconAndTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  businessLogo: {
+    height: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    width: 50,
+    borderRadius: 15,
+  },
+  title: {
+    fontWeight: "800",
+    alignSelf: "flex-start",
+  },
+  subTitle: {
+    opacity: 0.6,
+    alignSelf: "flex-start",
+  },
+  button: {
+    backgroundColor: "#3B82F6",
+    width: 240,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  iconText: {
+    fontWeight: "bold",
+    fontSize: 20, // Adjust the font size as needed
+  },
+  logo: {
+    width: 70, // Adjust the width as needed
+    height: 70, // Adjust the height as needed
+    resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+  },
+  buttonTextPage: {
+    alignSelf: "center",
+    color: "black",
+    fontSize: 20,
+    marginLeft: 25,
+    marginTop: 300,
+    fontStyle: "italic",
+    fontWeight: "bold",
+    letterSpacing: 1,
+  },
+  buttomTextPage: {
+    alignSelf: "center",
+    color: "black",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    letterSpacing: 1,
+    marginLeft: 100,
+  },
+});
+
+const screenWidth = Dimensions.get("window").width;
+const stylesHomeCard = StyleSheet.create({
+  cardBottomRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  container: {
+    backgroundColor: "#5B8BDF",
+    alignItems: "center",
+    paddingBottom: 40,
+    paddingTop: 30,
+    gap: 15,
+  },
+  card: {
+    width: screenWidth - 32,
+    marginTop: -30,
+    backgroundColor: "#E9F1E9", // Assuming a white card background
+    borderRadius: 15, // Rounded corners
+    marginVertical: 8, // Adds vertical space between items
+    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
+    padding: 16, // Internal spacing between the border and content
+    shadowColor: "#000", // Shadow color
+    shadowOffset: { width: 0, height: 1 }, // Shadow position
+    shadowOpacity: 0.22, // Shadow opacity
+    shadowRadius: 2.22, // Shadow blur radius
+    elevation: 3, // Elevation for Android
+    borderWidth: 1, // Border width
+    borderColor: "#E0E0E0",
+    //opacity: 0.7, 
+  },
+  cardTopRow: {
+    marginTop: 0, // Adjust as needed to move closer to the top
+    marginLeft: 0, // Adjust as needed for left alignment
+    alignSelf: "flex-start", // Align self to the start of the cross axis
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  cardMiddleRow: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  iconAndTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginLeft: 0,
+  },
+  sportIcon: {
+    width: 30, // Adjust size as needed
+    height: 30, // Adjust size as needed
+    resizeMode: "contain",
+    marginRight: 10, // Add some space between the icon and the text
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 18,
+    alignSelf: "flex-start",
+    marginLeft: 0,
+  },
+  subTitle: {
+    opacity: 0.6,
+    alignSelf: "flex-start",
+    marginLeft: 0,
+    fontSize: 16,
+    color: "gray",
+  },
+  button: {
+    backgroundColor: "#366A68",
+    width: 120,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  participantContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+  },
+  slider: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 10,
+    minimumTrackTintColor: "black",
+    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    thumbTintColor: "white",
+  },
+  participantText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "bold",
+    // Add margin to the left or right to space the text from the slider
+    marginHorizontal: 5,
+  },
+});
 
 
-// const stylesHome = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   button: {
-//     backgroundColor: "#0782F9",
-//     width: "60%",
-//     padding: 15,
-//     borderRadius: 10,
-//     alignItems: "center",
-//     marginTop: 40,
-//   },
-//   buttonText: {
-//     color: "white",
-//     fontWeight: "700",
-//     fontSize: 16,
-//   },
-//   backgroundImage: {
-//     flex: 1,
-//     width: "100%",
-//     height: "100%",
-//     justifyContent: "center",
-//   },
-// });
-
-// export { stylesHome , styles};
+export { stylesProfile, stylesAboutUs, stylesHome, stylesHomeCard }

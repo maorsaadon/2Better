@@ -190,6 +190,7 @@ export const MeetingService = {
     }
   },
 
+
   async numOfMembers(meetingId) {
     try {
       // Assuming 'Meetings' is the name of the collection where meetings are stored
@@ -269,21 +270,23 @@ export const MeetingService = {
       var isLeader2 = 0;
       groupsSnapshot.forEach(doc => {
         const group = doc.data();
-        if (group.LeaderEmail !== userEmail) {
+        if (group.LeaderEmail !== userEmail && group.Members.includes(userEmail)) {
           // User is a member but not the leader
           isLeader2 = 0;
           leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
         }
       });
 
-            // Fetch meetings for groups where user is the leader
+      // Fetch meetings for groups where user is the leader
       for (const group of leaderGroupNames) {
         const meetingsSnapshot = await db.collection('Meetings')
                                           .where('GroupName', '==', group.groupName)
                                           .get();
         meetingsSnapshot.forEach(doc => {
           const meetingData = doc.data();
-          if(!meetingData.Members.includes(auth.currentUser.email)){
+          const meetingDate = new Date(meetingData.Date);
+          const currentDate = new Date();
+          if(!meetingData.Members.includes(auth.currentUser.email) ){ //&& meetingDate > currentDate}
             homeMeetings.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, IsLeader: group.isLeader,   id: doc.id });
           }
           });
@@ -297,8 +300,48 @@ export const MeetingService = {
     return { homeMeetings };
     
   },
+  async getSeuggestions() {
+    let homeMeetingsSuggestions = [];
+    let leaderGroupNames = [];
+    const userEmail = auth.currentUser.email;
 
-  async getMembers(MeetingID) {
+
+    try {
+      // Fetch all groups to determine user's role
+      const groupsSnapshot = await db.collection('Groups').get();
+      var isLeader2 = 0;
+      groupsSnapshot.forEach(doc => {
+        const group = doc.data();
+        if (group.LeaderEmail !== userEmail && !group.Members.includes(userEmail)) {
+          // User is a member but not the leader
+          isLeader2 = 0;
+          leaderGroupNames.push({ groupName: group.GroupName, sportType: group.SportType, totalCapacity: group.TotalCapacity, isLeader: isLeader2 });
+        }
+      });
+
+      // Fetch meetings for groups where user is the leader
+      for (const group of leaderGroupNames) {
+        const meetingsSnapshot = await db.collection('Meetings')
+                                          .where('GroupName', '==', group.groupName)
+                                          .get();
+        meetingsSnapshot.forEach(doc => {
+          const meetingData = doc.data();
+          const meetingDate = new Date(meetingData.Date);
+          const currentDate = new Date();
+          if(!meetingData.Members.includes(auth.currentUser.email) ){ //&& meetingDate > currentDate}
+            homeMeetingsSuggestions.push({ ...meetingData, SportType: group.sportType, TotalCapacity: group.totalCapacity, IsLeader: group.isLeader,   id: doc.id });
+          }
+          });
+      }
+      // Sort homeMeetings by Timestamp
+      homeMeetingsSuggestions.sort((a, b) => a.Timestamp.toDate() - b.Timestamp.toDate());
+    } catch (error) {
+      console.error("Error fetching meetings by user role: ", error);
+    }
+    return { homeMeetingsSuggestions };
+    
+  },
+  async  getMembers(MeetingID) {
     const groupRef = db.collection("Meetings").doc(MeetingID);
     try {
         const doc = await groupRef.get();
