@@ -4,7 +4,7 @@ import { StyleSheet, Platform, TouchableOpacity, Pressable, Text, View } from 'r
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 
-const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
+const DatePickerWithTime = ({meeting, date, setDate, time, setTime }) => {
 
     const isIphone = Platform.OS === 'ios';
 
@@ -20,8 +20,8 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
 
     const minimumDate = getToday();
 
-    const [selectedStringDate, setSelectedStringDate] = useState("select Date");
-    const [selectedStringTime, setSelectedStringTime] = useState("select time");
+    const [selectedStringDate, setSelectedStringDate] = useState(meeting ? meeting.Date : "Select Date");
+    const [selectedStringTime, setSelectedStringTime] = useState(meeting ? meeting.Time : "select time");
 
     const handleChangeAndroid = (event, selectedDate) => {
         setShow(false);

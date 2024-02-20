@@ -297,11 +297,10 @@ import GroupService from "../back/GroupService";
 
 const EditMeetingScreen = ({ route }) => {
   const { meeting, group } = route.params;
-  console.log(meeting);
-  const [location, setLocation] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [location, setLocation] = useState(meeting.Location);
+  const [selectedDate, setSelectedDate] = useState(new Date());  // still a probem when i dont difned a new date and time it reset to the time of now
   const [selectedTime, setSelectedTime] = useState(new Date());
-  const [totalCapacity, setTotalCapacity] = useState("");
+  const [totalCapacity, setTotalCapacity] = useState(meeting.TotalCapacity);
   // const [selectedDate, setSelectedDate] = useState(meeting.Date);
   // const [selectedTime, setSelectedTime] = useState(meeting.Time);
 
@@ -319,7 +318,7 @@ const EditMeetingScreen = ({ route }) => {
 
   const handleEditButton = async () => {
       try {
-
+        
         let stringDate;
         let stringTime;
     
@@ -374,6 +373,7 @@ const EditMeetingScreen = ({ route }) => {
             </TouchableOpacity>
 
             <DatePickerWithTime
+              meeting={meeting}
               date={selectedDate}
               setDate={setSelectedDate}
               time={selectedTime}
@@ -385,6 +385,7 @@ const EditMeetingScreen = ({ route }) => {
                 placeholder="Location"
                 value={location}
                 onChangeText={(text) => setLocation(text)}
+                onFocus={() => setLocation("")} // Clear text on focus
                 style={styles.input}
               />
             </View>
@@ -394,6 +395,7 @@ const EditMeetingScreen = ({ route }) => {
                 placeholder="Total Capacity"
                 value={totalCapacity}
                 onChangeText={(text) => setTotalCapacity(text)}
+                onFocus={() => setTotalCapacity("")} // Clear text on focus
                 style={styles.input}
               />
             </View>
