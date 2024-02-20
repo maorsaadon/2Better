@@ -27,12 +27,8 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
         setShow(false);
         setDate(selectedDate);
 
-        const dateAlone = selectedDate.toLocaleDateString();
-        console.log(dateAlone);
-        const splitDate = dateAlone.split('.');
-        const correctFormatDate = splitDate[0] + "/" + splitDate[1]+ "/" + splitDate[2];
-        console.log(correctFormatDate);
-        setSelectedStringDate(correctFormatDate);
+        const dateAlone = selectedDate.toLocaleDateString('he-IL').replace(/\./g, '/');
+        setSelectedStringDate(dateAlone);
     }
 
     const handleTimeChange = (event, selectedTime) => {
@@ -49,7 +45,7 @@ const DatePickerWithTime = ({ date, setDate, time, setTime }) => {
       setShow(false);
       setDate(selectedDate);
 
-      const dateAlone = selectedDate.toLocaleDateString();
+      const dateAlone = selectedDate.toLocaleDateString('he-IL', { minute: '2-digit', hour: '2-digit' });
       setSelectedStringDate(dateAlone);
   }
 

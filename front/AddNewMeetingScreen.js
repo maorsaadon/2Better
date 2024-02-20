@@ -92,7 +92,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
           <View style={styles.LocationTextInputContainer}>
             <TextInput
-              placeholder="user"
+              placeholder="Total Capacity"
               value={totalCapacity}
               onChangeText={(text) => setTotalCapacity(text)}
               style={styles.input}

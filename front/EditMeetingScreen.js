@@ -360,7 +360,7 @@ const EditMeetingScreen = ({ route }) => {
 
     console.log('Click on Delete!');
 
-    navigation.replace("Meeting");
+    navigation.replace("MyGroups");
     
   };
 
@@ -391,7 +391,7 @@ const EditMeetingScreen = ({ route }) => {
 
             <View style={styles.LocationTextInputContainer}>
               <TextInput
-                placeholder="user"
+                placeholder="Total Capacity"
                 value={totalCapacity}
                 onChangeText={(text) => setTotalCapacity(text)}
                 style={styles.input}
