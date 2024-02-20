@@ -84,7 +84,7 @@ return (
         </View>
         <View style={styles.cardBottomRow}>
           <TouchableOpacity style={styles.button} onPress={handleUnJoinPress}>
-            <Text style={styles.buttonText}>Cancel Meeting</Text>
+            <Text style={styles.buttonText}>UnJoin</Text>
           </TouchableOpacity>
 
         </View>

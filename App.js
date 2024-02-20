@@ -39,6 +39,8 @@ const GroupsStack = () => {
       <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
       <Stack.Screen name="EditGroup" component={EditGroupScreen} />
       <Stack.Screen name="GroupMeetings" component={GroupMeetingsScreen} />
+      <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
+      <Stack.Screen name="MeetingMembersList" component={MeetingMembersListScreen} />
     </Stack.Navigator>
   );
 };

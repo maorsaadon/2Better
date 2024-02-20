@@ -69,7 +69,7 @@ const GroupMeetingsScreen = ({ route }) => {
           <ScrollView>
             <View style={styles.container}>
               {managerMeetings.map((meeting, index) => (
-                <ManagerMeetingCard key={index} meeting={meeting} />
+                <ManagerMeetingCard key={index} meeting={meeting} group={group} />
               ))}
             </View>
           </ScrollView>

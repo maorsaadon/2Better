@@ -79,7 +79,28 @@ const stylesProfile = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 50,
-  }
+  },
+  orContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10, // Adjust as needed
+    top: 10,
+    left: -10,
+  },
+  orText: {
+    color: 'black',
+    paddingHorizontal: 5, // Adjust as needed
+    fontSize: 25,
+    fontStyle: "italic",
+  },
+  line: {
+    width: "100%",
+    flex: 1,
+    height: 2,
+    backgroundColor: 'black',
+    marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
+  },
 });
 const stylesAboutUs = StyleSheet.create({
   containerScroll: {
