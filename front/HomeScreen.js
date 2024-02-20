@@ -81,7 +81,7 @@ const HomeScreen = () => {
   };
   const handleSupport = () => {
     try {
-      navigation.replace("AboutUs");
+      navigation.replace("Support");
     } catch (error) {
       alert(error.message);
     }
@@ -118,7 +118,7 @@ const HomeScreen = () => {
         <View style={stylesHome.containerIcons}>
           {Object.entries(sportIconMapping_FontAwesome5).map(([sport, iconName]) => (
             <View key={sport} style={{ alignItems: 'center', margin: 5 }}>
-              <FontAwesome5 name={iconName} size={40} color="black" />
+              <FontAwesome5 name={iconName} size={40} color="#193735" />
             </View>
           ))}
         </View>

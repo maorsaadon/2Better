@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 
-import myLogoPic from "../assets/entryPage.jpeg";
+import myLogoPic from "../assets/entry-page.png";
 
 const AppScreen = () => {
 
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: "100%",
-    height: "125%",
+    height: "101%",
     justifyContent: "center",
     
   },

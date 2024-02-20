@@ -22,6 +22,7 @@ import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
 import MeetingMembersListScreen from "./front/MeetingMembersList";
 import AboutUsScreen from "./front/AboutUsScreen";
+import CostumerSupportScreen from "./front/CostumerSupportScreen";
 
 import UserService from "./back/UserService";
 
@@ -117,6 +118,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
         <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Support" component={CostumerSupportScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

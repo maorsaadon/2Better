@@ -190,6 +190,118 @@ const stylesAboutUs = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+const stylesSupport = StyleSheet.create({
+  containerScroll: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  container: {
+    flex: 1,
+    alignItems: "left",
+    justifyContent: "center",
+    top: 80,
+    bottom: 80,
+  },
+  container1: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 150,
+    bottom: 80,
+  },
+  container2: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 110,
+    bottom: 80,
+    left: 20,
+  },
+  container3: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 110,
+    bottom: 80,
+    left: 10,
+  },
+  containerEnd: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    bottom: 80,
+    left: 40,
+  },
+  defualtTopTextEdit: {
+    color: "black",
+    fontWeight: "600",
+    fontStyle: "italic",
+    fontSize: 22,
+    right: 60,
+    bottom: 90,
+  },
+  defualtTopTextEdit3: {
+    color: "black",
+    fontWeight: "600",
+    fontStyle: "italic",
+    fontSize: 22,
+    right: 15,
+    bottom: 90,
+  },
+  topTextEdit: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 30,
+    right: 85,
+    bottom: 10,
+  },
+  defualtTextEdit: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 40,
+    marginBottom: 140,
+  },
+  defualtTextEdit1: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 30,
+    bottom:70,
+  },
+  defualtTextEdit2: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 10,
+    marginTop: -80,
+  },
+  defualtTextEdit3: {
+    color: "black",
+    fontSize: 16,
+    marginLeft: 30,
+    marginTop: -80,
+  },
+  endTextEdit: {
+    color: "black",
+    fontSize: 17,
+    fontWeight: "600",
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 30,
+    left: -18,
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+});
+
 const stylesHome = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -466,5 +578,240 @@ const stylesHomeCard = StyleSheet.create({
   },
 });
 
+const stylesLogin = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 200,
+    left: 10,
+  },
+  inputContainer: {
+    width: "80%",
 
-export { stylesProfile, stylesAboutUs, stylesHome, stylesHomeCard }
+  },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  icon: {
+    position: 'absolute',
+    left: 5,
+    zIndex: 1,
+  },
+  checkShowIcon: {
+    position: 'absolute',
+    right: 5,
+    bottom: -18,
+    zIndex: 1,
+  },
+  input: {
+    width: '100%',
+    backgroundColor: "white",
+    paddingHorizontal: 35,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    borderWidth: 2,
+    borderColor: "#366A68",
+    textAlign: "left",
+  },
+  buttonContainer: {
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: "#366A68",
+    width: "100%", // This will make the button fill the container
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 30,
+  },
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#366A68",
+    borderWidth: 2,
+    width: "100%", // This ensures the outlined button also fills the container
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+
+  backgroundImage: {
+    width: "103%",
+    height: "101%",
+    justifyContent: "center",
+    right: 16,
+
+  },
+  buttonEdit: {
+    position: 'absolute',
+    top: 30,
+    left: 30,
+    width: "30%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  buttonTextEdit: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    top: 65 ,
+    right: 30 ,
+  },
+  endTextEdit: {
+    color: "#737373",
+    fontWeight: "700",
+    fontSize: 16,
+    top: 110 ,
+    right: 50 ,
+
+  },
+});
+
+const stylesRegister = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "105%",
+    top: -10,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 120,
+    gap: 5,
+  },
+  input: {
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 35,
+    paddingVertical: 5,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 5,
+    minWidth: "80%",
+    color: "#A9A9A9",
+    fontSize: 16,
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2,
+  },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginTop: 5,
+
+  },
+  icon: {
+    position: "absolute",
+    left: 5,
+    zIndex: 3,
+  },
+  iconCity: {
+    position: "absolute",
+    left: -25,
+    top: 20,
+    zIndex: 3,
+  },
+  checkIcon: {
+    position: "absolute",
+    right: 15,
+    bottom: 13,
+    zIndex: 1,
+  },
+  checkShowIcon: {
+    position: "absolute",
+    right: -1,
+    bottom: -14,
+    zIndex: 1,
+  },
+  buttonRegister: {
+    top: 0,
+    backgroundColor: "#366A68",
+    width: "100%",
+    padding: 12,
+    borderRadius: 50,
+    alignItems: "center",
+  },
+  buttonTextRegister: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonSignIn: {
+    position: "absolute",
+    left: 25,
+    width: "30%",
+    padding: 15,
+    top: 67,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonTextSignIn: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  dropContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
+    width: "70%",
+  },
+  dropdownStyle: {
+    backgroundColor: "#C3D4D3",
+    borderColor: "#C3D4D3",
+    borderRadius: 10,
+    alignSelf: "flex-end",
+    zIndex: 1,
+    marginTop: 15,
+    width: '125%',
+    left: 35,
+  },
+  dropdownItemStyle: {
+    justifyContent: "flex-start",
+    textAlign: "left",
+
+  },
+  dropdownListStyle: {
+    borderColor: "#C3D4D3",
+    borderWidth: 3,
+
+  },
+  placeHolderStyle: {
+    color: "#545454",
+    textAlign: "left",
+    left: 40,
+    backgroundColor: "#C3D4D3",
+    fontSize: 16,
+    zIndex: 1,
+    maxWidth: 80,
+  },
+});
+
+export {
+  stylesProfile, stylesAboutUs, stylesHome,
+  stylesHomeCard, stylesLogin, stylesRegister,
+  stylesSupport,
+}
