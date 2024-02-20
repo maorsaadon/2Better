@@ -1,5 +1,4 @@
 import {
-Pressable,
 Text,
 View,
 SafeAreaView,
@@ -25,27 +24,14 @@ import { auth } from "../back/firebase";
 import React, { useEffect, useState } from "react";
 import MeetingService from '../back/MeetingService';
 import { useNavigation } from '@react-navigation/core';
-import GroupService from "../back/GroupService";
+
 
 
 const screenWidth = Dimensions.get("window").width;
 
-const MeetingCard = ({ meeting }) => {
-const navigation = useNavigation();
+const UpcomingMeetingCard = ({ meeting }) => {
 const groupName = meeting?.GroupName ?? "Default Name";
-const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
-const totalCapacity = parseInt(meeting.TotalCapacity, 10);
-const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
 
-useEffect(() => {
-    
-    const checkUserInMeeting = async () => {
-        const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
-        setIsUserInMeeting(isInMeeting);
-      };
-    
-    checkUserInMeeting();
-  }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
 
 const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -63,29 +49,12 @@ const getSportIcon = (sportType) => {
     );
     }
 
-    return null; // Return null if no icon is found
+    return null; 
 };
 
-const handleCancelPress = () =>{
-    setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
-    setCurrentParticipants(currentParticipants-1);
-    MeetingService.removeUserFromMeetingMembers(meeting.id, auth.currentUser.email);
-    console.log("Click on Cancel Meeting!");
-};
-
-const handleEditPress = () =>{
-    console.log("Click on Edit!");
-    navigation.replace("EditMeeting", {meeting});
-};
-
-const handleDeletePress = () =>{
-
-    // GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
-
-    // MeetingService.handleDeleteMeeting(meeting.id);
-
-    // console.log('Click on Delete!');
-    
+const handleUnJoinPress = () => {
+    MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
+    console.log("Click on Join Meeting!");
 };
 
 return (
@@ -113,41 +82,18 @@ return (
             </View>
 
         </View>
-        <View style={styles.participantContainer}>
-        <Text style={styles.participantText}>{currentParticipants}</Text>
-        <CustomSlider
-            minimumValue={0}
-            maximumValue={totalCapacity}
-            value={currentParticipants}
-        />
-        <Text style={styles.participantText}>{totalCapacity}</Text>
-        <AntDesign name="user" size={22} color="black" />
-        </View>
         <View style={styles.cardBottomRow}>
-          <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
+          <TouchableOpacity style={styles.button} onPress={handleUnJoinPress}>
             <Text style={styles.buttonText}>Cancel Meeting</Text>
           </TouchableOpacity>
-        
-        {meeting.IsLeader ? (
-        <TouchableOpacity style={styles.button} onPress={handleEditPress}>
-            <Text style={styles.buttonText}>Edit</Text>
-        </TouchableOpacity>
-      ) : ( <Text/>
-        )}
 
-        {meeting.IsLeader ? (
-        <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
-            <Text style={styles.buttonText}>Delete</Text>
-        </TouchableOpacity>
-      ) : ( <Text/>
-        )}
         </View>
     </View>
     </SafeAreaView>
 );
 };
 
-export default MeetingCard;
+export default UpcomingMeetingCard;
 
 const styles = StyleSheet.create({
 cardBottomRow: {

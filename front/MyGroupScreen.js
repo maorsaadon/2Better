@@ -55,6 +55,15 @@ const MyGroupsScreen = () => {
     }
   };
 
+  const navigateToGroupMeetings = (group) => {
+    console.log("go to the group:", group);
+    try {
+      navigation.replace("GroupMeetings", {group});
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <View style={styles.buttonContainer}>
@@ -83,7 +92,9 @@ const MyGroupsScreen = () => {
         <View style={styles.container}>
           {isManagerView
             ? ManagerGroups.map((group, index) => (
+              <TouchableOpacity key={index} onPress={() => navigateToGroupMeetings(group)}>
               <ManagerGroupCard key={index} group={group} />
+              </TouchableOpacity>
             ))
             : MemberGroups.map((group, index) => (
               <MemberGroupCard key={index} group={group} />

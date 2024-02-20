@@ -33,14 +33,14 @@ const RegisterScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigation.replace("Login");
-      }
-    })
+    // const unsubscribe = auth.onAuthStateChanged(user => {
+    //   if (user) {
+    //     navigation.replace("Login");
+    //   }
+    // })
   
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    return unsubscribe
+    // return unsubscribe
   }, [city]);
 
   const isEmailValid = (email) => {
@@ -77,7 +77,7 @@ const RegisterScreen = () => {
 
     await UserService.createUserAccount(email, password, firstName, lastName, city);
     
-    // await navigation.replace("Login");
+    await navigation.replace("Login");
 
   };
   const handleSignIn = () => {

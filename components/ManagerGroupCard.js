@@ -43,13 +43,7 @@ import {
       return null; // Return null if no icon is found
     };
   
-    const handleAddNewMeeting = (groupName) => {
-      try {
-        navigation.replace("AddNewMeeting", { groupName });
-      } catch (error) {
-        alert(error.message);
-      }
-    };
+
   
     const deleteButton = (groupName) => {
       try {
@@ -93,12 +87,6 @@ import {
             </View>
           </View>
           <View style={styles.cardBottomRow}>
-            <TouchableOpacity
-              onPress={() => handleAddNewMeeting(groupName)}
-              style={styles.addMeetingButton}
-            >
-              <Text style={styles.buttonText}>Add new meeting</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => handleEditButton(groupName)}
               style={styles.editButton}

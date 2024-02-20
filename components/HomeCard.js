@@ -73,6 +73,13 @@ const HomeCard = ({ meeting }) => {
         console.log("Click on Join Meeting!");
     };
 
+    const handleUnJoinPress = () => {
+        setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
+        setCurrentParticipants(currentParticipants - 1);
+        MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
+        console.log("Click on Join Meeting!");
+    };
+
 
     return (
         <SafeAreaView>
@@ -115,7 +122,9 @@ const HomeCard = ({ meeting }) => {
                            <Text style={stylesHomeCard.buttonText}>Join</Text>
                         </TouchableOpacity>
                     ) : ( // Only show if hasJoined is true
-                        <Text />
+                    <TouchableOpacity style={stylesHomeCard.button} onPress={handleUnJoinPress}>
+                    <Text style={stylesHomeCard.buttonText}>UnJoin</Text>
+                 </TouchableOpacity>
                     )}
                 </View>
             </View>

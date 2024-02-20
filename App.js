@@ -22,6 +22,7 @@ import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
 import MeetingMembersListScreen from "./front/MeetingMembersList";
 import AboutUsScreen from "./front/AboutUsScreen";
+import GroupMeetingsScreen from "./front/GroupMeetingsScreen";
 
 import UserService from "./back/UserService";
 
@@ -36,6 +37,7 @@ const GroupsStack = () => {
       <Stack.Screen name="AddNewGroup" component={AddNewGroupScreen} />
       <Stack.Screen name="AddNewMeeting" component={AddNewMeetingScreen} />
       <Stack.Screen name="EditGroup" component={EditGroupScreen} />
+      <Stack.Screen name="GroupMeetings" component={GroupMeetingsScreen} />
     </Stack.Navigator>
   );
 };
@@ -46,6 +48,7 @@ const MeetingStack = () => {
       <Stack.Screen name="Meeting" component={UpcomingMeetingScreen} />
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
       <Stack.Screen name="MeetingMembersList" component={MeetingMembersListScreen} />
+      
     </Stack.Navigator>
   );
 };
@@ -113,7 +116,7 @@ export default function App() {
         <Stack.Screen name="Entry" component={AppScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="MyGroup" component={MyGroupScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="MyGroups" component={MyGroupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
         <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
