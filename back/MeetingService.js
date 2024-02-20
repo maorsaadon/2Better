@@ -376,16 +376,18 @@ async getMemberDetails(email) {
 
 // Function to return the date alone
 async getDateFromTimestamp(timestamp) {
-  const date = timestamp.toISOString().split('T')[0].split("-");
-  const correctDate = date[2] + "/" + date[1] + "/" + date[0];
-  return correctDate;
+  const date = timestamp.toLocaleDateString('he-IL').replace(/\./g, '/');
+  // const date = timestamp.toISOString().split('T')[0].split("-");
+  // const correctDate = date[2] + "/" + date[1] + "/" + date[0];
+  return date;
 },
 
 // Function to return the time alone
 async getTimeFromTimestamp(timestamp) {
-  const time = timestamp.toTimeString().split(' ')[0].split(':');
-  const correctTime = time[0] + ":" + time[1];
-  return correctTime;
+  const time = timestamp.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' });
+  // const time = timestamp.toTimeString().split(' ')[0].split(':');
+  // const correctTime = time[0] + ":" + time[1];
+  return time;
 },
 
 };

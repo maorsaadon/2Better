@@ -326,9 +326,12 @@ const EditMeetingScreen = ({ route }) => {
         const combinedDateTimestamp = new Date(selectedDate);
         combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
 
-      // Await the asynchronous functions
+        // Await the asynchronous functions
         stringDate = await MeetingService.getDateFromTimestamp(combinedDateTimestamp);
         stringTime = await MeetingService.getTimeFromTimestamp(combinedDateTimestamp);
+
+        // stringDate = combinedDateTimestamp.toLocaleDateString('he-IL');
+        // stringTime = combinedDateTimestamp.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' });
     
         // Update the meeting details
         await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp);
