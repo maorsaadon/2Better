@@ -35,7 +35,7 @@ const CostumerSupportScreen = () => {
     };
 
     const handleCommunityPress = () => {
-        // Navigate to the community forums screen
+        Linking.openURL("https://chat.whatsapp.com/Ei1zgdqJAZJCzjh0ZApW19");
     };
     return (
         <ImageBackground source={myLogoPic} style={stylesSupport.backgroundImage}>
@@ -68,13 +68,17 @@ const CostumerSupportScreen = () => {
 
                 </View>
                 <View>
-                    <Text style={stylesSupport.subTitleEnd} onPress={handleCommunityPress}>Community Forums:</Text>
+                    <Text style={stylesSupport.subTitleEnd}>Community Forums:</Text>
                     <Text style={stylesSupport.contactItemEnd}>Join our community forums to interact                       with other users, ask questions, and share                    tips and advice related to sports activities.</Text>
 
-                    <Text style={stylesSupport.editURLEnd} onPress={handleFeedbackPress}>OurCommunity</Text>
+                    <Text style={stylesSupport.editURLEnd} onPress={handleCommunityPress}>OurCommunity</Text>
                     <Text style={stylesSupport.subEnd}>Support Hours:</Text>
                     {/* <Text></Text> */}
                     <Text style={stylesSupport.textEnd}>Sonday to Thursday: 9:00 AM - 5:00 PM</Text>
+
+                    <View style={stylesSupport.rightsEnd}>
+                    <AntDesign name= "copyright" size={30} color="black"></AntDesign>
+                    </View>
                 </View>
             </ScrollView>
         </ImageBackground>

@@ -20,7 +20,6 @@ const AddNewGroupScreen = () => {
   const navigation = useNavigation();
 
   const [groupName, setGroupName] = useState("");
-  const [totalCapacity, setTotalCapacity] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [isOpenCities, setIsOpenCities] = useState(false);
   const [selectedSportType, setSelectedSportType] = useState("");
@@ -51,7 +50,6 @@ const AddNewGroupScreen = () => {
         groupName,
         selectedCity,
         selectedSportType,
-        totalCapacity
       );
       navigation.replace("MyGroups");
     } catch (error) {
@@ -75,12 +73,6 @@ const AddNewGroupScreen = () => {
             placeholder="Group name"
             value={groupName}
             onChangeText={(text) => setGroupName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Maximum num of participants"
-            value={totalCapacity}
-            onChangeText={(text) => setTotalCapacity(text)}
             style={styles.input}
           />
           <DropDownPicker

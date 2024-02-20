@@ -280,6 +280,13 @@ subEnd:{
     left: 50,
     marginBottom: 15,
 },
+rightsEnd:{
+  fontSize: 20,
+  fontWeight: 'bold',
+  left: 180,
+  marginBottom: 100,
+  marginTop: 20,
+},
 link: {
     color: 'black',
 },
@@ -300,6 +307,7 @@ link: {
     marginBottom: 10,
     marginLeft: 10,
   },
+
 });
 
 const stylesHome = StyleSheet.create({

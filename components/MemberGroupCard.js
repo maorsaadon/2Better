@@ -30,7 +30,7 @@ const MemberGroupCard = ({ group }) => {
   
   const groupName = group?.GroupName ?? "Default Name";
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
-  const totalCapacity = parseInt(group.TotalCapacity, 10);
+  const NumOfMembers = parseInt(group.Members.length);
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to unsubscribe to your group `" + groupName +"`"
 
@@ -79,7 +79,7 @@ const MemberGroupCard = ({ group }) => {
           </View>
           <View style={styles.iconAndTextContainer}>
             <AntDesign name="user" size={22} color="black" />
-            <Text>{totalCapacity}</Text>
+            <Text>{NumOfMembers}</Text>
           </View>
         </View>
         <View style={styles.cardBottomRow}>

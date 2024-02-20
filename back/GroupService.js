@@ -5,7 +5,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 export const GroupService = {
-  async handleAddNewGroup(groupName, city, sportType, totalCapacity) {
+  async handleAddNewGroup(groupName, city, sportType) {
     const userEmail = auth.currentUser.email;
     const docRef = db
       .collection("Groups") // The collection name
@@ -13,7 +13,6 @@ export const GroupService = {
       .set({
         GroupName: groupName,
         LeaderEmail: userEmail,
-        TotalCapacity: totalCapacity,
         City: city,
         SportType: sportType,
         Members: [],
@@ -148,7 +147,6 @@ export const GroupService = {
           groups.push({
             GroupName: group.GroupName || "Unknown",
             LeaderEmail: group.LeaderEmail || "Unknown",
-            TotalCapacity: group.TotalCapacity || 10,
             City: group.City || "Unknown",
             SportType: group.SportType || "Unknown",
             Members: group.Members?.length || 0,
@@ -183,7 +181,6 @@ export const GroupService = {
         groups.push({
           GroupName: groupName,
           LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
-          TotalCapacity: groupData.TotalCapacity || 10, // Provide an empty array if participants are missing
           City: groupData.City || "Unknown", // Provide a default if city is missing
           SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
           Members: groupData.Members?.length || 0,
@@ -208,7 +205,6 @@ export const GroupService = {
         return {
           GroupName: groupData.GroupName || "Unknown",
           LeaderEmail: groupData.LeaderEmail || "Unknown",
-          TotalCapacity: groupData.TotalCapacity || 10,
           City: groupData.City || "Unknown",
           SportType: groupData.SportType || "Unknown",
           Members: groupData.Members?.length || 0,
@@ -249,7 +245,6 @@ export const GroupService = {
           groups.push({
             GroupName: group.GroupName || "Unknown",
             LeaderEmail: group.LeaderEmail || "Unknown",
-            TotalCapacity: group.TotalCapacity || 10,
             City: group.City || "Unknown",
             SportType: group.SportType || "Unknown",
             Members: group.Members?.length || 0,
@@ -264,13 +259,12 @@ export const GroupService = {
     }
   },
 
-  async updateGroupDetails(groupName, city, sportType, totalCapacity) {
+  async updateGroupDetails(groupName, city, sportType) {
     try {
       console.log("City", city);
       const groupRef = db.collection("Groups").doc(groupName);
 
       await groupRef.update({
-        TotalCapacity: parseInt(totalCapacity),
         City: city,
         SportType: sportType,
       });
