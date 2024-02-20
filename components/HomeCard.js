@@ -32,7 +32,7 @@ const screenWidth = Dimensions.get("window").width;
 const HomeCard = ({ meeting }) => {
     const navigation = useNavigation();
     const groupName = meeting?.GroupName ?? "Default Name";
-    const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
+    const [currentParticipants, setCurrentParticipants] = useState(meeting.Members.length);
     const totalCapacity = parseInt(meeting.TotalCapacity, 10);
     const [isUserInMeeting, setIsUserInMeeting] = useState(false); // New state to track if joined
     useEffect(() => {
@@ -43,7 +43,7 @@ const HomeCard = ({ meeting }) => {
         };
 
         checkUserInMeeting();
-    }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
+    }, [meeting.id, auth.currentUser.email, meeting.Members]);
 
     const getSportIcon = (sportType) => {
         const iconName = sportIconMapping_FontAwesome5[sportType];

@@ -22,7 +22,7 @@ import {
   const ManagerGroupCard = ({ group }) => {
     const navigation = useNavigation();
     const groupName = group?.GroupName ?? "Default Name";
-    const totalCapacity = parseInt(group.TotalCapacity, 10);
+    const NumOfMembers = parseInt(group.Members.length);
   
     const getSportIcon = (sportType) => {
       const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -83,7 +83,7 @@ import {
             </View>
             <View style={styles.iconAndTextContainer}>
               <AntDesign name="user" size={22} color="black" />
-              <Text>{totalCapacity}</Text>
+              <Text>{NumOfMembers}</Text>
             </View>
           </View>
           <View style={styles.cardBottomRow}>

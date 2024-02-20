@@ -35,7 +35,7 @@ import {
   console.log(meeting);
   console.log(group);
   const groupName = meeting?.GroupName ?? "Default Name";
-  const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfMembers);
+  const [currentParticipants, setCurrentParticipants] = useState(meeting.Members.length);
   const totalCapacity = parseInt(meeting.TotalCapacity, 10);
   const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
   

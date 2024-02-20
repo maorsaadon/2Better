@@ -301,6 +301,7 @@ const EditMeetingScreen = ({ route }) => {
   const [location, setLocation] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
+  const [totalCapacity, setTotalCapacity] = useState("");
   // const [selectedDate, setSelectedDate] = useState(meeting.Date);
   // const [selectedTime, setSelectedTime] = useState(meeting.Time);
 
@@ -334,7 +335,7 @@ const EditMeetingScreen = ({ route }) => {
         // stringTime = combinedDateTimestamp.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' });
     
         // Update the meeting details
-        await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp);
+        await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp, totalCapacity);
 
 
         //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
@@ -387,6 +388,15 @@ const EditMeetingScreen = ({ route }) => {
                 placeholder="Location"
                 value={location}
                 onChangeText={(text) => setLocation(text)}
+                style={styles.input}
+              />
+            </View>
+
+            <View style={styles.LocationTextInputContainer}>
+              <TextInput
+                placeholder="user"
+                value={totalCapacity}
+                onChangeText={(text) => setTotalCapacity(text)}
                 style={styles.input}
               />
             </View>

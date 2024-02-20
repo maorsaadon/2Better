@@ -4,67 +4,9 @@ import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
 
 export const MeetingService = {
-  async fetchMeetingsData() {
-    try {
-      const meetingsCollection = await db.collection("Meetings").get();
-      // const meetingsCollection = await db.collection('Meetings').where('GroupName', '==', 'Maor test 1').get();
-      const meetingsData = meetingsCollection.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          GroupName: data.GroupName,
-          Date: data.Date,
-          Time: data.Time,
-          Location: data.Location,
-        };
-      });
-      return meetingsData; // Return the array of meeting objects
-    } catch (error) {
-      console.error("Error fetching meetings data: ", error);
-      return []; // Return an empty array in case of error
-    }
-  },
 
-  async getMeeting(MeetingId) {
-    try {
-      const snapshot = await db.collection("Meetings").doc(MeetingId).get();
-
-      if (snapshot.exists) {
-        const meetingData = snapshot.data();
-        return {
-          groupName: meetingData.GroupName, // Ensure the property names match your database fields
-          location: meetingData.Location,
-          date: meetingData.Date,
-          time: meetingData.Time,
-        };
-      } else {
-        console.log("Meeting not found.");
-        return null;
-      }
-    } catch (error) {
-      console.error("Error fetching Meeting: ", error);
-    }
-  },
-
-  // Update user details
-  async updateGroupDetails(groupName, date, time, location) {
-    try {
-      const groupRef = db.collection("Groups").doc(groupName);
-
-      // Update the user document
-      await groupRef.update({
-        Date: date,
-        Time: time,
-        Location: location,
-      });
-
-      console.log("Meeting details updated successfully");
-    } catch (error) {
-      console.error("Error updating Meeting details: ", error);
-    }
-  },
   // Update meeting details
-  async updateMeetingDetails(MeetingID, date, time, location, timestamp) {
+  async updateMeetingDetails(MeetingID, date, time, location, timestamp, totalCapacity) {
     try {
       const meetingRef = db.collection("Meetings").doc(MeetingID);
 
@@ -77,6 +19,7 @@ export const MeetingService = {
           Time: time,
           Location: location,
           Timestamp: timestamp,
+          TotalCapacity: totalCapacity,
         });
 
         console.log("Meeting details updated successfully");
@@ -89,7 +32,7 @@ export const MeetingService = {
     }
   },
 
-  async handleAddNewMeeting(groupName, location, date, time, timestamp) {
+  async handleAddNewMeeting(groupName, location, date, time, timestamp, totalCapacity) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
     MeetingRef.set({
       GroupName: groupName,
@@ -97,7 +40,7 @@ export const MeetingService = {
       Date: date,
       Time: time,
       Timestamp: timestamp,
-      NumberOfMembers: 0,
+      TotalCapacity: totalCapacity,
       Members: [],
     }).catch((error) => {
       console.error("Error creating Meeting: ", error);
@@ -152,7 +95,7 @@ export const MeetingService = {
           upcomingMeetings.push({
             ...meetingData,
             SportType: group.sportType,
-            TotalCapacity: group.totalCapacity,
+            Members: group.Members,
             IsLeader: group.isLeader,
             id: doc.id,
           });
@@ -181,7 +124,7 @@ export const MeetingService = {
         managerMeetings.push({
           ...meetingData,
           SportType: group.SportType,
-          TotalCapacity: group.TotalCapacity,
+          Members: group.Members,
           id: doc.id,
         });
       });
@@ -216,19 +159,6 @@ export const MeetingService = {
     }
   },
 
-  async numOfMembers(meetingId) {
-    try {
-      // Assuming 'Meetings' is the name of the collection where meetings are stored
-      const meetingRef = await db.collection("Meetings").doc(meetingId);
-      const snapshot = await meetingRef.get();
-      if (snapshot.exists) {
-        const meeting = snapshot.data();
-        return meeting.NumberOfMembers;
-      }
-    } catch (error) {
-      console.error(`Error find meetings members!`, error);
-    }
-  },
 
   async addUserToMeeting(meetingId, memberEmail) {
     try {
@@ -302,7 +232,7 @@ export const MeetingService = {
           leaderGroupNames.push({
             groupName: group.GroupName,
             sportType: group.SportType,
-            totalCapacity: group.TotalCapacity,
+            Members: group.Members,
             isLeader: isLeader2,
           });
         }
@@ -323,8 +253,8 @@ export const MeetingService = {
             homeMeetings.push({
               ...meetingData,
               SportType: group.sportType,
-              TotalCapacity: group.totalCapacity,
               IsLeader: group.isLeader,
+              Members: group.Members,
               id: doc.id,
             });
           }
@@ -358,7 +288,7 @@ export const MeetingService = {
           leaderGroupNames.push({
             groupName: group.GroupName,
             sportType: group.SportType,
-            totalCapacity: group.TotalCapacity,
+            Members: group.Members,
             isLeader: isLeader2,
           });
         }
@@ -379,7 +309,7 @@ export const MeetingService = {
             homeMeetingsSuggestions.push({
               ...meetingData,
               SportType: group.sportType,
-              TotalCapacity: group.totalCapacity,
+              Members: group.Members,
               IsLeader: group.isLeader,
               id: doc.id,
             });
