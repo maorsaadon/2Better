@@ -11,13 +11,13 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import myLogoPic from "../assets/registerPage.png";
+import myLogoPic from "../assets/register-page.png";
 import { MaterialIcons} from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { cityData } from "../back/DataBase";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
-
+import { stylesRegister} from "../components/StylesSheets"
 
 const RegisterScreen = () => {
   let [email, setEmail] = useState("");
@@ -29,6 +29,7 @@ const RegisterScreen = () => {
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
   const [isOpenCity, setIsOpenCity] = useState(false);
+  const [iconVisible, setIconVisible] = useState(true);
 
   const navigation = useNavigation();
 
@@ -103,113 +104,117 @@ const RegisterScreen = () => {
   };
 
   const handleCityPress = (item) => {
+    setIconVisible(false);
     setCity(item.value);
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+    <ImageBackground source={myLogoPic} style={stylesRegister.backgroundImage}>
       <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCity(false);
         }}
       >
-        <View style={styles.container}>
-          <View style={styles.inputRow}>
+        <View style={stylesRegister.container}>
+          <View style={stylesRegister.inputRow}>
             <MaterialIcons
               name="person"
               color="#366A68"
               size={20}
-              style={styles.icon}
+              style={stylesRegister.icon}
             />
             <TextInput
               placeholder="FirstName"
               value={firstName}
               onChangeText={(text) => setFirstName(text)}
-              style={styles.input}
+              style={stylesRegister.input}
             />
           </View>
-          <View style={styles.inputRow}>
+          <View style={stylesRegister.inputRow}>
             <MaterialIcons
               name="person"
               color="#366A68"
               size={20}
-              style={styles.icon}
+              style={stylesRegister.icon}
             />
             <TextInput
               placeholder="LastName"
               value={lastName}
               onChangeText={(text) => setLastName(text)}
-              style={styles.input}
+              style={stylesRegister.input}
             />
           </View>
-          <View style={styles.inputRow}>
+          <View style={stylesRegister.inputRow}>
             <MaterialIcons
               name="email"
               color="#366A68"
               size={20}
-              style={styles.icon}
+              style={stylesRegister.icon}
             />
             <TextInput
               placeholder="Email"
               value={email}
               // onChangeText={(text) => setEmail(text)}
               onChangeText={handleEmail}
-              style={styles.input}
+              style={stylesRegister.input}
             />
             {email.length > 0 && (
-              <View style={styles.checkIcon}>
+              <View style={stylesRegister.checkIcon}>
                 {emailVarify ? (
-                  <MaterialIcons name="check-circle" color="green" size={20} />
+                  <MaterialIcons name="check-circle" color="green" size={23} />
                 ) : (
-                  <MaterialIcons name="error" color="red" size={30} />
+                  <MaterialIcons name="error" color="#8B1B1B" size={23} />
                 )}
               </View>
             )}
           </View>
           {email.length < 1 ? null : emailVarify ? null : (
-            <Text style={{ marginLeft: 20, color: "red" }}>
-              example@gmail.com
+            <Text style={{ marginLeft: -210, color: "#8B1B1B" }}>
+              Example@gmail.com
             </Text>
           )}
-          <View style={styles.inputRow}>
+          <View style={stylesRegister.inputRow}>
             <MaterialIcons
               name="lock"
               color="#366A68"
               size={20}
-              style={styles.icon}
+              style={stylesRegister.icon}
             />
             <TextInput
               placeholder="Password"
               value={password}
               onChangeText={handlePassword}
-              style={styles.input}
+              style={stylesRegister.input}
               secureTextEntry={!showPassword}
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <View style={styles.checkShowIcon}>
+              <View style={stylesRegister.checkShowIcon}>
                 {password.length < 1 ? null : (
                   <MaterialIcons
                     name="remove-red-eye"
-                    color={passwordVarify ? "green" : "red"}
-                    size={20}
+                    color={passwordVarify ? "green" : "#8B1B1B"}
+                    size={23}
                   />
                 )}
               </View>
             </TouchableOpacity>
           </View>
           {password.length < 1 ? null : passwordVarify ? null : (
-            <Text style={{ marginLeft: 20, color: "red" }}>
+            <Text style={{ marginLeft: 20, color: "#8B1B1B" }}>
               Uppercase, Lowercase, Number and 6 or more characters
             </Text>
           )}
 
-          <View style={styles.dropContainer}>
-            <MaterialIcons
-              name="location-city"
-              color="#366A68"
-              size={20}
-              style={styles.iconCity}
-            />
+          <View style={stylesRegister.dropContainer}>
+          {iconVisible && ( // Conditionally render the icon
+          <MaterialIcons
+            name="location-city"
+            color="#366A68"
+            size={20}
+            style={stylesRegister.iconCity}
+          />
+        )}
+            
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
               items={cityData}
@@ -224,30 +229,30 @@ const RegisterScreen = () => {
               badgeDotColors={["white"]}
               badgeTextStyle={{ color: "white" }}
               placeholder="Select city"
-              placeholderStyle={styles.placeHolderStyle}
-              style={styles.dropdownStyle}
-              itemStyle={styles.dropdownItemStyle}
-              dropDownStyle={styles.dropdownListStyle}
+              placeholderStyle={stylesRegister.placeHolderStyle}
+              style={stylesRegister.dropdownStyle}
+              itemStyle={stylesRegister.dropdownItemStyle}
+              dropDownStyle={stylesRegister.dropdownListStyle}
               searchable={true}
               searchPlaceholder="Search..."
               onSelectItem={(item) => handleCityPress(item)}
             />
           </View>
-          <View>
+          <View style= {{width: "60%"}}>
             <TouchableOpacity
               onPress={handleSignUp}
-              style={styles.buttonRegister}
+              style={stylesRegister.buttonRegister}
             >
-              <Text style={styles.buttonTextRegister}>Register</Text>
+              <Text style={stylesRegister.buttonTextRegister}>Register</Text>
             </TouchableOpacity>
           </View>
           <View>
             {/* <Text>Already have an account?</Text> */}
             <TouchableOpacity
               onPress={handleSignIn}
-              style={styles.buttonSignIn}
+              style={stylesRegister.buttonSignIn}
             >
-              <Text style={styles.buttonTextSignIn}>Sign in</Text>
+              <Text style={stylesRegister.buttonTextSignIn}>Sign in</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -258,129 +263,3 @@ const RegisterScreen = () => {
 
 export default RegisterScreen;
 
-const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "105%",
-    top: -10,
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 120,
-    gap: 5,
-  },
-  input: {
-    backgroundColor: "#C3D4D3",
-    paddingHorizontal: 35,
-    paddingVertical: 5,
-    borderRadius: 10,
-    padding: 10,
-    marginTop: 5,
-    minWidth: "80%",
-    color: "#A9A9A9",
-    fontSize: 16,
-  },
-  itemText: {
-    fontSize: 15,
-    margin: 2,
-  },
-  inputRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    position: "relative",
-    backgroundColor: "#C3D4D3",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    borderRadius: 10,
-    marginTop: 5,
-    
-  },
-  icon: {
-    position: "absolute",
-    left: 5,
-    zIndex: 3,
-  },
-  iconCity: {
-    position: "absolute",
-    left: -25,
-    top: 20,
-    zIndex: 3,
-  },
-  checkIcon: {
-    position: "absolute",
-    right: 5,
-    bottom: 10,
-    zIndex: 1,
-  },
-  checkShowIcon: {
-    position: "absolute",
-    right: 5,
-    bottom: -18,
-    zIndex: 1,
-  },
-  buttonRegister: {
-    top: 0,
-    backgroundColor: "#366A68",
-    width: "100%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonTextRegister: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonSignIn: {
-    position: "absolute",
-    left: 25,
-    width: "30%",
-    padding: 15,
-    top: 30,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonTextSignIn: {
-    color: "#366A68",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  dropContainer:{
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
-    width: "70%",
-  },
-  dropdownStyle: {
-    backgroundColor: "#C3D4D3",
-    borderColor: "#C3D4D3",
-    borderRadius: 10,
-    alignSelf: "flex-end",
-    zIndex: 1,
-    marginTop : 15,
-    width: '125%',
-    left: 35,
-  },
-  dropdownItemStyle: {
-    justifyContent: "flex-start",
-    textAlign: "left",
-    
-  },
-  dropdownListStyle: {
-    borderColor: "#C3D4D3",
-    borderWidth: 3,
-    
-  },
-  placeHolderStyle: {
-    color: "#A9A9A9",
-    textAlign: "left",
-    left: 40,
-    backgroundColor: "#C3D4D3",
-    fontSize: 16,
-    zIndex: 1,
-    maxWidth: 80,
-  },
-});

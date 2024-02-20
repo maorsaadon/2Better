@@ -9,8 +9,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
+  ImageBackground,
 } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import myLogoPic from "../assets/default.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import { sportTypeDataSearch, cityDataSearch } from "../back/DataBase";
 import { MaterialIcons,MaterialCommunityIcons } from "@expo/vector-icons";
@@ -49,6 +51,8 @@ const FindNewGroupScreen = ({ navigation }) => {
  
 
   return (
+    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback
         onPress={() => {
@@ -129,6 +133,7 @@ const FindNewGroupScreen = ({ navigation }) => {
         </View>
       </TouchableWithoutFeedback>
       </SafeAreaView>
+      </ImageBackground>
   );
 };
 
@@ -220,6 +225,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
 
 });
