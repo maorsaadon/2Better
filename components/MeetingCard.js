@@ -37,15 +37,38 @@ const [currentParticipants, setCurrentParticipants] = useState(meeting.NumberOfM
 const totalCapacity = parseInt(meeting.TotalCapacity, 10);
 const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
 
-useEffect(() => {
+// useEffect(() => {
     
+//     const checkUserInMeeting = async () => {
+//         const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
+//         setIsUserInMeeting(isInMeeting);
+//       };
+    
+//     checkUserInMeeting();
+//   }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
+
+useEffect(() => {
     const checkUserInMeeting = async () => {
         const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
         setIsUserInMeeting(isInMeeting);
-      };
-    
+    };
+
+    const checkAndDeleteIfMeetingPassed = () => {
+        const currentTimestamp = new Date().getTime();
+        const meetingTimestamp = meeting?.Timestamp?.toDate().getTime() || 0;
+
+        if (meetingTimestamp < currentTimestamp) {
+            // Meeting has already passed, trigger deletion logic
+            console.log(`Meeting ID: ${meeting.id} has passed. Deleting...`);
+            // Add your deletion logic here, for example:
+            MeetingService.handleDeleteMeeting(meeting.id);
+            GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
+        }
+    };
+
     checkUserInMeeting();
-  }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
+    checkAndDeleteIfMeetingPassed();
+}, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers, meeting.Timestamp]);
 
 const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
