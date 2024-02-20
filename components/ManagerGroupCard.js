@@ -21,8 +21,9 @@ import {
   
   const ManagerGroupCard = ({ group }) => {
     const navigation = useNavigation();
+    console.log(group);
     const groupName = group?.GroupName ?? "Default Name";
-    const NumOfMembers = parseInt(group.Members.length);
+    const NumOfMembers = group.Members;
   
     const getSportIcon = (sportType) => {
       const iconName = sportIconMapping_FontAwesome5[sportType];

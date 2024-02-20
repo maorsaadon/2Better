@@ -29,7 +29,7 @@ const ResultGroupCard = ({ group }) => {
 
   const groupName = group?.GroupName ?? "Default Name";
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
-  const totalCapacity = parseInt(group.TotalCapacity, 10);
+  const NumOfMembers = group.Members ;
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to join your group: `" + groupName +"`"
 
@@ -77,7 +77,7 @@ const ResultGroupCard = ({ group }) => {
           </View>
           <View style={styles.iconAndTextContainer}>
             <AntDesign name="user" size={22} color="black" />
-            <Text>{totalCapacity}</Text>
+            <Text>{NumOfMembers}</Text>
           </View>
         </View>
         <View style={styles.cardBottomRow}>

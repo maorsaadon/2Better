@@ -27,7 +27,6 @@ const EditGroupScreen = ({ route }) => {
 
   const navigation = useNavigation();
   const [leaderEmail, setLeaderEmail] = useState("");
-  const [totalCapacity, setTotalCapacity] = useState(0);
   const [city, setCity] = useState("");
   const [isOpenCity, setIsOpenCity] = useState(false);
   const [sportType, setSportType] = useState("");
@@ -39,7 +38,6 @@ const EditGroupScreen = ({ route }) => {
         const data = await GroupService.getGroupByName(groupName);
         if (data) {
           setLeaderEmail(data.LeaderEmail);
-          setTotalCapacity(data.TotalCapacity);
         } else {
           // Handle the case where the group data is not found
           console.log("No group data found for:", groupName);
@@ -58,7 +56,6 @@ const EditGroupScreen = ({ route }) => {
         groupName,
         city,
         sportType,
-        totalCapacity
       );
       navigation.replace("MyGroups");
     } catch (error) {
@@ -117,21 +114,6 @@ const EditGroupScreen = ({ route }) => {
               style={styles.icon}
             />
             <Text style={styles.input}>{leaderEmail}</Text>
-          </View>
-
-          <Text style={styles.label}>TotalCapacity:</Text>
-          <View style={styles.inputRow}>
-            <MaterialIcons
-              name="person"
-              color="#366A68"
-              size={20}
-              style={styles.icon}
-            />
-            <TextInput
-              value={String(totalCapacity)}
-              onChangeText={(text) => setTotalCapacity(parseInt(text) || 0)}
-              style={styles.input}
-            />
           </View>
 
           <Text style={styles.label}>Sport Type:</Text>

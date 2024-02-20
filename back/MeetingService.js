@@ -78,7 +78,6 @@ export const MeetingService = {
           groupNames.push({
             groupName: group.GroupName,
             sportType: group.SportType,
-            totalCapacity: group.TotalCapacity,
             isLeader: isLeader2,
           });
         }
@@ -95,7 +94,7 @@ export const MeetingService = {
           upcomingMeetings.push({
             ...meetingData,
             SportType: group.sportType,
-            Members: group.Members,
+            // Members: group.Members,
             IsLeader: group.isLeader,
             id: doc.id,
           });
@@ -124,7 +123,7 @@ export const MeetingService = {
         managerMeetings.push({
           ...meetingData,
           SportType: group.SportType,
-          Members: group.Members,
+          // Members: group.Members,
           id: doc.id,
         });
       });
