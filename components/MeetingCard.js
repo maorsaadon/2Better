@@ -124,9 +124,14 @@ return (
             minimumValue={0}
             maximumValue={totalCapacity}
             value={currentParticipants}
+            
         />
         <Text style={styles.participantText}>{totalCapacity}</Text>
-        <AntDesign name="user" size={22} color="black" />
+            <AntDesign name="user"
+                        size={22} 
+                        color="black" 
+                        onPress={meeting.IsLeader ? handleMembersListButton : () => {}}>
+            </AntDesign>
         </View>
         <View style={styles.cardBottomRow}>
           <TouchableOpacity style={styles.button} onPress={handleCancelPress}>
@@ -140,12 +145,7 @@ return (
       ) : ( <Text/>
         )}
 
-        {meeting.IsLeader ? (
-        <TouchableOpacity style={styles.button} onPress={handleMembersListButton}>
-            <Text style={styles.buttonText}>Members list</Text>
-        </TouchableOpacity>
-      ) : ( <Text/>
-        )}
+        
 
         {/* {meeting.IsLeader ? (
         <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
