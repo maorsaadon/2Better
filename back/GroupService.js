@@ -75,20 +75,32 @@ export const GroupService = {
   async removeGroupMeeting(meetingId, groupName) {
     try {
       const groupRef = db.collection("Groups").doc(groupName);
+  
+      // Fetch the current array
+      const groupSnapshot = await groupRef.get();
+      const currentMeetingsGroup = groupSnapshot.data().MeetingsGroup || [];
+      
+      currentMeetingsGroup.forEach(s=>console.log(s))
 
-      // Atomically remove the meeting ID from the 'MeetingsGroup' array field
-      await groupRef.update({
-        MeetingsGroup: firebase.firestore.FieldValue.arrayRemove(meetingId),
-      });
+      let reference = `/Meetings/${meetingId}`;
 
-      console.log(
-        `Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`
-      );
+      console.log(reference);
+  
+      // Find the index of the meeting ID in the array
+      const index = currentMeetingsGroup.indexOf(reference);
+  
+      if (index !== -1) {
+        // Remove the meeting ID from the array
+        currentMeetingsGroup.splice(index, 1);
+  
+        // Update the array in Firestore
+        await groupRef.update({ MeetingsGroup: currentMeetingsGroup });
+        console.log(`Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`);
+      } else {
+        console.log(`Meeting ID: ${meetingId} not found in group ID: ${groupName}`);
+      }
     } catch (error) {
-      console.error(
-        `Error removing meeting ID: ${meetingId} from group ID: ${groupName}`,
-        error
-      );
+      console.error(`Error removing meeting ID: ${meetingId} from group ID: ${groupName}`, error);
       // Handle the error accordingly
     }
   },

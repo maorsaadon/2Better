@@ -199,6 +199,7 @@ import myLogoPic from "../assets/default.png";
 import '../back/MeetingService'
 import MeetingService from '../back/MeetingService';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { onSnapshot, collection, query, getDocs } from 'firebase/firestore';
 
 
 const MeetingMembersList = ({ route }) => {
@@ -208,14 +209,55 @@ const MeetingMembersList = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
 
-    useEffect(() => {
-        const getMeetingMembers = async () => {
-        const meetingsData = await MeetingService.getMembers(meeting.id);
-        setMeetingMembers(meetingsData); // Update the state with the fetched data
-        };
+  useEffect(() => {
+    const meetingRef = db.collection("Meetings").doc(meeting.id);
     
-        getMeetingMembers();
-    }, []);
+    const unsubscribe = onSnapshot(meetingRef, (doc) => {
+      try {
+        const meetingData = doc.data();
+        const updatedMeetingMembers = meetingData.Members || [];
+        setMeetingMembers(updatedMeetingMembers);
+      } catch (error) {
+        console.error("Error updating meeting members: ", error);
+      }
+    });
+
+    return () => {
+      // Unsubscribe the snapshot listener when the component is unmounted
+      unsubscribe();
+    };
+  }, [meeting.id]);
+
+// useEffect(() => {
+//   const unsubscribe = onSnapshot(
+//     query(collection(db, 'Meetings', meeting.id, 'Members')),
+//     (snapshot) => {
+//       const getMeetingMembers = async () => {
+//         const meetingsData = await MeetingService.getMembers(meeting.id);
+//         setMeetingMembers(meetingsData); // Update the state with the fetched data
+//       };
+
+//       getMeetingMembers();
+//     },
+//     (error) => {
+//       console.error("Error fetching meeting members: ", error);
+//     }
+//   );
+
+//   return () => {
+//     // Unsubscribe the snapshot listener when the component is unmounted
+//     unsubscribe();
+//   };
+// }, [meeting.id]);
+
+
+  const handleRemovePress = async (email) => {
+    try {
+      await MeetingService.removeUserFromMeetingMembers(meeting.id, email);
+    } catch (error) {
+      console.error("Error removing user from meeting members: ", error);
+    }
+  };
 
     
     // const getMemberDetails = async (email) => {
@@ -236,7 +278,7 @@ const MeetingMembersList = ({ route }) => {
     
   const backButton = () => {
     try {
-      navigation.navigate("EditMeeting" , { meeting });
+      navigation.navigate("Meeting");
     } catch (error) {
       alert(error.message);
     }
@@ -252,11 +294,11 @@ const MeetingMembersList = ({ route }) => {
     }
   };
 
-  const handleDeletePress = (meetingMembers) => {
-    // setSelectedMember(meetings);
-    // setModalVisible(true);
-    MeetingService.removeUserFromMeetingMembers(meeting.id,meetingMembers);
-  };
+  // const handleDeletePress = (meetingMembers) => {
+  //   // setSelectedMember(meetings);
+  //   // setModalVisible(true);
+  //   MeetingService.removeUserFromMeetingMembers(meeting.id,meetingMembers);
+  // };
   
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
@@ -267,7 +309,7 @@ const MeetingMembersList = ({ route }) => {
         <View style={styles.wrapper}>
             <DataTable.Header style={styles.header}>
               <DataTable.Title style={[styles.title, { left: 10,}]}>Members</DataTable.Title>
-              <DataTable.Title style={[styles.title, { left: 70 }]}>Member Details</DataTable.Title>
+              <DataTable.Title style={[styles.title, { left: 65 }]}>Member Details</DataTable.Title>
               <DataTable.Title style={[styles.title, { left: 60 }]}>Remove</DataTable.Title>
             </DataTable.Header>
         </View>
@@ -280,8 +322,8 @@ const MeetingMembersList = ({ route }) => {
               <TouchableOpacity onPress={() => handlePress(email)} style={[styles.rowButton, { backgroundColor: "#0782F9", left: -5 }]}>
                 <Text style={styles.buttonText}>Show</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleDeletePress(email)} style={[styles.rowButton, { backgroundColor: "red", left: 20 }]}>
-                <Text style={styles.buttonText}>Delete</Text>
+              <TouchableOpacity onPress={() => handleRemovePress(email)} style={[styles.rowButton, { backgroundColor: "red", left: 20 , width: '23%' }]}>
+                <Text style={styles.buttonText}>Remove</Text>
               </TouchableOpacity>
             </DataTable.Row>
           ))}
@@ -374,11 +416,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 20,
   },
-//   buttonText: {
-//     color: 'white',
-//     fontWeight: '700',
-//     fontSize: 16,
-//   },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 13,
+  },
   rowButton: {
     padding: 10,
     borderRadius: 5,

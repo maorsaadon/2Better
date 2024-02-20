@@ -78,15 +78,20 @@ const handleEditPress = () =>{
     navigation.replace("EditMeeting", {meeting});
 };
 
-const handleDeletePress = () =>{
-
-    // GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
-
-    // MeetingService.handleDeleteMeeting(meeting.id);
-
-    // console.log('Click on Delete!');
-    
+const handleMembersListButton = () => {
+    console.log("Click on members list");
+    navigation.navigate("MeetingMembersList" , {meeting} );
 };
+
+// const handleDeletePress = () =>{
+
+//     GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
+
+//     // MeetingService.handleDeleteMeeting(meeting.id);
+
+//     console.log('Click on Delete!');
+    
+// };
 
 return (
     <SafeAreaView>
@@ -136,11 +141,18 @@ return (
         )}
 
         {meeting.IsLeader ? (
+        <TouchableOpacity style={styles.button} onPress={handleMembersListButton}>
+            <Text style={styles.buttonText}>Members list</Text>
+        </TouchableOpacity>
+      ) : ( <Text/>
+        )}
+
+        {/* {meeting.IsLeader ? (
         <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
             <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
       ) : ( <Text/>
-        )}
+        )} */}
         </View>
     </View>
     </SafeAreaView>
@@ -228,13 +240,13 @@ buttonText: {
     alignSelf: "center",
     color: "white",
 },
-deleteButton: {
-    backgroundColor: "red",
-    width: 100,
-    paddingVertical: 10,
-    borderRadius: 10,
-    opacity: 1,
-},
+// deleteButton: {
+//     backgroundColor: "red",
+//     width: 100,
+//     paddingVertical: 10,
+//     borderRadius: 10,
+//     opacity: 1,
+// },
 participantContainer: {
     flexDirection: "row",
     alignItems: "center",

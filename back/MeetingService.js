@@ -298,7 +298,7 @@ export const MeetingService = {
     
   },
 
-  async  getMembers(MeetingID) {
+  async getMembers(MeetingID) {
     const groupRef = db.collection("Meetings").doc(MeetingID);
     try {
         const doc = await groupRef.get();

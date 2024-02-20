@@ -291,6 +291,7 @@ import { auth, db } from "../back/firebase";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import DatePickerWithTime from '../components/DateTimePicker';
 import MeetingDetails from './AddNewMeetingScreen';
+import GroupService from "../back/GroupService";
 
 
 
@@ -345,9 +346,21 @@ const EditMeetingScreen = ({ route }) => {
       }
   };
 
-  const handleMembersListButton = () => {
-    console.log("Click on members list");
-    navigation.navigate("MeetingMembersList" , {meeting} );
+  // const handleMembersListButton = () => {
+  //   console.log("Click on members list");
+  //   navigation.navigate("MeetingMembersList" , {meeting} );
+  // };
+
+  const handleDeletePress = () =>{
+
+    GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
+
+    // MeetingService.handleDeleteMeeting(meeting.id);
+
+    console.log('Click on Delete!');
+
+    // navigation.replace("Meeting");
+    
   };
 
   return (
@@ -377,11 +390,14 @@ const EditMeetingScreen = ({ route }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleMembersListButton} style={[styles.Memberbutton , styles.MemberButtonOutline ,{ alignSelf: "center" , }]}>
+            {/* <TouchableOpacity onPress={handleMembersListButton} style={[styles.Memberbutton , styles.MemberButtonOutline ,{ alignSelf: "center" , }]}>
               <Text style={styles.MemberButtonOutlineText}>Members list</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+            <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
+            <Text style={styles.buttonText}>Delete meeting</Text>
+          </TouchableOpacity>
           </View>
-  
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleEditButton} style={[styles.button, styles.buttonOutline]}>
               <Text style={styles.buttonOutlineText}>Save</Text>
@@ -489,6 +505,18 @@ const styles = StyleSheet.create({
     color: "#0782F9",
     fontWeight: "700",
     fontSize: 16,
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    width: 150,
+    height: 50,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
   },
   backgroundImage: {
     flex: 1,
