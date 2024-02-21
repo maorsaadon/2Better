@@ -20,8 +20,8 @@ const DatePickerWithTime = ({meeting, date, setDate, time, setTime }) => {
 
     const minimumDate = getToday();
 
-    const [selectedStringDate, setSelectedStringDate] = useState(meeting ? meeting.Date : "Select Date");
-    const [selectedStringTime, setSelectedStringTime] = useState(meeting ? meeting.Time : "select time");
+    const [selectedStringDate, setSelectedStringDate] = useState("Select Date");
+    const [selectedStringTime, setSelectedStringTime] = useState("select time");
 
     const handleChangeAndroid = (event, selectedDate) => {
         setShow(false);
