@@ -30,7 +30,7 @@ const MemberGroupCard = ({ group }) => {
   
   const groupName = group?.GroupName ?? "Default Name";
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
-  const NumOfMembers = parseInt(group.Members.length);
+  const NumOfMembers = group.Members;
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to unsubscribe to your group `" + groupName +"`"
 
