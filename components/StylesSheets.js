@@ -6,8 +6,8 @@ const stylesProfile = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 0,
     marginLeft: 20,
+    bottom: 60,
   },
   buttonEditProfile: {
     width: "20%",
@@ -27,12 +27,12 @@ const stylesProfile = StyleSheet.create({
     alignItems: "center",
     position: "absolute", // Use absolute positioning
     top: 50, // Align to the bottom
-    left: 300, // Align to the left
+    left: 310, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
   },
   buttonDelete: {
-    backgroundColor: "#990000",
+    backgroundColor: "#8B1B1B",
     width: "40%",
     padding: 15,
     borderRadius: 10,
@@ -44,6 +44,7 @@ const stylesProfile = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+    left:5,
   },
   buttonTextEdit: {
     color: "#366A68",
@@ -90,14 +91,15 @@ const stylesProfile = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 50,
+    top: 40,
+    right:15,
   },
   orContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10, // Adjust as needed
-    top: 10,
+    top: 70,
     left: -10,
   },
   orText: {

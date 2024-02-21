@@ -36,13 +36,13 @@ const AddNewMeetingScreen = ({ route }) => {
       alert(error.message);
     }
   };
-
+  
   const AddButton = async () => {
     try {
 
       let stringDate;
       let stringTime;
-
+  
       // timestamp
       const combinedDateTimestamp = new Date(selectedDate);
       combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
@@ -53,7 +53,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
       // stringDate = combinedDateTimestamp.toLocaleDateString('he-IL');
       // stringTime = selectedTime.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' });
-
+  
       MeetingService.handleAddNewMeeting(groupName, location, stringDate, stringTime, combinedDateTimestamp, totalCapacity);
 
       const content = `${groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
@@ -64,6 +64,7 @@ const AddNewMeetingScreen = ({ route }) => {
       alert(error.message);
     }
   };
+
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>

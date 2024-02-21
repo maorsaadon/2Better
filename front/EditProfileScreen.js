@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { useNavigation} from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 import { userFirstName, userLastName, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
@@ -90,11 +90,11 @@ const EditProfileScreen = () => {
         uploadBytes(storageRef, blob).then((snapshot) => {
           console.log('Uploaded a blob or file!');
         });
-      await UserService.updateUserImage();
+        await UserService.updateUserImage();
       } catch (error) {
         console.error(error);
       }
-      
+
     }
   };
 
@@ -153,7 +153,7 @@ const EditProfileScreen = () => {
           placeholder="Last Name"
         />
 
-        <Text style={styles.label}>City:</Text>
+        <Text style={[styles.label, { right: 120 }]}>City:</Text>
         <TextInput
           style={styles.input}
           value={city}
@@ -162,8 +162,11 @@ const EditProfileScreen = () => {
           placeholder="City"
         />
 
-        <Button title="Save" onPress={handleSave} style={styles.saveButton} />
+        {/* <Button title="Save" onPress={handleSave} style={styles.saveButton} /> */}
       </View>
+      <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+        <Text style={styles.buttonSaveText}>Save</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -186,35 +189,39 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   label: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#366A68",
     fontSize: 15,
     padding: 15,
     borderRadius: 10,
     color: "white",
     fontWeight: "bold",
     marginTop: 10,
+    right: 95,
   },
   input: {
     width: "80%",
-    backgroundColor: "white",
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#366A68",
     borderWidth: 2,
   },
   saveButton: {
-    marginTop: 100,
+    bottom: 30,
+    left: 160,
+    padding:10,
+    width:"20%",
+    backgroundColor: "#366A68",
+    marginTop: 5,
+    borderRadius: 20,
+  },
+  buttonSaveText: {
+    left: 10,
+    color: "white",
+    fontWeight: "700",
+    fontSize: 18,
+
   },
 });
-
-      // const storage = getStorage();
-
-      // const storageRef = ref(storage, `UsersProfilePics/${firstName+ '2'} `);
-      // file = result.Image
-      // // 'file' comes from the Blob or File API
-      // uploadBytes(storageRef, file).then((snapshot) => {
-      //   console.log('Uploaded a blob or file!');
-      // });
-      // Function to upload image

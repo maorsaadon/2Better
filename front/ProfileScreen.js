@@ -15,11 +15,11 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
   Entypo,
-  } from "@expo/vector-icons";
+} from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import { userFirstName, userLastName, UserCity, userImageUpload, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
-import { auth} from "../back/firebase";
+import { auth } from "../back/firebase";
 import { stylesProfile } from "../components/StylesSheets"
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Alert } from 'react-native';
@@ -42,10 +42,10 @@ const ProfileScreen = () => {
         setCity(UserCity);
       } catch (error) {
         console.error("Error fetching user details:", error);
-      } 
+      }
       const storage = getStorage();
       var storageRef;
-      
+
       if (userImageUpload == 0) {
         storageRef = ref(storage, 'UsersProfilePics/' + 'defaultProfile.jpeg');
       }
@@ -60,7 +60,7 @@ const ProfileScreen = () => {
         console.error('Error retrieving image:', error);
       }
 
-      console.log(" The number is and ",userImageUpload);
+      console.log(" The number is and ", userImageUpload);
     };
 
     fetchUserDetails();
@@ -105,18 +105,24 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
 
-  const logOutTo =() => {
+  const logOutTo = () => {
     auth
-    .signOut()
-    .then(() => {
-      navigation.replace("Entry");
-      console.log("Log Out From User");
-    })
-    .catch((error) => alert(error.message));
+      .signOut()
+      .then(() => {
+        navigation.replace("Entry");
+        console.log("Log Out From User");
+      })
+      .catch((error) => alert(error.message));
   }
 
   return (
     <ImageBackground source={myLogoPic} style={stylesProfile.backgroundImage}>
+      <TouchableOpacity onPress={logOutTo} style={stylesProfile.buttonLogOut}>
+        <Entypo name="log-out" size={30} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleEdit} style={stylesProfile.buttonEdit}>
+        <FontAwesome5 name="user-edit" size={30} color="black" />
+      </TouchableOpacity>
       <View style={stylesProfile.container}>
         <TouchableOpacity onPress={handleEdit} style={[ stylesProfile.buttonEditProfile]}>
           <FontAwesome5 name="user-edit" size={30} color="black" />
@@ -128,6 +134,7 @@ const ProfileScreen = () => {
           style={{
             alignItems: "center",
             marginVertical: 22,
+            right:10,
           }}
         >
           <Image
@@ -161,16 +168,21 @@ const ProfileScreen = () => {
             <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' , marginRight: 100}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
           <MaterialIcons name="location-on" size={26} color="black" />
           <Text style={stylesProfile.valueNew}>{userCity}</Text>
 
-          {/* <View>
-            <Text style={styles.valueNew}>
-              {city}
-            </Text>
-          </View> */}
         </View>
+        <TouchableOpacity onPress={handleEdit} style={stylesProfile.buttonEdit}>
+          <FontAwesome5 name="user-edit" size={30} color="black" />
+          <Text style={stylesProfile.buttonTextEdit}>Edit User</Text>
+        </TouchableOpacity>
+
+        <View style={stylesProfile.orContainer}>
+            <View style={stylesProfile.line} />
+              <Text style={stylesProfile.orText}>Or</Text>
+            <View style={stylesProfile.line} />
+          </View>
 
         <TouchableOpacity onPress={handleDelete} style={stylesProfile.buttonDelete}>
           <Text style={stylesProfile.buttonText}>Delete Account</Text>
