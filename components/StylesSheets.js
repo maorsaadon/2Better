@@ -37,7 +37,6 @@ const stylesProfile = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 180,
-    
   },
   buttonText: {
     color: "white",
@@ -89,7 +88,7 @@ const stylesProfile = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    top: 40,
+    top: 44,
     right:15,
   },
   orContainer: {
