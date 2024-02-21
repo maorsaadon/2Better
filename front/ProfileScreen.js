@@ -118,6 +118,9 @@ const ProfileScreen = () => {
   return (
     <ImageBackground source={myLogoPic} style={stylesProfile.backgroundImage}>
       <View style={stylesProfile.container}>
+        <TouchableOpacity onPress={handleEdit} style={[ stylesProfile.buttonEditProfile]}>
+          <FontAwesome5 name="user-edit" size={30} color="black" />
+        </TouchableOpacity>
         <TouchableOpacity onPress={logOutTo} style={stylesProfile.buttonLogOut}>
           <Entypo name="log-out" size={30} color="black" />
         </TouchableOpacity>
@@ -168,19 +171,8 @@ const ProfileScreen = () => {
             </Text>
           </View> */}
         </View>
-        <TouchableOpacity onPress={handleEdit} style={stylesProfile.buttonEdit}>
-          <FontAwesome5 name="user-edit" size={30} color="black" />
-          <Text style={stylesProfile.buttonTextEdit}>Edit User</Text>
-        </TouchableOpacity>
-
-        <View style={stylesProfile.orContainer}>
-            <View style={stylesProfile.line} />
-              <Text style={stylesProfile.orText}>Or</Text>
-            <View style={stylesProfile.line} />
-          </View>
 
         <TouchableOpacity onPress={handleDelete} style={stylesProfile.buttonDelete}>
-          <AntDesign name="deleteuser" size={30} color="black" />
           <Text style={stylesProfile.buttonText}>Delete Account</Text>
         </TouchableOpacity>
 
