@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: 300,
   },
   button: {
-    backgroundColor: "#366A68",
+    backgroundColor: "rgba(54, 106, 104, 0.8)",
     width: "90%", // This will make the button fill the container
     padding: 15,
     borderRadius: 20,

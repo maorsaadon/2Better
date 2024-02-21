@@ -27,7 +27,7 @@ const MeetingMembersList = ({ route }) => {
 
   useEffect(() => {
     const meetingRef = db.collection("Meetings").doc(meeting.id);
-    
+
     const unsubscribe = onSnapshot(meetingRef, (doc) => {
       try {
         const meetingData = doc.data();
@@ -44,27 +44,27 @@ const MeetingMembersList = ({ route }) => {
     };
   }, [meeting.id]);
 
-// useEffect(() => {
-//   const unsubscribe = onSnapshot(
-//     query(collection(db, 'Meetings', meeting.id, 'Members')),
-//     (snapshot) => {
-//       const getMeetingMembers = async () => {
-//         const meetingsData = await MeetingService.getMembers(meeting.id);
-//         setMeetingMembers(meetingsData); // Update the state with the fetched data
-//       };
+  // useEffect(() => {
+  //   const unsubscribe = onSnapshot(
+  //     query(collection(db, 'Meetings', meeting.id, 'Members')),
+  //     (snapshot) => {
+  //       const getMeetingMembers = async () => {
+  //         const meetingsData = await MeetingService.getMembers(meeting.id);
+  //         setMeetingMembers(meetingsData); // Update the state with the fetched data
+  //       };
 
-//       getMeetingMembers();
-//     },
-//     (error) => {
-//       console.error("Error fetching meeting members: ", error);
-//     }
-//   );
+  //       getMeetingMembers();
+  //     },
+  //     (error) => {
+  //       console.error("Error fetching meeting members: ", error);
+  //     }
+  //   );
 
-//   return () => {
-//     // Unsubscribe the snapshot listener when the component is unmounted
-//     unsubscribe();
-//   };
-// }, [meeting.id]);
+  //   return () => {
+  //     // Unsubscribe the snapshot listener when the component is unmounted
+  //     unsubscribe();
+  //   };
+  // }, [meeting.id]);
 
 
   const handleRemovePress = async (email) => {
@@ -75,26 +75,26 @@ const MeetingMembersList = ({ route }) => {
     }
   };
 
-    
-    // const getMemberDetails = async (email) => {
-    //     try {
-    //       const snapshot = await db.collection("Users").doc(email).get();
-    //       if (snapshot.exists) {
-    //         const userData = snapshot.data();
-    //         return userData; // Return the member details
-    //       } else {
-    //         console.log("No such document!");
-    //         return null; // Return null if the document does not exist
-    //       }
-    //     } catch (error) {
-    //       console.error("Error fetching user details: ", error);
-    //       throw error; // Throw the error to be caught in the calling function
-    //     }
-    //   };
-    
+
+  // const getMemberDetails = async (email) => {
+  //     try {
+  //       const snapshot = await db.collection("Users").doc(email).get();
+  //       if (snapshot.exists) {
+  //         const userData = snapshot.data();
+  //         return userData; // Return the member details
+  //       } else {
+  //         console.log("No such document!");
+  //         return null; // Return null if the document does not exist
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user details: ", error);
+  //       throw error; // Throw the error to be caught in the calling function
+  //     }
+  //   };
+
   const backButton = () => {
     try {
-      navigation.navigate("GroupMeetings" , {group});
+      navigation.navigate("GroupMeetings", { group });
     } catch (error) {
       alert(error.message);
     }
@@ -115,62 +115,60 @@ const MeetingMembersList = ({ route }) => {
   //   // setModalVisible(true);
   //   MeetingService.removeUserFromMeetingMembers(meeting.id,meetingMembers);
   // };
-  
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
 
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-              <AntDesign name="back" size={30} color="black" />
-        </TouchableOpacity>
+      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <AntDesign name="back" size={30} color="black" />
+      </TouchableOpacity>
+      <DataTable.Header style={styles.header}>
+        <DataTable.Title style={[styles.title, { left: 20 }]}>Members</DataTable.Title>
+        <DataTable.Title style={[styles.title, { left: 65 }]}>Member Details</DataTable.Title>
+        <DataTable.Title style={[styles.title, { left: 60 }]}>Remove</DataTable.Title>
+      </DataTable.Header>
+      <ScrollView style={styles.scrollView}>
         <View style={styles.wrapper}>
-            <DataTable.Header style={styles.header}>
-              <DataTable.Title style={[styles.title, { left: 10,}]}>Members</DataTable.Title>
-              <DataTable.Title style={[styles.title, { left: 65 }]}>Member Details</DataTable.Title>
-              <DataTable.Title style={[styles.title, { left: 60 }]}>Remove</DataTable.Title>
-            </DataTable.Header>
+          <DataTable>
+            {meetingMembers.map((email) => (
+              <DataTable.Row key={email} style={styles.row}>
+                <DataTable.Cell style={styles.cell}>{email}</DataTable.Cell>
+                <TouchableOpacity onPress={() => handlePress(email)} style={[styles.rowButton, styles.showButton]}>
+                  <Text style={styles.buttonText}>Show</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleRemovePress(email)} style={[styles.rowButton, styles.deleteButton]}>
+                  {/* <Text style={styles.buttonText}>Remove</Text> */}
+                  {/* <FontAwesome name="remove" size={30} color="black" /> */}
+                  <MaterialIcons name='person-remove' size={20} color='white' />
+                </TouchableOpacity>
+              </DataTable.Row>
+            ))}
+          </DataTable>
         </View>
-        <ScrollView style={styles.scrollView}>
-      <View style={styles.wrapper}>
-        <DataTable>
-          {meetingMembers.map((email) => (
-            <DataTable.Row key={email} style={styles.row}>
-              <DataTable.Cell style={styles.cell}>{email}</DataTable.Cell>
-              <TouchableOpacity onPress={() => handlePress(email)} style={[styles.rowButton, { backgroundColor: "#0782F9", left: -10 , justifyContent: 'center', alignItems: 'center'}]}>
-                <Text style={styles.buttonText}>Show</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleRemovePress(email)} style={[styles.rowButton, { backgroundColor: "red", left: 20 , width: '20%' ,  justifyContent: 'center', alignItems: 'center' }]}>
-                {/* <Text style={styles.buttonText}>Remove</Text> */}
-                {/* <FontAwesome name="remove" size={30} color="black" /> */}
-                <MaterialIcons name='person-remove' size={20} color='white'/>
-              </TouchableOpacity>
-            </DataTable.Row>
-          ))}
-        </DataTable>
-      </View>
-    </ScrollView>
+      </ScrollView>
       {/* Modal for displaying meeting details */}
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-            setModalVisible(!modalVisible);
+          setModalVisible(!modalVisible);
         }}
-        >
+      >
         <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+          <View style={styles.modalView}>
             <Text style={styles.modalText}>First name: {selectedMember?.FirstName}</Text>
             <Text style={styles.modalText}>Last name: {selectedMember?.LastName}</Text>
             <Text style={styles.modalText}>City: {selectedMember?.City}</Text>
             <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
             >
-                <Text style={styles.textStyle}>Hide Details</Text>
+              <Text style={styles.textStyle}>Hide Details</Text>
             </Pressable>
-            </View>
+          </View>
         </View>
-    </Modal>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -195,40 +193,30 @@ const styles = StyleSheet.create({
     top: -80,
   },
   wrapper: {
-    marginTop: 100,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    marginTop: 110,
     borderRadius: 10,
-    padding: 10,
+    padding: 0,
   },
   header: {
-    backgroundColor: '#2196F3',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    overflow: 'hidden',
+    marginTop: 110,
+    backgroundColor: 'rgba(54, 106, 104, 0.7)',
   },
   title: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 60,
+    fontWeight: '800',
   },
   row: {
     backgroundColor: '#e0e0e0',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    borderRadius: 5,
-    marginVertical: 1,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    marginTop: 10,
+    borderRadius: 20,
   },
   cell: {
     fontSize: 16,
     paddingVertical: 10,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#366A68',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -240,9 +228,23 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   rowButton: {
-    padding: 10,
-    borderRadius: 5,
+    padding: 15,
+    borderRadius: 20,
     right: 60,
+  },
+  showButton: {
+    backgroundColor: "#366A68",
+    left: -10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+  },
+  deleteButton: {
+    backgroundColor: "#8B1B1B",
+    left: 16,
+    width: '20%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   centeredView: {
     flex: 1,
@@ -266,7 +268,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#366A68",
     marginTop: 15, // Added margin top for spacing from the text
   },
   textStyle: {

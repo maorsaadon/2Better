@@ -136,9 +136,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "100%",
-    backgroundColor: "#366A68",
-
-
   },
   inputLocation: {
     color: 'white',
@@ -148,13 +145,14 @@ const styles = StyleSheet.create({
 
     width: '65%',
     bottom: -150,
-    backgroundColor: "#366A68",
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 20,
     marginTop: 5,
-    borderColor: "#E9F1E9",
+    borderColor: "#366A68",
     borderWidth: 2,
+    left: 70,
 
   },
   buttonContainer: {

@@ -36,7 +36,7 @@
 //   const [hours, setHours] = useState("");
 //   const [minutes, setMinutes] = useState("");
 //   const [seconds, setSeconds] = useState("");
-  
+
 
 //   // Define a function to get the current date without time
 //   const getToday = () => {
@@ -127,7 +127,7 @@
 //           <TouchableOpacity onPress={backButton} style={styles.backButton}>
 //             <MaterialIcons name="chevron-left" size={30} color="white" />
 //           </TouchableOpacity>
-          
+
 //           <TouchableOpacity onPress={() => { showDatePicker()}} style={[styles.button, styles.buttonOutline, styles.dateButtom]}>
 //             <Text>{selectedDate}</Text>
 //           </TouchableOpacity>
@@ -271,7 +271,7 @@
 // });
 
 import { useNavigation } from "@react-navigation/core";
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -309,41 +309,41 @@ const EditMeetingScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const backButton = () => {
-      try {
-        navigation.replace("GroupMeetings" , {group});
-      } catch (error) {
-        alert(error.message);
-      }
+    try {
+      navigation.replace("GroupMeetings", { group });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleEditButton = async () => {
-      try {
-        
-        let stringDate;
-        let stringTime;
-    
-        // timestamp
-        const combinedDateTimestamp = new Date(selectedDate);
-        combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
+    try {
 
-        // Await the asynchronous functions
-        stringDate = await MeetingService.getDateFromTimestamp(combinedDateTimestamp);
-        stringTime = await MeetingService.getTimeFromTimestamp(combinedDateTimestamp);
-    
-        // Update the meeting details
-        await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp, totalCapacity);
+      let stringDate;
+      let stringTime;
+
+      // timestamp
+      const combinedDateTimestamp = new Date(selectedDate);
+      combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
+
+      // Await the asynchronous functions
+      stringDate = await MeetingService.getDateFromTimestamp(combinedDateTimestamp);
+      stringTime = await MeetingService.getTimeFromTimestamp(combinedDateTimestamp);
+
+      // Update the meeting details
+      await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp, totalCapacity);
 
 
-        //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
-        
-        // Handle other operations as needed (e.g., notification)
-        //NotificationService.handleAddNewNotification(meeting.groupName, content, "Meeting Updated", serverTimestamp());
-      
-        // Navigate back to the MyGroups screen
-        navigation.replace("MyGroups");
-      } catch (error) {
-        alert(error.message);
-      }
+      //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
+
+      // Handle other operations as needed (e.g., notification)
+      //NotificationService.handleAddNewNotification(meeting.groupName, content, "Meeting Updated", serverTimestamp());
+
+      // Navigate back to the MyGroups screen
+      navigation.replace("MyGroups");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   // const handleMembersListButton = () => {
@@ -351,76 +351,75 @@ const EditMeetingScreen = ({ route }) => {
   //   navigation.navigate("MeetingMembersList" , {meeting} );
   // };
 
-  const handleDeletePress = () =>{
+  const handleDeletePress = () => {
 
-    GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
+    GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
 
     MeetingService.handleDeleteMeeting(meeting.id);
 
     console.log('Click on Delete!');
 
     navigation.replace("MyGroups");
-    
+
   };
 
   return (
-      <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-        <SafeAreaView style={styles.safeArea} behavior="padding">
-          <View style={styles.inputContainer}>
+    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+      <SafeAreaView style={styles.safeArea} behavior="padding">
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
+        <View style={styles.inputContainer}>
 
-            <TouchableOpacity onPress={backButton} style={styles.backButton}>
-              <AntDesign name="back" size={30} color="black" />
-            </TouchableOpacity>
 
-            <DatePickerWithTime
-              meeting={meeting}
-              date={selectedDate}
-              setDate={setSelectedDate}
-              time={selectedTime}
-              setTime={setSelectedTime}
+
+          <DatePickerWithTime
+            meeting={meeting}
+            date={selectedDate}
+            setDate={setSelectedDate}
+            time={selectedTime}
+            setTime={setSelectedTime}
+          />
+
+          <View style={styles.LocationTextInputContainer}>
+            <TextInput
+              placeholder="Location"
+              value={location}
+              onChangeText={(text) => setLocation(text)}
+              onFocus={() => setLocation("")} // Clear text on focus
+              style={styles.input}
             />
+          </View>
 
-            <View style={styles.LocationTextInputContainer}>
-              <TextInput
-                placeholder="Location"
-                value={location}
-                onChangeText={(text) => setLocation(text)}
-                onFocus={() => setLocation("")} // Clear text on focus
-                style={styles.input}
-              />
-            </View>
-
-            <View style={styles.LocationTextInputContainer}>
-              <TextInput
-                placeholder="Total Capacity"
-                value={totalCapacity}
-                onChangeText={(text) => setTotalCapacity(text)}
-                onFocus={() => setTotalCapacity("")} // Clear text on focus
-                style={styles.input}
-              />
-            </View>
+          <View style={styles.LocationTextInputContainer}>
+            <TextInput
+              placeholder="Total Capacity"
+              value={totalCapacity}
+              onChangeText={(text) => setTotalCapacity(text)}
+              onFocus={() => setTotalCapacity("")} // Clear text on focus
+              style={styles.input}
+            />
           </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleEditButton} style={[styles.button, styles.buttonOutline]}>
-              <Text style={styles.buttonOutlineText}>Save</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.orContainer}>
-            <View style={styles.line} />
-              <Text style={styles.orText}>or</Text>
-            <View style={styles.line} />
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
-              <Text style={styles.buttonText}>Delete meeting</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      </ImageBackground>
-    );
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={handleEditButton} style={[styles.button, styles.buttonOutline]}>
+            <Text style={styles.buttonOutlineText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.orContainer}>
+          <View style={styles.line} />
+          <Text style={styles.orText}>or</Text>
+          <View style={styles.line} />
+        </View>
+          <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
+            <Text style={styles.buttonText}>Delete meeting</Text>
+          </TouchableOpacity>
+      </SafeAreaView>
+    </ImageBackground>
+  );
 };
-    
-  
+
+
 export default EditMeetingScreen;
 
 
@@ -446,8 +445,8 @@ const styles = StyleSheet.create({
     position: "absolute", // Use absolute positioning
     top: -200, // Align to the bottom
     left: -40, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
+    top: 35, // Optional margin to add some space from the bottom
+    left: -10,
   },
   backButtonText: {
     alignSelf: "center",
@@ -462,34 +461,36 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#366A68",
     borderWidth: 2,
   },
-  LocationTextInputContainer:{
+  LocationTextInputContainer: {
     bottom: -150,
+    marginBottom:10,
   },
   buttonContainer: {
-    width: "60%",
+    width: "40%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
     bottom: -180,
+ 
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     width: "100%",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 20,
     alignItems: "center",
     top: -20,
   },
-  Memberbutton:{
-    backgroundColor: "white",
+  Memberbutton: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     width: 150,
     paddingVertical: 10,
     borderRadius: 10,
@@ -497,39 +498,40 @@ const styles = StyleSheet.create({
     top: -30,
   },
   MemberButtonOutline: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     marginTop: 1,
-    borderColor: "#0782F9",
+    borderColor: "#366A68",
     borderWidth: 2,
   },
   buttonOutline: {
-    backgroundColor: "white",
+    //width: '80',
+    backgroundColor: "#366A68",
     marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
   },
-  MemberButtonOutlineText:{
+  MemberButtonOutlineText: {
     color: "black",
     fontWeight: "700",
     fontSize: 16,
     alignSelf: 'center',
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "white",
     fontWeight: "700",
     fontSize: 16,
   },
   deleteButton: {
-    backgroundColor: "red",
+    backgroundColor: "#8B1B1B",
     width: 150,
     height: 50,
-    paddingVertical: 10,
-    borderRadius: 10,
-    opacity: 1,
+    padding: 15,
+    borderRadius: 20,
+    bottom: 10,
+    top: 190,
   },
   buttonText: {
     alignSelf: "center",
     color: "white",
+    fontWeight: "700",
   },
   backgroundImage: {
     flex: 1,
