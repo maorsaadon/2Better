@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Text,
   TouchableOpacity,
-  
+
 } from "react-native";
 import myLogoPic from "../assets/default.png";
 import MeetingService from "../back/MeetingService";
@@ -16,10 +16,10 @@ import ManagerMeetingCard from "../components/ManagerMeetingCard";
 import { AntDesign } from "@expo/vector-icons";
 
 const GroupMeetingsScreen = ({ route }) => {
-  
+
   const navigation = useNavigation();
   const { group } = route.params;
-  const groupName = group.GroupName; 
+  const groupName = group.GroupName;
   console.log("in the grouppppppp:", group);
   const [managerMeetings, setManagerMeetings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +42,7 @@ const GroupMeetingsScreen = ({ route }) => {
 
   const handleAddNewMeeting = () => {
     try {
-      navigation.replace("AddNewMeeting", {groupName});
+      navigation.replace("AddNewMeeting", { groupName });
     } catch (error) {
       alert(error.message);
     }
@@ -58,31 +58,30 @@ const GroupMeetingsScreen = ({ route }) => {
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      
-      <View style={styles.container}>
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
-        <AntDesign name="back" size={30} color="black" />
-      </TouchableOpacity>
-        {isLoading ? (
-          <ActivityIndicator size="large" color="black" />
-        ) : (
-          <ScrollView>
+      <ScrollView>
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={handleAddNewMeeting}
+            style={styles.addMeetingButton}
+          >
+            <Text style={styles.buttonText}>Add New Metting</Text>
+          </TouchableOpacity>
+        <View style={styles.container}>
+
+          {isLoading ? (
+            <ActivityIndicator size="large" color="black" />
+          ) : (
             <View style={styles.container}>
               {managerMeetings.map((meeting, index) => (
                 <ManagerMeetingCard key={index} meeting={meeting} group={group} />
               ))}
             </View>
-          </ScrollView>
-        )}
-      </View>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={handleAddNewMeeting}
-          style={styles.addMeetingButton}
-        >
-          <Text style={styles.buttonText}>Add New Metting</Text>
-        </TouchableOpacity>
-      </View>
+          )}
+        </View>
+
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -90,11 +89,11 @@ const GroupMeetingsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "flex-start", 
     alignItems: "center",
-    paddingTop: 40,
     flexDirection: "column",
     gap: 35,
+    marginTop: 30,
   },
   backgroundImage: {
     flex: 1,
@@ -107,11 +106,12 @@ const styles = StyleSheet.create({
     color: "white",
   },
   addMeetingButton: {
+    width : '50%',
     backgroundColor: "#325E54",
     padding: 10,
-    borderRadius: 10,
-    marginTop: 0,
-    marginLeft: 0,
+    borderRadius: 20,
+    marginTop: 100,
+    left: 100,
   },
   backButton: {
     position: "absolute", // Use absolute positioning

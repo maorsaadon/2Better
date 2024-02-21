@@ -36,13 +36,13 @@ const AddNewMeetingScreen = ({ route }) => {
       alert(error.message);
     }
   };
-  
+
   const AddButton = async () => {
     try {
 
       let stringDate;
       let stringTime;
-  
+
       // timestamp
       const combinedDateTimestamp = new Date(selectedDate);
       combinedDateTimestamp.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
@@ -53,7 +53,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
       // stringDate = combinedDateTimestamp.toLocaleDateString('he-IL');
       // stringTime = selectedTime.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' });
-  
+
       MeetingService.handleAddNewMeeting(groupName, location, stringDate, stringTime, combinedDateTimestamp, totalCapacity);
 
       const content = `${groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
@@ -68,12 +68,10 @@ const AddNewMeetingScreen = ({ route }) => {
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+          <AntDesign name="back" size={30} color="black" />
+        </TouchableOpacity>
         <View style={styles.inputContainer}>
-
-          <TouchableOpacity onPress={backButton} style={styles.backButton}>
-            <AntDesign name="back" size={30} color="black" />
-          </TouchableOpacity>
-
           <DatePickerWithTime
             date={selectedDate}
             setDate={setSelectedDate}
@@ -122,14 +120,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute", // Use absolute positioning
-    top: -250, // Align to the bottom
-    left: -40, // Align to the left
+    top: 50, // Align to the bottom
+    left: -20, // Align to the left
     marginBottom: 10, // Optional margin to add some space from the bottom
     marginLeft: 10, // Optional margin to add some space from the left
   },
   backButtonText: {
     alignSelf: "center",
-    
+
   },
   container: {
     flex: 1,
@@ -137,21 +135,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputContainer: {
-    width: "80%",
-    
+    width: "100%",
+    backgroundColor: "#366A68",
+
+
   },
-  input: {
+  inputLocation: {
+    color: 'white',
+    left: 90,
+  },
+  LocationTextInputContainer: {
+
+    width: '65%',
+    bottom: -150,
     backgroundColor: "#366A68",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 5,
     borderColor: "#E9F1E9",
     borderWidth: 2,
-  },
-  LocationTextInputContainer:{
-    color: "#E9F1E9",
-    bottom: -150,
+
   },
   buttonContainer: {
     width: "60%",
@@ -163,8 +167,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#366A68",
     width: "100%",
-    padding: 15,
-    borderRadius: 10,
+    padding: 13,
+    borderRadius: 20,
     alignItems: "center",
   },
   buttonOutline: {
@@ -175,7 +179,6 @@ const styles = StyleSheet.create({
   },
   buttonOutlineText: {
     color: "white",
-    fontWeight: "700",
     fontSize: 16,
   },
   backgroundImage: {

@@ -114,6 +114,7 @@ import {
       alignItems: "center",
       justifyContent: "space-around",
       gap: 10,
+      marginTop: 10,
     },
     container: {
       backgroundColor: "#5B8BDF",
@@ -202,7 +203,7 @@ import {
       marginLeft: 0,
     },
     editButton: {
-      backgroundColor: "#448072",
+      backgroundColor: "#325E54",
       padding: 10,
       borderRadius: 10,
       marginTop: 0,

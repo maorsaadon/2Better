@@ -259,7 +259,7 @@ import {
       color: "gray",
   },
   button: {
-      backgroundColor: "black",
+      backgroundColor: "#325E54",
       width: 110,
       paddingVertical: 10,
       borderRadius: 10,
