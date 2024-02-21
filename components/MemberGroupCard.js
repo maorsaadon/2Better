@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     width: 120,
     paddingVertical: 10,
     borderRadius: 10,
+    top: 5,
   },
   buttonText: {
     alignSelf: "center",

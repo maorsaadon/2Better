@@ -169,6 +169,7 @@ button: {
     paddingVertical: 10,
     borderRadius: 10,
     opacity: 1,
+    top: 5,
 },
 buttonText: {
     alignSelf: "center",
