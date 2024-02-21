@@ -22,6 +22,7 @@ import NotificationService from "../back/NotificationsService";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
 import { auth } from "../back/firebase";
+import React, { useEffect, useState } from "react";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -30,6 +31,7 @@ const ResultGroupCard = ({ group }) => {
   const groupName = group?.GroupName ?? "Default Name";
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
   const NumOfMembers = group.Members ;
+  const [isRequest, setIsRequest] = useState(true);
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to join your group: `" + groupName +"`"
 
@@ -53,6 +55,7 @@ const ResultGroupCard = ({ group }) => {
   };
 
   const handleRequestPress = () =>{
+    setIsRequest(false);
     NotificationService.handleAddNewNotification(groupName, content, "Group Join request", serverTimestamp(), auth.currentUser.email, groupLeaderEmail);
   };
 
@@ -80,14 +83,14 @@ const ResultGroupCard = ({ group }) => {
             <Text>{NumOfMembers}</Text>
           </View>
         </View>
-        <View style={styles.cardBottomRow}>
+{isRequest &&(        <View style={styles.cardBottomRow}>
           <TouchableOpacity 
           style={styles.button}
           onPress={() => handleRequestPress(groupName)}
           >
             <Text style={styles.buttonText}>Request</Text>
           </TouchableOpacity>
-        </View>
+        </View>)}
       </View>
     </SafeAreaView>
   );
