@@ -164,7 +164,7 @@ subTitle: {
     color: "gray",
 },
 button: {
-    backgroundColor: "black",
+    backgroundColor: "#366A68",
     width: 110,
     paddingVertical: 10,
     borderRadius: 10,
