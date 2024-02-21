@@ -116,7 +116,7 @@ const EditGroupScreen = ({ route }) => {
             <Text style={styles.input}>{leaderEmail}</Text>
           </View>
 
-          <Text style={styles.label}>Sport Type:</Text>
+          <Text style={styles.labelSport}>Sport Type:</Text>
           <View style={styles.dropContainer}>
             <MaterialCommunityIcons
               name="arm-flex"
@@ -148,7 +148,7 @@ const EditGroupScreen = ({ route }) => {
             />
           </View>
 
-          <Text style={styles.label}>City:</Text>
+          <Text style={styles.labelCity}>City:</Text>
           <View style={styles.dropContainer}>
             <MaterialIcons
               name="location-city"
@@ -198,6 +198,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     left: -120,
   },
+  labelCity: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    left: -150,
+    top:10,
+  },
+  labelSport: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    left: -130,
+    top:10,
+  },
   overlay: {
     flex: 1,
     backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
@@ -219,11 +233,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#C3D4D3",
     paddingHorizontal: 35,
     paddingVertical: 5,
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 10,
     marginTop: 5,
     minWidth: "80%",
-    color: "#A9A9A9",
+    color: "black",
     fontSize: 16,
   },
   itemText: {
@@ -237,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C3D4D3",
     paddingHorizontal: 15,
     paddingVertical: 5,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 5,
   },
   icon: {
@@ -278,12 +292,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     zIndex: 1,
     width: "70%",
+    marginBottom: 10,
     
   },
   dropdownStyle: {
     backgroundColor: "#C3D4D3",
     borderColor: "#C3D4D3",
-    borderRadius: 10,
+    borderRadius: 20,
     alignSelf: "flex-end",
     marginTop: 15,
     width: "124%",

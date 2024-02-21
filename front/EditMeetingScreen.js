@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputContainer: {
-    width: "80%",
+    width: "100%",
+    bottom: 50,
   },
   input: {
     backgroundColor: "rgba(233, 241, 233, 0.7)",
@@ -199,14 +200,16 @@ const styles = StyleSheet.create({
   },
   LocationTextInputContainer: {
     bottom: -150,
-    marginBottom:10,
+    marginTop: 20,
+    width: "65%",
+    left: 70,
   },
   buttonContainer: {
     width: "40%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-    bottom: -180,
+    bottom: -140,
  
   },
   button: {
@@ -254,7 +257,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 20,
     bottom: 10,
-    top: 190,
+    top: 170,
   },
   buttonText: {
     alignSelf: "center",
@@ -272,7 +275,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10, // Adjust as needed
-    top: 180,
+    top: 150,
   },
   orText: {
     color: 'black',

@@ -22,17 +22,22 @@ const FindNewGroupScreen = ({ navigation }) => {
   const [isOpenCity, setIsOpenCity] = useState(false);
   const [selectedTypeOfSport, setSelectedTypeOfSport] = useState(null);
   const [isOpenTypeOfSport, setIsOpenTypeOfSport] = useState(false);
+  const [iconVisible, setIconVisible] = useState(true);
+  const [cityVisible, setCityVisible] = useState(true);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, [selectedTypeOfSport, selectedCity]);
 
   const handleTypeOfSportPress = (item) => {
+    setIconVisible(false)
     setSelectedTypeOfSport(item.value);
   };
 
   const handleCityPress = (item) => {
+    setCityVisible(false);
     setSelectedCity(item.value);
+
   };
 
   const handleSearchPress = () => {
@@ -62,12 +67,12 @@ const FindNewGroupScreen = ({ navigation }) => {
       >
         <View style={styles.container}>
           <View style={styles.dropStyleContainer}>
-            <MaterialCommunityIcons
+            {iconVisible && (<MaterialCommunityIcons
             name="arm-flex"
             color="#366A68"
             size={20}
             style={styles.icon}
-            />
+            />)}
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
               items={sportTypeDataSearch}
@@ -94,12 +99,14 @@ const FindNewGroupScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.dropStyleContainer}>
-            <MaterialIcons
-              name="location-city"
-              color="#366A68"
-              size={20}
-              style={styles.icon}
-            />
+          {cityVisible && ( // Conditionally render the icon
+          <MaterialIcons
+            name="location-city"
+            color="#366A68"
+            size={20}
+            style={styles.icon}
+          />
+        )}
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
               items={cityDataSearch}

@@ -94,7 +94,7 @@ const AddNewMeetingScreen = ({ route }) => {
               placeholder="Total Capacity"
               value={totalCapacity}
               onChangeText={(text) => setTotalCapacity(text)}
-              style={styles.input}
+              style={styles.inputText}
             />
           </View>
         </View>
@@ -137,24 +137,20 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "100%",
-  },
-  inputLocation: {
-    color: 'white',
-    left: 90,
+    bottom: 100,
   },
   LocationTextInputContainer: {
-
     width: '65%',
-    bottom: -150,
+    bottom: -160,
     backgroundColor: "rgba(233, 241, 233, 0.7)",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 20,
-    marginTop: 5,
+    marginTop: 20,
     borderColor: "#366A68",
     borderWidth: 2,
     left: 70,
-
+    color:"black",
   },
   buttonContainer: {
     width: "60%",
@@ -179,11 +175,15 @@ const styles = StyleSheet.create({
   buttonOutlineText: {
     color: "white",
     fontSize: 16,
+    fontWeight: "700"
   },
   backgroundImage: {
     flex: 1,
     width: "100%",
     height: "100%",
     justifyContent: "center",
+  },
+  inputText:{
+    color: "black",
   },
 });
