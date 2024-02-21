@@ -7,7 +7,6 @@ const stylesProfile = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
-    bottom: 60,
   },
   buttonEditProfile: {
     width: "20%",
@@ -44,7 +43,6 @@ const stylesProfile = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
-    left:5,
   },
   buttonTextEdit: {
     color: "#366A68",

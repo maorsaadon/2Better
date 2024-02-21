@@ -124,12 +124,6 @@ const ProfileScreen = () => {
         <FontAwesome5 name="user-edit" size={30} color="black" />
       </TouchableOpacity>
       <View style={stylesProfile.container}>
-        <TouchableOpacity onPress={handleEdit} style={[ stylesProfile.buttonEditProfile]}>
-          <FontAwesome5 name="user-edit" size={30} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={logOutTo} style={stylesProfile.buttonLogOut}>
-          <Entypo name="log-out" size={30} color="black" />
-        </TouchableOpacity>
         <View
           style={{
             alignItems: "center",
@@ -173,10 +167,6 @@ const ProfileScreen = () => {
           <Text style={stylesProfile.valueNew}>{userCity}</Text>
 
         </View>
-        <TouchableOpacity onPress={handleEdit} style={stylesProfile.buttonEdit}>
-          <FontAwesome5 name="user-edit" size={30} color="black" />
-          <Text style={stylesProfile.buttonTextEdit}>Edit User</Text>
-        </TouchableOpacity>
 
         <View style={stylesProfile.orContainer}>
             <View style={stylesProfile.line} />
