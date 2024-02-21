@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef  } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -78,14 +78,14 @@ const NotificationsScreen = () => {
     //     new Promise(resolve => setTimeout(resolve, 1000));
     //     setLatestNotification(notifications[notifications.length-1])
     //   });
-    
+
 
     fetchNotifications();
     return () => unsubscribe();
   }, [latestNotification]);
 
   const pressedNotification = (notification) => {
-    if(notification.Type === "New Meeting"){
+    if (notification.Type === "New Meeting") {
       try {
         navigation.navigate('Home', { screen: 'Meetings' });
       } catch (error) {
@@ -93,14 +93,14 @@ const NotificationsScreen = () => {
       }
     }
 
-    if(notification.Type === "Request accepted"){
+    if (notification.Type === "Request accepted") {
       try {
         navigation.navigate('Home', { screen: 'My Groups' });
       } catch (error) {
         alert(error.message);
       }
     }
- }
+  }
 
   const backButton = () => {
     try {
@@ -111,27 +111,29 @@ const NotificationsScreen = () => {
   };
 
   return (
-      <View style={{ flex: 1 }}>
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+    <View style={{ flex: 1 }}>
+      <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
         <View style={styles.container}>
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
-          <AntDesign name="back" size={30} color="black" />
-        </TouchableOpacity>
-        
-        {isLoading ? (
-            <ActivityIndicator size="large" color="black" />
-          ) : (
-            <ScrollView>
+          <ScrollView>
+            <TouchableOpacity onPress={backButton} style={styles.backButton}>
+              <AntDesign name="back" size={30} color="black" />
+            </TouchableOpacity>
+
+            {isLoading ? (
+              <ActivityIndicator size="large" color="black" />
+            ) : (
+
               <View style={styles.container}>
                 {notifications.slice().reverse().map((notification, index) => (
-                <TouchableOpacity onPress={() => pressedNotification(notification)}>
+                  <TouchableOpacity onPress={() => pressedNotification(notification)}>
                     <NotificationCard key={index} notification={notification} />
-                </TouchableOpacity>
+                  </TouchableOpacity>
                 ))}
               </View>
-            </ScrollView>
-          )}
-          </View>
+
+            )}
+          </ScrollView>
+        </View>
       </ImageBackground>
       <Animated.View
         style={{
@@ -146,15 +148,15 @@ const NotificationsScreen = () => {
           alignItems: 'center',
         }}
       >
-          <View style={styles.container}>
-            {latestNotification?(
+        <View style={styles.container}>
+          {latestNotification ? (
             <TouchableOpacity onPress={() => pressedNotification(notifications[notifications.length - 1])}>
-                <NotificationCard notification={notifications[notifications.length - 1]} />
+              <NotificationCard notification={notifications[notifications.length - 1]} />
             </TouchableOpacity>
-          ):null}
+          ) : null}
         </View>
       </Animated.View>
-  </View>
+    </View>
   );
 };
 
@@ -194,11 +196,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", 
-    top: -15, 
-    left: -18, 
-    marginBottom: 10, 
-    marginLeft: 10, 
+    position: "absolute",
+    top: -15,
+    left: -18,
+    marginBottom: 10,
+    marginLeft: 10,
   },
   buttonText: {
     color: "black",

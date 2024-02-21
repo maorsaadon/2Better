@@ -23,6 +23,7 @@ import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
 import GroupService from "../back/GroupService";
 import { auth } from "../back/firebase";
+import React, { useEffect, useState } from "react";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -31,6 +32,7 @@ const MemberGroupCard = ({ group }) => {
   const groupName = group?.GroupName ?? "Default Name";
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
   const NumOfMembers = group.Members;
+  const [pressUnsubscribe, setPressUnsubscribe] = useState(false);
 
   const content = "`" + userFirstName + " " + userLastName + "` wants to unsubscribe to your group `" + groupName +"`"
 
@@ -54,12 +56,15 @@ const MemberGroupCard = ({ group }) => {
   };
 
   const handleUnsubscribePress = () =>{
+    setPressUnsubscribe(true);
     NotificationService.handleAddNewNotification(groupName, content, "Group unsubscribe", serverTimestamp(), auth.currentUser.email, groupLeaderEmail)
     GroupService.handleJoinGroup(true, group.GroupName);
+
   };
 
   return (
     <SafeAreaView>
+      {!pressUnsubscribe ? (
       <View style={styles.card}>
         <View style={styles.cardTopRow}>
           {getSportIcon(group.SportType)}
@@ -90,7 +95,7 @@ const MemberGroupCard = ({ group }) => {
             <Text style={styles.buttonText}>Unsubscribe</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View>) : <Text></Text>}
     </SafeAreaView>
   );
 };
