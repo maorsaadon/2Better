@@ -6,10 +6,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
+  ImageBackground
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import ResultGroupCard from "../components/ResultGroupCard";
 import GroupService from "../back/GroupService";
+import myLogoPic from "../assets/default.png";
 
 const ResultGroupScreen = ({ route, navigation }) => {
   const { selectedCity, selectedTypeOfSport } = route.params;
@@ -55,26 +57,28 @@ const ResultGroupScreen = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.backContainer}>
+    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>         
+    <ScrollView>
+    <View style={{backgroundColor: 'rgba(233, 240, 233, 0.7)'} }> 
       <TouchableOpacity onPress={backButton} style={styles.backButton}>
         <AntDesign name="back" size={30} color="#366A68" />
       </TouchableOpacity>
-      </View>
       <View style={styles.container}>
         {isLoading ? (
           <ActivityIndicator size="large" color="#366A68" />
         ) : (
-          <ScrollView style={{ paddingTop: 10 }}>
+
             <View style={styles.container}>
               {groups.map((group, index) => (
                 <ResultGroupCard key={index} group={group} />
               ))}
             </View>
-          </ScrollView>
+          
         )}
       </View>
-      </SafeAreaView>
+    </View>
+    </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -88,17 +92,12 @@ export const styles = StyleSheet.create({
     paddingBottom: 40,
     backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
-  safeArea: {
-    justifyContent: "flex-start",
-    flexDirection: "column",
-    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
-  },
   container: {
     justifyContent: "flex-start",
-    paddingTop: 30,
     flexDirection: "column",
     gap: 35,
-    backgroundColor: "rgba(233, 240, 233, 0.7)",
+    top: 70,
+    marginBottom: 70,
   },
   card: {
     width: "100%",
@@ -127,17 +126,25 @@ export const styles = StyleSheet.create({
   },
   backButton: {
     width: "20%",
-    padding: 10,
+    //padding: 10,
     borderRadius: 10,
     alignItems: "center",
     position: "absolute",
-    top: 0,
+    top: 50,
     left: -15,
+    bottom: 10,
   },
 
   buttonText: {
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+  },
+  backgroundImage: {
+    
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
   },
 });
