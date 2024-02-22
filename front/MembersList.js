@@ -7,6 +7,7 @@ import { db } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import '../back/MeetingService'
 import MeetingService from '../back/MeetingService';
+import GroupService from '../back/GroupService';
 import {
   AntDesign,
   FontAwesome5,
@@ -18,7 +19,7 @@ import {
 import { onSnapshot, collection, query, getDocs } from 'firebase/firestore';
 
 
-const MeetingMembersList = ({ route }) => {
+const MembersList = ({ route }) => {
   const { meeting, group } = route.params;
   const navigation = useNavigation();
   const [meetingMembers, setMeetingMembers] = useState([]);
@@ -26,23 +27,42 @@ const MeetingMembersList = ({ route }) => {
   const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
-    const meetingRef = db.collection("Meetings").doc(meeting.id);
-
-    const unsubscribe = onSnapshot(meetingRef, (doc) => {
-      try {
-        const meetingData = doc.data();
-        const updatedMeetingMembers = meetingData.Members || [];
-        setMeetingMembers(updatedMeetingMembers);
-      } catch (error) {
-        console.error("Error updating meeting members: ", error);
-      }
-    });
-
+    let unsubscribe;
+  
+    if (meeting) {
+      const meetingRef = db.collection("Meetings").doc(meeting.id);
+  
+      unsubscribe = onSnapshot(meetingRef, (doc) => {
+        try {
+          const meetingData = doc.data();
+          const updatedMeetingMembers = meetingData.Members || [];
+          setMeetingMembers(updatedMeetingMembers);
+        } catch (error) {
+          console.error("Error updating meeting members: ", error);
+        }
+      });
+    } else if (group) {
+      const groupRef = db.collection("Groups").doc(group.GroupName);
+  
+      unsubscribe = onSnapshot(groupRef, (doc) => {
+        try {
+          const groupData = doc.data();
+          const updatedGroupMembers = groupData.Members || [];
+          setMeetingMembers(updatedGroupMembers);
+        } catch (error) {
+          console.error("Error updating group members: ", error);
+        }
+      });
+    }
+  
     return () => {
       // Unsubscribe the snapshot listener when the component is unmounted
-      unsubscribe();
+      if (unsubscribe) {
+        unsubscribe();
+      }
     };
-  }, [meeting.id]);
+  }, [meeting, group]);
+    
 
   // useEffect(() => {
   //   const unsubscribe = onSnapshot(
@@ -75,6 +95,14 @@ const MeetingMembersList = ({ route }) => {
     }
   };
 
+  const handleRemoveGroupPress = async (email) => {
+    try {
+      await GroupService.removeUserFromGroup(group.GroupName, email);
+    } catch (error) {
+      console.error("Error removing user from meeting members: ", error);
+    }
+  };
+
 
   // const getMemberDetails = async (email) => {
   //     try {
@@ -94,7 +122,11 @@ const MeetingMembersList = ({ route }) => {
 
   const backButton = () => {
     try {
-      navigation.navigate("GroupMeetings", { group });
+      if(meeting){
+        navigation.navigate("GroupMeetings", { group });
+      }else{
+        navigation.navigate("MyGroups");
+      }
     } catch (error) {
       alert(error.message);
     }
@@ -130,7 +162,9 @@ const MeetingMembersList = ({ route }) => {
                 <TouchableOpacity onPress={() => handlePress(email)} style={[styles.rowButton, styles.showButton]}>
                   <Text style={styles.buttonText}>Show</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleRemovePress(email)} style={[styles.rowButton, styles.deleteButton]}>
+                <TouchableOpacity 
+                  onPress={() => (meeting ? handleRemovePress(email) : handleRemoveGroupPress(email))} 
+                  style={[styles.rowButton, styles.deleteButton]}>
                   {/* <Text style={styles.buttonText}>Remove</Text> */}
                   {/* <FontAwesome name="remove" size={30} color="black" /> */}
                   <MaterialIcons name='person-remove' size={20} color='white' />
@@ -279,4 +313,4 @@ const styles = StyleSheet.create({
     fontSize: 16, // Adjusted font size for modal text
   },
 });
-export default MeetingMembersList;
+export default MembersList;

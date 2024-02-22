@@ -300,6 +300,32 @@ export const GroupService = {
       console.error("Error subscribing or unsubscribing", error);
     }
   },
+
+  async removeUserFromGroup(groupName, memberEmail) {
+    try {
+      const groupRef = db.collection("Groups").doc(groupName);
+      const snapshot = await groupRef.get();
+
+      if (snapshot.exists) {
+        const group = snapshot.data();
+
+        if (group.Members && group.Members.includes(memberEmail)) {
+          // Remove the userEmail from the Members array and decrement NumberOfMembers atomically
+          await groupRef.update({
+            Members: firebase.firestore.FieldValue.arrayRemove(memberEmail),
+          });
+
+          console.log("User email removed from meeting members successfully.");
+        } else {
+          console.log("User email not found in the meeting members.");
+        }
+      } else {
+        console.log("Meeting does not exist.");
+      }
+    } catch (error) {
+      console.error(`Error removing user from the meeting!`, error);
+    }
+  },
 };
 
 export default GroupService;

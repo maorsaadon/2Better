@@ -64,6 +64,11 @@ import {
         alert(error.message);
       }
     };
+
+    const handleMembersListButton = () => {
+      console.log("Click on members list");
+      navigation.replace("MembersList" ,  {group} );
+    };
   
     return (
       <SafeAreaView>
@@ -85,7 +90,7 @@ import {
               <Text>{group.LeaderEmail}</Text>
             </View>
             <View style={styles.iconAndTextContainer}>
-              <AntDesign name="user" size={22} color="black" />
+              <AntDesign name="user" size={22} color="black" onPress={handleMembersListButton} />
               <Text>{NumOfMembers}</Text>
             </View>
           </View>

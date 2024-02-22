@@ -114,18 +114,8 @@ import {
   
   const handleMembersListButton = () => {
       console.log("Click on members list");
-      navigation.replace("MeetingMembersList" , {meeting , group} );
+      navigation.replace("MembersList" , {meeting , group} );
   };
-  
-  // const handleDeletePress = () =>{
-  
-  //     GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
-  
-  //     // MeetingService.handleDeleteMeeting(meeting.id);
-  
-  //     console.log('Click on Delete!');
-      
-  // };
   
   return (
       <SafeAreaView>

@@ -20,7 +20,7 @@ import AddNewGroupScreen from "./front/AddNewGroupScreen";
 import ResultGroupsScreen from "./front/ResultGroupsScreen";
 import EditGroupScreen from "./front/EditGroupScreen";
 import EditMeetingScreen from "./front/EditMeetingScreen";
-import MeetingMembersListScreen from "./front/MeetingMembersList";
+import MembersListScreen from "./front/MembersList";
 import AboutUsScreen from "./front/AboutUsScreen";
 import CostumerSupportScreen from "./front/CostumerSupportScreen";
 import GroupMeetingsScreen from "./front/GroupMeetingsScreen";
@@ -40,7 +40,7 @@ const GroupsStack = () => {
       <Stack.Screen name="EditGroup" component={EditGroupScreen} />
       <Stack.Screen name="GroupMeetings" component={GroupMeetingsScreen} />
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
-      <Stack.Screen name="MeetingMembersList" component={MeetingMembersListScreen} />
+      <Stack.Screen name="MembersList" component={MembersListScreen} />
     </Stack.Navigator>
   );
 };
@@ -50,7 +50,7 @@ const MeetingStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Meeting" component={UpcomingMeetingScreen} />
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
-      <Stack.Screen name="MeetingMembersList" component={MeetingMembersListScreen} />
+      <Stack.Screen name="MembersList" component={MembersListScreen} />
       
     </Stack.Navigator>
   );
