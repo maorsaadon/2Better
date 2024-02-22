@@ -96,7 +96,7 @@ const HomeScreen = () => {
 
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
-      <ScrollView>
+      <ScrollView style={{backgroundColor: "rgba(233, 240, 233, 0.7)"}}>
         <View style={stylesHome.container}>
           <TouchableOpacity
             onPress={handleNotifications}

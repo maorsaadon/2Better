@@ -15,6 +15,7 @@ import {
   } from "@expo/vector-icons";
   import { useNavigation } from "@react-navigation/core";
   import { GroupService } from "../back/GroupService";
+  import React, { useState, useEffect } from "react";
   import { sportIconMapping_MaterialCommunityIcons, sportIconMapping_FontAwesome, sportIconMapping_FontAwesome5} from "../back/DataBase";
   
   const screenWidth = Dimensions.get("window").width;
@@ -24,6 +25,7 @@ import {
     console.log(group);
     const groupName = group?.GroupName ?? "Default Name";
     const NumOfMembers = group.Members;
+    const [isDelete, setIsDelete] = useState(true);
   
     const getSportIcon = (sportType) => {
       const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -49,7 +51,7 @@ import {
     const deleteButton = (groupName) => {
       try {
         GroupService.handleDeleteGroup(groupName);
-        navigation.replace("MyGroups");
+        setIsDelete(false);
       } catch (error) {
         alert(error.message);
       }
@@ -65,7 +67,7 @@ import {
   
     return (
       <SafeAreaView>
-        <View style={styles.card}>
+        {isDelete && (<View style={styles.card}>
           <View style={styles.cardTopRow}>
             {getSportIcon(group.SportType)}
             <View>
@@ -101,7 +103,7 @@ import {
               <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View>)}
       </SafeAreaView>
     );
   };

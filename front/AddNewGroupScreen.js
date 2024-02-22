@@ -125,11 +125,10 @@ const AddNewGroupScreen = () => {
         </View>
       </TouchableWithoutFeedback>
 
-      <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={AddButton} style={styles.addButton}>
           <Text style={styles.addButtonText}>Add</Text>
         </TouchableOpacity>
-      </View>
+
     </SafeAreaView>
   );
 };
@@ -230,8 +229,8 @@ const styles = StyleSheet.create({
   addButton: {
     backgroundColor: "#366A68",
     width: "40%",
-    padding: 10,
-    borderRadius: 10,
+    padding: 5,
+    borderRadius: 20,
     alignItems: "center",
     paddingBottom: 30,
     top: -30,
@@ -240,5 +239,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+    top: 10,
   },
 });
