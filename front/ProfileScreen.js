@@ -15,9 +15,10 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
   Entypo,
+  Fontisto
 } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity, userImageUpload, userCity } from "../back/UserService";
+import { userFirstName, userLastName, UserCity, userImageUpload, userCity , userAge , userGender } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 import { stylesProfile } from "../components/StylesSheets"
@@ -31,6 +32,10 @@ const ProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
+  const [age , setAge] = useState("");
+  const [gender , setGender] = useState("");
+  const [genderOption , setGenderOption] = useState(false);
+
   //const photo = require("../assets/iconProfile.jpeg");
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -40,6 +45,11 @@ const ProfileScreen = () => {
         setFirstName(userFirstName);
         setLastName(userLastName);
         setCity(UserCity);
+        setAge(userAge);
+        setGender(userCity);
+        if(userGender === "Male"){
+          setGenderOption(true);
+        }
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
@@ -161,6 +171,21 @@ const ProfileScreen = () => {
             <Entypo name="mail" size={30} color="black" />
             <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
           </View>
+        </View>
+        
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
+          {genderOption? (
+          <Fontisto name="male" size={26} color="black" />
+          ) : ( 
+          <Fontisto name="female" size={26} color="black" />
+          )}
+          <Text style={stylesProfile.valueNew}>{userGender}</Text>
+
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
+          <MaterialIcons name="face" color="black" size={20} />
+          <Text style={stylesProfile.valueNew}>{userAge}</Text>
+
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
           <MaterialIcons name="location-on" size={26} color="black" />

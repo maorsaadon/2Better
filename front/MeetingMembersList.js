@@ -110,12 +110,6 @@ const MeetingMembersList = ({ route }) => {
     }
   };
 
-  // const handleDeletePress = (meetingMembers) => {
-  //   // setSelectedMember(meetings);
-  //   // setModalVisible(true);
-  //   MeetingService.removeUserFromMeetingMembers(meeting.id,meetingMembers);
-  // };
-
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
 
@@ -159,7 +153,10 @@ const MeetingMembersList = ({ route }) => {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>First name: {selectedMember?.FirstName}</Text>
             <Text style={styles.modalText}>Last name: {selectedMember?.LastName}</Text>
+            <Text style={styles.modalText}>Gender: {selectedMember?.Gender}</Text>
+            <Text style={styles.modalText}>Age: {selectedMember?.Age}</Text>
             <Text style={styles.modalText}>City: {selectedMember?.City}</Text>
+
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}

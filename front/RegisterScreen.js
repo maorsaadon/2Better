@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import myLogoPic from "../assets/register-page.png";
-import { MaterialIcons} from "@expo/vector-icons";
+import { MaterialIcons , Foundation} from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { cityData } from "../back/DataBase";
 import UserService from "../back/UserService";
@@ -30,6 +30,10 @@ const RegisterScreen = () => {
   const [city, setCity] = useState("");
   const [isOpenCity, setIsOpenCity] = useState(false);
   const [iconVisible, setIconVisible] = useState(true);
+  const [age, setAge] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
+  const [isOpenGender, setIsOpenGender] = useState(false);
+  const [genderIconVisible, setGenderIconVisible] = useState(true);
 
   const navigation = useNavigation();
 
@@ -76,7 +80,7 @@ const RegisterScreen = () => {
       return;
     }
 
-    await UserService.createUserAccount(email, password, firstName, lastName, city);
+    await UserService.createUserAccount(email, password, firstName, lastName, city , selectedGender , age);
     
     await navigation.replace("Login");
 
@@ -106,6 +110,15 @@ const RegisterScreen = () => {
   const handleCityPress = (item) => {
     setIconVisible(false);
     setCity(item.value);
+  };
+
+  const handleAge = (text) => {
+    setAge(text);
+  };
+
+  const handleGenderPress = (item) => {
+    setGenderIconVisible(false);
+    setSelectedGender(item.value);
   };
 
   return (
@@ -213,7 +226,7 @@ const RegisterScreen = () => {
             size={20}
             style={stylesRegister.iconCity}
           />
-        )}
+          )}
             
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
@@ -236,6 +249,56 @@ const RegisterScreen = () => {
               searchable={true}
               searchPlaceholder="Search..."
               onSelectItem={(item) => handleCityPress(item)}
+            />
+          </View>
+          <View style={[stylesRegister.inputRow , {top: -5}]}>
+            <MaterialIcons
+              name="face"
+              color="#366A68"
+              size={20}
+              style={stylesRegister.icon}
+            />
+            <TextInput
+              placeholder="Age"
+              value={age}
+              onChangeText={handleAge}
+              keyboardType="numeric"
+              style={stylesRegister.input}
+            />
+          </View>
+
+          <View style={[stylesRegister.dropContainer , {top: -10}]}>
+          {genderIconVisible && (
+            <Foundation
+              name="male-female"
+              color="#366A68"
+              size={20}
+              style={stylesRegister.iconCity}
+            />
+          )}
+            <DropDownPicker
+              listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
+              items={[
+                { label: "Male", value: "Male" },
+                { label: "Female", value: "Female" },
+              ]}
+              open={isOpenGender}
+              setOpen={() => setIsOpenGender(!isOpenGender)}
+              value={selectedGender}
+              setValue={setSelectedGender}
+              dropDownDirection="DOWN"
+              showArrowIcon={false}
+              mode="BADGE"
+              badgeColors={"#2C64C6"}
+              badgeDotColors={["white"]}
+              badgeTextStyle={{ color: "white" }}
+              placeholder="Select gender"
+              placeholderStyle={stylesRegister.placeHolderStyle}
+              style={stylesRegister.dropdownStyle}
+              itemStyle={stylesRegister.dropdownItemStyle}
+              dropDownStyle={stylesRegister.dropdownListStyle}
+              searchable={false}
+              onSelectItem={(item) => handleGenderPress(item.value)}
             />
           </View>
           <View style= {{width: "60%"}}>

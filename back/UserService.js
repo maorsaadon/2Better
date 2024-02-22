@@ -6,6 +6,8 @@ import "firebase/compat/firestore";
 var userFirstName = "";
 var userLastName = "";
 var userCity = "";
+var userAge = "";
+var userGender = "";
 var userNotificationCounter = 0;
 var userImageUpload = 0;
 
@@ -24,7 +26,7 @@ export const UserService = {
     }
   },
   
-  async createUserAccount(email, password, firstName, lastName, city) {
+  async createUserAccount(email, password, firstName, lastName, city , gender , age) {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
@@ -34,6 +36,8 @@ export const UserService = {
           FirstName: firstName,
           LastName: lastName,
           City: city,
+          Gender: gender,
+          Age: age,
           Email: email,
           ImageUpload: 0,
           NotificationCounter: 0,
@@ -75,6 +79,8 @@ export const UserService = {
             userFirstName = userData.FirstName;
             userLastName = userData.LastName;
             userCity = userData.City;
+            userGender = userData.Gender;
+            userAge = userData.Age;
             userImageUpload = userData.ImageUpload;
             userNotificationCounter = userData.NotificationCounter;
           } else {
@@ -180,6 +186,6 @@ export const UserService = {
 
 };
 
-export { userFirstName, userLastName, userCity, userImageUpload};
+export { userFirstName, userLastName, userCity, userAge, userGender , userImageUpload};
 
 export default UserService;
