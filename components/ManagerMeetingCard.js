@@ -39,15 +39,6 @@ import {
   const totalCapacity = meeting.TotalCapacity || 10;
   const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
   
-  // useEffect(() => {
-      
-  //     const checkUserInMeeting = async () => {
-  //         const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
-  //         setIsUserInMeeting(isInMeeting);
-  //       };
-      
-  //     checkUserInMeeting();
-  //   }, [meeting.id, auth.currentUser.email, meeting.NumberOfMembers]);
   
   useEffect(() => {
       const checkUserInMeeting = async () => {
@@ -116,6 +107,18 @@ import {
       console.log("Click on members list");
       navigation.replace("MembersList" , {meeting , group} );
   };
+
+  const handleDeletePress = () =>{
+
+    GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
+
+    MeetingService.handleDeleteMeeting(meeting.id);
+
+    console.log('Click on Delete!');
+
+    // navigation.replace("MyGroups");
+    
+  };
   
   return (
       <SafeAreaView>
@@ -127,6 +130,12 @@ import {
               <Text style={styles.subTitle}>{meeting.SportType}</Text>
           </View>
           </View>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={handleDeletePress}
+            >
+            <FontAwesome5 name="trash" size={23} color="black" />
+          </TouchableOpacity>
           <View style={styles.cardMiddleRow}>
               <View style={styles.iconAndTextContainer}>
                   <MaterialIcons name="location-on" size={22} color="black" />
@@ -259,13 +268,13 @@ import {
       alignSelf: "center",
       color: "white",
   },
-  // deleteButton: {
-  //     backgroundColor: "red",
-  //     width: 100,
-  //     paddingVertical: 10,
-  //     borderRadius: 10,
-  //     opacity: 1,
-  // },
+  deleteButton: {
+    // Move delete button to the top right corner
+    position: "absolute",
+    top: 0,
+    right: 0,
+    padding: 10,
+  },
   participantContainer: {
       flexDirection: "row",
       alignItems: "center",
@@ -287,4 +296,11 @@ import {
       // Add margin to the left or right to space the text from the slider
       marginHorizontal: 5,
   },
+//   deleteButton: {
+//     backgroundColor: "#8B1B1B",
+//     width: 150,
+//     height: 50,
+//     padding: 15,
+//     borderRadius: 20,
+//   },
   });

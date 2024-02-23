@@ -105,7 +105,8 @@ import {
               onPress={() => deleteButton(groupName)}
               style={styles.deleteButton}
             >
-              <Text style={styles.buttonText}>Delete</Text>
+              <FontAwesome5 name="trash" size={20} color="black" style={styles.buttonText}/>
+              {/* <Text style={styles.buttonText}>Delete</Text> */}
             </TouchableOpacity>
           </View>
         </View>)}

@@ -168,10 +168,9 @@ export const UserService = {
   async deleteUserAccount() {
     try {
       const userEmail = auth.currentUser.email;
-      const userRef = db.collection("Users").doc(userEmail);
 
       // Delete the user document from the "Users" collection in Firestore
-      await firebase.firestore().collection("Users").doc(userEmail).delete();
+      await db.collection("Users").doc(userEmail).delete();
 
       // Delete the user account in Firebase Authentication
       await auth.currentUser.delete();

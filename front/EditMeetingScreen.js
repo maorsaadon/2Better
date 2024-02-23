@@ -74,22 +74,19 @@ const EditMeetingScreen = ({ route }) => {
       }
   };
 
-  // const handleMembersListButton = () => {
-  //   console.log("Click on members list");
-  //   navigation.navigate("MeetingMembersList" , {meeting} );
-  // };
 
-  const handleDeletePress = () =>{
 
-    GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
+  // const handleDeletePress = () =>{
 
-    MeetingService.handleDeleteMeeting(meeting.id);
+  //   GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
 
-    console.log('Click on Delete!');
+  //   MeetingService.handleDeleteMeeting(meeting.id);
 
-    navigation.replace("MyGroups");
+  //   console.log('Click on Delete!');
+
+  //   navigation.replace("MyGroups");
     
-  };
+  // };
 
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
@@ -139,9 +136,9 @@ const EditMeetingScreen = ({ route }) => {
           <Text style={styles.orText}>or</Text>
           <View style={styles.line} />
         </View>
-          <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
+          {/* <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress}>
             <Text style={styles.buttonText}>Delete meeting</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
       </SafeAreaView>
     </ImageBackground>
   );
