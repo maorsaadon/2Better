@@ -32,6 +32,7 @@ const screenWidth = Dimensions.get("window").width;
 const UpcomingMeetingCard = ({ meeting }) => {
 const groupName = meeting?.GroupName ?? "Default Name";
 
+const [isUnJoin, setIsUnJoin] = useState(true);
 
 const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -53,13 +54,14 @@ const getSportIcon = (sportType) => {
 };
 
 const handleUnJoinPress = () => {
+    setIsUnJoin(false);
     MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
     console.log("Click on Join Meeting!");
 };
 
 return (
     <SafeAreaView>
-    <View style={styles.card}>
+    {isUnJoin && (<View style={styles.card}>
         <View style={styles.cardTopRow}>
         {getSportIcon(meeting.SportType)}
         <View>
@@ -86,9 +88,8 @@ return (
           <TouchableOpacity style={styles.button} onPress={handleUnJoinPress}>
             <Text style={styles.buttonText}>UnJoin</Text>
           </TouchableOpacity>
-
         </View>
-    </View>
+    </View>)}
     </SafeAreaView>
 );
 };

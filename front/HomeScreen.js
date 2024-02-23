@@ -7,6 +7,7 @@ import {
   Text,
   ActivityIndicator,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { auth } from "../back/firebase";
@@ -27,45 +28,47 @@ const HomeScreen = () => {
   const [homeMeetingsSuggestions, setHomeMeetingsSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingSugg, setIsLoadingSugg] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   // console.log(`NotificationCounter = ${userNotificationCounter}`);
 
+  const fetchData = async () => {
+    await UserService.getUserDetails();
+  };
+
+  const userRef = doc(db, "Users", auth.currentUser.email);
+
+  const unsubscribe = onSnapshot(userRef, (doc) => {
+    const data = doc.data();
+    setNotificationCounter(data.NotificationCounter);
+  });
+
+  const fetchMeetings = async () => {
+    try {
+      const { homeMeetings } = await MeetingService.functionToHomeScreen();
+      setHomeMeetings(homeMeetings);
+      // const { homeMeetingsSuggestions } = await MeetingService.functionToHomeScreenS();
+      // setHomeMeetingsSuggestions(homeMeetingsSuggestions);
+    } catch (error) {
+      console.error("Error fetching Meetings:", error);
+    } finally {
+      setIsLoading(false); // This ensures isLoading is set to false after fetching is done
+    }
+  };
+
+  const fetchSuggestions = async () => {
+    try {
+      const response = await MeetingService.getSeuggestions(); // Assuming MeetingService.getSeuggestions() returns an object with a key 'homeMeetingsSuggestions'
+      const { homeMeetingsSuggestions } = response;
+      setHomeMeetingsSuggestions(homeMeetingsSuggestions);
+      console.log(homeMeetingsSuggestions)
+    } catch (error) {
+      console.error("Error fetching Meetings:", error);
+    } finally {
+      setIsLoadingSugg(false); // This ensures isLoading is set to false after fetching is done
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      await UserService.getUserDetails();
-    };
 
-    const userRef = doc(db, "Users", auth.currentUser.email);
-
-    const unsubscribe = onSnapshot(userRef, (doc) => {
-      const data = doc.data();
-      setNotificationCounter(data.NotificationCounter);
-    });
-
-    const fetchMeetings = async () => {
-      try {
-        const { homeMeetings } = await MeetingService.functionToHomeScreen();
-        setHomeMeetings(homeMeetings);
-        // const { homeMeetingsSuggestions } = await MeetingService.functionToHomeScreenS();
-        // setHomeMeetingsSuggestions(homeMeetingsSuggestions);
-      } catch (error) {
-        console.error("Error fetching Meetings:", error);
-      } finally {
-        setIsLoading(false); // This ensures isLoading is set to false after fetching is done
-      }
-    };
-
-    const fetchSuggestions = async () => {
-      try {
-        const response = await MeetingService.getSeuggestions(); // Assuming MeetingService.getSeuggestions() returns an object with a key 'homeMeetingsSuggestions'
-        const { homeMeetingsSuggestions } = response;
-        setHomeMeetingsSuggestions(homeMeetingsSuggestions);
-        console.log(homeMeetingsSuggestions)
-      } catch (error) {
-        console.error("Error fetching Meetings:", error);
-      } finally {
-        setIsLoadingSugg(false); // This ensures isLoading is set to false after fetching is done
-      }
-    };
     fetchMeetings();
     fetchSuggestions();
     fetchData();
@@ -94,9 +97,33 @@ const HomeScreen = () => {
     }
   };
 
+  const onRefreshing = () => {
+    setRefresh(true);
+    setIsLoading(true);
+    setIsLoadingSugg(true);
+    fetchMeetings();
+    fetchSuggestions();
+    fetchData();
+
+    setTimeout(() => {
+      setRefresh(false);
+      setIsLoading(false);
+      setIsLoadingSugg(false);
+    }, 3000)
+
+  };
+
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
-      <ScrollView style={{backgroundColor: "rgba(233, 240, 233, 0.7)"}}>
+      <ScrollView style={{ backgroundColor: "rgba(233, 240, 233, 0.7)" }} refreshControl={ // Notice the correct prop name here: refreshControl instead of RefreshControl
+        <RefreshControl
+          refreshing={refresh}
+          onRefresh={() => onRefreshing()}
+          colors={['#366A68', 'black']} // Set the colors of the loading indicator
+          progressBackgroundColor='#E9EFE8'
+          size="large"
+        />
+      }>
         <View style={stylesHome.container}>
           <TouchableOpacity
             onPress={handleNotifications}
