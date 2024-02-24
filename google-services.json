@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "345292233880",
+    "project_id": "tobetteraviya",
+    "storage_bucket": "tobetteraviya.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345292233880:android:2f0a10eded9dcaa53b44ed",
+        "android_client_info": {
+          "package_name": "com.ironDome.ToBetter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBni_G5EZve8xbbWVMWV-wKJyK0Ijvz3q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

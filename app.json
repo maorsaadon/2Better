@@ -21,10 +21,18 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ironDome.ToBetter",
+      "googleServicesFile": "./google-services.json",
+      "compileSdkVersion": 32
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "461dfcb6-00a1-4192-bca0-238910ccb0cf"
+      }
     }
   }
 }

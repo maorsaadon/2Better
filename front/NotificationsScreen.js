@@ -135,7 +135,7 @@ const NotificationsScreen = () => {
           </ScrollView>
         </View>
       </ImageBackground>
-      <Animated.View
+      {/* <Animated.View
         style={{
           transform: [{ translateY: slideAnim }],
           position: 'absolute',
@@ -155,7 +155,7 @@ const NotificationsScreen = () => {
             </TouchableOpacity>
           ) : null}
         </View>
-      </Animated.View>
+      </Animated.View> */}
     </View>
   );
 };

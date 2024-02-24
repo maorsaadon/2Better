@@ -24,7 +24,7 @@ import MembersListScreen from "./front/MembersList";
 import AboutUsScreen from "./front/AboutUsScreen";
 import CostumerSupportScreen from "./front/CostumerSupportScreen";
 import GroupMeetingsScreen from "./front/GroupMeetingsScreen";
-
+import { PushNotifications } from "./back/PushNotifications"
 import UserService from "./back/UserService";
 
 const Stack = createNativeStackNavigator();
@@ -112,6 +112,9 @@ const HomeStack = ({ navigation }) => {
 
 
 export default function App() {
+  const { expoPushToken } = PushNotifications();
+  console.log(expoPushToken);
+
   return (
 
     <NavigationContainer>
