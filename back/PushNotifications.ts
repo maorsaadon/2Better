@@ -6,12 +6,12 @@ import Constants from "expo-constants";
 
 import { Platform } from "react-native";
 
-// export interface PushNotificationState {
-//     expoPushToken?: Notifications.ExpoPushToken,
-//     notification?: Notifications.Notification;
-// }
+export interface PushNotificationState {
+    expoPushToken?: Notifications.ExpoPushToken,
+    notification?: Notifications.Notification;
+}
 
-export const PushNotifications = () => {
+export const PushNotifications = () : PushNotificationState => {
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
           shouldShowAlert: true,
@@ -22,15 +22,15 @@ export const PushNotifications = () => {
 
     const [expoPushToken, setExpoPushToken] = useState<
     Notifications.ExpoPushToken | undefined
-    >('');
+    >();
 
     const [notification, setNotification] = useState<
-    Notifications.ExpoPushToken | undefined 
-    >(false);
+    Notifications.Notification | undefined 
+    >();
     
-    const notificationListener = useRef<Notifications.Subscription>('');
+    const notificationListener = useRef<Notifications.Subscription>();
 
-    const responseListener = useRef<Notifications.Subscription>('');
+    const responseListener = useRef<Notifications.Subscription>();
 
     async function registerForPushNotificationsAsync() {
         let token;
@@ -56,7 +56,7 @@ export const PushNotifications = () => {
             return;
           }
           token = await Notifications.getExpoPushTokenAsync({
-            projectId: Constants.expoConfig.extra.eas.projectId,
+            projectId: Constants?.expoConfig?.extra?.eas.projectId,
           });
           console.log(token);
         } else {
@@ -69,7 +69,7 @@ export const PushNotifications = () => {
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
     
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
           setNotification(notification);
         });
     
@@ -78,8 +78,8 @@ export const PushNotifications = () => {
         });
     
         return () => {
-          Notifications.removeNotificationSubscription(notificationListener.current);
-          Notifications.removeNotificationSubscription(responseListener.current);
+          Notifications.removeNotificationSubscription(notificationListener.current!);
+          Notifications.removeNotificationSubscription(responseListener.current!);
         };
       }, []);
 
