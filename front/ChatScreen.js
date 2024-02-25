@@ -29,6 +29,11 @@ const ChatScreen = ({ route }) => {
   const [imageUrl, setImageUrl] = useState(null);
   console.log(meeting);
 
+  useEffect(() => {
+    // Fetch user's image URL when the component mounts
+    getImageURL();
+  }, []);
+
 
   const getImageURL = async () => {
     const storage = getStorage();
