@@ -13,6 +13,7 @@ FontAwesome6,
 MaterialIcons,
 FontAwesome,
 MaterialCommunityIcons,
+Entypo,
 } from "@expo/vector-icons";
 import CustomSlider from "./CustomSlider";
 import {
@@ -24,6 +25,7 @@ import { auth } from "../back/firebase";
 import React, { useEffect, useState } from "react";
 import MeetingService from '../back/MeetingService';
 import { useNavigation } from '@react-navigation/core';
+import colors from '../colors';
 
 
 
@@ -33,6 +35,8 @@ const UpcomingMeetingCard = ({ meeting }) => {
 const groupName = meeting?.GroupName ?? "Default Name";
 
 const [isUnJoin, setIsUnJoin] = useState(true);
+
+const navigation = useNavigation();
 
 const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -58,6 +62,11 @@ const handleUnJoinPress = () => {
     MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
     console.log("Click on Join Meeting!");
 };
+
+const handleChatPress = () => {
+    navigation.navigate("Chat" , {meeting})
+    console.log("chat is pressed!");
+}
 
 return (
     <SafeAreaView>
@@ -87,6 +96,9 @@ return (
         <View style={styles.cardBottomRow}>
           <TouchableOpacity style={styles.button} onPress={handleUnJoinPress}>
             <Text style={styles.buttonText}>UnJoin</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleChatPress} style={styles.chatButton} >
+            <Entypo name="chat" size={24} color={colors.lightGray} />
           </TouchableOpacity>
         </View>
     </View>)}
@@ -204,4 +216,19 @@ participantText: {
     // Add margin to the left or right to space the text from the slider
     marginHorizontal: 5,
 },
+chatButton: {
+    backgroundColor: "#366A68",
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.primary,
+    shadowOffset: {
+        width: 0,
+        height: 2,
+    },
+    shadowOpacity: .9,
+    shadowRadius: 8,
+}
 });

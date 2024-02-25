@@ -18,6 +18,7 @@
     "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
+    "@types/react": "~18.2.45",
     "base64-js": "^1.5.1",
     "expo": "^50.0.7",
     "expo-constants": "~15.4.5",
@@ -33,6 +34,7 @@
     "react-native-autocomplete-input": "^5.4.0",
     "react-native-check-box": "^2.1.7",
     "react-native-dropdown-picker": "^5.4.6",
+    "react-native-gifted-chat": "^2.4.0",
     "react-native-image-crop-picker": "^0.40.2",
     "react-native-image-picker": "^7.1.0",
     "react-native-ionicons": "^4.6.5",
@@ -47,8 +49,7 @@
     "scheduler": "^0.23.0",
     "uuid": "^9.0.1",
     "watchman": "^1.0.0",
-    "winter": "^0.0.1",
-    "@types/react": "~18.2.45"
+    "winter": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

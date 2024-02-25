@@ -26,6 +26,8 @@ import CostumerSupportScreen from "./front/CostumerSupportScreen";
 import GroupMeetingsScreen from "./front/GroupMeetingsScreen";
 import { PushNotifications } from "./back/PushNotifications"
 import UserService from "./back/UserService";
+import Chat from "./front/ChatScreen";
+import ChatScreen from "./front/ChatScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +53,7 @@ const MeetingStack = () => {
       <Stack.Screen name="Meeting" component={UpcomingMeetingScreen} />
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
       <Stack.Screen name="MembersList" component={MembersListScreen} />
+      <Stack.Screen name="Chat" component={ChatScreen} />
       
     </Stack.Navigator>
   );
