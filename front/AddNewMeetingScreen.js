@@ -23,6 +23,8 @@ const AddNewMeetingScreen = ({ route }) => {
   const [totalCapacity, setTotalCapacity] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
+  const [dateSelected, setDateSelected] = useState(false);
+  const [timeSelected, setTimeSelected] = useState(false);
 
 
   // const isIphone = Platform.OS === 'ios';
@@ -39,6 +41,11 @@ const AddNewMeetingScreen = ({ route }) => {
   
   const AddButton = async () => {
     try {
+      // Check if both date and time are selected
+      if (!dateSelected || !timeSelected) {
+        alert('Please select both date and time before adding a meeting.');
+        return;
+      }
 
       let stringDate;
       let stringTime;
@@ -73,12 +80,14 @@ const AddNewMeetingScreen = ({ route }) => {
           <AntDesign name="back" size={30} color="black" />
         </TouchableOpacity>
         <View style={styles.inputContainer}>
-          <DatePickerWithTime
-            date={selectedDate}
-            setDate={setSelectedDate}
-            time={selectedTime}
-            setTime={setSelectedTime}
-          />
+        <DatePickerWithTime
+          date={selectedDate}
+          setDate={setSelectedDate}
+          time={selectedTime}
+          setTime={setSelectedTime}
+          onDateSelected={setDateSelected}
+          onTimeSelected={setTimeSelected}
+        />
           
           <View style={styles.LocationTextInputContainer}>
             <TextInput

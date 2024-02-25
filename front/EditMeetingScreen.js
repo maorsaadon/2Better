@@ -29,8 +29,8 @@ const EditMeetingScreen = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());  // still a probem when i dont difned a new date and time it reset to the time of now
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [totalCapacity, setTotalCapacity] = useState(meeting.TotalCapacity);
-  // const [selectedDate, setSelectedDate] = useState(meeting.Date);
-  // const [selectedTime, setSelectedTime] = useState(meeting.Time);
+  const [dateSelected, setDateSelected] = useState(false);
+  const [timeSelected, setTimeSelected] = useState(false);
 
   const isIphone = Platform.OS === 'ios';
 
@@ -46,6 +46,11 @@ const EditMeetingScreen = ({ route }) => {
 
   const handleEditButton = async () => {
       try {
+        // Check if both date and time are selected
+        if (!dateSelected || !timeSelected) {
+          alert('Please select both date and time before adding a meeting.');
+          return;
+        }
         
         let stringDate;
         let stringTime;
@@ -104,6 +109,8 @@ const EditMeetingScreen = ({ route }) => {
             setDate={setSelectedDate}
             time={selectedTime}
             setTime={setSelectedTime}
+            onDateSelected={setDateSelected}
+            onTimeSelected={setTimeSelected}
           />
 
           <View style={styles.LocationTextInputContainer}>

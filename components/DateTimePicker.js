@@ -4,7 +4,7 @@ import { StyleSheet, Platform, TouchableOpacity, Pressable, Text, View } from 'r
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 
-const DatePickerWithTime = ({meeting, date, setDate, time, setTime }) => {
+const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTimeSelected }) => {
 
     const isIphone = Platform.OS === 'ios';
 
@@ -29,6 +29,8 @@ const DatePickerWithTime = ({meeting, date, setDate, time, setTime }) => {
 
         const dateAlone = selectedDate.toLocaleDateString('he-IL').replace(/\./g, '/');
         setSelectedStringDate(dateAlone);
+
+        onDateSelected(true);
     }
 
     const handleTimeChange = (event, selectedTime) => {
@@ -39,6 +41,8 @@ const DatePickerWithTime = ({meeting, date, setDate, time, setTime }) => {
         setTime(newDate);
 
         setSelectedStringTime(selectedTime.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' }));
+
+        onTimeSelected(true);
     }
 
     const handleChangeIphone = (event, selectedDate) => {
@@ -47,6 +51,8 @@ const DatePickerWithTime = ({meeting, date, setDate, time, setTime }) => {
 
       const dateAlone = selectedDate.toLocaleDateString('he-IL', { minute: '2-digit', hour: '2-digit' });
       setSelectedStringDate(dateAlone);
+
+      onDateSelected(true);
   }
 
     const renderAndroid = () => 

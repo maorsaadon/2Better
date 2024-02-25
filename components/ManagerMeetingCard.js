@@ -56,6 +56,8 @@ import {
               // Add your deletion logic here, for example:
               MeetingService.handleDeleteMeeting(meeting.id);
               GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
+
+              onDelete(meeting.id);
           }
       };
   

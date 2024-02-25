@@ -31,6 +31,10 @@ const MembersList = ({ route }) => {
   
     if (meeting) {
       const meetingRef = db.collection("Meetings").doc(meeting.id);
+
+      if(meetingRef === null){
+        return;
+      }
   
       unsubscribe = onSnapshot(meetingRef, (doc) => {
         try {
@@ -43,6 +47,10 @@ const MembersList = ({ route }) => {
       });
     } else if (group) {
       const groupRef = db.collection("Groups").doc(group.GroupName);
+
+      if(groupRef === null){
+        return;
+      }
   
       unsubscribe = onSnapshot(groupRef, (doc) => {
         try {
