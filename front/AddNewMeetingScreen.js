@@ -94,6 +94,7 @@ const AddNewMeetingScreen = ({ route }) => {
               placeholder="Total Capacity"
               value={totalCapacity}
               onChangeText={(text) => setTotalCapacity(text)}
+              keyboardType="numeric"
               style={styles.inputText}
             />
           </View>

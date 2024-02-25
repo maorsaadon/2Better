@@ -30,7 +30,7 @@ import {
   
   const screenWidth = Dimensions.get("window").width;
   
-  const ManagerMeetingCard = ({ meeting , group}) => {
+  const ManagerMeetingCard = ({ meeting, group, onDelete }) => {
   const navigation = useNavigation();
   console.log(meeting);
   console.log(group);
@@ -114,9 +114,9 @@ import {
 
     MeetingService.handleDeleteMeeting(meeting.id);
 
-    console.log('Click on Delete!');
+    onDelete(meeting.id);
 
-    // navigation.replace("MyGroups");
+    console.log('Click on Delete!');
     
   };
   

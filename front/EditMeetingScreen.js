@@ -121,6 +121,7 @@ const EditMeetingScreen = ({ route }) => {
               placeholder="Total Capacity"
               value={totalCapacity}
               onChangeText={(text) => setTotalCapacity(text)}
+              keyboardType="numeric"
               onFocus={() => setTotalCapacity("")} // Clear text on focus
               style={styles.input}
             />

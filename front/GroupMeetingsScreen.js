@@ -56,6 +56,13 @@ const GroupMeetingsScreen = ({ route }) => {
     }
   };
 
+  const handleDeleteMeeting = (meetingId) => {
+    // Update the local state to remove the deleted meeting
+    setManagerMeetings((prevMeetings) =>
+      prevMeetings.filter((prevMeeting) => prevMeeting.id !== meetingId)
+    );
+  };
+
   return (
     <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
       <ScrollView>
@@ -75,7 +82,11 @@ const GroupMeetingsScreen = ({ route }) => {
           ) : (
             <View style={styles.container}>
               {managerMeetings.map((meeting, index) => (
-                <ManagerMeetingCard key={index} meeting={meeting} group={group} />
+                <ManagerMeetingCard key={index}
+                                    meeting={meeting} 
+                                    group={group}
+                                    onDelete={handleDeleteMeeting} // Pass the callback
+                />
               ))}
             </View>
           )}
