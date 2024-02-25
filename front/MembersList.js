@@ -32,7 +32,7 @@ const MembersList = ({ route }) => {
     if (meeting) {
       const meetingRef = db.collection("Meetings").doc(meeting.id);
 
-      if(meetingRef === null){
+      if(!meetingRef){
         return;
       }
   
@@ -48,7 +48,7 @@ const MembersList = ({ route }) => {
     } else if (group) {
       const groupRef = db.collection("Groups").doc(group.GroupName);
 
-      if(groupRef === null){
+      if(!groupRef){
         return;
       }
   
