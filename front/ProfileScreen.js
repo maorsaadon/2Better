@@ -118,13 +118,10 @@ const ProfileScreen = () => {
 
 
   const logOutTo = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Entry");
-        console.log("Log Out From User");
-      })
-      .catch((error) => alert(error.message));
+
+    navigation.replace("Entry");
+    console.log("Log Out From User");
+
   }
 
   return (

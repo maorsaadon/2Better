@@ -47,22 +47,15 @@ export const UserService = {
       })
       .catch((error) => alert(error.message));
       
-      auth
-    .signOut()
-    .then(() => {
-      console.log("LogOutFrom");
-    })
-    .catch((error) => alert(error.message));
+    //   auth
+    // .signOut()
+    // .then(() => {
+    //   console.log("LogOutFrom");
+    // })
+    // .catch((error) => alert(error.message));
     
   },
-  async logOut() {
-    auth
-    .signOut()
-    .then(() => {
-      console.log("LogOutFrom");
-    })
-    .catch((error) => alert(error.message));
-  },
+
 
   async getUserDetails() {
     try {
