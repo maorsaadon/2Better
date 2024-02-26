@@ -18,7 +18,7 @@ import {
   Fontisto
 } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, UserCity, userImageUpload, userCity , userAge , userGender } from "../back/UserService";
+import { userFirstName, userLastName, userImageUpload, userCity , userAge , userGender } from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
 import { stylesProfile } from "../components/StylesSheets"
@@ -40,11 +40,13 @@ const ProfileScreen = () => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
+    UserService.getUserDetails();
+    
     const fetchUserDetails = async () => {
       try {
         setFirstName(userFirstName);
         setLastName(userLastName);
-        setCity(UserCity);
+        setCity(userCity);
         setAge(userAge);
         setGender(userCity);
         if(userGender === "Male"){
