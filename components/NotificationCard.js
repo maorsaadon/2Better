@@ -47,6 +47,23 @@ const NotificationCard = ({ notification }) => {
     },[notification.id, notification.Handled]);
   }
 
+  if(type === "Meeting Join request"){
+    
+    useEffect(() => {
+      const checkIfHandled = async () => {
+        const handle = await NotificationService.isHandled(notification.id);
+        setHandled(handle);
+      };
+
+      const checkAnswer = async () => {
+        const answer = await NotificationService.requestAnswer(notification.id);
+        setRequestAnswer(answer);
+      };
+    
+      checkIfHandled(), checkAnswer();
+    },[notification.id, notification.Handled]);
+  }
+
   const handleAcceptButton = () => {
     const acceptContent = `You are now a group member in ${groupName} `
     try {

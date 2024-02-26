@@ -27,21 +27,39 @@ import React, { useEffect, useState } from "react";
 import MeetingService from '../back/MeetingService';
 import { useNavigation } from '@react-navigation/core';
 import { stylesHomeCard } from "../components/StylesSheets"
+import GroupService from "../back/GroupService";
+import NotificationService from "../back/NotificationsService";
+import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { serverTimestamp } from "firebase/firestore";
+
 const screenWidth = Dimensions.get("window").width;
 
 const HomeCard = ({ meeting }) => {
     const navigation = useNavigation();
     const groupName = meeting?.GroupName ?? "Default Name";
+    const [groupLeaderEmail , setGroupLeaderEmail] = useState('')
     const [currentParticipants, setCurrentParticipants] = useState(meeting.Members.length);
     const totalCapacity = meeting.TotalCapacity || 10;
-    const [isUserInMeeting, setIsUserInMeeting] = useState(false); // New state to track if joined
+    const [isUserInMeeting, setIsUserInMeeting] = useState(false);
+    const [isUserInGroup, setIsUserInGroup] = useState(false); // New state to track if joined
+    const [flageRequest, setFlageRequest] = useState(true);
+    const content = "`" + userFirstName + " " + userLastName + "` wants to join your group: `" + groupName +"`"
+    
+    
+    
     useEffect(() => {
 
         const checkUserInMeeting = async () => {
             const isInMeeting = await MeetingService.isInTheMeeting(meeting.id, auth.currentUser.email);
+            const isInGroup = await GroupService.isInTheGroup(groupName);
             setIsUserInMeeting(isInMeeting);
+            setIsUserInGroup(isInGroup);
+            const leaderName = await GroupService.getLeaderEmail(groupName)
+            setGroupLeaderEmail(leaderName)
+            console.log("name" ,leaderName)
         };
 
+        
         checkUserInMeeting();
     }, [meeting.id, auth.currentUser.email, meeting.Members]);
 
@@ -65,7 +83,7 @@ const HomeCard = ({ meeting }) => {
     };
 
     const handleJoinPress = () => {
-        
+
         //Alert.alert("This is only a request, please wait to approve");
         setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
         setCurrentParticipants(currentParticipants + 1);
@@ -73,11 +91,14 @@ const HomeCard = ({ meeting }) => {
         console.log("Click on Join Meeting!");
     };
 
-    const handleUnJoinPress = () => {
-        setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
-        setCurrentParticipants(currentParticipants - 1);
-        MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
-        console.log("Click on Join Meeting!");
+    const handleRequestPress = () => {
+        setFlageRequest(false)
+        NotificationService.handleAddNewNotification(groupName, content, "Meeting Join request", serverTimestamp(), auth.currentUser.email, groupLeaderEmail);
+        Alert.alert("This is only a request, please wait to approve");
+        // setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
+        // setCurrentParticipants(currentParticipants + 1);
+        // MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
+        // console.log("Click on Join Meeting!");  
     };
 
 
@@ -117,15 +138,15 @@ const HomeCard = ({ meeting }) => {
                     <AntDesign name="user" size={22} color="black" />
                 </View>
                 <View style={stylesHomeCard.cardBottomRow}>
-                    {!isUserInMeeting ? ( // Only show if isUserInMeeting is false
+                    {!isUserInMeeting && isUserInGroup ? ( // Only show if isUserInMeeting is false
                         <TouchableOpacity style={stylesHomeCard.button} onPress={handleJoinPress}>
-                           <Text style={stylesHomeCard.buttonText}>Join</Text>
+                            <Text style={stylesHomeCard.buttonText}>Join</Text>
                         </TouchableOpacity>
-                    ) : ( // Only show if hasJoined is true
-                    <TouchableOpacity style={stylesHomeCard.button} onPress={handleUnJoinPress}>
-                    <Text style={stylesHomeCard.buttonText}>UnJoin</Text>
-                 </TouchableOpacity>
-                    )}
+                    ) : !isUserInGroup && flageRequest ? (
+                        <TouchableOpacity style={stylesHomeCard.button} onPress={handleRequestPress}>
+                            <Text style={stylesHomeCard.buttonText}>Request</Text>
+                        </TouchableOpacity>
+                    ) : ( <Text></Text> )}
                 </View>
             </View>
         </SafeAreaView>

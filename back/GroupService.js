@@ -4,6 +4,8 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
+
+
 export const GroupService = {
   async handleAddNewGroup(groupName, city, sportType) {
     const userEmail = auth.currentUser.email;
@@ -200,7 +202,7 @@ export const GroupService = {
 
       if (snapshot.exists) {
         const groupData = snapshot.data(); // Use "snapshot.data()" to access the document data
-        console.log("groupData", groupData);
+        //console.log("groupData", groupData);
 
         return {
           GroupName: groupData.GroupName || "Unknown",
@@ -326,6 +328,23 @@ export const GroupService = {
       console.error(`Error removing user from the meeting!`, error);
     }
   },
+
+  async isInTheGroup(groupName) {
+    try {
+      const memGroups = await this.getMemberGroups();
+      const menGroups = await this.getManagerGroups();
+      // Check if the group exists in member groups or manager groups
+      const groupExists = memGroups.some(group => group.GroupName === groupName) ||
+                          menGroups.some(group => group.GroupName === groupName);
+  
+      return groupExists;
+    } catch (error) {
+      console.error(`Error finding groups!`, error);
+      return false;
+    }
+  }
+
+
 };
 
 export default GroupService;

@@ -113,6 +113,24 @@ export const NotificationService = {
           console.error("Error creating Notification for leader: ", error);
           alert(error.message);
       }
+    }else if (type === "Meeting Join request"){
+      try {
+        const NotificationRef = db.collection("Notifications").doc();
+        await NotificationRef.set({
+          Addressee: groupLeaderEmail,
+          GroupName: groupName,
+          Content: content,
+          Type: type,
+          TimeStamp: timeStamp,
+          From: from,
+          Handled: false,
+          RequestAnswer: "did not Answer yet"
+        });
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+      } catch (error) {
+          console.error("Error creating Notification for leader: ", error);
+          alert(error.message);
+      }
     }else{
       try {
         const NotificationRef = db.collection("Notifications").doc();
