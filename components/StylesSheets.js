@@ -720,7 +720,7 @@ const stylesRegister = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 120,
     gap: 4,
-    top: 35,
+    top: 45,
   },
   input: {
     backgroundColor: "#C3D4D3",
@@ -772,7 +772,7 @@ const stylesRegister = StyleSheet.create({
     zIndex: 1,
   },
   buttonRegister: {
-    top: 0,
+    top: 10,
     backgroundColor: "#366A68",
     width: "100%",
     padding: 12,
@@ -789,7 +789,7 @@ const stylesRegister = StyleSheet.create({
     left: 25,
     width: "30%",
     padding: 15,
-    top: -10,
+    top: 20,
     borderRadius: 10,
     alignItems: "center",
   },
@@ -832,6 +832,14 @@ const stylesRegister = StyleSheet.create({
     fontSize: 16,
     zIndex: 1,
     maxWidth: 80,
+  },
+  endTextEdit: {
+    color: "#737373",
+    fontWeight: "700",
+    fontSize: 16,
+    top: 30 ,
+    right: 50 ,
+
   },
 });
 

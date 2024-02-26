@@ -317,8 +317,13 @@ const RegisterScreen = () => {
             >
               <Text style={stylesRegister.buttonTextSignIn}>Sign in</Text>
             </TouchableOpacity>
-          </View>
+
+          </View>        
+          <View>
+            <Text style={stylesRegister.endTextEdit}>Already have account?</Text>
         </View>
+        </View>            
+
       </TouchableWithoutFeedback>
     </ImageBackground>
   );
