@@ -155,7 +155,7 @@ export const NotificationService = {
       const querySnapshot = await db.collection("Notifications")
                                      .where('From', '==', from)
                                      .where('GroupName', '==', groupName)
-                                     .where('Type', '==', `Group Join request`)
+                                     .where("Type", "in", ["Group Join request", "Meeting Join request"])
                                      .get();
   
       if (!querySnapshot.empty) {
@@ -180,7 +180,7 @@ export const NotificationService = {
       const querySnapshot = await db.collection("Notifications")
                                      .where('From', '==', from)
                                      .where('GroupName', '==', groupName)
-                                     .where('Type', '==', `Group Join request`)
+                                     .where("Type", "in", ["Group Join request", "Meeting Join request"])
                                      .get();
   
       // Check if the querySnapshot is not empty

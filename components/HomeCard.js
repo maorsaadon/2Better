@@ -32,6 +32,7 @@ import NotificationService from "../back/NotificationsService";
 import { userFirstName, userLastName, UserCity } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
 
+
 const screenWidth = Dimensions.get("window").width;
 
 const HomeCard = ({ meeting }) => {
@@ -56,7 +57,6 @@ const HomeCard = ({ meeting }) => {
             setIsUserInGroup(isInGroup);
             const leaderName = await GroupService.getLeaderEmail(groupName)
             setGroupLeaderEmail(leaderName)
-            console.log("name" ,leaderName)
         };
 
         
@@ -91,15 +91,13 @@ const HomeCard = ({ meeting }) => {
         console.log("Click on Join Meeting!");
     };
 
-    const handleRequestPress = () => {
+    const handleRequestPress = async () => {
         setFlageRequest(false)
         NotificationService.handleAddNewNotification(groupName, content, "Meeting Join request", serverTimestamp(), auth.currentUser.email, groupLeaderEmail);
         Alert.alert("This is only a request, please wait to approve");
-        // setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
-        // setCurrentParticipants(currentParticipants + 1);
-        // MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
-        // console.log("Click on Join Meeting!");  
+        
     };
+
 
 
     return (

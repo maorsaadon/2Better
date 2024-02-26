@@ -21,33 +21,21 @@ import React, { useEffect, useState } from "react";
 
 const screenWidth = Dimensions.get("window").width;
 
+
 const NotificationCard = ({ notification }) => {
   const content = notification?.Content ?? "Default Content"
   const type = notification?.Type ?? "Default Type"
   const groupName = notification?.GroupName ?? "Default GroupName"
   const from = notification?.From ?? "Default From"
-  const request = type === "Group Join request" ? true : false
+  const request = (type === "Group Join request" || type === "Meeting Join request") ? true : false
   const [handled, setHandled] = type === "Group Join request" ? useState(notification.Handled) : useState(false);
   const [requestAnswer, setRequestAnswer] = type === "Group Join request" ? useState(notification.RequestAnswer) : useState("");
 
-  if(type === "Group Join request"){
-    
-    useEffect(() => {
-      const checkIfHandled = async () => {
-        const handle = await NotificationService.isHandled(notification.id);
-        setHandled(handle);
-      };
 
-      const checkAnswer = async () => {
-        const answer = await NotificationService.requestAnswer(notification.id);
-        setRequestAnswer(answer);
-      };
-    
-      checkIfHandled(), checkAnswer();
-    },[notification.id, notification.Handled]);
-  }
 
-  if(type === "Meeting Join request"){
+
+
+  if(type === "Group Join request" || type === "Meeting Join request"){
     
     useEffect(() => {
       const checkIfHandled = async () => {
@@ -72,6 +60,7 @@ const NotificationCard = ({ notification }) => {
       NotificationService.updateHandledField(from, groupName);
       NotificationService.updateRequestAnswerField(from, groupName, "Accepted");
       setHandled(true);
+
       setRequestAnswer("Accepted");
     } catch (error) {
       alert(error.message);
@@ -86,6 +75,7 @@ const NotificationCard = ({ notification }) => {
       NotificationService.updateHandledField(from, groupName);
       NotificationService.updateRequestAnswerField(from, groupName, "Rejected");      
       setHandled(true);
+
       setRequestAnswer("Rejected");
     } catch (error) {
       alert(error.message);
@@ -129,7 +119,7 @@ const NotificationCard = ({ notification }) => {
     </SafeAreaView>
   );
 };
-  
+
 export default NotificationCard;
 
 const styles = StyleSheet.create({
