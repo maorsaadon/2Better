@@ -122,7 +122,7 @@ const NavigationButtonStyles = StyleSheet.create({
         textDecorationLine: 'underline'
     },
     button: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: "#366A68",
         flexDirection: 'row',
         alignItems: 'center',
         width: 120,
