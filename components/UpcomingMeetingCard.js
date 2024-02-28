@@ -16,6 +16,7 @@ MaterialCommunityIcons,
 Entypo,
 } from "@expo/vector-icons";
 import CustomSlider from "./CustomSlider";
+import NavigationButton from "./NavigationButton";
 import {
 sportIconMapping_MaterialCommunityIcons,
 sportIconMapping_FontAwesome,
@@ -100,6 +101,7 @@ return (
           <TouchableOpacity onPress={handleChatPress} style={styles.chatButton} >
             <Entypo name="chat" size={24} color={colors.lightGray} />
           </TouchableOpacity>
+          <NavigationButton destination={meeting.Location} />
         </View>
     </View>)}
     </SafeAreaView>
