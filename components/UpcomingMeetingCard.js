@@ -95,11 +95,12 @@ return (
 
         </View>
         <View style={styles.cardBottomRow}>
-          <TouchableOpacity style={styles.button} onPress={handleUnJoinPress}>
-            <Text style={styles.buttonText}>UnJoin</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity onPress={handleChatPress} style={styles.chatButton} >
             <Entypo name="chat" size={24} color={colors.lightGray} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleUnJoinPress}>
+            <Text style={styles.buttonText}>UnJoin</Text>
           </TouchableOpacity>
           <NavigationButton destination={meeting.Location} />
         </View>
@@ -220,7 +221,7 @@ participantText: {
 },
 chatButton: {
     backgroundColor: "#366A68",
-    height: 50,
+    paddingVertical: 10,
     width: 50,
     borderRadius: 25,
     alignItems: 'center',
@@ -232,5 +233,6 @@ chatButton: {
     },
     shadowOpacity: .9,
     shadowRadius: 8,
+    top: 5,
 }
 });

@@ -88,7 +88,6 @@ const NavigationButton = ({ destination }) => {
         <TouchableOpacity onPress={openAppChooser}>
             {/* Button to open the app chooser */}
             <View style={NavigationButtonStyles.button}>
-                <Text style={NavigationButtonStyles.buttonText}>Navigate</Text>
                 <MaterialCommunityIcons name="map-marker-outline" size={24} color="white" />
             </View>
             {/* Render the app chooser modal for Android */}
@@ -123,12 +122,18 @@ const NavigationButtonStyles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#366A68",
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: 120,
         paddingVertical: 10,
-        borderRadius: 10,
-        justifyContent: 'center'
+        width: 50,
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: .9,
+        shadowRadius: 8,
+        top: 3,
     },
     buttonText: {
         color: 'white',
