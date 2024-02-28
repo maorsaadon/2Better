@@ -65,34 +65,34 @@ const MemberGroupCard = ({ group }) => {
   return (
     <SafeAreaView>
       {!pressUnsubscribe ? (
-      <View style={styles.card}>
-        <View style={styles.cardTopRow}>
+      <View style={MemberGroupCardStyles.card}>
+        <View style={MemberGroupCardStyles.cardTopRow}>
           {getSportIcon(group.SportType)}
           <View>
-            <Text style={styles.title}>{groupName}</Text>
-            <Text style={styles.subTitle}>{group.SportType}</Text>
+            <Text style={MemberGroupCardStyles.title}>{groupName}</Text>
+            <Text style={MemberGroupCardStyles.subTitle}>{group.SportType}</Text>
           </View>
         </View>
-        <View style={styles.cardMiddleRow}>
-          <View style={styles.iconAndTextContainer}>
+        <View style={MemberGroupCardStyles.cardMiddleRow}>
+          <View style={MemberGroupCardStyles.iconAndTextContainer}>
             <MaterialIcons name="location-on" size={22} color="black" />
             <Text>{group.City}</Text>
           </View>
-          <View style={styles.iconAndTextContainer}>
+          <View style={MemberGroupCardStyles.iconAndTextContainer}>
             <MaterialCommunityIcons name="email" size={22} color="black" />
             <Text>{group.LeaderEmail}</Text>
           </View>
-          <View style={styles.iconAndTextContainer}>
+          <View style={MemberGroupCardStyles.iconAndTextContainer}>
             <AntDesign name="user" size={22} color="black" />
             <Text>{NumOfMembers}</Text>
           </View>
         </View>
-        <View style={styles.cardBottomRow}>
+        <View style={MemberGroupCardStyles.cardBottomRow}>
           <TouchableOpacity 
-          style={styles.button}
+          style={MemberGroupCardStyles.button}
           onPress={handleUnsubscribePress}
           >
-            <Text style={styles.buttonText}>Unsubscribe</Text>
+            <Text style={MemberGroupCardStyles.buttonText}>Unsubscribe</Text>
           </TouchableOpacity>
         </View>
       </View>) : <Text></Text>}
@@ -102,7 +102,7 @@ const MemberGroupCard = ({ group }) => {
 
 export default MemberGroupCard;
 
-const styles = StyleSheet.create({
+const MemberGroupCardStyles = StyleSheet.create({
   cardBottomRow: {
     flexDirection: "row",
     alignItems: "center",
