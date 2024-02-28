@@ -28,23 +28,23 @@ const NotificationsScreen = () => {
   const [latestNotification, setLatestNotification] = useState(null);
   const slideAnim = useRef(new Animated.Value(-100)).current; // Initial position off-screen
 
-  const slideNotification = () => {
-    // Slide in
-    Animated.timing(slideAnim, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => {
-      // Stay visible for 2 seconds then slide out
-      setTimeout(() => {
-        Animated.timing(slideAnim, {
-          toValue: -100,
-          duration: 500,
-          useNativeDriver: true,
-        }).start();
-      }, 6000);
-    });
-  };
+  // const slideNotification = () => {
+  //   // Slide in
+  //   Animated.timing(slideAnim, {
+  //     toValue: 0,
+  //     duration: 500,
+  //     useNativeDriver: true,
+  //   }).start(() => {
+  //     // Stay visible for 2 seconds then slide out
+  //     setTimeout(() => {
+  //       Animated.timing(slideAnim, {
+  //         toValue: -100,
+  //         duration: 500,
+  //         useNativeDriver: true,
+  //       }).start();
+  //     }, 6000);
+  //   });
+  // };
 
   // Fetch user notifications when the component is mounted
   useEffect(() => {
@@ -81,8 +81,9 @@ const NotificationsScreen = () => {
 
 
     fetchNotifications();
-    return () => unsubscribe();
-  }, [latestNotification]);
+    // return () => unsubscribe();
+  }, []);
+  // }, [latestNotification]);
 
   const pressedNotification = (notification) => {
     if (notification.Type === "New Meeting") {
@@ -124,9 +125,9 @@ const NotificationsScreen = () => {
             ) : (
 
               <View style={styles.container}>
-                {notifications.slice().reverse().map((notification, index) => (
-                  <TouchableOpacity onPress={() => pressedNotification(notification)}>
-                    <NotificationCard key={index} notification={notification} />
+                {notifications.slice().reverse().map((notification) => (
+                  <TouchableOpacity key={notification.id} onPress={() => pressedNotification(notification)}>
+                    <NotificationCard notification={notification} />  
                   </TouchableOpacity>
                 ))}
               </View>

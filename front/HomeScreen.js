@@ -60,7 +60,7 @@ const HomeScreen = () => {
       const response = await MeetingService.getSeuggestions(); // Assuming MeetingService.getSeuggestions() returns an object with a key 'homeMeetingsSuggestions'
       const { homeMeetingsSuggestions } = response;
       setHomeMeetingsSuggestions(homeMeetingsSuggestions);
-      console.log(homeMeetingsSuggestions)
+      // console.log(homeMeetingsSuggestions)
     } catch (error) {
       console.error("Error fetching Meetings:", error);
     } finally {

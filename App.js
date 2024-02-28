@@ -1,9 +1,12 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/core";
 import { Ionicons } from '@expo/vector-icons';
+import { auth } from './back/firebase';
 
 import AppScreen from "./front/AppScreen";
 import LoginScreen from "./front/LoginScreen";
@@ -76,7 +79,7 @@ const FindNewGroupsStack = () => {
 };
 
 
-const HomeStack = ({ navigation }) => {
+const HomeStack = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -114,6 +117,23 @@ const HomeStack = ({ navigation }) => {
 
 
 export default function App() {
+
+  // const navigation = useNavigation();
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     const stayLoggedIn = await AsyncStorage.getItem('stayLoggedIn');
+  //     auth.onAuthStateChanged((user) => {
+  //       if (user && stayLoggedIn) {
+  //         console.log("User is logged in, navigating to Home");
+  //         navigation.navigate("Home");
+  //       } else {
+  //         console.log("No user logged in or user opted out of stay logged in, staying on Login screen");
+  //       }
+  //     });
+  //   };
+
+  //   checkLoginStatus();
+  // }, []);
 
   return (
 
