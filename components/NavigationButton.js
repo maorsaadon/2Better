@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Linking, Platform, ActionSheetIOS, Modal } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, Dimensions } from "react-native";
 
 const NavigationButton = ({ destination }) => {
 
