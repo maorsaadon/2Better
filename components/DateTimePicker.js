@@ -2,7 +2,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from "react";
 import { StyleSheet, Platform, TouchableOpacity, Pressable, Text, View } from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-
+import { DatePickerWithTimeStyles } from './StylesSheets';
 
 const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTimeSelected }) => {
 
@@ -56,10 +56,10 @@ const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTi
   }
 
     const renderAndroid = () => 
-    <View style={styles.container}>
-        <View style={styles.inputContainer}>
-            <TouchableOpacity onPress={() => setShow(true)} style={styles.button}>
-                {/* <View style={[styles.button, styles.buttonOutline, styles.dateButtom]}> */}
+    <View style={DatePickerWithTimeStyles.container}>
+        <View style={DatePickerWithTimeStyles.inputContainer}>
+            <TouchableOpacity onPress={() => setShow(true)} style={DatePickerWithTimeStyles.button}>
+                {/* <View style={[DatePickerWithTimeStyles.button, DatePickerWithTimeStyles.buttonOutline, DatePickerWithTimeStyles.dateButtom]}> */}
                     <Text >{selectedStringDate}</Text>
                 {/* </View> */}
             </TouchableOpacity>
@@ -70,8 +70,8 @@ const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTi
                 display='default'
                 onChange={handleChangeAndroid}
             />}
-            <TouchableOpacity onPress={() => setShowTime(true)} style={styles.button}>
-                {/* <View style={[styles.button, styles.buttonOutline, styles.timeButtom]}> */}
+            <TouchableOpacity onPress={() => setShowTime(true)} style={DatePickerWithTimeStyles.button}>
+                {/* <View style={[DatePickerWithTimeStyles.button, DatePickerWithTimeStyles.buttonOutline, DatePickerWithTimeStyles.timeButtom]}> */}
                     <Text >{selectedStringTime}</Text>
                 {/* </View> */}
             </TouchableOpacity>
@@ -80,8 +80,8 @@ const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTi
     </View>
 
     const renderIOS = () =>
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => setShow(true)} style={styles.button}>
+    <View style={DatePickerWithTimeStyles.container}>
+      <TouchableOpacity onPress={() => setShow(true)} style={DatePickerWithTimeStyles.button}>
           <Text>{selectedStringDate}</Text>
       </TouchableOpacity>
       {show && (
@@ -93,7 +93,7 @@ const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTi
               onChange={handleChangeIphone}
           />
       )}
-      <TouchableOpacity onPress={() => setShowTime(true)} style={styles.button}>
+      <TouchableOpacity onPress={() => setShowTime(true)} style={DatePickerWithTimeStyles.button}>
           <Text>{selectedStringTime}</Text>
       </TouchableOpacity>
       {showTime && (
@@ -106,46 +106,3 @@ const DatePickerWithTime = ({date, setDate, time, setTime, onDateSelected , onTi
 
 export default DatePickerWithTime;
 
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center" 
-    },
-  datePickerContainer: {
-    marginup: 30, // Adjust this value as needed for the desired spacing
-  },
-  inputContainer: {
-        width: "80%",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 60,
-  },
-
-  button: {
-    backgroundColor: "rgba(233, 241, 233, 0.7)",
-    width: '80%',
-    height: 50,
-    borderRadius: 20,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-    borderWidth: 2,
-    borderColor: "#366A68",
-    top: 15,
-  },
-
-});

@@ -80,9 +80,21 @@ const RegisterScreen = () => {
       return;
     }
 
-    await UserService.createUserAccount(email, password, firstName, lastName, city , selectedGender , age);
-    
-    await navigation.replace("Login");
+    try {
+      const accountCreated = await UserService.createUserAccount(email, password, firstName, lastName, city, selectedGender, age);
+      if (accountCreated) {
+        // If the account is created successfully, show a success message and navigate to the login screen
+        alert("Account created successfully!");
+        // Navigate to your desired screen here
+        navigation.replace("Login");
+      } else {
+        // If there was an issue creating the account, show an error message
+        alert("Failed to create account. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error creating user account:", error.message);
+      // Handle any additional error cases if needed
+    }
 
   };
   const handleSignIn = () => {

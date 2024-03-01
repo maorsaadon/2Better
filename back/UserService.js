@@ -27,25 +27,28 @@ export const UserService = {
   },
   
   async createUserAccount(email, password, firstName, lastName, city , gender , age) {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-
-        db.collection("Users").doc(email).set({
-          FirstName: firstName,
-          LastName: lastName,
-          City: city,
-          Gender: gender,
-          Age: age,
-          Email: email,
-          ImageUpload: 0,
-          NotificationCounter: 0,
-        });
-
-        console.log("Registered with:", user.email);
-      })
-      .catch((error) => alert(error.message));
+    try {
+      const userCredentials = await auth.createUserWithEmailAndPassword(email, password);
+  
+      const user = userCredentials.user;
+  
+      await db.collection("Users").doc(email).set({
+        FirstName: firstName,
+        LastName: lastName,
+        City: city,
+        Gender: gender,
+        Age: age,
+        Email: email,
+        ImageUpload: 0,
+        NotificationCounter: 0,
+      });
+  
+      console.log("Registered with:", user.email);
+  
+      return true; // Indicate success
+    } catch (error) {
+      return false; // Indicate failure
+    }
       
     //   auth
     // .signOut()

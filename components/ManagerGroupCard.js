@@ -17,7 +17,9 @@ import {
   import { GroupService } from "../back/GroupService";
   import React, { useState, useEffect } from "react";
   import { sportIconMapping_MaterialCommunityIcons, sportIconMapping_FontAwesome, sportIconMapping_FontAwesome5} from "../back/DataBase";
-  
+ 
+
+
   const screenWidth = Dimensions.get("window").width;
   
   const ManagerGroupCard = ({ group }) => {
@@ -72,41 +74,41 @@ import {
   
     return (
       <SafeAreaView>
-        {isDelete && (<View style={styles.card}>
-          <View style={styles.cardTopRow}>
+        {isDelete && (<View style={ManagerGroupCardStyles.card}>
+          <View style={ManagerGroupCardStyles.cardTopRow}>
             {getSportIcon(group.SportType)}
             <View>
-              <Text style={styles.title}>{groupName}</Text>
-              <Text style={styles.subTitle}>{group.SportType}</Text>
+              <Text style={ManagerGroupCardStyles.title}>{groupName}</Text>
+              <Text style={ManagerGroupCardStyles.subTitle}>{group.SportType}</Text>
             </View>
           </View>
-          <View style={styles.cardMiddleRow}>
-            <View style={styles.iconAndTextContainer}>
+          <View style={ManagerGroupCardStyles.cardMiddleRow}>
+            <View style={ManagerGroupCardStyles.iconAndTextContainer}>
               <MaterialIcons name="location-on" size={22} color="black" />
               <Text>{group.City}</Text>
             </View>
-            <View style={styles.iconAndTextContainer}>
+            <View style={ManagerGroupCardStyles.iconAndTextContainer}>
               <MaterialCommunityIcons name="email" size={22} color="black" />
               <Text>{group.LeaderEmail}</Text>
             </View>
-            <View style={styles.iconAndTextContainer}>
+            <View style={ManagerGroupCardStyles.iconAndTextContainer}>
               <AntDesign name="user" size={22} color="black" onPress={handleMembersListButton} />
               <Text>{NumOfMembers}</Text>
             </View>
           </View>
-          <View style={styles.cardBottomRow}>
+          <View style={ManagerGroupCardStyles.cardBottomRow}>
             <TouchableOpacity
               onPress={() => handleEditButton(groupName)}
-              style={styles.editButton}
+              style={ManagerGroupCardStyles.editButton}
             >
-              <Text style={styles.buttonText}>Edit</Text>
+              <Text style={ManagerGroupCardStyles.buttonText}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => deleteButton(groupName)}
-              style={styles.deleteButton}
+              style={ManagerGroupCardStyles.deleteButton}
             >
-              <FontAwesome5 name="trash" size={20} color="black" style={styles.buttonText}/>
-              {/* <Text style={styles.buttonText}>Delete</Text> */}
+              <FontAwesome5 name="trash" size={20} color="black" style={ManagerGroupCardStyles.buttonText}/>
+              {/* <Text style={ManagerGroupCardStyles.buttonText}>Delete</Text> */}
             </TouchableOpacity>
           </View>
         </View>)}
@@ -116,7 +118,7 @@ import {
   
   export default ManagerGroupCard;
   
-  const styles = StyleSheet.create({
+  const ManagerGroupCardStyles = StyleSheet.create({
     cardBottomRow: {
       flexDirection: "row",
       alignItems: "center",

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Linking, Platform, ActionSheetIOS, Modal 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Dimensions } from "react-native";
-
+import { navigationButtonStyles } from './StylesSheets';
 const NavigationButton = ({ destination }) => {
 
     // State to control the visibility of the modal on Android
@@ -69,13 +69,13 @@ const NavigationButton = ({ destination }) => {
             transparent={true}
             onRequestClose={closeAppChooser}
         >
-            <View style={NavigationButtonStyles.container}>
-                <View style={NavigationButtonStyles.modal}>
+            <View style={navigationButtonStyles.container}>
+                <View style={navigationButtonStyles.modal}>
                     {Object.keys(NameToIcon).map(key =>
                         <TouchableOpacity key={key} onPress={() => { closeAppChooser(); openNavigationApp(key); }}>
-                            <View style={NavigationButtonStyles.appRow}>
+                            <View style={navigationButtonStyles.appRow}>
                                 {NameToIcon[key]}
-                                <Text style={NavigationButtonStyles.appName}>{key}</Text>
+                                <Text style={navigationButtonStyles.appName}>{key}</Text>
                             </View>
                         </TouchableOpacity>)}
                 </View>
@@ -87,8 +87,7 @@ const NavigationButton = ({ destination }) => {
     return (
         <TouchableOpacity onPress={openAppChooser}>
             {/* Button to open the app chooser */}
-            <View style={NavigationButtonStyles.button}>
-                <Text style={NavigationButtonStyles.buttonText}>Navigate</Text>
+            <View style={navigationButtonStyles.button}>
                 <MaterialCommunityIcons name="map-marker-outline" size={24} color="white" />
             </View>
             {/* Render the app chooser modal for Android */}
@@ -99,39 +98,3 @@ const NavigationButton = ({ destination }) => {
 
 export default NavigationButton;
 
-const NavigationButtonStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    modal: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10
-    },
-    appRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-        justifyContent: 'space-between'
-    },
-    appName: {
-        paddingLeft: 10,
-        color: 'blue',
-        textDecorationLine: 'underline'
-    },
-    button: {
-        backgroundColor: "#366A68",
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: 120,
-        paddingVertical: 10,
-        borderRadius: 10,
-        justifyContent: 'center'
-    },
-    buttonText: {
-        color: 'white',
-        paddingRight: 10,
-    },
-})
