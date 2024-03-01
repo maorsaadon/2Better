@@ -144,7 +144,6 @@ const NotificationsScreen = () => {
           left: 0,
           right: 0,
           height: 50, // Adjust as needed
-          backgroundColor: 'blue', // Customize
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -217,4 +216,5 @@ const styles = StyleSheet.create({
 
 });
 
+// export { pressedNotification };
 export default NotificationsScreen;

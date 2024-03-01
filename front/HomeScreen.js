@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   TouchableOpacity,
   View,
@@ -8,18 +8,22 @@ import {
   ActivityIndicator,
   ScrollView,
   RefreshControl,
+  Animated,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import UserService from "../back/UserService";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, query, where, doc, onSnapshot } from "firebase/firestore";
 import MeetingService from "../back/MeetingService";
 import HomeCard from "../components/HomeCard";
 import { db } from "../back/firebase";
 import { sportIconMapping_FontAwesome5 } from "../back/DataBase";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { stylesHome } from "../components/StylesSheets"
+import { NotificationService } from "../back/NotificationsService";
+import NotificationCard from "../components/NotificationCard";
+// import { pressedNotification } from "../front/NotificationsScreen"
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -29,18 +33,40 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingSugg, setIsLoadingSugg] = useState(true);
   const [refresh, setRefresh] = useState(false);
-  // console.log(`NotificationCounter = ${userNotificationCounter}`);
+  const userRef = doc(db, "Users", auth.currentUser.email);
+  const [notifications, setNotifications] = useState([]);
+  const [latestNotification, setLatestNotification] = useState(null);
+  const slideAnim = useRef(new Animated.Value(-100)).current;
+
+  
+  useEffect(() => {
+
+    fetchMeetings();
+    fetchSuggestions();
+    fetchData();
+    fetchNotifications()
+    return () => unsubscribe(), notificationUnsubscribe();
+  }, [latestNotification]);
+  
+  const slideNotification = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      setTimeout(() => {
+        Animated.timing(slideAnim, {
+          toValue: -100,
+          duration: 500,
+          useNativeDriver: true,
+        }).start();
+      }, 6000);
+    });
+  };
 
   const fetchData = async () => {
     await UserService.getUserDetails();
   };
-
-  const userRef = doc(db, "Users", auth.currentUser.email);
-
-  const unsubscribe = onSnapshot(userRef, (doc) => {
-    const data = doc.data();
-    setNotificationCounter(data.NotificationCounter);
-  });
 
   const fetchMeetings = async () => {
     try {
@@ -67,13 +93,40 @@ const HomeScreen = () => {
       setIsLoadingSugg(false); // This ensures isLoading is set to false after fetching is done
     }
   };
-  useEffect(() => {
 
-    fetchMeetings();
-    fetchSuggestions();
-    fetchData();
-    return () => unsubscribe();
-  }, []);
+  const fetchNotifications = async () => {
+    try {
+      const userNotifications = await NotificationService.getUserNotifications();
+      if (userNotifications && userNotifications.length > 0) {
+        setNotifications(userNotifications);
+      } else {
+        console.log("No Notifications found for the given criteria.");
+      }
+    } catch (error) {
+      console.error("Error fetching Notifications:", error);
+    } finally {
+      setIsLoading(false); // This ensures isLoading is set to false after fetching is done
+    }
+  };
+
+  const unsubscribe = onSnapshot(userRef, (doc) => {
+    const data = doc.data();
+    setNotificationCounter(data.NotificationCounter);
+  });
+
+  const notificationUnsubscribe = onSnapshot(
+    query(collection(db, 'Notifications'), where('Addressee', '==', auth.currentUser.email)),
+    (snapshot) => {
+      const updatedNotifications = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setNotifications(updatedNotifications);
+      new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
+        setLatestNotification(notifications[notifications.length - 1]);
+      });
+    }
+  );
 
   const handleNotifications = () => {
     try {
@@ -82,6 +135,7 @@ const HomeScreen = () => {
       alert(error.message);
     }
   };
+
   const handleSupport = () => {
     try {
       navigation.replace("Support");
@@ -89,6 +143,7 @@ const HomeScreen = () => {
       alert(error.message);
     }
   };
+
   const handleAboutUs = () => {
     try {
       navigation.replace("AboutUs");
@@ -111,6 +166,24 @@ const HomeScreen = () => {
       setIsLoadingSugg(false);
     }, 3000)
 
+  };
+
+  const pressedNotification = (notification) => {
+    if (notification.Type === "New Meeting") {
+      try {
+        navigation.navigate('Home', { screen: 'Meetings' });
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    if (notification.Type === "Request accepted") {
+      try {
+        navigation.navigate('Home', { screen: 'My Groups' });
+      } catch (error) {
+        alert(error.message);
+      }
+    }
   };
 
   return (
@@ -195,6 +268,26 @@ const HomeScreen = () => {
           <Entypo name="chevron-right" size={20} color="black" />
         </TouchableOpacity>
       </ScrollView>
+      <Animated.View
+        style={{
+          transform: [{ translateY: slideAnim }],
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 50, // Adjust as needed
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <View>
+          {latestNotification ? (
+            <TouchableOpacity onPress={() => pressedNotification(notifications[notifications.length - 1])}>
+              <NotificationCard notification={notifications[notifications.length - 1]} />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+      </Animated.View>
     </ImageBackground>
   );
 };
