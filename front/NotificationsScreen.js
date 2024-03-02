@@ -79,10 +79,8 @@ const NotificationsScreen = () => {
     //     setLatestNotification(notifications[notifications.length-1])
     //   });
 
-
     fetchNotifications();
-    return () => unsubscribe();
-  }, [latestNotification]);
+  }, []);
 
   const pressedNotification = (notification) => {
     if (notification.Type === "New Meeting") {
@@ -124,10 +122,10 @@ const NotificationsScreen = () => {
             ) : (
 
               <View style={styles.container}>
-                {notifications.slice().reverse().map((notification, index) => (
-                  <TouchableOpacity onPress={() => pressedNotification(notification)}>
-                    <NotificationCard key={index} notification={notification} />
-                  </TouchableOpacity>
+                {notifications.slice().reverse().map((notification) => (
+                  <TouchableOpacity key={notification.id} onPress={() => pressedNotification(notification)}>
+                  <NotificationCard notification={notification} />  
+                </TouchableOpacity>
                 ))}
               </View>
 
