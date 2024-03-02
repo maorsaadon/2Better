@@ -10,6 +10,7 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import styles from "../components/StylesSheets";
 import { auth , db } from "../back/firebase";
 import { userImageUpload } from "../back/UserService";
@@ -21,24 +22,37 @@ const LoginScreen = () => {
   var [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [stayLoggedIn, setStayLoggedIn] = useState(false);
 
   const navigation = useNavigation();
 
-
-  const handleLogin = () => {
-    email = email.toLowerCase();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Logged in with:", user.email);
-        navigation.replace("Home");
-      })
-      .catch((error) => alert(error.message));
+  const handleLogin = async  () => {
+    try {
+      if (stayLoggedIn) {
+        await AsyncStorage.setItem('stayLoggedIn', 'true');
+      } else {
+        await AsyncStorage.removeItem('stayLoggedIn');
+      }
+      email = email.toLowerCase();
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          console.log("Logged in with:", user.email);
+          navigation.replace("Home");
+        })
+        .catch((error) => alert(error.message));
+    } catch(error){
+      console.log(error);
+    }
   };
+
+
   const handleSignUp = () => {
     navigation.navigate("Register");
   };
+
+
   return (
     <ImageBackground source={myLogoPic} style={stylesLogin.backgroundImage}>
       <SafeAreaView style={stylesLogin.container} behavior="padding">
@@ -86,6 +100,13 @@ const LoginScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
+        <TouchableOpacity onPress={() => setStayLoggedIn(!stayLoggedIn)} style={{ marginRight: 10 }}>
+          <Text>{stayLoggedIn ? '☑️' : '⬜️'}</Text>
+        </TouchableOpacity>
+        <Text>Stay logged in</Text>
+      </View> */}
 
         <View style={stylesLogin.buttonContainer}>
           <TouchableOpacity onPress={handleLogin} style={stylesLogin.button}>
