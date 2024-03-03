@@ -11,35 +11,36 @@
 - **Data Sync:** Securely sync your data across devices to keep your progress up-to-date
 
 ### Welcome Screen
-![Welcome Screen](https://github.com/maorsaadon/2Better/tree/main/README_pictures/welcome_screen.jpg)
+![welcome_screen](https://github.com/maorsaadon/2Better/assets/102155998/964c4312-2501-425e-8837-74996cbcf4ed)
 The welcome screen greets users with a motivational quote, "HEALTHY MIND IN A HEALTHY BODY," emphasizing the app's focus on overall well-being. From here, users can either sign in to their existing account or create a new one.
 
 ### Registration
-![Registration](https://github.com/maorsaadon/2Better/tree/main/README_pictures/registration_screen.jpg)
+![registration_screen](https://github.com/maorsaadon/2Better/assets/102155998/69c06c04-50ee-47d9-926a-6d1c5080be30)
 New users can sign up by providing their first name, last name, email, password, city, age, and gender, ensuring a personalized experience.
 
 ### Login
-![Login](https://github.com/maorsaadon/2Better/tree/main/README_pictures/login_screen.jpg)
+![login_screen](https://github.com/maorsaadon/2Better/assets/102155998/1d55f9c1-0545-46b3-9485-466f9e266642)
 Returning users can quickly log in using their email and password.
 
 ### Home Page
-![Home Page](https://github.com/maorsaadon/2Better/tree/main/README_pictures/home_page.jpg)
+![home_page](https://github.com/maorsaadon/2Better/assets/102155998/f0836af7-2f91-43e7-8efd-deab9d666938)
+
 The home page offers a dashboard view where users can see their groups' activities, join new groups, or explore activities organized by other groups.
 
 ### Group Management
-![Group Management](https://github.com/maorsaadon/2Better/tree/main/README_pictures/group_management.jpg)
+![group_management](https://github.com/maorsaadon/2Better/assets/102155998/a153eaa0-b1aa-445d-b153-94f1217b82f7)
 Users can manage their groups, view membership status, and edit or delete groups they manage.
 
 ### Group Activities
-![Group Activities](https://github.com/maorsaadon/2Better/tree/main/README_pictures/group_activities.jpg)
+![group_activities](https://github.com/maorsaadon/2Better/assets/102155998/2a0a8824-d340-4681-8d51-351b0ec05b87)
 The app lists various sports activities available in the user's groups or nearby groups, including details like the sport type, location, date, time, and the number of participants.
 
 ### Activity Search
-![Activity Search](https://github.com/maorsaadon/2Better/tree/main/README_pictures/activity_search.jpg)
+![activity_search](https://github.com/maorsaadon/2Better/assets/102155998/29fa786d-afa1-41bc-bab6-487ad5e03086)
 Users can search for groups based on the type of sport and city, making it easy to find local activities that match their interests.
 
 ### User Profile
-![User Profile](https://github.com/maorsaadon/2Better/tree/main/README_pictures/user_profile.jpg)
+![user_profile](https://github.com/maorsaadon/2Better/assets/102155998/076516e9-d68a-40db-9f87-b1a838acdf00)
 The profile page allows users to view and edit their personal information and manage account settings, including the option to delete their account.
 
 
