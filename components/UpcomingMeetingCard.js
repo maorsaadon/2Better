@@ -28,6 +28,7 @@ import MeetingService from '../back/MeetingService';
 import { useNavigation } from '@react-navigation/core';
 import colors from '../colors';
 import { UpcomingStyles } from "./StylesSheets";
+import GroupService from "../back/GroupService";
 
 
 const screenWidth = Dimensions.get("window").width;
@@ -38,6 +39,26 @@ const groupName = meeting?.GroupName ?? "Default Name";
 const [isUnJoin, setIsUnJoin] = useState(true);
 
 const navigation = useNavigation();
+
+
+useEffect(() => {
+    const checkAndDeleteIfMeetingPassed = () => {
+        const currentTimestamp = new Date().getTime();
+        const meetingTimestamp = meeting?.Timestamp?.toDate().getTime() || 0;
+
+        if (meetingTimestamp < currentTimestamp) {
+            // Meeting has already passed, trigger deletion logic
+            console.log(`Meeting ID: ${meeting.id} has passed. Deleting...`);
+            // Add your deletion logic here, for example:
+            MeetingService.handleDeleteMeeting(meeting.id);
+            GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
+
+        }
+    };
+
+    checkAndDeleteIfMeetingPassed();
+}, [meeting.id, meeting.Timestamp]);
+
 
 const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];

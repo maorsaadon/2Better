@@ -58,10 +58,23 @@ const HomeCard = ({ meeting }) => {
             const leaderName = await GroupService.getLeaderEmail(groupName)
             setGroupLeaderEmail(leaderName)
         };
-
-        
+        const checkAndDeleteIfMeetingPassed = () => {
+            const currentTimestamp = new Date().getTime();
+            const meetingTimestamp = meeting?.Timestamp?.toDate().getTime() || 0;
+    
+            if (meetingTimestamp < currentTimestamp) {
+                // Meeting has already passed, trigger deletion logic
+                console.log(`Meeting ID: ${meeting.id} has passed. Deleting...`);
+                // Add your deletion logic here, for example:
+                MeetingService.handleDeleteMeeting(meeting.id);
+                GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
+  
+            }
+        };
+    
+        checkAndDeleteIfMeetingPassed();
         checkUserInMeeting();
-    }, [meeting.id, auth.currentUser.email, meeting.Members]);
+    }, [meeting.id, auth.currentUser.email, meeting.Members, meeting.Timestamp]);
 
     const getSportIcon = (sportType) => {
         const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -94,8 +107,10 @@ const HomeCard = ({ meeting }) => {
     const handleRequestPress = async () => {
         setFlageRequest(false)
         NotificationService.handleAddNewNotification(groupName, content, "Meeting Join request", serverTimestamp(), auth.currentUser.email, groupLeaderEmail);
-        Alert.alert("This is only a request, please wait to approve");
-        
+        Alert.alert(
+            "Request to Join Group",
+            "This is only a request to join the group, please wait to approve.",
+          );        
     };
 
 

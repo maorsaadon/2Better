@@ -172,7 +172,7 @@ const HomeScreen = () => {
             )}
           </View>
           <View style={stylesHome.containerText}>
-            <Text style={stylesHome.buttonTextPage}>Explore new activities</Text>
+            <Text style={stylesHome.buttonTextPage}>Explore new groups activities</Text>
           </View>
           <View style={stylesHome.scrollContainer}>
             {isLoadingSugg ? (
