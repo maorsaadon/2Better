@@ -85,15 +85,7 @@ const NotificationsScreen = () => {
   // }, [latestNotification]);
 
   const pressedNotification = (notification) => {
-    if (notification.Type === "New Meeting") {
-      try {
-        navigation.navigate('Home', { screen: 'Meetings' });
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-
-    if (notification.Type === "Request accepted") {
+    if (notification.Type === "Request accepted" || notification.Type === "New Meeting") {
       try {
         navigation.navigate('Home', { screen: 'My Groups' });
       } catch (error) {
@@ -126,7 +118,7 @@ const NotificationsScreen = () => {
               <View style={styles.container}>
                 {notifications.slice().reverse().map((notification) => (
                   <TouchableOpacity key={notification.id} onPress={() => pressedNotification(notification)}>
-                    <NotificationCard notification={notification} />  
+                    <NotificationCard notification={notification} />
                   </TouchableOpacity>
                 ))}
               </View>
