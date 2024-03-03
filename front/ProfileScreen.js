@@ -161,43 +161,37 @@ const ProfileScreen = () => {
           >
           </View>
 
-        </View>
-        <View style={stylesProfile.userInfoContainer}>
-          <Text style={stylesProfile.valueName}>
-            {userFirstName}{ } {userLastName}
-          </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Entypo name="mail" size={30} color="black" />
-            <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
-          </View>
-        </View>
-        
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
-          {genderOption? (
-          <Fontisto name="male" size={26} color="black" />
-          ) : ( 
-          <Fontisto name="female" size={26} color="black" />
-          )}
-          <Text style={stylesProfile.valueNew}>{userGender}</Text>
+          <View style={stylesProfile.userInfoContainer}>
+  <Text style={stylesProfile.valueName}>
+    {userFirstName} {userLastName}
+  </Text>
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+    <Entypo name="mail" size={30} color="black" />
+    <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
+  </View>
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+    {genderOption ? (
+      <Fontisto name="male" size={26} color="black" />
+    ) : ( 
+      <Fontisto name="female" size={26} color="black" />
+    )}
+    <Text style={stylesProfile.valueNew}>{userGender}</Text>
+  </View>
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+    <MaterialIcons name="face" color="black" size={20} />
+    <Text style={stylesProfile.valueNew}>{userAge}</Text>
+  </View>
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+    <MaterialIcons name="location-on" size={26} color="black" />
+    <Text style={stylesProfile.valueNew}>{userCity}</Text>
+  </View>
+</View>
 
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
-          <MaterialIcons name="face" color="black" size={20} />
-          <Text style={stylesProfile.valueNew}>{userAge}</Text>
-
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 100 }}>
-          <MaterialIcons name="location-on" size={26} color="black" />
-          <Text style={stylesProfile.valueNew}>{userCity}</Text>
-
-        </View>
-
-        <View style={stylesProfile.orContainer}>
-            <View style={stylesProfile.line} />
-              <Text style={stylesProfile.orText}>Or</Text>
-            <View style={stylesProfile.line} />
-          </View>
-
         <TouchableOpacity onPress={handleDelete} style={stylesProfile.buttonDelete}>
           <Text style={stylesProfile.buttonText}>Delete Account</Text>
         </TouchableOpacity>

@@ -164,12 +164,6 @@ const HomeScreen = () => {
               <FontAwesome5 name={iconName} size={40} color="#193735" />
             </View>
           ))}
-          <TouchableOpacity
-            onPress={handleNotifications}
-            style={stylesHome.notificationBotton}
-          >
-            <Entypo name="bell" size={30} color="black" />
-          </TouchableOpacity>
         </View>
 
         <View style={stylesHome.containerScrollers}>
