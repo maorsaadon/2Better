@@ -20,6 +20,7 @@ import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import DatePickerWithTime from '../components/DateTimePicker';
 import MeetingDetails from './AddNewMeetingScreen';
 import GroupService from "../back/GroupService";
+import { serverTimestamp } from "firebase/firestore";
 
 
 
@@ -67,10 +68,10 @@ const EditMeetingScreen = ({ route }) => {
         await MeetingService.updateMeetingDetails(meeting.id, stringDate, stringTime, location, combinedDateTimestamp, totalCapacity);
 
 
-        //const content = `${meeting.groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
+        const content = `${meeting.GroupName}: at ${stringDate}, ${stringTime} in - ${location}`;
         
         // Handle other operations as needed (e.g., notification)
-        //NotificationService.handleAddNewNotification(meeting.groupName, content, "Meeting Updated", serverTimestamp());
+        NotificationService.handleAddNewNotification(meeting.GroupName, content, "Meeting Updated", serverTimestamp());
       
         // Navigate back to the MyGroups screen
         navigation.replace("MyGroups");

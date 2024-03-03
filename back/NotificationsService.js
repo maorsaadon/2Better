@@ -131,6 +131,40 @@ export const NotificationService = {
           console.error("Error creating Notification for leader: ", error);
           alert(error.message);
       }
+    }else if( type === "Meeting Updated"){
+      const groupMembers = await GroupService.getMembers(groupName);
+      try {
+        const leaderNotifRef = db.collection("Notifications").doc();
+        await leaderNotifRef.set({
+          Addressee: groupLeaderEmail,
+          GroupName: groupName,
+          Content: content,
+          Type: type,
+          TimeStamp: timeStamp,
+        });
+        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+      } catch (error) {
+          console.error("Error creating Notification for leader: ", error);
+          alert(error.message);
+      }
+
+      for (const member of groupMembers) {
+        try {
+          const memberNotifRef = db.collection("Notifications").doc();
+          await memberNotifRef.set({
+            Addressee: member,
+            GroupName: groupName,
+            Content: content,
+            Type: type,
+            TimeStamp: timeStamp,
+          });
+          await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(member) + 1, member);
+        } catch (error) {
+            console.error("Error creating Notification for member: ", error);
+            alert(error.message);
+        }
+        console.log(`${member} : ${await UserService.getUserNotificationCounter(member)}`);
+      }
     }else{
       try {
         const NotificationRef = db.collection("Notifications").doc();
