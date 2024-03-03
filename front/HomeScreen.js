@@ -38,8 +38,10 @@ const HomeScreen = () => {
   const userRef = doc(db, "Users", auth.currentUser.email);
 
   const unsubscribe = onSnapshot(userRef, (doc) => {
-    const data = doc.data();
-    setNotificationCounter(data.NotificationCounter);
+    if (doc.exists) {
+      const data = doc.data();
+      setNotificationCounter(data.NotificationCounter);
+    }
   });
 
   const fetchMeetings = async () => {
@@ -91,7 +93,7 @@ const HomeScreen = () => {
       alert(error.message);
     }
   };
-  
+
   const handleAboutUs = () => {
     try {
       navigation.replace("AboutUs");
@@ -151,6 +153,12 @@ const HomeScreen = () => {
               <FontAwesome5 name={iconName} size={40} color="#193735" />
             </View>
           ))}
+          <TouchableOpacity
+            onPress={handleNotifications}
+            style={stylesHome.notificationBotton}
+          >
+            <Entypo name="bell" size={30} color="black" />
+          </TouchableOpacity>
         </View>
 
         <View style={stylesHome.containerScrollers}>

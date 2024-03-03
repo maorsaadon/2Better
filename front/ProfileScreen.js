@@ -108,7 +108,7 @@ const ProfileScreen = () => {
       await UserService.deleteUserAccount();
 
       // Navigate to the login screen or any other desired screen after account deletion
-      navigation.replace("Entry");
+      await navigation.replace("Entry");
     } catch (error) {
       console.error("Error deleting account:", error);
     }
