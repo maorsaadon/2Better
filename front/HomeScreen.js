@@ -38,10 +38,8 @@ const HomeScreen = () => {
   const userRef = doc(db, "Users", auth.currentUser.email);
 
   const unsubscribe = onSnapshot(userRef, (doc) => {
-    if (doc.exists) {
       const data = doc.data();
       setNotificationCounter(data.NotificationCounter);
-    }
   });
 
   const fetchMeetings = async () => {
