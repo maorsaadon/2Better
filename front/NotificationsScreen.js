@@ -106,11 +106,10 @@ const NotificationsScreen = () => {
     <View style={{ flex: 1 }}>
       <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
         <View style={styles.container}>
-          <ScrollView>
-            <TouchableOpacity onPress={backButton} style={styles.backButton}>
+        <TouchableOpacity onPress={backButton} style={styles.backButton}>
               <AntDesign name="back" size={30} color="black" />
-            </TouchableOpacity>
-
+          </TouchableOpacity>
+          <ScrollView>
             {isLoading ? (
               <ActivityIndicator size="large" color="black" />
             ) : (
@@ -127,26 +126,6 @@ const NotificationsScreen = () => {
           </ScrollView>
         </View>
       </ImageBackground>
-      {/* <Animated.View
-        style={{
-          transform: [{ translateY: slideAnim }],
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 50, // Adjust as needed
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <View style={styles.container}>
-          {latestNotification ? (
-            <TouchableOpacity onPress={() => pressedNotification(notifications[notifications.length - 1])}>
-              <NotificationCard notification={notifications[notifications.length - 1]} />
-            </TouchableOpacity>
-          ) : null}
-        </View>
-      </Animated.View> */}
     </View>
   );
 };

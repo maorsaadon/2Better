@@ -136,7 +136,7 @@ import {
             style={ManagerMeetingCardStyles.deleteButton}
             onPress={handleDeletePress}
             >
-            <FontAwesome5 name="trash" size={23} color="black" />
+            <FontAwesome5 name="trash" size={23} color="#460811" />
           </TouchableOpacity>
           <View style={ManagerMeetingCardStyles.cardMiddleRow}>
               <View style={ManagerMeetingCardStyles.iconAndTextContainer}>

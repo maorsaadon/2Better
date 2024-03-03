@@ -59,7 +59,7 @@ const UpcomingMeetingsScreen = () => {
             />
           }
         >
-          <Text style={{ color: '#E9EFE8' }}>bla bla</Text>
+          <Text style={{ color: '#E9EFE8' }}>The need for the refresh</Text>
           {isLoading ? (
             <Text></Text>
             //<ActivityIndicator size="large" color="black" />

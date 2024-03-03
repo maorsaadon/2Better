@@ -243,9 +243,6 @@ export const MeetingService = {
           isLeader2 = 0;
           leaderGroupNames.push({
             groupName: group.GroupName,
-            sportType: group.SportType,
-            Members: group.Members,
-            isLeader: isLeader2,
           });
         }
       });
@@ -258,15 +255,9 @@ export const MeetingService = {
           .get();
         meetingsSnapshot.forEach((doc) => {
           const meetingData = doc.data();
-          const meetingDate = new Date(meetingData.Date);
-          const currentDate = new Date();
           if (!meetingData.Members.includes(auth.currentUser.email)) {
-            //&& meetingDate > currentDate}
             homeMeetings.push({
               ...meetingData,
-              SportType: group.sportType,
-              IsLeader: group.isLeader,
-              Members: group.Members,
               id: doc.id,
             });
           }
@@ -299,9 +290,6 @@ export const MeetingService = {
           isLeader2 = 0;
           leaderGroupNames.push({
             groupName: group.GroupName,
-            sportType: group.SportType,
-            Members: group.Members,
-            isLeader: isLeader2,
           });
         }
       });
@@ -314,15 +302,9 @@ export const MeetingService = {
           .get();
         meetingsSnapshot.forEach((doc) => {
           const meetingData = doc.data();
-          const meetingDate = new Date(meetingData.Date);
-          const currentDate = new Date();
           if (!meetingData.Members.includes(auth.currentUser.email)) {
-            //&& meetingDate > currentDate}
             homeMeetingsSuggestions.push({
               ...meetingData,
-              SportType: group.sportType,
-              Members: group.Members,
-              IsLeader: group.isLeader,
               id: doc.id,
             });
           }
