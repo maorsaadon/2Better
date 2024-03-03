@@ -2,6 +2,9 @@ import { auth, db } from "./firebase";
 import { GroupService } from "./GroupService";
 import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
+import {
+   collection, getDocs, deleteDoc, query, where
+} from 'firebase/firestore';
 
 export const MeetingService = {
 
@@ -51,7 +54,17 @@ export const MeetingService = {
 
   async handleDeleteMeeting(meetingId) {
     try {
-      // Assuming 'Meetings' is the name of the collection where meetings are stored
+      const chatCollectionRef = collection(db, 'Meetings', meetingId, 'chat');
+
+      // Get all documents in the 'chat' subcollection
+      const chatQuerySnapshot = await getDocs(chatCollectionRef);
+
+      // Iterate through each document and delete it
+      chatQuerySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+        console.log(`Document with ID ${doc.id} deleted successfully.`);
+      });
+      
       await db.collection("Meetings").doc(meetingId).delete();
       console.log(`Meeting with ID: ${meetingId} has been deleted.`);
     } catch (error) {

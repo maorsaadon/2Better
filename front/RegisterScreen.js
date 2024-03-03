@@ -71,14 +71,14 @@ const RegisterScreen = () => {
       return;
     }
 
-    // Check if the email is already in use
-    const emailInUse = await UserService.isEmailInAuth(email);
+    // // Check if the email is already in use
+    // const emailInUse = await UserService.isEmailInAuth(email);
 
-    if (emailInUse) {
-      // If the email is already in use, show an alert and return without proceeding
-      alert("Email is already in use! Please use another email.");
-      return;
-    }
+    // if (emailInUse) {
+    //   // If the email is already in use, show an alert and return without proceeding
+    //   alert("Email is already in use! Please use another email.");
+    //   return;
+    // }
 
     try {
       const accountCreated = await UserService.createUserAccount(email, password, firstName, lastName, city, selectedGender, age);
