@@ -71,7 +71,6 @@ const HomeCard = ({ meeting }) => {
   
             }
         };
-    
         checkAndDeleteIfMeetingPassed();
         checkUserInMeeting();
     }, [meeting.id, auth.currentUser.email, meeting.Members, meeting.Timestamp]);
