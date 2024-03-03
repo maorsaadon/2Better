@@ -31,6 +31,8 @@ const HomeScreen = () => {
   const [refresh, setRefresh] = useState(false);
   // console.log(`NotificationCounter = ${userNotificationCounter}`);
 
+  const notificationCounterField = "NotificationCounter";
+
   const fetchData = async () => {
     await UserService.getUserDetails();
   };
@@ -38,8 +40,19 @@ const HomeScreen = () => {
   const userRef = doc(db, "Users", auth.currentUser.email);
 
   const unsubscribe = onSnapshot(userRef, (doc) => {
+    if (doc.exists()) {
       const data = doc.data();
-      setNotificationCounter(data.NotificationCounter);
+      // Check if the NotificationCounter field exists in the document
+      if (data && notificationCounterField in data) {
+        setNotificationCounter(data[notificationCounterField]);
+      } else {
+        // Handle the case where the NotificationCounter field is missing
+        console.log("NotificationCounter field is missing from the document.");
+      }
+    }else{
+      // Handle the case where the document does not exist
+      console.log("User document does not exist.");
+    }
   });
 
   const fetchMeetings = async () => {
