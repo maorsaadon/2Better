@@ -325,7 +325,7 @@ export const GroupService = {
         console.log("Meeting does not exist.");
       }
     } catch (error) {
-      console.error(`Error removing user from the meeting!`, error);
+      console.error(`Error removing user from the group!`, error);
     }
   },
 

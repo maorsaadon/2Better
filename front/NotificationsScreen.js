@@ -15,37 +15,15 @@ import { AntDesign } from "@expo/vector-icons";
 import { stylesNotifi } from "../components/StylesSheets";
 
 const NotificationsScreen = () => {
-  //Aviv's Edit:
-  /***************** */
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [latestNotification, setLatestNotification] = useState(null);
   const slideAnim = useRef(new Animated.Value(-100)).current; // Initial position off-screen
 
-  // const slideNotification = () => {
-  //   // Slide in
-  //   Animated.timing(slideAnim, {
-  //     toValue: 0,
-  //     duration: 500,
-  //     useNativeDriver: true,
-  //   }).start(() => {
-  //     // Stay visible for 2 seconds then slide out
-  //     setTimeout(() => {
-  //       Animated.timing(slideAnim, {
-  //         toValue: -100,
-  //         duration: 500,
-  //         useNativeDriver: true,
-  //       }).start();
-  //     }, 6000);
-  //   });
-  // };
 
-  // Fetch user notifications when the component is mounted
   useEffect(() => {
-    // if (latestNotification) {
-    //   slideNotification();
-    // }
+
 
     const fetchNotifications = async () => {
       try {
@@ -63,22 +41,11 @@ const NotificationsScreen = () => {
       }
     };
 
-    // const unsubscribe = db.collection('Notifications')
-    //   .where('Addressee', '==', auth.currentUser.email)
-    //   .onSnapshot(snapshot => {
-    //     const updatedNotifications = snapshot.docs.map(doc => ({
-    //       id: doc.id,
-    //       ...doc.data()
-    //     }));
-    //     setNotifications(updatedNotifications);
-    //     new Promise(resolve => setTimeout(resolve, 1000));
-    //     setLatestNotification(notifications[notifications.length-1])
-    //   });
+
 
     fetchNotifications();
-    // return () => unsubscribe();
   }, []);
-  // }, [latestNotification]);
+
 
   const pressedNotification = (notification) => {
     if (

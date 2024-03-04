@@ -26,6 +26,8 @@ import {
 } from "@expo/vector-icons";
 import { onSnapshot, collection, query, getDocs } from "firebase/firestore";
 import { stylesMemList } from "../components/StylesSheets";
+import NotificationService from "../back/NotificationsService";
+import { serverTimestamp } from "firebase/firestore";
 
 const MembersList = ({ route }) => {
   const { meeting, group } = route.params;
@@ -78,32 +80,20 @@ const MembersList = ({ route }) => {
       }
     };
   }, [meeting, group]);
-
-  // useEffect(() => {
-  //   const unsubscribe = onSnapshot(
-  //     query(collection(db, 'Meetings', meeting.id, 'Members')),
-  //     (snapshot) => {
-  //       const getMeetingMembers = async () => {
-  //         const meetingsData = await MeetingService.getMembers(meeting.id);
-  //         setMeetingMembers(meetingsData); // Update the state with the fetched data
-  //       };
-
-  //       getMeetingMembers();
-  //     },
-  //     (error) => {
-  //       console.error("Error fetching meeting members: ", error);
-  //     }
-  //   );
-
-  //   return () => {
-  //     // Unsubscribe the snapshot listener when the component is unmounted
-  //     unsubscribe();
-  //   };
-  // }, [meeting.id]);
+    
 
   const handleRemovePress = async (email) => {
     try {
       await MeetingService.removeUserFromMeeting(meeting.id, email);
+      await NotificationService.handleAddNewNotification(
+        email,
+        meeting.GroupName,
+        "The manager remove you from the meeting",
+        "Removed From Meeting",
+        serverTimestamp(),
+        "",
+        ""
+      );
     } catch (error) {
       console.error("Error removing user from meeting members: ", error);
     }
@@ -112,26 +102,21 @@ const MembersList = ({ route }) => {
   const handleRemoveGroupPress = async (email) => {
     try {
       await GroupService.removeUserFromGroup(group.GroupName, email);
+      await NotificationService.handleAddNewNotification(
+        email,
+        group.GroupName,
+        "The manager remove you from the group",
+        "Removed From Group",
+        serverTimestamp(),
+        "",
+        ""
+      );
     } catch (error) {
       console.error("Error removing user from meeting members: ", error);
     }
   };
 
-  // const getMemberDetails = async (email) => {
-  //     try {
-  //       const snapshot = await db.collection("Users").doc(email).get();
-  //       if (snapshot.exists) {
-  //         const userData = snapshot.data();
-  //         return userData; // Return the member details
-  //       } else {
-  //         console.log("No such document!");
-  //         return null; // Return null if the document does not exist
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user details: ", error);
-  //       throw error; // Throw the error to be caught in the calling function
-  //     }
-  //   };
+
 
   const backButton = () => {
     try {
