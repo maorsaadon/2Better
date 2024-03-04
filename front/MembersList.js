@@ -17,7 +17,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { onSnapshot, collection, query, getDocs } from 'firebase/firestore';
-
+import { stylesMemList } from '../components/StylesSheets';
 
 const MembersList = ({ route }) => {
   const { meeting, group } = route.params;
@@ -151,29 +151,29 @@ const MembersList = ({ route }) => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+    <ImageBackground source={myLogoPic} style={stylesMemList.backgroundImage}>
 
-      <TouchableOpacity onPress={backButton} style={styles.backButton}>
+      <TouchableOpacity onPress={backButton} style={stylesMemList.backButton}>
         <AntDesign name="back" size={30} color="black" />
       </TouchableOpacity>
-      <DataTable.Header style={styles.header}>
-        <DataTable.Title style={[styles.title, { left: 20 }]}>Members</DataTable.Title>
-        <DataTable.Title style={[styles.title, { left: 65 }]}>Member Details</DataTable.Title>
-        <DataTable.Title style={[styles.title, { left: 60 }]}>Remove</DataTable.Title>
+      <DataTable.Header style={stylesMemList.header}>
+        <DataTable.Title style={[stylesMemList.title, { left: 20 }]}>Members</DataTable.Title>
+        <DataTable.Title style={[stylesMemList.title, { left: 65 }]}>Member Details</DataTable.Title>
+        <DataTable.Title style={[stylesMemList.title, { left: 60 }]}>Remove</DataTable.Title>
       </DataTable.Header>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.wrapper}>
+      <ScrollView style={stylesMemList.scrollView}>
+        <View style={stylesMemList.wrapper}>
           <DataTable>
             {meetingMembers.map((email) => (
-              <DataTable.Row key={email} style={styles.row}>
-                <DataTable.Cell style={styles.cell}>{email}</DataTable.Cell>
-                <TouchableOpacity onPress={() => handlePress(email)} style={[styles.rowButton, styles.showButton]}>
-                  <Text style={styles.buttonText}>Show</Text>
+              <DataTable.Row key={email} style={stylesMemList.row}>
+                <DataTable.Cell style={stylesMemList.cell}>{email}</DataTable.Cell>
+                <TouchableOpacity onPress={() => handlePress(email)} style={[stylesMemList.rowButton, stylesMemList.showButton]}>
+                  <Text style={stylesMemList.buttonText}>Show</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   onPress={() => (meeting ? handleRemovePress(email) : handleRemoveGroupPress(email))} 
-                  style={[styles.rowButton, styles.deleteButton]}>
-                  {/* <Text style={styles.buttonText}>Remove</Text> */}
+                  style={[stylesMemList.rowButton, stylesMemList.deleteButton]}>
+                  {/* <Text style={stylesMemList.buttonText}>Remove</Text> */}
                   {/* <FontAwesome name="remove" size={30} color="black" /> */}
                   <MaterialIcons name='person-remove' size={20} color='white' />
                 </TouchableOpacity>
@@ -191,19 +191,19 @@ const MembersList = ({ route }) => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>First name: {selectedMember?.FirstName}</Text>
-            <Text style={styles.modalText}>Last name: {selectedMember?.LastName}</Text>
-            <Text style={styles.modalText}>Gender: {selectedMember?.Gender}</Text>
-            <Text style={styles.modalText}>Age: {selectedMember?.Age}</Text>
-            <Text style={styles.modalText}>City: {selectedMember?.City}</Text>
+        <View style={stylesMemList.centeredView}>
+          <View style={stylesMemList.modalView}>
+            <Text style={stylesMemList.modalText}>First name: {selectedMember?.FirstName}</Text>
+            <Text style={stylesMemList.modalText}>Last name: {selectedMember?.LastName}</Text>
+            <Text style={stylesMemList.modalText}>Gender: {selectedMember?.Gender}</Text>
+            <Text style={stylesMemList.modalText}>Age: {selectedMember?.Age}</Text>
+            <Text style={stylesMemList.modalText}>City: {selectedMember?.City}</Text>
 
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={[stylesMemList.button, stylesMemList.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Hide Details</Text>
+              <Text style={stylesMemList.textStyle}>Hide Details</Text>
             </Pressable>
           </View>
         </View>
@@ -211,114 +211,5 @@ const MembersList = ({ route }) => {
     </ImageBackground>
   );
 };
-const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  backButton: {
-    width: "20%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 40, // Align to the bottom
-    left: -10, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
-  },
-  scrollView: {
-    marginHorizontal: 20,
-    top: -80,
-  },
-  wrapper: {
-    marginTop: 110,
-    borderRadius: 10,
-    padding: 0,
-  },
-  header: {
-    marginTop: 110,
-    backgroundColor: 'rgba(54, 106, 104, 0.7)',
-  },
-  title: {
-    color: 'black',
-    fontSize: 60,
-    fontWeight: '800',
-  },
-  row: {
-    backgroundColor: '#e0e0e0',
-    marginTop: 10,
-    borderRadius: 20,
-  },
-  cell: {
-    fontSize: 16,
-    paddingVertical: 10,
-  },
-  button: {
-    backgroundColor: '#366A68',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    margin: 20,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 13,
-  },
-  rowButton: {
-    padding: 15,
-    borderRadius: 20,
-    right: 60,
-  },
-  showButton: {
-    backgroundColor: "#366A68",
-    left: -10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '20%',
-  },
-  deleteButton: {
-    backgroundColor: "#8B1B1B",
-    left: 16,
-    width: '20%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background for the modal overlay
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  buttonClose: {
-    backgroundColor: "#366A68",
-    marginTop: 15, // Added margin top for spacing from the text
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-    fontSize: 16, // Adjusted font size for modal text
-  },
-});
+
 export default MembersList;

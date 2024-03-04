@@ -14,6 +14,7 @@ import { GroupService } from "../back/GroupService";
 import { AntDesign } from "@expo/vector-icons";
 import ManagerGroupCard from "../components/ManagerGroupCard";
 import MemberGroupCard from "../components/MemberGroupCard";
+import { stylesGroup } from "../components/StylesSheets";
 
 const MyGroupsScreen = () => {
   const navigation = useNavigation();
@@ -78,27 +79,27 @@ const MyGroupsScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.buttonContainer}>
+    <ImageBackground source={myLogoPic} style={stylesGroup.backgroundImage}>
+      <View style={stylesGroup.buttonContainer}>
         <TouchableOpacity
           onPress={() => setIsManagerView(true)}
           style={[
-            styles.toggleButton,
-            !isManagerView && styles.toggleButtonActive,
+            stylesGroup.toggleButton,
+            !isManagerView && stylesGroup.toggleButtonActive,
           ]}
         >
-          <Text style={styles.buttonText}>MY GROUP AS</Text>
-          <Text style={styles.buttonText}>A MANAGER</Text>
+          <Text style={stylesGroup.buttonText}>MY GROUP AS</Text>
+          <Text style={stylesGroup.buttonText}>A MANAGER</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setIsManagerView(false)}
           style={[
-            styles.toggleButton,
-            isManagerView && styles.toggleButtonActive,
+            stylesGroup.toggleButton,
+            isManagerView && stylesGroup.toggleButtonActive,
           ]}
         >
-          <Text style={styles.buttonText}>MY GROUP AS</Text>
-          <Text style={styles.buttonText}>A MEMBER</Text>
+          <Text style={stylesGroup.buttonText}>MY GROUP AS</Text>
+          <Text style={stylesGroup.buttonText}>A MEMBER</Text>
         </TouchableOpacity>
       </View>
       <ScrollView refreshControl={ // Notice the correct prop name here: refreshControl instead of RefreshControl
@@ -111,7 +112,7 @@ const MyGroupsScreen = () => {
         />
       }
       >
-        <View style={styles.container}>
+        <View style={stylesGroup.container}>
           {isManagerView
             ? ManagerGroups.map((group, index) => (
               <TouchableOpacity key={index} onPress={() => navigateToGroupMeetings(group)}>
@@ -124,12 +125,12 @@ const MyGroupsScreen = () => {
         </View>
       </ScrollView>
       {isManagerView && (
-        <View style={styles.container}>
+        <View style={stylesGroup.container}>
           <TouchableOpacity
             onPress={handleAddNewGroup}
-            style={styles.addButton}
+            style={stylesGroup.addButton}
           >
-            <Text style={styles.buttonText}>Add New Group</Text>
+            <Text style={stylesGroup.buttonText}>Add New Group</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -137,103 +138,5 @@ const MyGroupsScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    paddingVertical: 15,
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingTop: 50,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.5,
-    elevation: 3,
-  },
-  addContainer: {
-    flex: 1,
-    justifyContent: "flex-start", // Align items at the top
-    flexDirection: "column",
-  },
-  container: {
-    justifyContent: "flex-start",
-    paddingVertical: 40,
-    flexDirection: "column",
-    gap: 40,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  card: {
-    width: "100%",
-    backgroundColor: "rgba(255, 255, 255 , 0.4)",
-    borderRadius: 20,
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    flexDirection: "column",
-    gap: 10,
-    marginTop: 1,
-  },
-  button: {
-    backgroundColor: "#3B82F6",
-    width: 240,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  buttonText: {
-    alignSelf: "center",
-    color: "white",
-  },
-  toggleButton: {
-    flex: 1,
-    backgroundColor: "#366A68",
-    paddingVertical: 10,
-    borderBottomWidth: 2, // Add underline to indicate this part can be tapped
-    borderBottomColor: "#366A68", // Make the underline transparent initially
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  toggleButtonActive: {
-    opacity: 0.5,
-    flex: 1,
-    backgroundColor: "#366A68",
-    paddingVertical: 10,
-    borderBottomWidth: 2, // Add underline to indicate this part can be tapped
-    borderBottomColor: "#366A68", // Make the underline transparent initially
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: {
-    width: 70,
-    height: 70,
-    resizeMode: "contain",
-  },
-  backButton: {
-    width: "20%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    position: "absolute",
-    top: 5,
-    left: -15,
-  },
-  addButton: {
-    backgroundColor: "#273B35",
-    width: "90%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    alignSelf: "center",
-    position: "absolute",
-    bottom: 20,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-});
 
 export default MyGroupsScreen;

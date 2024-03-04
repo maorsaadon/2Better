@@ -21,6 +21,7 @@ import colors from '../colors';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { userImageUpload } from "../back/UserService";
 import myLogoPic from "../assets/default.png";
+import { stylesChat } from '../components/StylesSheets';
 
 const ChatScreen = ({ route }) => {
   const { meeting } = route.params;
@@ -98,10 +99,10 @@ const ChatScreen = ({ route }) => {
   }, []);
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <View style={styles.backContainer}>
-          <TouchableOpacity onPress={backButton} style={styles.backButton}>
+    <ImageBackground source={myLogoPic} style={stylesChat.backgroundImage}>
+      <View style={stylesChat.container}>
+        <View style={stylesChat.backContainer}>
+          <TouchableOpacity onPress={backButton} style={stylesChat.backButton}>
             <AntDesign name="back" size={24} color="#366A68" />
           </TouchableOpacity>
         </View>
@@ -131,24 +132,3 @@ const ChatScreen = ({ route }) => {
 
 export default ChatScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'rgba(233, 240, 233, 0.7)', // Adjust the opacity as needed
-  },
-  backContainer: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    zIndex: 1,
-  },
-  backButton: {
-    padding: 10,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-});

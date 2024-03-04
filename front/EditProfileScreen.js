@@ -20,6 +20,9 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 import * as FileSystem from 'expo-file-system';
 import { auth } from '../back/firebase';
 
+import { stylesEditProfile } from "../components/StylesSheets";
+
+
 const EditProfileScreen = () => {
   const userEmail = auth.currentUser.email;
   const [firstName, setFirstName] = useState(userFirstName);
@@ -99,8 +102,8 @@ const EditProfileScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
+    <ImageBackground source={myLogoPic} style={stylesEditProfile.backgroundImage}>
+      <View style={stylesEditProfile.container}>
         <View
           style={{
             alignItems: "center",
@@ -135,93 +138,41 @@ const EditProfileScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <Text style={styles.label}>First Name:</Text>
+        <Text style={stylesEditProfile.label}>First Name:</Text>
         <TextInput
-          style={styles.input}
+          style={stylesEditProfile.input}
           value={firstName}
           onChangeText={setFirstName}
           onFocus={() => setFirstName("")} // Clear text on focus
           placeholder="First Name"
         />
 
-        <Text style={styles.label}>Last Name:</Text>
+        <Text style={stylesEditProfile.label}>Last Name:</Text>
         <TextInput
-          style={styles.input}
+          style={stylesEditProfile.input}
           value={lastName}
           onChangeText={setLastName}
           onFocus={() => setLastName("")} // Clear text on focus
           placeholder="Last Name"
         />
 
-        <Text style={[styles.label, { right: 120 }]}>City:</Text>
+        <Text style={[stylesEditProfile.label, { right: 120 }]}>City:</Text>
         <TextInput
-          style={styles.input}
+          style={stylesEditProfile.input}
           value={city}
           onChangeText={setCity}
           onFocus={() => setCity("")} // Clear text on focus
           placeholder="City"
         />
 
-        {/* <Button title="Save" onPress={handleSave} style={styles.saveButton} /> */}
+        {/* <Button title="Save" onPress={handleSave} style={stylesEditProfile.saveButton} /> */}
       </View>
-      <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-        <Text style={styles.buttonSaveText}>Save</Text>
+      <TouchableOpacity onPress={handleSave} style={stylesEditProfile.saveButton}>
+        <Text style={stylesEditProfile.buttonSaveText}>Save</Text>
       </TouchableOpacity>
     </ImageBackground>
   );
 };
 
-//export { imageUri };
 export default EditProfileScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  label: {
-    backgroundColor: "#366A68",
-    fontSize: 15,
-    padding: 15,
-    borderRadius: 10,
-    color: "white",
-    fontWeight: "bold",
-    marginTop: 10,
-    right: 95,
-  },
-  input: {
-    width: "80%",
-    backgroundColor: "rgba(233, 241, 233, 0.7)",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-    borderColor: "#366A68",
-    borderWidth: 2,
-  },
-  saveButton: {
-    bottom: 30,
-    left: 160,
-    padding:10,
-    width:"20%",
-    backgroundColor: "#366A68",
-    marginTop: 5,
-    borderRadius: 20,
-  },
-  buttonSaveText: {
-    left: 10,
-    color: "white",
-    fontWeight: "700",
-    fontSize: 18,
-
-  },
-});

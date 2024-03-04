@@ -11,7 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 
-
+import { stylesApp } from "../components/StylesSheets";
 import myLogoPic from "../assets/entry-page.png";
 
 const AppScreen = () => {
@@ -34,16 +34,16 @@ const AppScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.container} behavior="padding">
+    <ImageBackground source={myLogoPic} style={stylesApp.backgroundImage}>
+      <SafeAreaView style={stylesApp.container} behavior="padding">
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSignIn} style={styles.button}>
-            <Text style={styles.buttonText}>Sign in</Text>
+        <View style={stylesApp.buttonContainer}>
+          <TouchableOpacity onPress={handleSignIn} style={stylesApp.button}>
+            <Text style={stylesApp.buttonText}>Sign in</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleSignUp} style={styles.buttonOutline}>
-          <Text style={styles.buttonOutlineText}> Create an acount </Text>
+        <TouchableOpacity onPress={handleSignUp} style={stylesApp.buttonOutline}>
+          <Text style={stylesApp.buttonOutlineText}> Create an acount </Text>
         </TouchableOpacity>
       </SafeAreaView>
     </ImageBackground>
@@ -51,48 +51,3 @@ const AppScreen = () => {
 };
 
 export default AppScreen;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 200,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-    width: 300,
-  },
-  button: {
-    backgroundColor: "rgba(54, 106, 104, 0.8)",
-    width: "90%", // This will make the button fill the container
-    padding: 15,
-    borderRadius: 20,
-    alignItems: "center",
-  },
-  buttonOutline: {
-    width: "100%", // This will make the button fill the container
-    padding: 15,
-    borderRadius: 20,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#366A68",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "101%",
-    justifyContent: "center",
-    
-  },
-});
