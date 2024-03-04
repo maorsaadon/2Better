@@ -1,9 +1,7 @@
 import {
-  Pressable,
   Text,
   View,
   SafeAreaView,
-  StyleSheet,
   Dimensions,
   TouchableOpacity,
   } from "react-native";
@@ -37,7 +35,7 @@ import {
   const groupName = meeting?.GroupName ?? "Default Name";
   const [currentParticipants, setCurrentParticipants] = useState(meeting.Members.length);
   const totalCapacity = meeting.TotalCapacity || 10;
-  const [isUserInMeeting, setIsUserInMeeting] = useState(false);// New state to track if joined
+  const [isUserInMeeting, setIsUserInMeeting] = useState(false);
   
   
   useEffect(() => {
@@ -51,9 +49,7 @@ import {
           const meetingTimestamp = meeting?.Timestamp?.toDate().getTime() || 0;
   
           if (meetingTimestamp < currentTimestamp) {
-              // Meeting has already passed, trigger deletion logic
               console.log(`Meeting ID: ${meeting.id} has passed. Deleting...`);
-              // Add your deletion logic here, for example:
               MeetingService.handleDeleteMeeting(meeting.id);
               GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
 
@@ -81,20 +77,18 @@ import {
       );
       }
   
-      return null; // Return null if no icon is found
+      return null;
   };
 
   const handleJoinPress = () => {
-        
-    //Alert.alert("This is only a request, please wait to approve");
-    setIsUserInMeeting(true); // Set hasJoined to true when button is pressed
+    setIsUserInMeeting(true); 
     setCurrentParticipants(currentParticipants + 1);
     MeetingService.addUserToMeeting(meeting.id, auth.currentUser.email);
     console.log("Click on Join Meeting!");
 };
   
   const handleCancelPress = () =>{
-      setIsUserInMeeting(false); // Set hasJoined to true when button is pressed
+      setIsUserInMeeting(false);
       setCurrentParticipants(currentParticipants-1);
       MeetingService.removeUserFromMeeting(meeting.id, auth.currentUser.email);
       console.log("Click on Cancel Meeting!");
@@ -111,13 +105,9 @@ import {
   };
 
   const handleDeletePress = () =>{
-
     GroupService.removeGroupMeeting(meeting.id ,meeting.GroupName);
-
     MeetingService.handleDeleteMeeting(meeting.id);
-
     onDelete(meeting.id);
-
     console.log('Click on Delete!');
     
   };
@@ -169,11 +159,11 @@ import {
               </AntDesign>
           </View>
           <View style={ManagerMeetingCardStyles.cardBottomRow}>
-            {!isUserInMeeting ? ( // Only show if isUserInMeeting is false
+            {!isUserInMeeting ? ( 
                         <TouchableOpacity style={ManagerMeetingCardStyles.button} onPress={handleJoinPress}>
                            <Text style={ManagerMeetingCardStyles.buttonText}>Join</Text>
                         </TouchableOpacity>
-                    ) : ( // Only show if hasJoined is true
+                    ) : ( 
                     <TouchableOpacity style={ManagerMeetingCardStyles.button} onPress={handleCancelPress}>
                     <Text style={ManagerMeetingCardStyles.buttonText}>UnJoin</Text>
                  </TouchableOpacity>

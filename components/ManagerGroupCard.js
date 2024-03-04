@@ -2,7 +2,6 @@ import {
     Text,
     View,
     SafeAreaView,
-    StyleSheet,
     Dimensions,
     TouchableOpacity,
   } from "react-native";
@@ -15,12 +14,11 @@ import {
   } from "@expo/vector-icons";
   import { useNavigation } from "@react-navigation/core";
   import { GroupService } from "../back/GroupService";
-  import React, { useState, useEffect } from "react";
+  import React, { useState } from "react";
   import { sportIconMapping_MaterialCommunityIcons, sportIconMapping_FontAwesome, sportIconMapping_FontAwesome5} from "../back/DataBase";
+  import { ManagerGroupCardStyles } from "./StylesSheets";
+
  
-
-
-  const screenWidth = Dimensions.get("window").width;
   
   const ManagerGroupCard = ({ group }) => {
     const navigation = useNavigation();
@@ -108,7 +106,6 @@ import {
               style={ManagerGroupCardStyles.deleteButton}
             >
               <FontAwesome5 name="trash" size={20} color="black" style={ManagerGroupCardStyles.buttonText}/>
-              {/* <Text style={ManagerGroupCardStyles.buttonText}>Delete</Text> */}
             </TouchableOpacity>
           </View>
         </View>)}
@@ -118,107 +115,5 @@ import {
   
   export default ManagerGroupCard;
   
-  const ManagerGroupCardStyles = StyleSheet.create({
-    cardBottomRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-around",
-      gap: 10,
-      marginTop: 10,
-    },
-    container: {
-      backgroundColor: "#5B8BDF",
-      alignItems: "center",
-      paddingBottom: 40,
-      paddingTop: 30,
-      gap: 15,
-    },
-    card: {
-      width: screenWidth - 32,
-      marginTop: -30,
-      backgroundColor: "#E9F1E9", // Assuming a white card background
-      borderRadius: 15, // Rounded corners
-      marginVertical: 8, // Adds vertical space between items
-      marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-      padding: 16, // Internal spacing between the border and content
-      shadowColor: "#000", // Shadow color
-      shadowOffset: { width: 0, height: 1 }, // Shadow position
-      shadowOpacity: 0.22, // Shadow opacity
-      shadowRadius: 2.22, // Shadow blur radius
-      elevation: 3, // Elevation for Android
-      borderWidth: 1, // Border width
-      borderColor: "#E0E0E0",
-    },
-    cardTopRow: {
-      marginTop: 0, 
-      marginLeft: 0, 
-      alignSelf: "flex-start", 
-      flexDirection: "row",
-      gap: 15,
-      alignItems: "center",
-    },
-    cardMiddleRow: {
-      flexDirection: "row",
-      gap: 5,
-      alignItems: "center",
-    },
-    iconAndTextContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 3,
-      marginLeft: 0,
-    },
-    sportIcon: {
-      width: 30, 
-      height: 30, 
-      resizeMode: "contain",
-      marginRight: 10, 
-    },
-    title: {
-      fontWeight: "bold",
-      fontSize: 18,
-      alignSelf: "flex-start",
-      marginLeft: 0,
-    },
-    subTitle: {
-      opacity: 0.6,
-      alignSelf: "flex-start",
-      marginLeft: 0,
-      fontSize: 16,
-      color: "gray",
-    },
-    button: {
-      backgroundColor: "#3B82F6",
-      width: 120,
-      paddingVertical: 10,
-      borderRadius: 10,
-    },
-    buttonText: {
-      alignSelf: "center",
-      color: "white",
-    },
-    addMeetingButton: {
-      backgroundColor: "#325E54",
-      padding: 10, 
-      borderRadius: 10,
-      marginTop: 0,
-      marginLeft: 0,
-    },
-    deleteButton: {
-      backgroundColor: "#460811",
-      padding: 10, 
-      borderRadius: 10,
-      marginTop: 0,
-      width: 70,
-      marginLeft: 0,
-    },
-    editButton: {
-      backgroundColor: "#325E54",
-      padding: 10,
-      borderRadius: 10,
-      marginTop: 0,
-      width: 80,
-      marginLeft: 0,
-    },
-  });
+  
   

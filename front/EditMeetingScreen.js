@@ -69,9 +69,9 @@ const EditMeetingScreen = ({ route }) => {
 
 
         const content = `${meeting.GroupName}: at ${stringDate}, ${stringTime} in - ${location}`;
-        
+         
         // Handle other operations as needed (e.g., notification)
-        NotificationService.handleAddNewNotification(meeting.GroupName, content, "Meeting Updated", serverTimestamp());
+        NotificationService.handleAddNewNotification(meeting.id, meeting.GroupName, content, "Meeting Updated", serverTimestamp());
       
         // Navigate back to the MyGroups screen
         navigation.replace("MyGroups");

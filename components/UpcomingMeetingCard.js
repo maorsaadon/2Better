@@ -2,7 +2,6 @@ import {
 Text,
 View,
 SafeAreaView,
-StyleSheet,
 Dimensions,
 TouchableOpacity,
 } from "react-native";
@@ -15,7 +14,6 @@ FontAwesome,
 MaterialCommunityIcons,
 Entypo,
 } from "@expo/vector-icons";
-import CustomSlider from "./CustomSlider";
 import NavigationButton from "./NavigationButton";
 import {
 sportIconMapping_MaterialCommunityIcons,
@@ -47,9 +45,7 @@ useEffect(() => {
         const meetingTimestamp = meeting?.Timestamp?.toDate().getTime() || 0;
 
         if (meetingTimestamp < currentTimestamp) {
-            // Meeting has already passed, trigger deletion logic
             console.log(`Meeting ID: ${meeting.id} has passed. Deleting...`);
-            // Add your deletion logic here, for example:
             MeetingService.handleDeleteMeeting(meeting.id);
             GroupService.removeGroupMeeting(meeting.id, meeting.GroupName);
 

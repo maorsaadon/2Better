@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Linking, Platform, ActionSheetIOS, Modal } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet, Dimensions } from "react-native";
 import { navigationButtonStyles } from './StylesSheets';
 const NavigationButton = ({ destination }) => {
 
-    // State to control the visibility of the modal on Android
     const [modalVisible, setModalVisible] = useState(false);
 
     const NameToIcon = {
@@ -23,27 +21,21 @@ const NavigationButton = ({ destination }) => {
         'Moovit': `moovit://directions?dest_lat=0&dest_lon=0&dest_name=${encodeURIComponent(destination)}`
     }
 
-    // Function to open the selected navigation app
     const openNavigationApp = (app) => {
         const url = NameToURL[app]
         console.log(url)
-
-        // Open the URL using the Linking module
         Linking.openURL(url)
             .catch(err => console.error('Error opening Waze:', err));
     };
 
-    // Function to open the app chooser (ActionSheetIOS on iOS, Modal on Android)
     const openAppChooser = () => {
         if (Platform.OS === 'ios') {
-            // On iOS, show the native ActionSheetIOS for app selection
             ActionSheetIOS.showActionSheetWithOptions(
                 {
                     options: ['Cancel', 'Waze', 'Google Maps', 'Moovit'],
                     cancelButtonIndex: 0,
                 },
                 (buttonIndex) => {
-                    // Handle the selected app based on the button index
                     if (buttonIndex === 1) {
                         openNavigationApp('Waze');
                     } else if (buttonIndex === 2) {
@@ -54,15 +46,12 @@ const NavigationButton = ({ destination }) => {
                 }
             );
         } else {
-            // On Android, set the modal to visible for app selection
             setModalVisible(true);
         }
     };
 
-    // Function to close the app chooser modal on Android
     const closeAppChooser = () => setModalVisible(false);
 
-    // Function to render the app chooser modal on Android
     const renderAndroidModal = () => (
         <Modal
             visible={modalVisible}
@@ -83,14 +72,11 @@ const NavigationButton = ({ destination }) => {
         </Modal>
     );
 
-    // Render the main component
     return (
         <TouchableOpacity onPress={openAppChooser}>
-            {/* Button to open the app chooser */}
             <View style={navigationButtonStyles.button}>
                 <MaterialCommunityIcons name="map-marker-outline" size={24} color="white" />
             </View>
-            {/* Render the app chooser modal for Android */}
             {Platform.OS === 'android' && renderAndroidModal()}
         </TouchableOpacity>
     );

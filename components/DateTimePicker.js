@@ -1,6 +1,6 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from "react";
-import { StyleSheet, Platform, TouchableOpacity, Pressable, Text, View } from 'react-native';
+import {Platform, TouchableOpacity, Text, View } from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { DatePickerWithTimeStyles } from './StylesSheets';
 

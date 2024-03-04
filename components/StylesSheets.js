@@ -1,5 +1,6 @@
-
 import { StyleSheet, Dimensions } from "react-native";
+
+const screenWidth = Dimensions.get("window").width;
 
 const stylesProfile = StyleSheet.create({
   container: {
@@ -92,15 +93,15 @@ const stylesProfile = StyleSheet.create({
     right: 15,
   },
   orContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 10, // Adjust as needed
     top: 70,
     left: -10,
   },
   orText: {
-    color: 'black',
+    color: "black",
     paddingHorizontal: 5, // Adjust as needed
     fontSize: 25,
     fontStyle: "italic",
@@ -109,13 +110,13 @@ const stylesProfile = StyleSheet.create({
     width: "100%",
     flex: 1,
     height: 2,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20, // Adjust the value as needed
   },
 });
@@ -238,12 +239,12 @@ const stylesSupport = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     left: 100,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
   },
   subTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
     marginTop: 16,
     left: 40,
@@ -252,60 +253,59 @@ const stylesSupport = StyleSheet.create({
   subTitleEnd: {
     top: 60,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
     marginTop: 16,
     left: 50,
     bottom: 100,
-
   },
   contactItemEnd: {
     left: 75,
     top: 70,
     fontSize: 16,
     marginBottom: 8,
-    color: '#404040',
+    color: "#404040",
     marginBottom: 80,
   },
   contactItem: {
     left: 60,
     fontSize: 16,
     marginBottom: 8,
-    color: '#404040',
+    color: "#404040",
   },
   textEnd: {
     left: 75,
     fontSize: 16,
     marginBottom: 15,
-    color: '#404040',
+    color: "#404040",
   },
   editURL: {
     left: 60,
     fontSize: 16,
     marginBottom: 8,
-    color: '#0F376D',
+    color: "#0F376D",
   },
   editURLEnd: {
     left: 75,
     fontSize: 16,
     marginBottom: 8,
-    color: '#0F376D',
+    color: "#0F376D",
   },
   subEnd: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     left: 50,
     marginBottom: 15,
   },
   rightsEnd: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     left: 180,
     marginBottom: 100,
     marginTop: 20,
   },
   link: {
-    color: 'black',
+    color: "black",
   },
   backgroundImage: {
     flex: 1,
@@ -324,7 +324,6 @@ const stylesSupport = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
   },
-
 });
 
 const stylesHome = StyleSheet.create({
@@ -355,10 +354,10 @@ const stylesHome = StyleSheet.create({
     marginTop: 80,
   },
   containerIcons: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 10,
     marginBottom: -100,
   },
@@ -500,7 +499,6 @@ const stylesHome = StyleSheet.create({
   },
 });
 
-const screenWidth = Dimensions.get("window").width;
 const stylesHomeCard = StyleSheet.create({
   cardBottomRow: {
     flexDirection: "row",
@@ -529,7 +527,7 @@ const stylesHomeCard = StyleSheet.create({
     elevation: 3, // Elevation for Android
     borderWidth: 1, // Border width
     borderColor: "#E0E0E0",
-    //opacity: 0.7, 
+    //opacity: 0.7,
   },
   cardTopRow: {
     marginTop: 0, // Adjust as needed to move closer to the top
@@ -613,26 +611,25 @@ const stylesLogin = StyleSheet.create({
   },
   inputContainer: {
     width: "80%",
-
   },
   inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'relative',
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
   },
   icon: {
-    position: 'absolute',
+    position: "absolute",
     left: 5,
     zIndex: 1,
   },
   checkShowIcon: {
-    position: 'absolute',
+    position: "absolute",
     right: 5,
     bottom: -18,
     zIndex: 1,
   },
   input: {
-    width: '100%',
+    width: "100%",
     backgroundColor: "white",
     paddingHorizontal: 35,
     paddingVertical: 10,
@@ -679,10 +676,9 @@ const stylesLogin = StyleSheet.create({
     height: "101%",
     justifyContent: "center",
     right: 16,
-
   },
   buttonEdit: {
-    position: 'absolute',
+    position: "absolute",
     top: 95,
     left: 35,
     width: "30%",
@@ -703,7 +699,6 @@ const stylesLogin = StyleSheet.create({
     fontSize: 16,
     top: 110,
     right: 50,
-
   },
 });
 
@@ -746,7 +741,6 @@ const stylesRegister = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 10,
     marginTop: 5,
-
   },
   icon: {
     position: "absolute",
@@ -811,18 +805,16 @@ const stylesRegister = StyleSheet.create({
     alignSelf: "flex-end",
     zIndex: 1,
     marginTop: 15,
-    width: '125%',
+    width: "125%",
     left: 35,
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
     textAlign: "left",
-
   },
   dropdownListStyle: {
     borderColor: "#C3D4D3",
     borderWidth: 3,
-
   },
   placeHolderStyle: {
     color: "#545454",
@@ -839,49 +831,48 @@ const stylesRegister = StyleSheet.create({
     fontSize: 16,
     top: 30,
     right: 50,
-
   },
 });
 
 const navigationButtonStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   modal: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
-    borderRadius: 10
+    borderRadius: 10,
   },
   appRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   appName: {
     paddingLeft: 10,
-    color: 'blue',
-    textDecorationLine: 'underline'
+    color: "blue",
+    textDecorationLine: "underline",
   },
   button: {
     backgroundColor: "#366A68",
     paddingVertical: 10,
     width: 50,
     borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: .9,
+    shadowOpacity: 0.9,
     shadowRadius: 8,
     top: 3,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     paddingRight: 10,
   },
 });
@@ -914,7 +905,7 @@ export const UpcomingStyles = StyleSheet.create({
     elevation: 3, // Elevation for Android
     borderWidth: 1, // Border width
     borderColor: "#E0E0E0",
-    //opacity: 0.7, 
+    //opacity: 0.7,
   },
   cardTopRow: {
     marginTop: 0, // Adjust as needed to move closer to the top
@@ -999,16 +990,16 @@ export const UpcomingStyles = StyleSheet.create({
     paddingVertical: 10,
     width: 50,
     borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: .9,
+    shadowOpacity: 0.9,
     shadowRadius: 8,
     top: 5,
-  }
+  },
 });
 
 const ResultStyles = StyleSheet.create({
@@ -1028,7 +1019,7 @@ const ResultStyles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: 'rgba(233, 241, 233, 0.7)',
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
     borderRadius: 15,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -1113,7 +1104,6 @@ const ResultStyles = StyleSheet.create({
   },
 });
 
-
 const ManagerMeetingCardStyles = StyleSheet.create({
   cardBottomRow: {
     flexDirection: "row",
@@ -1142,7 +1132,7 @@ const ManagerMeetingCardStyles = StyleSheet.create({
     elevation: 3, // Elevation for Android
     borderWidth: 1, // Border width
     borderColor: "#E0E0E0",
-    //opacity: 0.7, 
+    //opacity: 0.7,
   },
   cardTopRow: {
     marginTop: 0, // Adjust as needed to move closer to the top
@@ -1230,8 +1220,6 @@ const ManagerMeetingCardStyles = StyleSheet.create({
   //   },
 });
 
-
-
 const NotificationCardStyles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
@@ -1301,14 +1289,54 @@ const NotificationCardStyles = StyleSheet.create({
   },
 });
 
+const DatePickerWithTimeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  datePickerContainer: {
+    marginup: 30, // Adjust this value as needed for the desired spacing
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  input: {
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    borderColor: "#0782F9",
+    borderWidth: 2,
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 60,
+  },
 
-const ManagerGroupCardStyles = StyleSheet.create({
+  button: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    width: "80%",
+    height: 50,
+    borderRadius: 20,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    borderWidth: 2,
+    borderColor: "#366A68",
+    top: 15,
+  },
+});
+
+const MemberGroupCardStyles = StyleSheet.create({
   cardBottomRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    gap: 10,
-    marginTop: 10,
   },
   container: {
     backgroundColor: "#5B8BDF",
@@ -1316,21 +1344,22 @@ const ManagerGroupCardStyles = StyleSheet.create({
     paddingBottom: 40,
     paddingTop: 30,
     gap: 15,
+    flex: 1,
   },
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#E9F1E9", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: "#E9F1E9", 
+    borderRadius: 15, 
+    marginVertical: 8, 
+    marginHorizontal: 16, 
+    padding: 16, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 1 }, 
+    shadowOpacity: 0.22, 
+    shadowRadius: 2.22, 
+    elevation: 3, 
+    borderWidth: 1, 
     borderColor: "#E0E0E0",
   },
   cardTopRow: {
@@ -1343,13 +1372,13 @@ const ManagerGroupCardStyles = StyleSheet.create({
   },
   cardMiddleRow: {
     flexDirection: "row",
-    gap: 5,
+    gap: 15,
     alignItems: "center",
   },
   iconAndTextContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: 5,
     marginLeft: 0,
   },
   sportIcon: {
@@ -1372,21 +1401,97 @@ const ManagerGroupCardStyles = StyleSheet.create({
     color: "gray",
   },
   button: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: "#366A68",
     width: 120,
     paddingVertical: 10,
     borderRadius: 10,
+    top: 5,
   },
   buttonText: {
     alignSelf: "center",
     color: "white",
   },
-  addMeetingButton: {
-    backgroundColor: "#325E54",
-    padding: 10, 
-    borderRadius: 10,
-    marginTop: 0,
+  participantContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+  },
+  slider: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 10,
+    minimumTrackTintColor: "black",
+    maximumTrackTintColor: "#C0C0C0",
+    thumbTintColor: "white",
+  },
+  participantText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "bold",
+    marginHorizontal: 5,
+  },
+});
+
+const ManagerGroupCardStyles = StyleSheet.create({
+  cardBottomRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    gap: 10,
+    marginTop: 10,
+  },
+  card: {
+    width: screenWidth - 32,
+    marginTop: -30,
+    backgroundColor: "#E9F1E9",
+    borderRadius: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+  },
+  cardTopRow: {
+    marginTop: 0, 
+    marginLeft: 0, 
+    alignSelf: "flex-start", 
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  cardMiddleRow: {
+    flexDirection: "row",
+    gap: 5,
+    alignItems: "center",
+  },
+  iconAndTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
     marginLeft: 0,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 18,
+    alignSelf: "flex-start",
+    marginLeft: 0,
+  },
+  subTitle: {
+    opacity: 0.6,
+    alignSelf: "flex-start",
+    marginLeft: 0,
+    fontSize: 16,
+    color: "gray",
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
   },
   deleteButton: {
     backgroundColor: "#460811",
@@ -1406,58 +1511,20 @@ const ManagerGroupCardStyles = StyleSheet.create({
   },
 });
 
-
-const DatePickerWithTimeStyles = StyleSheet.create({
-  container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center" 
-  },
-datePickerContainer: {
-  marginup: 30, // Adjust this value as needed for the desired spacing
-},
-inputContainer: {
-      width: "80%",
-},
-input: {
-  backgroundColor: "white",
-  paddingHorizontal: 15,
-  paddingVertical: 10,
-  borderRadius: 10,
-  marginTop: 5,
-  borderColor: "#0782F9",
-  borderWidth: 2,
-},
-buttonContainer: {
-  width: "60%",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: 60,
-},
-
-button: {
-  backgroundColor: "rgba(233, 241, 233, 0.7)",
-  width: '80%',
-  height: 50,
-  borderRadius: 20,
-  alignSelf: 'center',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: 20,
-  borderWidth: 2,
-  borderColor: "#366A68",
-  top: 15,
-},
-
-});
-
-
-
-
 export {
-  stylesProfile, stylesAboutUs, stylesHome,
-  stylesHomeCard, stylesLogin, stylesRegister,
-  stylesSupport, navigationButtonStyles,
-  ResultStyles, ManagerMeetingCardStyles, NotificationCardStyles,
-  ManagerGroupCardStyles, DatePickerWithTimeStyles, 
-}
+  stylesProfile,
+  stylesAboutUs,
+  stylesHome,
+  stylesHomeCard,
+  stylesLogin,
+  stylesRegister,
+  stylesSupport,
+  navigationButtonStyles,
+  ResultStyles,
+  ManagerMeetingCardStyles,
+  NotificationCardStyles,
+  DatePickerWithTimeStyles,
+  MemberGroupCardStyles,
+  ManagerGroupCardStyles,
+
+};

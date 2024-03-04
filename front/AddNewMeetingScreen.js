@@ -65,7 +65,7 @@ const AddNewMeetingScreen = ({ route }) => {
 
       const content = `${groupName}: at ${stringDate}, ${stringTime} in - ${location}`;
 
-      NotificationService.handleAddNewNotification(groupName, content, "New Meeting", serverTimestamp());
+      NotificationService.handleAddNewNotification("", groupName, content, "New Meeting", serverTimestamp());
       navigation.replace("MyGroups");
     } catch (error) {
       alert(error.message);

@@ -2,7 +2,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  StyleSheet,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
@@ -19,23 +18,26 @@ import {
   sportIconMapping_FontAwesome5,
 } from "../back/DataBase";
 import NotificationService from "../back/NotificationsService";
-import { userFirstName, userLastName, UserCity } from "../back/UserService";
+import { userFirstName, userLastName } from "../back/UserService";
 import { serverTimestamp } from "firebase/firestore";
 import { auth } from "../back/firebase";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ResultStyles } from "./StylesSheets";
 
-
-const screenWidth = Dimensions.get("window").width;
-
 const ResultGroupCard = ({ group }) => {
-
   const groupName = group?.GroupName ?? "Default Name";
   const groupLeaderEmail = group?.LeaderEmail ?? "Default Email";
-  const NumOfMembers = group.Members ;
+  const NumOfMembers = group.Members;
   const [isRequest, setIsRequest] = useState(true);
 
-  const content = "`" + userFirstName + " " + userLastName + "` wants to join your group: `" + groupName +"`"
+  const content =
+    "`" +
+    userFirstName +
+    " " +
+    userLastName +
+    "` wants to join your group: `" +
+    groupName +
+    "`";
 
   const getSportIcon = (sportType) => {
     const iconName = sportIconMapping_FontAwesome5[sportType];
@@ -53,12 +55,20 @@ const ResultGroupCard = ({ group }) => {
       );
     }
 
-    return null; 
+    return null;
   };
 
-  const handleRequestPress = () =>{
+  const handleRequestPress = () => {
     setIsRequest(false);
-    NotificationService.handleAddNewNotification(groupName, content, "Group Join request", serverTimestamp(), auth.currentUser.email, groupLeaderEmail);
+    NotificationService.handleAddNewNotification(
+      "",
+      groupName,
+      content,
+      "Group Join request",
+      serverTimestamp(),
+      auth.currentUser.email,
+      groupLeaderEmail
+    );
   };
 
   return (
@@ -85,18 +95,19 @@ const ResultGroupCard = ({ group }) => {
             <Text>{NumOfMembers}</Text>
           </View>
         </View>
-{isRequest &&(        <View style={ResultStyles.cardBottomRow}>
-          <TouchableOpacity 
-          style={ResultStyles.button}
-          onPress={() => handleRequestPress(groupName)}
-          >
-            <Text style={ResultStyles.buttonText}>Request</Text>
-          </TouchableOpacity>
-        </View>)}
+        {isRequest && (
+          <View style={ResultStyles.cardBottomRow}>
+            <TouchableOpacity
+              style={ResultStyles.button}
+              onPress={() => handleRequestPress(groupName)}
+            >
+              <Text style={ResultStyles.buttonText}>Request</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 export default ResultGroupCard;
-

@@ -2,17 +2,9 @@ import {
   Text,
   View,
   SafeAreaView,
-  StyleSheet,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import {
-  AntDesign,
-  FontAwesome5,
-  MaterialIcons,
-  FontAwesome,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
 import { GroupService } from "../back/GroupService";
 import NotificationService from "../back/NotificationsService";
 import { serverTimestamp } from "firebase/firestore";
@@ -59,7 +51,7 @@ const NotificationCard = ({ notification }) => {
     const acceptContent = `You are now a group member in ${groupName} `
     try {
       GroupService.handleJoinGroup(false, groupName, from);
-      NotificationService.handleAddNewNotification(groupName, acceptContent, "Request accepted", serverTimestamp(), auth.currentUser.email, from);
+      NotificationService.handleAddNewNotification("", groupName, acceptContent, "Request accepted", serverTimestamp(), auth.currentUser.email, from);
       NotificationService.updateHandledField(from, groupName);
       NotificationService.updateRequestAnswerField(from, groupName, "Accepted");
       setHandled(true);
@@ -74,7 +66,7 @@ const NotificationCard = ({ notification }) => {
     const rejectContent = `Your request to join ${groupName} has been denied`
     try {
       GroupService.handleJoinGroup(true, groupName, from);
-      NotificationService.handleAddNewNotification(groupName, rejectContent, "Request rejected", serverTimestamp(), auth.currentUser.email, from);
+      NotificationService.handleAddNewNotification("", groupName, rejectContent, "Request rejected", serverTimestamp(), auth.currentUser.email, from);
       NotificationService.updateHandledField(from, groupName);
       NotificationService.updateRequestAnswerField(from, groupName, "Rejected");      
       setHandled(true);

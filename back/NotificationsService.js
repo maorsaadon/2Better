@@ -1,6 +1,7 @@
 import { db, auth } from "./firebase";
 import GroupService from "../back/GroupService";
 import UserService from "../back/UserService";
+import MeetingService from "./MeetingService";
 
 
 export const NotificationService = {
@@ -58,7 +59,7 @@ export const NotificationService = {
     
   },
   
-  async handleAddNewNotification(groupName, content, type, timeStamp, from = "default mail", addressee = auth.currentUser.email) {
+  async handleAddNewNotification(meetingId, groupName, content, type, timeStamp, from = "default mail", addressee = auth.currentUser.email) {
     const groupLeaderEmail = await GroupService.getLeaderEmail(groupName);
     if( type === "New Meeting"){
       const groupMembers = await GroupService.getMembers(groupName);
@@ -132,7 +133,7 @@ export const NotificationService = {
           alert(error.message);
       }
     }else if( type === "Meeting Updated"){
-      const groupMembers = await GroupService.getMembers(groupName);
+      const meetingMembers = await MeetingService.getMembers(meetingId);
       try {
         const leaderNotifRef = db.collection("Notifications").doc();
         await leaderNotifRef.set({
@@ -148,7 +149,7 @@ export const NotificationService = {
           alert(error.message);
       }
 
-      for (const member of groupMembers) {
+      for (const member of meetingMembers) {
         try {
           const memberNotifRef = db.collection("Notifications").doc();
           await memberNotifRef.set({
