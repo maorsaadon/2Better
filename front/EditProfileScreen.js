@@ -15,13 +15,12 @@ import { userFirstName, userLastName, userCity } from "../back/UserService";
 import UserService from "../back/UserService";
 import myLogoPic from "../assets/default.png";
 import { MaterialIcons } from "@expo/vector-icons";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import * as FileSystem from 'expo-file-system';
-import { auth } from '../back/firebase';
+import * as FileSystem from "expo-file-system";
+import { auth } from "../back/firebase";
 
 import { stylesEditProfile } from "../components/StylesSheets";
-
 
 const EditProfileScreen = () => {
   const userEmail = auth.currentUser.email;
@@ -52,7 +51,6 @@ const EditProfileScreen = () => {
   //   }, [])
   // );
 
-
   const handleImageSelection = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -64,8 +62,7 @@ const EditProfileScreen = () => {
     console.log(result);
 
     if (!result.canceled) {
-
-      imageUri = result.assets[0].uri
+      imageUri = result.assets[0].uri;
       if (!imageUri) return;
       setSelectedImage(imageUri);
       try {
@@ -76,33 +73,36 @@ const EditProfileScreen = () => {
             resolve(xhr.response);
           };
           xhr.onerror = (e) => {
-            reject(new TypeError('Network request faild'));
+            reject(new TypeError("Network request faild"));
           };
-          xhr.responseType = 'blob';
-          xhr.open('GET', uri, true);
+          xhr.responseType = "blob";
+          xhr.open("GET", uri, true);
           xhr.send(null);
         });
 
-
-
         const storage = getStorage();
 
-        const storageRef = ref(storage, `UsersProfilePics/${auth.currentUser.email}`);
+        const storageRef = ref(
+          storage,
+          `UsersProfilePics/${auth.currentUser.email}`
+        );
 
         // 'file' comes from the Blob or File API
         uploadBytes(storageRef, blob).then((snapshot) => {
-          console.log('Uploaded a blob or file!');
+          console.log("Uploaded a blob or file!");
         });
         await UserService.updateUserImage();
       } catch (error) {
         console.error(error);
       }
-
     }
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={stylesEditProfile.backgroundImage}>
+    <ImageBackground
+      source={myLogoPic}
+      style={stylesEditProfile.backgroundImage}
+    >
       <View style={stylesEditProfile.container}>
         <View
           style={{
@@ -118,7 +118,7 @@ const EditProfileScreen = () => {
                 width: 170,
                 borderRadius: 85,
                 borderWidth: 2,
-                borderColor: '#366A68',
+                borderColor: "#366A68",
               }}
             />
 
@@ -130,11 +130,7 @@ const EditProfileScreen = () => {
                 zIndex: 9999,
               }}
             >
-              <MaterialIcons
-                name="photo-camera"
-                size={32}
-                color='#366A68'
-              />
+              <MaterialIcons name="photo-camera" size={32} color="#366A68" />
             </View>
           </TouchableOpacity>
         </View>
@@ -167,7 +163,10 @@ const EditProfileScreen = () => {
 
         {/* <Button title="Save" onPress={handleSave} style={stylesEditProfile.saveButton} /> */}
       </View>
-      <TouchableOpacity onPress={handleSave} style={stylesEditProfile.saveButton}>
+      <TouchableOpacity
+        onPress={handleSave}
+        style={stylesEditProfile.saveButton}
+      >
         <Text style={stylesEditProfile.buttonSaveText}>Save</Text>
       </TouchableOpacity>
     </ImageBackground>
@@ -175,4 +174,3 @@ const EditProfileScreen = () => {
 };
 
 export default EditProfileScreen;
-

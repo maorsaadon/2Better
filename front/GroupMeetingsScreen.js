@@ -3,12 +3,10 @@ import { useNavigation } from "@react-navigation/core";
 import {
   View,
   ScrollView,
-  StyleSheet,
   ImageBackground,
   ActivityIndicator,
   Text,
   TouchableOpacity,
-
 } from "react-native";
 import myLogoPic from "../assets/default.png";
 import MeetingService from "../back/MeetingService";
@@ -16,9 +14,7 @@ import ManagerMeetingCard from "../components/ManagerMeetingCard";
 import { AntDesign } from "@expo/vector-icons";
 import { stylesGroupMeeting } from "../components/StylesSheets";
 
-
 const GroupMeetingsScreen = ({ route }) => {
-
   const navigation = useNavigation();
   const { group } = route.params;
   const groupName = group.GroupName;
@@ -66,38 +62,42 @@ const GroupMeetingsScreen = ({ route }) => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={stylesGroupMeeting.backgroundImage}>
+    <ImageBackground
+      source={myLogoPic}
+      style={stylesGroupMeeting.backgroundImage}
+    >
       <ScrollView>
-        <TouchableOpacity onPress={backButton} style={stylesGroupMeeting.backButton}>
+        <TouchableOpacity
+          onPress={backButton}
+          style={stylesGroupMeeting.backButton}
+        >
           <AntDesign name="back" size={30} color="black" />
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={handleAddNewMeeting}
-            style={stylesGroupMeeting.addMeetingButton}
-          >
-            <Text style={stylesGroupMeeting.buttonText}>Add New Metting</Text>
-          </TouchableOpacity>
+          onPress={handleAddNewMeeting}
+          style={stylesGroupMeeting.addMeetingButton}
+        >
+          <Text style={stylesGroupMeeting.buttonText}>Add New Metting</Text>
+        </TouchableOpacity>
         <View style={stylesGroupMeeting.container}>
-
           {isLoading ? (
             <ActivityIndicator size="large" color="black" />
           ) : (
             <View style={stylesGroupMeeting.container}>
               {managerMeetings.map((meeting, index) => (
-                <ManagerMeetingCard key={index}
-                                    meeting={meeting} 
-                                    group={group}
-                                    onDelete={handleDeleteMeeting} // Pass the callback
+                <ManagerMeetingCard
+                  key={index}
+                  meeting={meeting}
+                  group={group}
+                  onDelete={handleDeleteMeeting} // Pass the callback
                 />
               ))}
             </View>
           )}
         </View>
-
       </ScrollView>
     </ImageBackground>
   );
 };
-
 
 export default GroupMeetingsScreen;

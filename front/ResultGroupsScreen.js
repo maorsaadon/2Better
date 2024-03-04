@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  StyleSheet,
   ScrollView,
-  SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import ResultGroupCard from "../components/ResultGroupCard";
@@ -58,31 +56,30 @@ const ResultGroupScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={stylesResult.backgroundImage}>         
-    <ScrollView>
-    <View style={{backgroundColor: 'rgba(233, 240, 233, 0.7)'} }> 
-      <TouchableOpacity onPress={backButton} style={stylesResult.backButton}>
-        <AntDesign name="back" size={30} color="#366A68" />
-      </TouchableOpacity>
-      <View style={stylesResult.container}>
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#366A68" />
-        ) : (
-
-            <View style={stylesResult.container}>
-              {groups.map((group, index) => (
-                <ResultGroupCard key={index} group={group} />
-              ))}
-            </View>
-          
-        )}
-      </View>
-    </View>
-    </ScrollView>
+    <ImageBackground source={myLogoPic} style={stylesResult.backgroundImage}>
+      <ScrollView>
+        <View style={{ backgroundColor: "rgba(233, 240, 233, 0.7)" }}>
+          <TouchableOpacity
+            onPress={backButton}
+            style={stylesResult.backButton}
+          >
+            <AntDesign name="back" size={30} color="#366A68" />
+          </TouchableOpacity>
+          <View style={stylesResult.container}>
+            {isLoading ? (
+              <ActivityIndicator size="large" color="#366A68" />
+            ) : (
+              <View style={stylesResult.container}>
+                {groups.map((group, index) => (
+                  <ResultGroupCard key={index} group={group} />
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
 
 export default ResultGroupScreen;
-
-

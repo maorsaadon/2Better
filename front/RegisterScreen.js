@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -12,12 +11,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import myLogoPic from "../assets/register-page.png";
-import { MaterialIcons , Foundation} from "@expo/vector-icons";
+import { MaterialIcons, Foundation } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { cityData } from "../back/DataBase";
 import UserService from "../back/UserService";
-import { auth } from "../back/firebase";
-import { stylesRegister} from "../components/StylesSheets"
+import { stylesRegister } from "../components/StylesSheets";
 
 const RegisterScreen = () => {
   let [email, setEmail] = useState("");
@@ -43,7 +41,7 @@ const RegisterScreen = () => {
     //     navigation.replace("Login");
     //   }
     // })
-  
+
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     // return unsubscribe
   }, [city]);
@@ -81,7 +79,15 @@ const RegisterScreen = () => {
     // }
 
     try {
-      const accountCreated = await UserService.createUserAccount(email, password, firstName, lastName, city, selectedGender, age);
+      const accountCreated = await UserService.createUserAccount(
+        email,
+        password,
+        firstName,
+        lastName,
+        city,
+        selectedGender,
+        age
+      );
       if (accountCreated) {
         // If the account is created successfully, show a success message and navigate to the login screen
         alert("Account created successfully!");
@@ -95,7 +101,6 @@ const RegisterScreen = () => {
       console.error("Error creating user account:", error.message);
       // Handle any additional error cases if needed
     }
-
   };
   const handleSignIn = () => {
     navigation.replace("Login");
@@ -231,15 +236,15 @@ const RegisterScreen = () => {
           )}
 
           <View style={stylesRegister.dropContainer}>
-          {iconVisible && ( // Conditionally render the icon
-          <MaterialIcons
-            name="location-city"
-            color="#366A68"
-            size={20}
-            style={stylesRegister.iconCity}
-          />
-          )}
-            
+            {iconVisible && ( // Conditionally render the icon
+              <MaterialIcons
+                name="location-city"
+                color="#366A68"
+                size={20}
+                style={stylesRegister.iconCity}
+              />
+            )}
+
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
               items={cityData}
@@ -263,7 +268,7 @@ const RegisterScreen = () => {
               onSelectItem={(item) => handleCityPress(item)}
             />
           </View>
-          <View style={[stylesRegister.inputRow , {top: -5}]}>
+          <View style={[stylesRegister.inputRow, { top: -5 }]}>
             <MaterialIcons
               name="face"
               color="#366A68"
@@ -279,15 +284,15 @@ const RegisterScreen = () => {
             />
           </View>
 
-          <View style={[stylesRegister.dropContainer , {top: -10}]}>
-          {genderIconVisible && (
-            <Foundation
-              name="male-female"
-              color="#366A68"
-              size={20}
-              style={stylesRegister.iconCity}
-            />
-          )}
+          <View style={[stylesRegister.dropContainer, { top: -10 }]}>
+            {genderIconVisible && (
+              <Foundation
+                name="male-female"
+                color="#366A68"
+                size={20}
+                style={stylesRegister.iconCity}
+              />
+            )}
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
               items={[
@@ -313,7 +318,7 @@ const RegisterScreen = () => {
               onSelectItem={(item) => handleGenderPress(item.value)}
             />
           </View>
-          <View style= {{width: "60%"}}>
+          <View style={{ width: "60%" }}>
             <TouchableOpacity
               onPress={handleSignUp}
               style={stylesRegister.buttonRegister}
@@ -329,17 +334,16 @@ const RegisterScreen = () => {
             >
               <Text style={stylesRegister.buttonTextSignIn}>Sign in</Text>
             </TouchableOpacity>
-
-          </View>        
+          </View>
           <View>
-            <Text style={stylesRegister.endTextEdit}>Already have account?</Text>
+            <Text style={stylesRegister.endTextEdit}>
+              Already have account?
+            </Text>
+          </View>
         </View>
-        </View>            
-
       </TouchableWithoutFeedback>
     </ImageBackground>
   );
 };
 
 export default RegisterScreen;
-

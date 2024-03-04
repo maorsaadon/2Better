@@ -1,8 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  StyleSheet,
-  style,
   Text,
   TextInput,
   TouchableOpacity,
@@ -10,11 +8,9 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-//import styles from "../components/StylesSheets";
-import { auth , db } from "../back/firebase";
-import { userImageUpload } from "../back/UserService";
-import { stylesLogin } from "../components/StylesSheets"
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { auth } from "../back/firebase";
+import { stylesLogin } from "../components/StylesSheets";
 import myLogoPic from "../assets/login-page.png";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -26,12 +22,12 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const handleLogin = async  () => {
+  const handleLogin = async () => {
     try {
       if (stayLoggedIn) {
-        await AsyncStorage.setItem('stayLoggedIn', 'true');
+        await AsyncStorage.setItem("stayLoggedIn", "true");
       } else {
-        await AsyncStorage.removeItem('stayLoggedIn');
+        await AsyncStorage.removeItem("stayLoggedIn");
       }
       email = email.toLowerCase();
       auth
@@ -42,16 +38,14 @@ const LoginScreen = () => {
           navigation.replace("Home");
         })
         .catch((error) => alert(error.message));
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   };
 
-
   const handleSignUp = () => {
     navigation.navigate("Register");
   };
-
 
   return (
     <ImageBackground source={myLogoPic} style={stylesLogin.backgroundImage}>
@@ -59,7 +53,7 @@ const LoginScreen = () => {
         <View style={stylesLogin.inputContainer}>
           {/* Email line */}
           <View style={stylesLogin.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="email"
               color="#366A68"
               size={20}
@@ -74,7 +68,7 @@ const LoginScreen = () => {
           </View>
           {/* Password line */}
           <View style={stylesLogin.inputRow}>
-            <MaterialIcons 
+            <MaterialIcons
               name="lock"
               color="#366A68"
               size={20}
@@ -89,13 +83,13 @@ const LoginScreen = () => {
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <View style={stylesLogin.checkShowIcon}>
-                {password.length < 1 ? null : 
-                <MaterialIcons
-                  name="remove-red-eye"
-                  color= "black"
-                  size={20} 
-                />
-                }
+                {password.length < 1 ? null : (
+                  <MaterialIcons
+                    name="remove-red-eye"
+                    color="black"
+                    size={20}
+                  />
+                )}
               </View>
             </TouchableOpacity>
           </View>
@@ -107,12 +101,15 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <View>
-          <TouchableOpacity onPress={handleSignUp} style={stylesLogin.buttonEdit}>
+          <TouchableOpacity
+            onPress={handleSignUp}
+            style={stylesLogin.buttonEdit}
+          >
             <Text style={stylesLogin.buttonTextEdit}>Sign up</Text>
           </TouchableOpacity>
         </View>
         <View>
-            <Text style={stylesLogin.endTextEdit}>Don`t have account?</Text>
+          <Text style={stylesLogin.endTextEdit}>Don`t have account?</Text>
         </View>
       </SafeAreaView>
     </ImageBackground>

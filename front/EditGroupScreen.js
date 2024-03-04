@@ -23,7 +23,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { cityData, sportTypeData } from "../back/DataBase";
 import { stylesEditGroup } from "../components/StylesSheets";
 
-
 const EditGroupScreen = ({ route }) => {
   const { groupName } = route.params;
 
@@ -54,11 +53,7 @@ const EditGroupScreen = ({ route }) => {
   const handleSave = async () => {
     try {
       // Call the updateUserDetails function from UserService to update user data
-      await GroupService.updateGroupDetails(
-        groupName,
-        city,
-        sportType,
-      );
+      await GroupService.updateGroupDetails(groupName, city, sportType);
       navigation.replace("MyGroups");
     } catch (error) {
       console.error("Error updating group details:", error);
@@ -85,9 +80,12 @@ const EditGroupScreen = ({ route }) => {
   return (
     <View style={stylesEditGroup.overlay}>
       <View style={stylesEditGroup.backContainer}>
-      <TouchableOpacity onPress={backButton} style={stylesEditGroup.backButton}>
-        <AntDesign name="back" size={24} color="#366A68" />
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={backButton}
+          style={stylesEditGroup.backButton}
+        >
+          <AntDesign name="back" size={24} color="#366A68" />
+        </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback
         onPress={() => {

@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -14,10 +13,8 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import GroupService from "../back/GroupService";
 import { sportTypeData, cityData } from "../back/DataBase";
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { stylesNewGroup } from "../components/StylesSheets";
-
-
 
 const AddNewGroupScreen = () => {
   const navigation = useNavigation();
@@ -52,7 +49,7 @@ const AddNewGroupScreen = () => {
       GroupService.handleAddNewGroup(
         groupName,
         selectedCity,
-        selectedSportType,
+        selectedSportType
       );
       navigation.replace("MyGroups");
     } catch (error) {
@@ -65,7 +62,7 @@ const AddNewGroupScreen = () => {
       <TouchableOpacity onPress={backButton} style={stylesNewGroup.backButton}>
         <AntDesign name="back" size={24} color="#366A68" />
       </TouchableOpacity>
-        <TouchableWithoutFeedback
+      <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCities(false);
           setIsOpenSportTypes(false);
@@ -128,13 +125,11 @@ const AddNewGroupScreen = () => {
         </View>
       </TouchableWithoutFeedback>
 
-        <TouchableOpacity onPress={AddButton} style={stylesNewGroup.addButton}>
-          <Text style={stylesNewGroup.addButtonText}>Add</Text>
-        </TouchableOpacity>
-
+      <TouchableOpacity onPress={AddButton} style={stylesNewGroup.addButton}>
+        <Text style={stylesNewGroup.addButtonText}>Add</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 export default AddNewGroupScreen;
-

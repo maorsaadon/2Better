@@ -1,12 +1,11 @@
-
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/core";
-import { Ionicons } from '@expo/vector-icons';
-import { auth } from './back/firebase';
+import { Ionicons } from "@expo/vector-icons";
+import { auth } from "./back/firebase";
 
 import AppScreen from "./front/AppScreen";
 import LoginScreen from "./front/LoginScreen";
@@ -56,15 +55,22 @@ const MeetingStack = () => {
       <Stack.Screen name="EditMeeting" component={EditMeetingScreen} />
       <Stack.Screen name="MembersList" component={MembersListScreen} />
       <Stack.Screen name="Chat" component={ChatScreen} />
-      
     </Stack.Navigator>
   );
 };
 const ProfileStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Profile page" component={ProfileScreen} options={{ headerShown: false}} />
-      <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Profile page"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -78,7 +84,6 @@ const FindNewGroupsStack = () => {
   );
 };
 
-
 const HomeStack = () => {
   return (
     <Tab.Navigator
@@ -86,38 +91,57 @@ const HomeStack = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home Page') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'My Groups') {
-            iconName = focused ? 'people' : 'people-outline';
-          } else if (route.name === 'Explore Group') {
-            iconName = focused ? 'compass' : 'compass-outline';
-          } else if (route.name === 'Meetings') {
-            iconName = focused ? 'calendar' : 'calendar-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline';
+          if (route.name === "Home Page") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "My Groups") {
+            iconName = focused ? "people" : "people-outline";
+          } else if (route.name === "Explore Group") {
+            iconName = focused ? "compass" : "compass-outline";
+          } else if (route.name === "Meetings") {
+            iconName = focused ? "calendar" : "calendar-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "person" : "person-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#366A68', // Active tab text color
-        tabBarInactiveTintColor: 'gray', // Inactive tab text color
-        tabBarStyle: { // Style for the tab bar
-          display: 'flex'
-        }
+        tabBarActiveTintColor: "#366A68", // Active tab text color
+        tabBarInactiveTintColor: "gray", // Inactive tab text color
+        tabBarStyle: {
+          // Style for the tab bar
+          display: "flex",
+        },
       })}
     >
-      <Tab.Screen name="Home Page" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="My Groups" component={GroupsStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Explore Group" component={FindNewGroupsStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Meetings" component={MeetingStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false}} />
+      <Tab.Screen
+        name="Home Page"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="My Groups"
+        component={GroupsStack}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Explore Group"
+        component={FindNewGroupsStack}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Meetings"
+        component={MeetingStack}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStack}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 };
 
-
 export default function App() {
-
   // const navigation = useNavigation();
   // useEffect(() => {
   //   const checkLoginStatus = async () => {
@@ -136,17 +160,48 @@ export default function App() {
   // }, []);
 
   return (
-
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Entry" component={AppScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="MyGroups" component={MyGroupScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
-        <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Support" component={CostumerSupportScreen} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Entry"
+          component={AppScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyGroups"
+          component={MyGroupScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeStack}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={NotificationsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AboutUs"
+          component={AboutUsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Support"
+          component={CostumerSupportScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

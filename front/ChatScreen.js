@@ -2,26 +2,24 @@ import React, {
   useState,
   useEffect,
   useLayoutEffect,
-  useCallback
-} from 'react';
-import { TouchableOpacity, Text, View, StyleSheet, ImageBackground } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+  useCallback,
+} from "react";
+import { TouchableOpacity, View, ImageBackground } from "react-native";
+import { GiftedChat } from "react-native-gifted-chat";
 import {
   collection,
   addDoc,
   orderBy,
   query,
-  onSnapshot
-} from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
-import { auth, db } from '../back/firebase';
-import { useNavigation } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
-import colors from '../colors';
+  onSnapshot,
+} from "firebase/firestore";
+import { auth, db } from "../back/firebase";
+import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { userImageUpload } from "../back/UserService";
 import myLogoPic from "../assets/default.png";
-import { stylesChat } from '../components/StylesSheets';
+import { stylesChat } from "../components/StylesSheets";
 
 const ChatScreen = ({ route }) => {
   const { meeting } = route.params;
@@ -35,25 +33,23 @@ const ChatScreen = ({ route }) => {
     getImageURL();
   }, []);
 
-
   const getImageURL = async () => {
     const storage = getStorage();
     var storageRef;
 
     if (userImageUpload == 0) {
-      storageRef = ref(storage, 'UsersProfilePics/' + 'defaultProfile.jpeg');
-    }
-    else {
-      storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
+      storageRef = ref(storage, "UsersProfilePics/" + "defaultProfile.jpeg");
+    } else {
+      storageRef = ref(storage, "UsersProfilePics/" + auth.currentUser.email);
     }
     try {
       const url = await getDownloadURL(storageRef);
       setImageUrl(url);
-      console.log(url)
+      console.log(url);
     } catch (error) {
-      console.error('Error retrieving image:', error);
+      console.error("Error retrieving image:", error);
     }
-  }
+  };
 
   const backButton = () => {
     try {
@@ -64,18 +60,17 @@ const ChatScreen = ({ route }) => {
   };
 
   useLayoutEffect(() => {
+    const chatRef = collection(db, "Meetings", meeting.id, "chat");
+    const q = query(chatRef, orderBy("createdAt", "desc"));
 
-    const chatRef = collection(db, 'Meetings', meeting.id, 'chat');
-    const q = query(chatRef, orderBy('createdAt', 'desc'));
-
-    const unsubscribe = onSnapshot(q, querySnapshot => {
-      console.log('querySnapshot unsusbscribe');
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("querySnapshot unsusbscribe");
       setMessages(
-        querySnapshot.docs.map(doc => ({
+        querySnapshot.docs.map((doc) => ({
           _id: doc.data()._id,
           createdAt: doc.data().createdAt.toDate(),
           text: doc.data().text,
-          user: doc.data().user
+          user: doc.data().user,
         }))
       );
     });
@@ -84,17 +79,17 @@ const ChatScreen = ({ route }) => {
 
   const onSend = useCallback((messages = []) => {
     getImageURL();
-    setMessages(previousMessages =>
+    setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
     // setMessages([...messages, ...messages]);
     const { _id, createdAt, text, user } = messages[0];
-    const chatRef = collection(db, 'Meetings', meeting.id, 'chat');
+    const chatRef = collection(db, "Meetings", meeting.id, "chat");
     addDoc(chatRef, {
       _id,
       createdAt,
       text,
-      user
+      user,
     });
   }, []);
 
@@ -112,17 +107,17 @@ const ChatScreen = ({ route }) => {
           messages={messages}
           showAvatarForEveryMessage={false}
           showUserAvatar={true}
-          onSend={messages => onSend(messages)}
+          onSend={(messages) => onSend(messages)}
           messagesContainerStyle={{
-            backgroundColor: 'white', // Make it transparent
+            backgroundColor: "white", // Make it transparent
           }}
           textInputStyle={{
-            backgroundColor: '#fff',
+            backgroundColor: "#fff",
             borderRadius: 20,
           }}
           user={{
             _id: auth?.currentUser?.email,
-            avatar: imageUrl
+            avatar: imageUrl,
           }}
         />
       </View>
@@ -131,4 +126,3 @@ const ChatScreen = ({ route }) => {
 };
 
 export default ChatScreen;
-

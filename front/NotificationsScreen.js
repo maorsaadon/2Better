@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   View,
-  Text,
-  FlatList,
-  StyleSheet,
   TouchableOpacity,
   ImageBackground,
   ScrollView,
@@ -12,12 +9,9 @@ import {
 } from "react-native";
 import { NotificationService } from "../back/NotificationsService";
 import { useNavigation } from "@react-navigation/core";
-import { auth } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
 import NotificationCard from "../components/NotificationCard";
 import { AntDesign } from "@expo/vector-icons";
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from "../back/firebase";
 import { stylesNotifi } from "../components/StylesSheets";
 
 const NotificationsScreen = () => {
@@ -55,7 +49,8 @@ const NotificationsScreen = () => {
 
     const fetchNotifications = async () => {
       try {
-        const userNotifications = await NotificationService.getUserNotifications();
+        const userNotifications =
+          await NotificationService.getUserNotifications();
         if (userNotifications && userNotifications.length > 0) {
           setNotifications(userNotifications);
         } else {
@@ -86,14 +81,17 @@ const NotificationsScreen = () => {
   // }, [latestNotification]);
 
   const pressedNotification = (notification) => {
-    if (notification.Type === "Request accepted" || notification.Type === "New Meeting") {
+    if (
+      notification.Type === "Request accepted" ||
+      notification.Type === "New Meeting"
+    ) {
       try {
-        navigation.navigate('Home', { screen: 'My Groups' });
+        navigation.navigate("Home", { screen: "My Groups" });
       } catch (error) {
         alert(error.message);
       }
     }
-  }
+  };
 
   const backButton = () => {
     try {
@@ -107,22 +105,29 @@ const NotificationsScreen = () => {
     <View style={{ flex: 1 }}>
       <ImageBackground source={myLogoPic} style={stylesNotifi.backgroundImage}>
         <View style={stylesNotifi.container}>
-        <TouchableOpacity onPress={backButton} style={stylesNotifi.backButton}>
-              <AntDesign name="back" size={30} color="black" />
+          <TouchableOpacity
+            onPress={backButton}
+            style={stylesNotifi.backButton}
+          >
+            <AntDesign name="back" size={30} color="black" />
           </TouchableOpacity>
           <ScrollView>
             {isLoading ? (
               <ActivityIndicator size="large" color="black" />
             ) : (
-
               <View style={stylesNotifi.container}>
-                {notifications.slice().reverse().map((notification) => (
-                  <TouchableOpacity key={notification.id} onPress={() => pressedNotification(notification)}>
-                    <NotificationCard notification={notification} />
-                  </TouchableOpacity>
-                ))}
+                {notifications
+                  .slice()
+                  .reverse()
+                  .map((notification) => (
+                    <TouchableOpacity
+                      key={notification.id}
+                      onPress={() => pressedNotification(notification)}
+                    >
+                      <NotificationCard notification={notification} />
+                    </TouchableOpacity>
+                  ))}
               </View>
-
             )}
           </ScrollView>
         </View>

@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import myLogoPic from "../assets/default.png";
 import { GroupService } from "../back/GroupService";
-import { AntDesign } from "@expo/vector-icons";
 import ManagerGroupCard from "../components/ManagerGroupCard";
 import MemberGroupCard from "../components/MemberGroupCard";
 import { stylesGroup } from "../components/StylesSheets";
@@ -23,7 +21,6 @@ const MyGroupsScreen = () => {
   const [MemberGroups, setMemberGroups] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isRefreshing, setRefreshing] = useState(true);
-
 
   const fetchGroups = async () => {
     try {
@@ -50,7 +47,6 @@ const MyGroupsScreen = () => {
     fetchGroups();
   }, [isManagerView]);
 
-
   const handleAddNewGroup = () => {
     try {
       navigation.navigate("AddNewGroup");
@@ -74,8 +70,7 @@ const MyGroupsScreen = () => {
     setTimeout(() => {
       setRefresh(false);
       setRefreshing(true);
-    }, 2000)
-
+    }, 2000);
   };
 
   return (
@@ -102,26 +97,35 @@ const MyGroupsScreen = () => {
           <Text style={stylesGroup.buttonText}>A MEMBER</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView refreshControl={ // Notice the correct prop name here: refreshControl instead of RefreshControl
-        <RefreshControl
-          refreshing={refresh}
-          onRefresh={() => onRefreshing()}
-          colors={['#366A68', 'black']} // Set the colors of the loading indicator
-          progressBackgroundColor='#E9EFE8'
-          size="large"
-        />
-      }
+      <ScrollView
+        refreshControl={
+          // Notice the correct prop name here: refreshControl instead of RefreshControl
+          <RefreshControl
+            refreshing={refresh}
+            onRefresh={() => onRefreshing()}
+            colors={["#366A68", "black"]} // Set the colors of the loading indicator
+            progressBackgroundColor="#E9EFE8"
+            size="large"
+          />
+        }
       >
         <View style={stylesGroup.container}>
-          {isManagerView
-            ? ManagerGroups.map((group, index) => (
-              <TouchableOpacity key={index} onPress={() => navigateToGroupMeetings(group)}>
+          {isManagerView ? (
+            ManagerGroups.map((group, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => navigateToGroupMeetings(group)}
+              >
                 <ManagerGroupCard key={index} group={group} />
               </TouchableOpacity>
             ))
-            : isRefreshing ? MemberGroups.map((group, index) => (
+          ) : isRefreshing ? (
+            MemberGroups.map((group, index) => (
               <MemberGroupCard key={index} group={group} />
-            )) : <Text></Text>}
+            ))
+          ) : (
+            <Text></Text>
+          )}
         </View>
       </ScrollView>
       {isManagerView && (
@@ -137,6 +141,5 @@ const MyGroupsScreen = () => {
     </ImageBackground>
   );
 };
-
 
 export default MyGroupsScreen;

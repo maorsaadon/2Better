@@ -6,7 +6,6 @@ import {
     ImageBackground,
     TouchableOpacity,
     ScrollView,
-    StyleSheet,
     Linking,
 } from "react-native";
 import { stylesSupport } from "../components/StylesSheets"

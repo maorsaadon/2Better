@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   ScrollView,
   RefreshControl,
-  StyleSheet,
   ImageBackground,
   Text,
-  ActivityIndicator
-} from 'react-native';
-import myLogoPic from '../assets/default.png';
-import MeetingService from '../back/MeetingService';
+} from "react-native";
+import myLogoPic from "../assets/default.png";
+import MeetingService from "../back/MeetingService";
 import UpcomingMeetingCard from "../components/UpcomingMeetingCard";
-import { stylesUpcome } from '../components/StylesSheets';
-
-
+import { stylesUpcome } from "../components/StylesSheets";
 
 const UpcomingMeetingsScreen = () => {
   const [upcomingMeetings, setUpcomingMeetings] = useState([]);
@@ -41,29 +37,29 @@ const UpcomingMeetingsScreen = () => {
     setTimeout(() => {
       setRefresh(false);
       setIsLoading(false);
-    }, 2000)
-
+    }, 2000);
   };
 
   return (
     <ImageBackground source={myLogoPic} style={stylesUpcome.backgroundImage}>
       <View style={stylesUpcome.container}>
         <ScrollView
-          refreshControl={ // Notice the correct prop name here: refreshControl instead of RefreshControl
+          refreshControl={
+            // Notice the correct prop name here: refreshControl instead of RefreshControl
             <RefreshControl
               refreshing={refresh}
               onRefresh={() => onRefreshing()}
-              colors={['#366A68', 'black']} // Set the colors of the loading indicator
-              progressBackgroundColor='#E9EFE8'
+              colors={["#366A68", "black"]} // Set the colors of the loading indicator
+              progressBackgroundColor="#E9EFE8"
               size="large"
             />
           }
         >
-          <Text style={{ color: '#E9EFE8' }}>The need for the refresh</Text>
+          <Text style={{ color: "#E9EFE8" }}>The need for the refresh</Text>
           {isLoading ? (
             <Text></Text>
-            //<ActivityIndicator size="large" color="black" />
           ) : (
+            //<ActivityIndicator size="large" color="black" />
             <View style={stylesUpcome.container}>
               {upcomingMeetings.map((meeting, index) => (
                 <UpcomingMeetingCard key={index} meeting={meeting} />
@@ -74,8 +70,6 @@ const UpcomingMeetingsScreen = () => {
       </View>
     </ImageBackground>
   );
-
 };
-
 
 export default UpcomingMeetingsScreen;

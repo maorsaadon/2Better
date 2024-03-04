@@ -18,8 +18,8 @@ import MeetingService from "../back/MeetingService";
 import HomeCard from "../components/HomeCard";
 import { db } from "../back/firebase";
 import { sportIconMapping_FontAwesome5 } from "../back/DataBase";
-import { FontAwesome5 } from '@expo/vector-icons';
-import { stylesHome } from "../components/StylesSheets"
+import { FontAwesome5 } from "@expo/vector-icons";
+import { stylesHome } from "../components/StylesSheets";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -49,7 +49,7 @@ const HomeScreen = () => {
         // Handle the case where the NotificationCounter field is missing
         console.log("NotificationCounter field is missing from the document.");
       }
-    }else{
+    } else {
       // Handle the case where the document does not exist
       console.log("User document does not exist.");
     }
@@ -82,7 +82,6 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-
     fetchMeetings();
     fetchSuggestions();
     fetchData();
@@ -125,21 +124,24 @@ const HomeScreen = () => {
       setRefresh(false);
       setIsLoading(false);
       setIsLoadingSugg(false);
-    }, 3000)
-
+    }, 3000);
   };
 
   return (
     <ImageBackground source={myLogoPic} style={stylesHome.backgroundImage}>
-      <ScrollView style={{ backgroundColor: "rgba(233, 240, 233, 0.7)" }} refreshControl={ // Notice the correct prop name here: refreshControl instead of RefreshControl
-        <RefreshControl
-          refreshing={refresh}
-          onRefresh={() => onRefreshing()}
-          colors={['#366A68', 'black']} // Set the colors of the loading indicator
-          progressBackgroundColor='#E9EFE8'
-          size="large"
-        />
-      }>
+      <ScrollView
+        style={{ backgroundColor: "rgba(233, 240, 233, 0.7)" }}
+        refreshControl={
+          // Notice the correct prop name here: refreshControl instead of RefreshControl
+          <RefreshControl
+            refreshing={refresh}
+            onRefresh={() => onRefreshing()}
+            colors={["#366A68", "black"]} // Set the colors of the loading indicator
+            progressBackgroundColor="#E9EFE8"
+            size="large"
+          />
+        }
+      >
         <View style={stylesHome.container}>
           <TouchableOpacity
             onPress={handleNotifications}
@@ -159,22 +161,26 @@ const HomeScreen = () => {
         </View>
 
         <View style={stylesHome.containerIcons}>
-          {Object.entries(sportIconMapping_FontAwesome5).map(([sport, iconName]) => (
-            <View key={sport} style={{ alignItems: 'center', margin: 5 }}>
-              <FontAwesome5 name={iconName} size={40} color="#193735" />
-            </View>
-          ))}
+          {Object.entries(sportIconMapping_FontAwesome5).map(
+            ([sport, iconName]) => (
+              <View key={sport} style={{ alignItems: "center", margin: 5 }}>
+                <FontAwesome5 name={iconName} size={40} color="#193735" />
+              </View>
+            )
+          )}
         </View>
 
         <View style={stylesHome.containerScrollers}>
           <View style={stylesHome.containerText}>
-            <Text style={stylesHome.buttonTextPage}>Your groups activities</Text>
+            <Text style={stylesHome.buttonTextPage}>
+              Your groups activities
+            </Text>
           </View>
           <View style={stylesHome.scrollContainer}>
             {isLoading ? (
               <ActivityIndicator size="large" color="black" />
             ) : (
-              <ScrollView horizontal={true} >
+              <ScrollView horizontal={true}>
                 <View style={stylesHome.scrollContainer}>
                   {Array.isArray(homeMeetings) &&
                     homeMeetings.map((meeting, index) => (
@@ -185,13 +191,15 @@ const HomeScreen = () => {
             )}
           </View>
           <View style={stylesHome.containerText}>
-            <Text style={stylesHome.buttonTextPage}>Explore new groups activities</Text>
+            <Text style={stylesHome.buttonTextPage}>
+              Explore new groups activities
+            </Text>
           </View>
           <View style={stylesHome.scrollContainer}>
             {isLoadingSugg ? (
               <ActivityIndicator size="large" color="black" />
             ) : (
-              <ScrollView horizontal={true} >
+              <ScrollView horizontal={true}>
                 <View style={stylesHome.scrollContainer}>
                   {Array.isArray(homeMeetingsSuggestions) &&
                     homeMeetingsSuggestions.map((meeting, index) => (
@@ -202,12 +210,18 @@ const HomeScreen = () => {
             )}
           </View>
         </View>
-        <TouchableOpacity onPress={handleSupport} style={stylesHome.containerTextSupport}>
-          <Text style={stylesHome.buttomTextPage}>Customer support                       </Text>
+        <TouchableOpacity
+          onPress={handleSupport}
+          style={stylesHome.containerTextSupport}
+        >
+          <Text style={stylesHome.buttomTextPage}>Customer support </Text>
           <Entypo name="chevron-right" size={20} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleAboutUs} style={stylesHome.containerTextUS}>
-          <Text style={stylesHome.buttomTextPage}>About us                                    </Text>
+        <TouchableOpacity
+          onPress={handleAboutUs}
+          style={stylesHome.containerTextUS}
+        >
+          <Text style={stylesHome.buttomTextPage}>About us </Text>
           <Entypo name="chevron-right" size={20} color="black" />
         </TouchableOpacity>
       </ScrollView>

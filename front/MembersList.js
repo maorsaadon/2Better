@@ -1,13 +1,21 @@
-
-import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, ImageBackground, Modal, Pressable } from 'react-native';
-import { DataTable } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/core';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  Modal,
+  Pressable,
+} from "react-native";
+import { DataTable } from "react-native-paper";
+import { useNavigation } from "@react-navigation/core";
 import { db } from "../back/firebase";
 import myLogoPic from "../assets/default.png";
-import '../back/MeetingService'
-import MeetingService from '../back/MeetingService';
-import GroupService from '../back/GroupService';
+import "../back/MeetingService";
+import MeetingService from "../back/MeetingService";
+import GroupService from "../back/GroupService";
 import {
   AntDesign,
   FontAwesome5,
@@ -16,8 +24,8 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { onSnapshot, collection, query, getDocs } from 'firebase/firestore';
-import { stylesMemList } from '../components/StylesSheets';
+import { onSnapshot, collection, query, getDocs } from "firebase/firestore";
+import { stylesMemList } from "../components/StylesSheets";
 
 const MembersList = ({ route }) => {
   const { meeting, group } = route.params;
@@ -28,14 +36,14 @@ const MembersList = ({ route }) => {
 
   useEffect(() => {
     let unsubscribe;
-  
+
     if (meeting) {
       const meetingRef = db.collection("Meetings").doc(meeting.id);
 
-      if(!meetingRef){
+      if (!meetingRef) {
         return;
       }
-  
+
       unsubscribe = onSnapshot(meetingRef, (doc) => {
         try {
           const meetingData = doc.data();
@@ -48,10 +56,10 @@ const MembersList = ({ route }) => {
     } else if (group) {
       const groupRef = db.collection("Groups").doc(group.GroupName);
 
-      if(!groupRef){
+      if (!groupRef) {
         return;
       }
-  
+
       unsubscribe = onSnapshot(groupRef, (doc) => {
         try {
           const groupData = doc.data();
@@ -62,7 +70,7 @@ const MembersList = ({ route }) => {
         }
       });
     }
-  
+
     return () => {
       // Unsubscribe the snapshot listener when the component is unmounted
       if (unsubscribe) {
@@ -70,7 +78,6 @@ const MembersList = ({ route }) => {
       }
     };
   }, [meeting, group]);
-    
 
   // useEffect(() => {
   //   const unsubscribe = onSnapshot(
@@ -94,7 +101,6 @@ const MembersList = ({ route }) => {
   //   };
   // }, [meeting.id]);
 
-
   const handleRemovePress = async (email) => {
     try {
       await MeetingService.removeUserFromMeeting(meeting.id, email);
@@ -110,7 +116,6 @@ const MembersList = ({ route }) => {
       console.error("Error removing user from meeting members: ", error);
     }
   };
-
 
   // const getMemberDetails = async (email) => {
   //     try {
@@ -130,9 +135,9 @@ const MembersList = ({ route }) => {
 
   const backButton = () => {
     try {
-      if(meeting){
+      if (meeting) {
         navigation.navigate("GroupMeetings", { group });
-      }else{
+      } else {
         navigation.navigate("MyGroups");
       }
     } catch (error) {
@@ -152,30 +157,45 @@ const MembersList = ({ route }) => {
 
   return (
     <ImageBackground source={myLogoPic} style={stylesMemList.backgroundImage}>
-
       <TouchableOpacity onPress={backButton} style={stylesMemList.backButton}>
         <AntDesign name="back" size={30} color="black" />
       </TouchableOpacity>
       <DataTable.Header style={stylesMemList.header}>
-        <DataTable.Title style={[stylesMemList.title, { left: 20 }]}>Members</DataTable.Title>
-        <DataTable.Title style={[stylesMemList.title, { left: 65 }]}>Member Details</DataTable.Title>
-        <DataTable.Title style={[stylesMemList.title, { left: 60 }]}>Remove</DataTable.Title>
+        <DataTable.Title style={[stylesMemList.title, { left: 20 }]}>
+          Members
+        </DataTable.Title>
+        <DataTable.Title style={[stylesMemList.title, { left: 65 }]}>
+          Member Details
+        </DataTable.Title>
+        <DataTable.Title style={[stylesMemList.title, { left: 60 }]}>
+          Remove
+        </DataTable.Title>
       </DataTable.Header>
       <ScrollView style={stylesMemList.scrollView}>
         <View style={stylesMemList.wrapper}>
           <DataTable>
             {meetingMembers.map((email) => (
               <DataTable.Row key={email} style={stylesMemList.row}>
-                <DataTable.Cell style={stylesMemList.cell}>{email}</DataTable.Cell>
-                <TouchableOpacity onPress={() => handlePress(email)} style={[stylesMemList.rowButton, stylesMemList.showButton]}>
+                <DataTable.Cell style={stylesMemList.cell}>
+                  {email}
+                </DataTable.Cell>
+                <TouchableOpacity
+                  onPress={() => handlePress(email)}
+                  style={[stylesMemList.rowButton, stylesMemList.showButton]}
+                >
                   <Text style={stylesMemList.buttonText}>Show</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                  onPress={() => (meeting ? handleRemovePress(email) : handleRemoveGroupPress(email))} 
-                  style={[stylesMemList.rowButton, stylesMemList.deleteButton]}>
+                <TouchableOpacity
+                  onPress={() =>
+                    meeting
+                      ? handleRemovePress(email)
+                      : handleRemoveGroupPress(email)
+                  }
+                  style={[stylesMemList.rowButton, stylesMemList.deleteButton]}
+                >
                   {/* <Text style={stylesMemList.buttonText}>Remove</Text> */}
                   {/* <FontAwesome name="remove" size={30} color="black" /> */}
-                  <MaterialIcons name='person-remove' size={20} color='white' />
+                  <MaterialIcons name="person-remove" size={20} color="white" />
                 </TouchableOpacity>
               </DataTable.Row>
             ))}
@@ -193,11 +213,21 @@ const MembersList = ({ route }) => {
       >
         <View style={stylesMemList.centeredView}>
           <View style={stylesMemList.modalView}>
-            <Text style={stylesMemList.modalText}>First name: {selectedMember?.FirstName}</Text>
-            <Text style={stylesMemList.modalText}>Last name: {selectedMember?.LastName}</Text>
-            <Text style={stylesMemList.modalText}>Gender: {selectedMember?.Gender}</Text>
-            <Text style={stylesMemList.modalText}>Age: {selectedMember?.Age}</Text>
-            <Text style={stylesMemList.modalText}>City: {selectedMember?.City}</Text>
+            <Text style={stylesMemList.modalText}>
+              First name: {selectedMember?.FirstName}
+            </Text>
+            <Text style={stylesMemList.modalText}>
+              Last name: {selectedMember?.LastName}
+            </Text>
+            <Text style={stylesMemList.modalText}>
+              Gender: {selectedMember?.Gender}
+            </Text>
+            <Text style={stylesMemList.modalText}>
+              Age: {selectedMember?.Age}
+            </Text>
+            <Text style={stylesMemList.modalText}>
+              City: {selectedMember?.City}
+            </Text>
 
             <Pressable
               style={[stylesMemList.button, stylesMemList.buttonClose]}

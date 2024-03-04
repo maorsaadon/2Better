@@ -15,8 +15,6 @@ import { stylesApp } from "../components/StylesSheets";
 import myLogoPic from "../assets/entry-page.png";
 
 const AppScreen = () => {
-
-
   const navigation = useNavigation();
 
   const handleSignUp = () => {
@@ -28,21 +26,22 @@ const AppScreen = () => {
       navigation.replace("Login");
       console.log("move to Login page");
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-
   };
 
   return (
     <ImageBackground source={myLogoPic} style={stylesApp.backgroundImage}>
       <SafeAreaView style={stylesApp.container} behavior="padding">
-
         <View style={stylesApp.buttonContainer}>
           <TouchableOpacity onPress={handleSignIn} style={stylesApp.button}>
             <Text style={stylesApp.buttonText}>Sign in</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleSignUp} style={stylesApp.buttonOutline}>
+        <TouchableOpacity
+          onPress={handleSignUp}
+          style={stylesApp.buttonOutline}
+        >
           <Text style={stylesApp.buttonOutlineText}> Create an acount </Text>
         </TouchableOpacity>
       </SafeAreaView>

@@ -15,16 +15,22 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
   Entypo,
-  Fontisto
+  Fontisto,
 } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
-import { userFirstName, userLastName, userImageUpload, userCity , userAge , userGender } from "../back/UserService";
+import {
+  userFirstName,
+  userLastName,
+  userImageUpload,
+  userCity,
+  userAge,
+  userGender,
+} from "../back/UserService";
 import UserService from "../back/UserService";
 import { auth } from "../back/firebase";
-import { stylesProfile } from "../components/StylesSheets"
+import { stylesProfile } from "../components/StylesSheets";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { Alert } from 'react-native';
-
+import { Alert } from "react-native";
 
 const ProfileScreen = () => {
   const userEmail = auth.currentUser.email;
@@ -32,16 +38,16 @@ const ProfileScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
-  const [age , setAge] = useState("");
-  const [gender , setGender] = useState("");
-  const [genderOption , setGenderOption] = useState(false);
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [genderOption, setGenderOption] = useState(false);
 
   //const photo = require("../assets/iconProfile.jpeg");
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     UserService.getUserDetails();
-    
+
     const fetchUserDetails = async () => {
       try {
         setFirstName(userFirstName);
@@ -49,7 +55,7 @@ const ProfileScreen = () => {
         setCity(userCity);
         setAge(userAge);
         setGender(userCity);
-        if(userGender === "Male"){
+        if (userGender === "Male") {
           setGenderOption(true);
         }
       } catch (error) {
@@ -59,17 +65,16 @@ const ProfileScreen = () => {
       var storageRef;
 
       if (userImageUpload == 0) {
-        storageRef = ref(storage, 'UsersProfilePics/' + 'defaultProfile.jpeg');
-      }
-      else {
-        storageRef = ref(storage, 'UsersProfilePics/' + auth.currentUser.email);
+        storageRef = ref(storage, "UsersProfilePics/" + "defaultProfile.jpeg");
+      } else {
+        storageRef = ref(storage, "UsersProfilePics/" + auth.currentUser.email);
       }
       try {
         const url = await getDownloadURL(storageRef);
         setImageUrl(url);
-        console.log(url)
+        console.log(url);
       } catch (error) {
-        console.error('Error retrieving image:', error);
+        console.error("Error retrieving image:", error);
       }
 
       console.log(" The number is and ", userImageUpload);
@@ -84,15 +89,14 @@ const ProfileScreen = () => {
 
   const handleDelete = async () => {
     try {
-
       // Ask for user confirmation using Alert( if user press yes the resolve var will becmae true and then the confrimed will became true)
-      const confirmed = await new Promise(resolve => {
+      const confirmed = await new Promise((resolve) => {
         Alert.alert(
           "Confirmation",
           "Are you sure you want to delete your account? This action is irreversible.",
           [
             { text: "Cancel", onPress: () => resolve(false), style: "cancel" },
-            { text: "OK", onPress: () => resolve(true) }
+            { text: "OK", onPress: () => resolve(true) },
           ],
           { cancelable: false }
         );
@@ -116,13 +120,10 @@ const ProfileScreen = () => {
 
   const navigation = useNavigation();
 
-
   const logOutTo = () => {
-
     navigation.replace("Entry");
     console.log("Log Out From User");
-
-  }
+  };
 
   return (
     <ImageBackground source={myLogoPic} style={stylesProfile.backgroundImage}>
@@ -137,7 +138,7 @@ const ProfileScreen = () => {
           style={{
             alignItems: "center",
             marginVertical: 22,
-            right:10,
+            right: 10,
           }}
         >
           <Image
@@ -147,7 +148,7 @@ const ProfileScreen = () => {
               width: 170,
               borderRadius: 85,
               borderWidth: 2,
-              borderColor: '#366A68',
+              borderColor: "#366A68",
             }}
           />
 
@@ -158,45 +159,70 @@ const ProfileScreen = () => {
               right: 10,
               zIndex: 9999,
             }}
-          >
-          </View>
+          ></View>
 
           <View style={stylesProfile.userInfoContainer}>
-  <Text style={stylesProfile.valueName}>
-    {userFirstName} {userLastName}
-  </Text>
+            <Text style={stylesProfile.valueName}>
+              {userFirstName} {userLastName}
+            </Text>
 
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-    <Entypo name="mail" size={30} color="black" />
-    <Text style={stylesProfile.valueNew}>{auth.currentUser?.email}</Text>
-  </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              <Entypo name="mail" size={30} color="black" />
+              <Text style={stylesProfile.valueNew}>
+                {auth.currentUser?.email}
+              </Text>
+            </View>
 
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-    {genderOption ? (
-      <Fontisto name="male" size={26} color="black" />
-    ) : ( 
-      <Fontisto name="female" size={26} color="black" />
-    )}
-    <Text style={stylesProfile.valueNew}>{userGender}</Text>
-  </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              {genderOption ? (
+                <Fontisto name="male" size={26} color="black" />
+              ) : (
+                <Fontisto name="female" size={26} color="black" />
+              )}
+              <Text style={stylesProfile.valueNew}>{userGender}</Text>
+            </View>
 
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-    <MaterialIcons name="face" color="black" size={20} />
-    <Text style={stylesProfile.valueNew}>{userAge}</Text>
-  </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              <MaterialIcons name="face" color="black" size={20} />
+              <Text style={stylesProfile.valueNew}>{userAge}</Text>
+            </View>
 
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-    <MaterialIcons name="location-on" size={26} color="black" />
-    <Text style={stylesProfile.valueNew}>{userCity}</Text>
-  </View>
-</View>
-
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              <MaterialIcons name="location-on" size={26} color="black" />
+              <Text style={stylesProfile.valueNew}>{userCity}</Text>
+            </View>
+          </View>
         </View>
-        <TouchableOpacity onPress={handleDelete} style={stylesProfile.buttonDelete}>
+        <TouchableOpacity
+          onPress={handleDelete}
+          style={stylesProfile.buttonDelete}
+        >
           <Text style={stylesProfile.buttonText}>Delete Account</Text>
         </TouchableOpacity>
-
-
       </View>
     </ImageBackground>
   );
