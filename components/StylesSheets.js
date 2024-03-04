@@ -1306,23 +1306,23 @@ const MemberGroupCardStyles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#E9F1E9", 
-    borderRadius: 15, 
-    marginVertical: 8, 
-    marginHorizontal: 16, 
-    padding: 16, 
-    shadowColor: "#000", 
-    shadowOffset: { width: 0, height: 1 }, 
-    shadowOpacity: 0.22, 
-    shadowRadius: 2.22, 
-    elevation: 3, 
-    borderWidth: 1, 
+    backgroundColor: "#E9F1E9",
+    borderRadius: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 1,
     borderColor: "#E0E0E0",
   },
   cardTopRow: {
-    marginTop: 0, 
-    marginLeft: 0, 
-    alignSelf: "flex-start", 
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -1339,10 +1339,10 @@ const MemberGroupCardStyles = StyleSheet.create({
     marginLeft: 0,
   },
   sportIcon: {
-    width: 30, 
-    height: 30, 
+    width: 30,
+    height: 30,
     resizeMode: "contain",
-    marginRight: 10, 
+    marginRight: 10,
   },
   title: {
     fontWeight: "bold",
@@ -1415,9 +1415,9 @@ const ManagerGroupCardStyles = StyleSheet.create({
     borderColor: "#E0E0E0",
   },
   cardTopRow: {
-    marginTop: 0, 
-    marginLeft: 0, 
-    alignSelf: "flex-start", 
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -1452,7 +1452,7 @@ const ManagerGroupCardStyles = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: "#460811",
-    padding: 10, 
+    padding: 10,
     borderRadius: 10,
     marginTop: 0,
     width: 70,
@@ -1468,51 +1468,48 @@ const ManagerGroupCardStyles = StyleSheet.create({
   },
 });
 
-
 const DatePickerWithTimeStyles = StyleSheet.create({
   container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center" 
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-datePickerContainer: {
-  marginup: 30, // Adjust this value as needed for the desired spacing
-},
-inputContainer: {
-      width: "80%",
-},
-input: {
-  backgroundColor: "white",
-  paddingHorizontal: 15,
-  paddingVertical: 10,
-  borderRadius: 10,
-  marginTop: 5,
-  borderColor: "#0782F9",
-  borderWidth: 2,
-},
-buttonContainer: {
-  width: "60%",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: 60,
-},
+  datePickerContainer: {
+    marginup: 30, // Adjust this value as needed for the desired spacing
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  input: {
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    borderColor: "#0782F9",
+    borderWidth: 2,
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 60,
+  },
 
-button: {
-  backgroundColor: "rgba(233, 241, 233, 0.7)",
-  width: '80%',
-  height: 50,
-  borderRadius: 20,
-  alignSelf: 'center',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: 20,
-  borderWidth: 2,
-  borderColor: "#366A68",
-  top: 15,
-},
-
+  button: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    width: "80%",
+    height: 50,
+    borderRadius: 20,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    borderWidth: 2,
+    borderColor: "#366A68",
+    top: 15,
+  },
 });
-
 
 const stylesNewGroup = StyleSheet.create({
   safeArea: {
@@ -1636,7 +1633,6 @@ const stylesNewMeeting = StyleSheet.create({
   },
   backButtonText: {
     alignSelf: "center",
-
   },
   container: {
     flex: 1,
@@ -1648,7 +1644,7 @@ const stylesNewMeeting = StyleSheet.create({
     bottom: 100,
   },
   LocationTextInputContainer: {
-    width: '65%',
+    width: "65%",
     bottom: -160,
     backgroundColor: "rgba(233, 241, 233, 0.7)",
     paddingHorizontal: 15,
@@ -1658,7 +1654,7 @@ const stylesNewMeeting = StyleSheet.create({
     borderColor: "#366A68",
     borderWidth: 2,
     left: 70,
-    color:"black",
+    color: "black",
   },
   buttonContainer: {
     width: "60%",
@@ -1683,7 +1679,7 @@ const stylesNewMeeting = StyleSheet.create({
   buttonOutlineText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "700"
+    fontWeight: "700",
   },
   backgroundImage: {
     flex: 1,
@@ -1691,11 +1687,10 @@ const stylesNewMeeting = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
   },
-  inputText:{
+  inputText: {
     color: "black",
   },
 });
-
 
 const stylesApp = StyleSheet.create({
   container: {
@@ -1739,19 +1734,16 @@ const stylesApp = StyleSheet.create({
     width: "100%",
     height: "101%",
     justifyContent: "center",
-    
   },
 });
-
-
 
 const stylesChat = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(233, 240, 233, 0.7)', // Adjust the opacity as needed
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
   backContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 40,
     left: 20,
     zIndex: 1,
@@ -1767,7 +1759,6 @@ const stylesChat = StyleSheet.create({
   },
 });
 
-
 const stylesEditGroup = StyleSheet.create({
   label: {
     color: "#366A68",
@@ -1780,14 +1771,14 @@ const stylesEditGroup = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
     left: -150,
-    top:10,
+    top: 10,
   },
   labelSport: {
     color: "#366A68",
     fontWeight: "700",
     fontSize: 16,
     left: -130,
-    top:10,
+    top: 10,
   },
   overlay: {
     flex: 1,
@@ -1870,7 +1861,6 @@ const stylesEditGroup = StyleSheet.create({
     zIndex: 1,
     width: "70%",
     marginBottom: 10,
-    
   },
   dropdownStyle: {
     backgroundColor: "#C3D4D3",
@@ -1900,12 +1890,11 @@ const stylesEditGroup = StyleSheet.create({
   },
 });
 
-
 const stylesEditMeeting = StyleSheet.create({
   safeArea: {
     flex: 1,
-    alignItems: 'center', // Center children horizontally
-    justifyContent: 'center', // Center children vertically
+    alignItems: "center", // Center children horizontally
+    justifyContent: "center", // Center children vertically
   },
   // container: {
   //   flex: 1,
@@ -1960,7 +1949,6 @@ const stylesEditMeeting = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
     bottom: -140,
- 
   },
   button: {
     backgroundColor: "rgba(233, 241, 233, 0.7)",
@@ -1993,7 +1981,7 @@ const stylesEditMeeting = StyleSheet.create({
     color: "black",
     fontWeight: "700",
     fontSize: 16,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   buttonOutlineText: {
     color: "white",
@@ -2021,14 +2009,14 @@ const stylesEditMeeting = StyleSheet.create({
     justifyContent: "center",
   },
   orContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 10, // Adjust as needed
     top: 150,
   },
   orText: {
-    color: 'black',
+    color: "black",
     paddingHorizontal: 10, // Adjust as needed
     fontSize: 20,
     fontStyle: "italic",
@@ -2036,11 +2024,9 @@ const stylesEditMeeting = StyleSheet.create({
   line: {
     flex: 1,
     height: 2,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
   },
-
-
 });
 const stylesEditProfile = StyleSheet.create({
   container: {
@@ -2079,8 +2065,8 @@ const stylesEditProfile = StyleSheet.create({
   saveButton: {
     bottom: 30,
     left: 160,
-    padding:10,
-    width:"20%",
+    padding: 10,
+    width: "20%",
     backgroundColor: "#366A68",
     marginTop: 5,
     borderRadius: 20,
@@ -2090,7 +2076,6 @@ const stylesEditProfile = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 18,
-
   },
 });
 const stylesFindNew = StyleSheet.create({
@@ -2104,11 +2089,11 @@ const stylesFindNew = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    alignItems: 'center', // Center children horizontally
-    justifyContent: 'center', // Center children vertically
+    alignItems: "center", // Center children horizontally
+    justifyContent: "center", // Center children vertically
     backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
   },
-  dropStyleContainer:{
+  dropStyleContainer: {
     marginBottom: 16,
     textAlign: "center",
     zIndex: 1,
@@ -2122,7 +2107,7 @@ const stylesFindNew = StyleSheet.create({
     top: 10,
     left: -15,
   },
-  dropContainer:{
+  dropContainer: {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
@@ -2140,13 +2125,12 @@ const stylesFindNew = StyleSheet.create({
   dropdownItemStyle: {
     justifyContent: "flex-start",
     textAlign: "center",
-    
   },
   dropdownListStyle: {
     borderColor: "#C3D4D3",
     borderWidth: 3,
     textAlign: "center",
-    paddingLeft:50,
+    paddingLeft: 50,
   },
   dropdownContainer: {
     height: 40,
@@ -2185,13 +2169,12 @@ const stylesFindNew = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
   },
-
 });
 
 const stylesGroupMeeting = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start", 
+    justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "column",
     gap: 35,
@@ -2208,7 +2191,7 @@ const stylesGroupMeeting = StyleSheet.create({
     color: "white",
   },
   addMeetingButton: {
-    width : '50%',
+    width: "50%",
     backgroundColor: "#325E54",
     padding: 10,
     borderRadius: 20,
@@ -2231,7 +2214,7 @@ const stylesGroupMeeting = StyleSheet.create({
 const stylesMemList = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   backButton: {
     width: "20%",
@@ -2255,15 +2238,15 @@ const stylesMemList = StyleSheet.create({
   },
   header: {
     marginTop: 110,
-    backgroundColor: 'rgba(54, 106, 104, 0.7)',
+    backgroundColor: "rgba(54, 106, 104, 0.7)",
   },
   title: {
-    color: 'black',
+    color: "black",
     fontSize: 60,
-    fontWeight: '800',
+    fontWeight: "800",
   },
   row: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
     marginTop: 10,
     borderRadius: 20,
   },
@@ -2272,15 +2255,15 @@ const stylesMemList = StyleSheet.create({
     paddingVertical: 10,
   },
   button: {
-    backgroundColor: '#366A68',
+    backgroundColor: "#366A68",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     margin: 20,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 13,
   },
   rowButton: {
@@ -2291,22 +2274,22 @@ const stylesMemList = StyleSheet.create({
   showButton: {
     backgroundColor: "#366A68",
     left: -10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '20%',
+    justifyContent: "center",
+    alignItems: "center",
+    width: "20%",
   },
   deleteButton: {
     backgroundColor: "#8B1B1B",
     left: 16,
-    width: '20%',
-    justifyContent: 'center',
-    alignItems: 'center'
+    width: "20%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background for the modal overlay
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background for the modal overlay
   },
   modalView: {
     margin: 20,
@@ -2317,11 +2300,11 @@ const stylesMemList = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   buttonClose: {
     backgroundColor: "#366A68",
@@ -2330,7 +2313,7 @@ const stylesMemList = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
@@ -2338,7 +2321,6 @@ const stylesMemList = StyleSheet.create({
     fontSize: 16, // Adjusted font size for modal text
   },
 });
-
 
 const stylesGroup = StyleSheet.create({
   buttonContainer: {
@@ -2491,7 +2473,6 @@ const stylesNotifi = StyleSheet.create({
     height: "100%",
     justifyContent: "left",
   },
-
 });
 
 const stylesResult = StyleSheet.create({
@@ -2551,7 +2532,6 @@ const stylesResult = StyleSheet.create({
     fontSize: 16,
   },
   backgroundImage: {
-    
     flex: 1,
     width: "100%",
     height: "100%",
@@ -2577,14 +2557,32 @@ const stylesUpcome = StyleSheet.create({
 });
 
 export {
-  stylesProfile, stylesAboutUs, stylesHome,
-  stylesHomeCard, stylesLogin, stylesRegister,
-  stylesSupport, navigationButtonStyles,
-  ResultStyles, ManagerMeetingCardStyles, NotificationCardStyles,
-  ManagerGroupCardStyles, DatePickerWithTimeStyles, stylesNewGroup,
-  stylesNewMeeting, stylesApp ,stylesChat ,stylesEditGroup,
-  stylesEditMeeting , stylesEditProfile ,stylesFindNew,
-  stylesGroupMeeting, stylesMemList, stylesGroup,
-  stylesNotifi ,stylesResult , stylesUpcome
-
-}
+  stylesProfile,
+  stylesAboutUs,
+  stylesHome,
+  stylesHomeCard,
+  stylesLogin,
+  stylesRegister,
+  stylesSupport,
+  navigationButtonStyles,
+  ResultStyles,
+  ManagerMeetingCardStyles,
+  NotificationCardStyles,
+  ManagerGroupCardStyles,
+  DatePickerWithTimeStyles,
+  stylesNewGroup,
+  stylesNewMeeting,
+  stylesApp,
+  stylesChat,
+  stylesEditGroup,
+  stylesEditMeeting,
+  stylesEditProfile,
+  stylesFindNew,
+  stylesGroupMeeting,
+  stylesMemList,
+  stylesGroup,
+  stylesNotifi,
+  stylesResult,
+  stylesUpcome,
+  MemberGroupCardStyles,
+};
