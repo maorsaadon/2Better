@@ -16,6 +16,9 @@ import NotificationService from "../back/NotificationsService";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import DatePickerWithTime from '../components/DateTimePicker';
 import { serverTimestamp } from "firebase/firestore";
+import { stylesNewMeeting } from "../components/StylesSheets";
+
+
 
 const AddNewMeetingScreen = ({ route }) => {
   const { groupName } = route.params;
@@ -74,12 +77,12 @@ const AddNewMeetingScreen = ({ route }) => {
 
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <TouchableOpacity onPress={backButton} style={styles.backButton}>
+    <ImageBackground source={myLogoPic} style={stylesNewMeeting.backgroundImage}>
+      <KeyboardAvoidingView style={stylesNewMeeting.container} behavior="padding">
+        <TouchableOpacity onPress={backButton} style={stylesNewMeeting.backButton}>
           <AntDesign name="back" size={30} color="black" />
         </TouchableOpacity>
-        <View style={styles.inputContainer}>
+        <View style={stylesNewMeeting.inputContainer}>
         <DatePickerWithTime
           date={selectedDate}
           setDate={setSelectedDate}
@@ -89,32 +92,32 @@ const AddNewMeetingScreen = ({ route }) => {
           onTimeSelected={setTimeSelected}
         />
           
-          <View style={styles.LocationTextInputContainer}>
+          <View style={stylesNewMeeting.LocationTextInputContainer}>
             <TextInput
               placeholder="Location"
               value={location}
               onChangeText={(text) => setLocation(text)}
-              style={styles.input}
+              style={stylesNewMeeting.input}
             />
           </View>
 
-          <View style={styles.LocationTextInputContainer}>
+          <View style={stylesNewMeeting.LocationTextInputContainer}>
             <TextInput
               placeholder="Total Capacity"
               value={totalCapacity}
               onChangeText={(text) => setTotalCapacity(text)}
               keyboardType="numeric"
-              style={styles.inputText}
+              style={stylesNewMeeting.inputText}
             />
           </View>
         </View>
 
-        <View style={styles.buttonContainer}>
+        <View style={stylesNewMeeting.buttonContainer}>
           <TouchableOpacity
             onPress={AddButton}
-            style={[styles.button, styles.buttonOutline]}
+            style={[stylesNewMeeting.button, stylesNewMeeting.buttonOutline]}
           >
-            <Text style={styles.buttonOutlineText}>Add</Text>
+            <Text style={stylesNewMeeting.buttonOutlineText}>Add</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -124,76 +127,4 @@ const AddNewMeetingScreen = ({ route }) => {
 
 export default AddNewMeetingScreen;
 
-const styles = StyleSheet.create({
-  backButton: {
-    width: "20%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 50, // Align to the bottom
-    left: -20, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
-  },
-  backButtonText: {
-    alignSelf: "center",
 
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  inputContainer: {
-    width: "100%",
-    bottom: 100,
-  },
-  LocationTextInputContainer: {
-    width: '65%',
-    bottom: -160,
-    backgroundColor: "rgba(233, 241, 233, 0.7)",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginTop: 20,
-    borderColor: "#366A68",
-    borderWidth: 2,
-    left: 70,
-    color:"black",
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-    bottom: -180,
-  },
-  button: {
-    backgroundColor: "#366A68",
-    width: "100%",
-    padding: 13,
-    borderRadius: 20,
-    alignItems: "center",
-  },
-  buttonOutline: {
-    backgroundColor: "#366A68",
-    marginTop: 5,
-    borderColor: "#E9F1E9",
-    borderWidth: 2,
-  },
-  buttonOutlineText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "700"
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  inputText:{
-    color: "black",
-  },
-});

@@ -1452,6 +1452,534 @@ button: {
 });
 
 
+const stylesNewGroup = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    alignItems: "center", // Center children horizontally
+    justifyContent: "center", // Center children vertically
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  backButton: {
+    alignSelf: "flex-start", // Aligns the button to the start of its container
+    position: "absolute", // Positions the button absolutely within its container
+    top: 10, // Adjusts the distance from the top
+    left: 10, // Adjusts the distance from the left
+    backgroundColor: "#0782F9",
+    padding: 10,
+    borderRadius: 10,
+    margin: 10,
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 10,
+    left: -15,
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+  },
+  inputContainer: {
+    flex: 1,
+    width: "80%", // Adjusted to take the full width
+    alignItems: "center", // Centers children horizontally
+    justifyContent: "center", // Aligns children from the top
+    paddingTop: 50,
+    zIndex: 1,
+  },
+  input: {
+    borderColor: "#C3D4D3",
+    backgroundColor: "#C3D4D3",
+    width: "80%", // Adjusted to a consistent width for all inputs
+    borderRadius: 20,
+    color: "black",
+    marginTop: 10,
+    borderWidth: 1,
+    padding: 15, // Increased padding for better touch area
+    marginBottom: 10, // Adds space between inputs
+  },
+  dropdownContainer: {
+    width: "80%", // Ensure dropdowns are also the same width as inputs
+    marginBottom: 10, // Consistent spacing
+    zIndex: 2,
+  },
+  dropdownStyle: {
+    borderColor: "#C3D4D3",
+    backgroundColor: "#C3D4D3",
+    borderRadius: 20,
+    borderWidth: 1,
+    padding: 15, // Adjust padding to match inputs
+  },
+  dropdownItemStyle: {
+    justifyContent: "flex-start",
+  },
+  dropdownListStyle: {
+    borderColor: "#2C64C6",
+    borderWidth: 1,
+  },
+  placeHolderStyle: {
+    color: "#A9A9A9",
+  },
+
+  button: {
+    width: "80%", // Match the width of inputs and dropdowns
+    padding: 15, // Comfortable padding for tapping
+    borderRadius: 20,
+    alignItems: "center", // Center text within the button
+    backgroundColor: "#0782F9", // Example button color
+  },
+  buttonOutlineText: {
+    color: "white",
+    fontWeight: "700",
+  },
+
+  addButton: {
+    backgroundColor: "#366A68",
+    width: "40%",
+    padding: 5,
+    borderRadius: 20,
+    alignItems: "center",
+    paddingBottom: 30,
+    top: -30,
+  },
+  addButtonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+    top: 10,
+  },
+});
+
+const stylesNewMeeting = StyleSheet.create({
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute", // Use absolute positioning
+    top: 50, // Align to the bottom
+    left: -20, // Align to the left
+    marginBottom: 10, // Optional margin to add some space from the bottom
+    marginLeft: 10, // Optional margin to add some space from the left
+  },
+  backButtonText: {
+    alignSelf: "center",
+
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
+    width: "100%",
+    bottom: 100,
+  },
+  LocationTextInputContainer: {
+    width: '65%',
+    bottom: -160,
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 20,
+    borderColor: "#366A68",
+    borderWidth: 2,
+    left: 70,
+    color:"black",
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+    bottom: -180,
+  },
+  button: {
+    backgroundColor: "#366A68",
+    width: "100%",
+    padding: 13,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  buttonOutline: {
+    backgroundColor: "#366A68",
+    marginTop: 5,
+    borderColor: "#E9F1E9",
+    borderWidth: 2,
+  },
+  buttonOutlineText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "700"
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  inputText:{
+    color: "black",
+  },
+});
+
+
+const stylesApp = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 200,
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+    width: 300,
+  },
+  button: {
+    backgroundColor: "rgba(54, 106, 104, 0.8)",
+    width: "90%", // This will make the button fill the container
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  buttonOutline: {
+    width: "100%", // This will make the button fill the container
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "101%",
+    justifyContent: "center",
+    
+  },
+});
+
+
+
+const stylesChat = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(233, 240, 233, 0.7)', // Adjust the opacity as needed
+  },
+  backContainer: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 1,
+  },
+  backButton: {
+    padding: 10,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+});
+
+
+const stylesEditGroup = StyleSheet.create({
+  label: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    left: -120,
+  },
+  labelCity: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    left: -150,
+    top:10,
+  },
+  labelSport: {
+    color: "#366A68",
+    fontWeight: "700",
+    fontSize: 16,
+    left: -130,
+    top:10,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+  },
+  backContainer: {
+    flex: 1,
+    flexDirection: "column",
+    paddingBottom: 20,
+  },
+
+  container: {
+    top: -150,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  input: {
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 35,
+    paddingVertical: 5,
+    borderRadius: 20,
+    padding: 10,
+    marginTop: 5,
+    minWidth: "80%",
+    color: "black",
+    fontSize: 16,
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2,
+  },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
+    backgroundColor: "#C3D4D3",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginTop: 5,
+  },
+  icon: {
+    position: "absolute",
+    left: 5,
+    zIndex: 3,
+  },
+  iconDrop: {
+    position: "absolute",
+    left: -25,
+    top: 25,
+    zIndex: 1,
+  },
+  saveButton: {
+    top: 0,
+    backgroundColor: "#366A68",
+    width: "100%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  saveButtonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    top: 40,
+    left: -15,
+  },
+  dropContainer: {
+    marginBottom: 16,
+    textAlign: "center",
+    zIndex: 1,
+    width: "70%",
+    marginBottom: 10,
+    
+  },
+  dropdownStyle: {
+    backgroundColor: "#C3D4D3",
+    borderColor: "#C3D4D3",
+    borderRadius: 20,
+    alignSelf: "flex-end",
+    marginTop: 15,
+    width: "124%",
+    left: 35,
+  },
+  dropdownItemStyle: {
+    justifyContent: "flex-start",
+    textAlign: "left",
+  },
+  dropdownListStyle: {
+    borderColor: "#C3D4D3",
+    borderWidth: 3,
+  },
+  placeHolderStyle: {
+    color: "#A9A9A9",
+    textAlign: "left",
+    left: 40,
+    backgroundColor: "#C3D4D3",
+    fontSize: 16,
+    maxWidth: 200,
+    zIndex: 1,
+  },
+});
+
+
+const stylesEditMeeting = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    alignItems: 'center', // Center children horizontally
+    justifyContent: 'center', // Center children vertically
+  },
+  // container: {
+  //   flex: 1,
+  //   justifyContent: "flex-start", // Align items at the top
+  //   alignItems: "center",
+  //   paddingTop: 150, // Add padding to give some space at the top
+  //   flexDirection: "column",
+  //   gap: 35,
+  // },
+  backButton: {
+    width: "20%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute", // Use absolute positioning
+    top: -200, // Align to the bottom
+    left: -40, // Align to the left
+    top: 35, // Optional margin to add some space from the bottom
+    left: -10,
+  },
+  backButtonText: {
+    alignSelf: "center",
+    color: "white",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
+    width: "100%",
+    bottom: 50,
+  },
+  input: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 5,
+    borderColor: "#366A68",
+    borderWidth: 2,
+  },
+  LocationTextInputContainer: {
+    bottom: -150,
+    marginTop: 20,
+    width: "65%",
+    left: 70,
+  },
+  buttonContainer: {
+    width: "40%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+    bottom: -140,
+ 
+  },
+  button: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    width: "100%",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+    top: -20,
+  },
+  Memberbutton: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    width: 150,
+    paddingVertical: 10,
+    borderRadius: 10,
+    opacity: 1,
+    top: -30,
+  },
+  MemberButtonOutline: {
+    backgroundColor: "rgba(233, 241, 233, 0.7)",
+    marginTop: 1,
+    borderColor: "#366A68",
+    borderWidth: 2,
+  },
+  buttonOutline: {
+    //width: '80',
+    backgroundColor: "#366A68",
+    marginTop: 5,
+  },
+  MemberButtonOutlineText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
+    alignSelf: 'center',
+  },
+  buttonOutlineText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  deleteButton: {
+    backgroundColor: "#8B1B1B",
+    width: 150,
+    height: 50,
+    padding: 15,
+    borderRadius: 20,
+    bottom: 10,
+    top: 170,
+  },
+  buttonText: {
+    alignSelf: "center",
+    color: "white",
+    fontWeight: "700",
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  orContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10, // Adjust as needed
+    top: 150,
+  },
+  orText: {
+    color: 'black',
+    paddingHorizontal: 10, // Adjust as needed
+    fontSize: 20,
+    fontStyle: "italic",
+  },
+  line: {
+    flex: 1,
+    height: 2,
+    backgroundColor: 'black',
+    marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
+  },
+
+
+});
 
 
 export {
@@ -1459,5 +1987,7 @@ export {
   stylesHomeCard, stylesLogin, stylesRegister,
   stylesSupport, navigationButtonStyles,
   ResultStyles, ManagerMeetingCardStyles, NotificationCardStyles,
-  ManagerGroupCardStyles, DatePickerWithTimeStyles, 
+  ManagerGroupCardStyles, DatePickerWithTimeStyles, stylesNewGroup,
+  stylesNewMeeting, stylesApp ,stylesChat ,stylesEditGroup,
+  stylesEditMeeting
 }
