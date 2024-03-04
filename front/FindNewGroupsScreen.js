@@ -16,6 +16,7 @@ import myLogoPic from "../assets/default.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import { sportTypeDataSearch, cityDataSearch } from "../back/DataBase";
 import { MaterialIcons,MaterialCommunityIcons } from "@expo/vector-icons";
+import { stylesFindNew } from "../components/StylesSheets";
 
 const FindNewGroupScreen = ({ navigation }) => {
   const [selectedCity, setSelectedCity] = useState(null);
@@ -56,22 +57,22 @@ const FindNewGroupScreen = ({ navigation }) => {
  
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
+    <ImageBackground source={myLogoPic} style={stylesFindNew.backgroundImage}>
 
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={stylesFindNew.safeArea}>
       <TouchableWithoutFeedback
         onPress={() => {
           setIsOpenCity(false);
           setIsOpenTypeOfSport(false);
         }}
       >
-        <View style={styles.container}>
-          <View style={styles.dropStyleContainer}>
+        <View style={stylesFindNew.container}>
+          <View style={stylesFindNew.dropStyleContainer}>
             {iconVisible && (<MaterialCommunityIcons
             name="arm-flex"
             color="#366A68"
             size={20}
-            style={styles.icon}
+            style={stylesFindNew.icon}
             />)}
             <DropDownPicker
               listMode={Platform.OS === "ios" ? "SCROLLVIEW" : "MODAL"}
@@ -87,24 +88,24 @@ const FindNewGroupScreen = ({ navigation }) => {
               badgeDotColors={["white"]}
               badgeTextStyle={{ color: "white" }}
               placeholder="Select type of sport"
-              placeholderStyle={styles.placeHolderStyle}
-              containerStyle={[styles.dropdownContainer, { zIndex: 1 }]}
-              style={styles.dropdownStyle}
-              itemStyle={styles.dropdownItemStyle}
-              dropDownStyle={styles.dropdownListStyle}
+              placeholderStyle={stylesFindNew.placeHolderStyle}
+              containerStyle={[stylesFindNew.dropdownContainer, { zIndex: 1 }]}
+              style={stylesFindNew.dropdownStyle}
+              itemStyle={stylesFindNew.dropdownItemStyle}
+              dropDownStyle={stylesFindNew.dropdownListStyle}
               searchable={true}
               searchPlaceholder="Search..."
               onSelectItem={(item) => handleTypeOfSportPress(item)}
             />
           </View>
 
-          <View style={styles.dropStyleContainer}>
+          <View style={stylesFindNew.dropStyleContainer}>
           {cityVisible && ( // Conditionally render the icon
           <MaterialIcons
             name="location-city"
             color="#366A68"
             size={20}
-            style={styles.icon}
+            style={stylesFindNew.icon}
           />
         )}
             <DropDownPicker
@@ -121,19 +122,19 @@ const FindNewGroupScreen = ({ navigation }) => {
               badgeDotColors={["white"]}
               badgeTextStyle={{ color: "white" }}
               placeholder="Select city"
-              placeholderStyle={styles.placeHolderStyle}
-              containerStyle={[styles.dropdownContainer, { zIndex: 1 }]}
-              style={styles.dropdownStyle}
-              itemStyle={styles.dropdownItemStyle}
-              dropDownStyle={styles.dropdownListStyle}
+              placeholderStyle={stylesFindNew.placeHolderStyle}
+              containerStyle={[stylesFindNew.dropdownContainer, { zIndex: 1 }]}
+              style={stylesFindNew.dropdownStyle}
+              itemStyle={stylesFindNew.dropdownItemStyle}
+              dropDownStyle={stylesFindNew.dropdownListStyle}
               searchable={true}
               searchPlaceholder="Search..."
               onSelectItem={(item) => handleCityPress(item)}
             />
           </View>
 
-          <Pressable style={styles.buttonSearch} onPress={handleSearchPress}>
-            <Text style={styles.buttonTextSearch}>
+          <Pressable style={stylesFindNew.buttonSearch} onPress={handleSearchPress}>
+            <Text style={stylesFindNew.buttonTextSearch}>
               <FontAwesome name="search" size={20} color="white" /> Search Group
             </Text>
           </Pressable>
@@ -146,97 +147,3 @@ const FindNewGroupScreen = ({ navigation }) => {
 
 export default FindNewGroupScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    width: "70%",
-    gap: 20,
-  },
-  safeArea: {
-    flex: 1,
-    alignItems: 'center', // Center children horizontally
-    justifyContent: 'center', // Center children vertically
-    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
-  },
-  dropStyleContainer:{
-    marginBottom: 16,
-    textAlign: "center",
-    zIndex: 1,
-  },
-  backButton: {
-    width: "20%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    position: "absolute",
-    top: 10,
-    left: -15,
-  },
-  dropContainer:{
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    width: "70%",
-  },
-  dropdownStyle: {
-    backgroundColor: "#C3D4D3",
-    borderColor: "#C3D4D3",
-    width: "125%",
-    borderWidth: 3,
-    borderRadius: 10,
-    textAlign: "center",
-    alignSelf: "flex-end",
-  },
-  dropdownItemStyle: {
-    justifyContent: "flex-start",
-    textAlign: "center",
-    
-  },
-  dropdownListStyle: {
-    borderColor: "#C3D4D3",
-    borderWidth: 3,
-    textAlign: "center",
-    paddingLeft:50,
-  },
-  dropdownContainer: {
-    height: 40,
-    width: "80%",
-    marginBottom: 16,
-    textAlign: "center",
-    zIndex: 2,
-  },
-  placeHolderStyle: {
-    color: "#A9A9A9",
-    textAlign: "center",
-    textAlign: "center",
-  },
-  icon: {
-    position: "absolute",
-    top: 10,
-    left: 10,
-    zIndex: 3,
-  },
-  buttonSearch: {
-    top: 0,
-    backgroundColor: "#366A68",
-    width: "70%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonTextSearch: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-
-});

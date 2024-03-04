@@ -101,13 +101,6 @@ const LoginScreen = () => {
           </View>
         </View>
 
-      {/* <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
-        <TouchableOpacity onPress={() => setStayLoggedIn(!stayLoggedIn)} style={{ marginRight: 10 }}>
-          <Text>{stayLoggedIn ? '☑️' : '⬜️'}</Text>
-        </TouchableOpacity>
-        <Text>Stay logged in</Text>
-      </View> */}
-
         <View style={stylesLogin.buttonContainer}>
           <TouchableOpacity onPress={handleLogin} style={stylesLogin.button}>
             <Text style={stylesLogin.buttonText}>Login</Text>

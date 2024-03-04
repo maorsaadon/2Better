@@ -11,7 +11,7 @@ import {
 import myLogoPic from '../assets/default.png';
 import MeetingService from '../back/MeetingService';
 import UpcomingMeetingCard from "../components/UpcomingMeetingCard";
-
+import { stylesUpcome } from '../components/StylesSheets';
 
 
 
@@ -46,8 +46,8 @@ const UpcomingMeetingsScreen = () => {
   };
 
   return (
-    <ImageBackground source={myLogoPic} style={styles.backgroundImage}>
-      <View style={styles.container}>
+    <ImageBackground source={myLogoPic} style={stylesUpcome.backgroundImage}>
+      <View style={stylesUpcome.container}>
         <ScrollView
           refreshControl={ // Notice the correct prop name here: refreshControl instead of RefreshControl
             <RefreshControl
@@ -64,7 +64,7 @@ const UpcomingMeetingsScreen = () => {
             <Text></Text>
             //<ActivityIndicator size="large" color="black" />
           ) : (
-            <View style={styles.container}>
+            <View style={stylesUpcome.container}>
               {upcomingMeetings.map((meeting, index) => (
                 <UpcomingMeetingCard key={index} meeting={meeting} />
               ))}
@@ -77,21 +77,5 @@ const UpcomingMeetingsScreen = () => {
 
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingTop: 40,
-    flexDirection: "column",
-    gap: 35,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-});
 
 export default UpcomingMeetingsScreen;
