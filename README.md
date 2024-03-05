@@ -15,7 +15,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/welcome_screen.jpg" width="500" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/welcome_screen.jpg" width="800" height="400" />
 </td>
 <td style="font-size: large;">
 <strong>The welcome screen greets users with a motivational quote, "HEALTHY MIND IN A HEALTHY BODY," emphasizing the app's focus on overall well-being. From here, users can either sign in to their existing account or create a new one.</strong>
