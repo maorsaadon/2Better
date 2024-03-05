@@ -67,7 +67,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_management.jpg" width="350" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_management.jpg" width="300" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> Users can manage their groups, view membership status, and edit or delete groups they manage. </strong>
@@ -80,7 +80,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_activities.jpg" width="550" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_activities.jpg" width="580" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> 
@@ -95,7 +95,7 @@ The app lists various sports activities available in the user's groups or nearby
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/activity_search.jpg" width="450" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/activity_search.jpg" width="420" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> 
