@@ -15,7 +15,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/welcome_screen.jpg" width="800" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/welcome_screen.jpg" width="750" height="400" />
 </td>
 <td style="font-size: large;">
 <strong>The welcome screen greets users with a motivational quote, "HEALTHY MIND IN A HEALTHY BODY," emphasizing the app's focus on overall well-being. From here, users can either sign in to their existing account or create a new one.</strong>
@@ -28,7 +28,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/registration_screen.jpg" width="300" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/registration_screen.jpg" width="450" height="400" />
 </td>
 <td style="font-size: large;">
 <strong>New users can sign up by providing their first name, last name, email, password, city, age, and gender, ensuring a personalized experience</strong>
@@ -54,7 +54,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/home_page.jpg" width="350" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/home_page.jpg" width="480" height="400" />
 </td>
 <td style="font-size: large;">
 <strong>The home page offers a dashboard view where users can see their groups' activities, join new groups, or explore activities organized by other groups. </strong>
@@ -67,7 +67,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_management.jpg" width="220" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_management.jpg" width="350" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> Users can manage their groups, view membership status, and edit or delete groups they manage. </strong>
@@ -80,7 +80,7 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_activities.jpg" width="400" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/group_activities.jpg" width="550" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> 
@@ -95,7 +95,7 @@ The app lists various sports activities available in the user's groups or nearby
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/activity_search.jpg" width="300" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/activity_search.jpg" width="450" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> 
@@ -110,7 +110,7 @@ Users can search for groups based on the type of sport and city, making it easy 
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/user_profile.jpg" width="350" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/user_profile.jpg" width="500" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> 
