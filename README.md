@@ -2,16 +2,23 @@
 # Table of Contents
 
 1. [Introduction](#Introduction)
-2. [Built With](#built-with)
-3. [Getting Started](#getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Installation](#installation)
-4. [Usage](#usage)
-5. [Roadmap](#roadmap)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact](#contact)
-9. [Acknowledgments](#acknowledgments)
+2. [Features](#Features)
+3. [App Displays](#App-Displays)
+   - [Welcome Screen](#Welcome-Screen)
+   - [Registration](#Registration)
+   - [Login](#Login)
+   - [Home Page](#Home-Page)
+   - [Group Management](#Group-Management)
+   - [Group Activities](#Group-Activities)
+   - [Activity Search](#Activity-Search)
+   - [User Profile](#Activity-Search)
+   - [Activity Search](#Activity-Search)
+13. [Installation](#Installation)
+14. [Usage](#Usage)
+15. [Contributing](#Contributing)
+16. [License](#License)
+17. [Contact](#Contact)
+18. [Acknowledgments](#Acknowledgments)
    
 ## Introduction
 2Better is an innovative Android application designed to enhance your daily productivity and well-being. With a focus on simplicity and user-friendliness, 2Better offers a range of features to help users better organize their tasks, track their habits, and stay motivated.
@@ -23,7 +30,7 @@
 - **Customizable Themes:** Personalize your app experience with customizable themes and layouts.
 - **Data Sync:** Securely sync your data across devices to keep your progress up-to-date
 
-
+## App Displays
  ### <I> Welcome Screen </I>
 <table>
 <tr>
