@@ -24,7 +24,6 @@ import { auth } from "../back/firebase";
 import React, { useEffect, useState } from "react";
 import MeetingService from "../back/MeetingService";
 import { useNavigation } from "@react-navigation/core";
-import colors from "../colors";
 import { UpcomingStyles } from "./StylesSheets";
 import GroupService from "../back/GroupService";
 
