@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   TextInput,
-  Button,
   View,
   ImageBackground,
   TouchableOpacity,
   Image,
-  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { userFirstName, userLastName, userCity } from "../back/UserService";
@@ -40,16 +37,6 @@ const EditProfileScreen = () => {
       console.error("Error updating user details:", error);
     }
   };
-
-  // Use useFocusEffect to update the state when the screen gains focus
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // Set initial values when the screen gains focus
-  //     setFirstName(userFirstName);
-  //     setLastName(userLastName);
-  //     setCity(UserCity);
-  //   }, [])
-  // );
 
   const handleImageSelection = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  SafeAreaView,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, SafeAreaView, TouchableOpacity } from "react-native";
 import {
   AntDesign,
   FontAwesome5,

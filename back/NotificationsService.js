@@ -3,7 +3,6 @@ import GroupService from "../back/GroupService";
 import UserService from "../back/UserService";
 import MeetingService from "./MeetingService";
 
-
 export const NotificationService = {
   // Fetch notifications for a specific user
   async getUserNotifications() {
@@ -12,7 +11,7 @@ export const NotificationService = {
       const notificationRef = db
         .collection("Notifications")
         .where("Addressee", "==", userEmail);
-        
+
       UserService.updateUserNotificationCounter();
 
       const snapshot = await notificationRef.get();
@@ -23,11 +22,11 @@ export const NotificationService = {
       }
 
       let notifications = [];
-      
+
       snapshot.forEach((notificationDoc) => {
         const notificationData = notificationDoc.data();
         const timeStamp = notificationData.TimeStamp.toDate();
-        
+
         notifications.push({
           Addressee: notificationData.Addressee || "Unknown",
           GroupName: notificationData.GroupName || "Unknown",
@@ -35,33 +34,37 @@ export const NotificationService = {
           Type: notificationData.Type || "Unknown",
           TimeStamp: timeStamp || "Unknown",
           From: notificationData.From || "Unknown",
-          id: notificationDoc.id
+          id: notificationDoc.id,
         });
       });
-      
+
       notifications.sort((a, b) => {
         // Convert dates to timestamps for comparison
         const timeA = a.TimeStamp.getTime();
         const timeB = b.TimeStamp.getTime();
-        
+
         // For descending order, from most recent to oldest
         return timeA - timeB;
       });
-      
+
       return notifications;
-      
-      
-      
     } catch (error) {
       console.error("Error getting notifications:", error);
       throw error;
     }
-    
   },
-  
-  async handleAddNewNotification(meetingId, groupName, content, type, timeStamp, from = "default mail", addressee = auth.currentUser.email) {
+
+  async handleAddNewNotification(
+    meetingId,
+    groupName,
+    content,
+    type,
+    timeStamp,
+    from = "default mail",
+    addressee = auth.currentUser.email
+  ) {
     const groupLeaderEmail = await GroupService.getLeaderEmail(groupName);
-    if( type === "New Meeting"){
+    if (type === "New Meeting") {
       const groupMembers = await GroupService.getMembers(groupName);
 
       try {
@@ -73,12 +76,15 @@ export const NotificationService = {
           Type: type,
           TimeStamp: timeStamp,
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(addressee)) + 1,
+          addressee
+        );
       } catch (error) {
-          console.error("Error creating Notification for leader: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for leader: ", error);
+        alert(error.message);
       }
-    
+
       for (const member of groupMembers) {
         try {
           const memberNotifRef = db.collection("Notifications").doc();
@@ -89,14 +95,19 @@ export const NotificationService = {
             Type: type,
             TimeStamp: timeStamp,
           });
-          await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(member) + 1, member);
+          await UserService.updateUserNotificationCounter(
+            (await UserService.getUserNotificationCounter(member)) + 1,
+            member
+          );
         } catch (error) {
-            console.error("Error creating Notification for member: ", error);
-            alert(error.message);
+          console.error("Error creating Notification for member: ", error);
+          alert(error.message);
         }
-        console.log(`${member} : ${await UserService.getUserNotificationCounter(member)}`);
+        console.log(
+          `${member} : ${await UserService.getUserNotificationCounter(member)}`
+        );
       }
-    }else if( type === "Group Join request"){
+    } else if (type === "Group Join request") {
       try {
         const NotificationRef = db.collection("Notifications").doc();
         await NotificationRef.set({
@@ -107,14 +118,17 @@ export const NotificationService = {
           TimeStamp: timeStamp,
           From: from,
           Handled: false,
-          RequestAnswer: "did not Answer yet"
+          RequestAnswer: "did not Answer yet",
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(addressee)) + 1,
+          addressee
+        );
       } catch (error) {
-          console.error("Error creating Notification for leader: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for leader: ", error);
+        alert(error.message);
       }
-    }else if (type === "Meeting Join request"){
+    } else if (type === "Meeting Join request") {
       try {
         const NotificationRef = db.collection("Notifications").doc();
         await NotificationRef.set({
@@ -125,14 +139,17 @@ export const NotificationService = {
           TimeStamp: timeStamp,
           From: from,
           Handled: false,
-          RequestAnswer: "did not Answer yet"
+          RequestAnswer: "did not Answer yet",
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(addressee)) + 1,
+          addressee
+        );
       } catch (error) {
-          console.error("Error creating Notification for leader: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for leader: ", error);
+        alert(error.message);
       }
-    }else if( type === "Meeting Updated"){
+    } else if (type === "Meeting Updated") {
       const meetingMembers = await MeetingService.getMembers(meetingId);
       try {
         const leaderNotifRef = db.collection("Notifications").doc();
@@ -143,10 +160,13 @@ export const NotificationService = {
           Type: type,
           TimeStamp: timeStamp,
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(addressee)) + 1,
+          addressee
+        );
       } catch (error) {
-          console.error("Error creating Notification for leader: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for leader: ", error);
+        alert(error.message);
       }
 
       for (const member of meetingMembers) {
@@ -159,18 +179,22 @@ export const NotificationService = {
             Type: type,
             TimeStamp: timeStamp,
           });
-          await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(member) + 1, member);
+          await UserService.updateUserNotificationCounter(
+            (await UserService.getUserNotificationCounter(member)) + 1,
+            member
+          );
         } catch (error) {
-            console.error("Error creating Notification for member: ", error);
-            alert(error.message);
+          console.error("Error creating Notification for member: ", error);
+          alert(error.message);
         }
-        console.log(`${member} : ${await UserService.getUserNotificationCounter(member)}`);
+        console.log(
+          `${member} : ${await UserService.getUserNotificationCounter(member)}`
+        );
       }
-    }else if(type === "Removed From Meeting"){
+    } else if (type === "Removed From Meeting") {
       try {
-        
         const memberToRemove = meetingId;
-        
+
         const memberNotifRef = db.collection("Notifications").doc();
         await memberNotifRef.set({
           Addressee: memberToRemove,
@@ -179,18 +203,19 @@ export const NotificationService = {
           Type: type,
           TimeStamp: timeStamp,
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(memberToRemove) + 1, memberToRemove);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(memberToRemove)) + 1,
+          memberToRemove
+        );
       } catch (error) {
-          console.error("Error creating Notification for member: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for member: ", error);
+        alert(error.message);
       }
       console.log("Send notification to User successfully.");
-    }
-    else if(type === "Removed From Group"){
+    } else if (type === "Removed From Group") {
       try {
-        
         const memberToRemove = meetingId;
-        
+
         const memberNotifRef = db.collection("Notifications").doc();
         await memberNotifRef.set({
           Addressee: memberToRemove,
@@ -199,13 +224,16 @@ export const NotificationService = {
           Type: type,
           TimeStamp: timeStamp,
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(memberToRemove) + 1, memberToRemove);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(memberToRemove)) + 1,
+          memberToRemove
+        );
       } catch (error) {
-          console.error("Error creating Notification for member: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for member: ", error);
+        alert(error.message);
       }
       console.log("Send notification to User successfully.");
-    }else{
+    } else {
       try {
         const NotificationRef = db.collection("Notifications").doc();
         await NotificationRef.set({
@@ -216,78 +244,99 @@ export const NotificationService = {
           TimeStamp: timeStamp,
           From: from,
         });
-        await UserService.updateUserNotificationCounter(await UserService.getUserNotificationCounter(addressee) + 1, addressee);
+        await UserService.updateUserNotificationCounter(
+          (await UserService.getUserNotificationCounter(addressee)) + 1,
+          addressee
+        );
       } catch (error) {
-          console.error("Error creating Notification for leader: ", error);
-          alert(error.message);
+        console.error("Error creating Notification for leader: ", error);
+        alert(error.message);
       }
     }
   },
 
-  async updateHandledField(from, groupName, handled = true){
+  async updateHandledField(from, groupName, handled = true) {
     try {
-      const querySnapshot = await db.collection("Notifications")
-                                     .where('From', '==', from)
-                                     .where('GroupName', '==', groupName)
-                                     .where("Type", "in", ["Group Join request", "Meeting Join request"])
-                                     .get();
-  
+      const querySnapshot = await db
+        .collection("Notifications")
+        .where("From", "==", from)
+        .where("GroupName", "==", groupName)
+        .where("Type", "in", ["Group Join request", "Meeting Join request"])
+        .get();
+
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           const docRef = doc.ref; // Get the DocumentReference
-          docRef.update({ // Update the document
-            Handled: handled
-          }).catch((error) => {
-            console.error(`Error updating Notification ${doc.id} 'Handled' field: `, error);
-          });
+          docRef
+            .update({
+              // Update the document
+              Handled: handled,
+            })
+            .catch((error) => {
+              console.error(
+                `Error updating Notification ${doc.id} 'Handled' field: `,
+                error
+              );
+            });
         });
       } else {
-        console.log('No matching documents found');
+        console.log("No matching documents found");
       }
     } catch (error) {
       console.error("Error updating Notification 'Handled' field: ", error);
     }
   },
 
-  async updateRequestAnswerField(from, groupName, requestAnswer){
+  async updateRequestAnswerField(from, groupName, requestAnswer) {
     try {
-      const querySnapshot = await db.collection("Notifications")
-                                     .where('From', '==', from)
-                                     .where('GroupName', '==', groupName)
-                                     .where("Type", "in", ["Group Join request", "Meeting Join request"])
-                                     .get();
-  
+      const querySnapshot = await db
+        .collection("Notifications")
+        .where("From", "==", from)
+        .where("GroupName", "==", groupName)
+        .where("Type", "in", ["Group Join request", "Meeting Join request"])
+        .get();
+
       // Check if the querySnapshot is not empty
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           const docRef = doc.ref; // Get the DocumentReference
-          docRef.update({ // Update the document
-            RequestAnswer: requestAnswer
-          }).catch((error) => {
-            console.error(`Error updating Notification ${doc.id} 'RequestAnswer' field: `, error);
-          });
+          docRef
+            .update({
+              // Update the document
+              RequestAnswer: requestAnswer,
+            })
+            .catch((error) => {
+              console.error(
+                `Error updating Notification ${doc.id} 'RequestAnswer' field: `,
+                error
+              );
+            });
         });
       } else {
-        console.log('No matching documents found');
+        console.log("No matching documents found");
       }
     } catch (error) {
-      console.error("Error updating Notification 'RequestAnswer' field: ", error);
+      console.error(
+        "Error updating Notification 'RequestAnswer' field: ",
+        error
+      );
     }
   },
 
   async isHandled(notificationId) {
     try {
-      const notificationsRef = await db.collection("Notifications").doc(notificationId);
+      const notificationsRef = await db
+        .collection("Notifications")
+        .doc(notificationId);
       const snapshot = await notificationsRef.get();
-      if(snapshot.exists) {
-        const notification = snapshot.data();      
-        if (notification.Handled)
-        {
+      if (snapshot.exists) {
+        const notification = snapshot.data();
+        if (notification.Handled) {
           return true;
         } else {
           return false;
         }
-    }
+      }
     } catch (error) {
       console.error(`Error find meetings members!`, error);
     }
@@ -295,17 +344,18 @@ export const NotificationService = {
 
   async requestAnswer(notificationId) {
     try {
-      const notificationsRef = await db.collection("Notifications").doc(notificationId);
+      const notificationsRef = await db
+        .collection("Notifications")
+        .doc(notificationId);
       const snapshot = await notificationsRef.get();
-      if(snapshot.exists) {
-        const notification = snapshot.data();      
+      if (snapshot.exists) {
+        const notification = snapshot.data();
         return notification.RequestAnswer;
-    }
+      }
     } catch (error) {
       console.error(`Error find meetings members!`, error);
     }
   },
-
 };
 
 export default NotificationService;

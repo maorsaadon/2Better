@@ -2,12 +2,9 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
-  ImageBackground,
   Pressable,
   TouchableWithoutFeedback,
   Platform,

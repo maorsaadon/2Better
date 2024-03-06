@@ -12,26 +12,23 @@ var userNotificationCounter = 0;
 var userImageUpload = 0;
 
 export const UserService = {
-
-  // async isEmailInAuth(email) {
-  //   try {
-  //     const methods = await auth.fetchSignInMethodsForEmail(email);
-
-  //     // If methods array is not empty, it means the email is in use
-  //     return methods.length > 0;
-  //   } catch (error) {
-  //     // Handle errors or return false
-  //     console.error("Error checking email existence:", error);
-  //     return false;
-  //   }
-  // },
-  
-  async createUserAccount(email, password, firstName, lastName, city , gender , age) {
+  async createUserAccount(
+    email,
+    password,
+    firstName,
+    lastName,
+    city,
+    gender,
+    age
+  ) {
     try {
-      const userCredentials = await auth.createUserWithEmailAndPassword(email, password);
-  
+      const userCredentials = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
       const user = userCredentials.user;
-  
+
       await db.collection("Users").doc(email).set({
         FirstName: firstName,
         LastName: lastName,
@@ -42,30 +39,14 @@ export const UserService = {
         ImageUpload: 0,
         NotificationCounter: 0,
       });
-  
+
       console.log("Registered with:", user.email);
-  
+
       return true; // Indicate success
     } catch (error) {
       return false; // Indicate failure
     }
-      
-    //   auth
-    // .signOut()
-    // .then(() => {
-    //   console.log("LogOutFrom");
-    // })
-    // .catch((error) => alert(error.message));
-    
   },
-  // async logOut() {
-  //   auth
-  //   .signOut()
-  //   .then(() => {
-  //     console.log("LogOutFrom");
-  //   })
-  //   .catch((error) => alert(error.message));
-  // },
 
   async getUserDetails() {
     try {
@@ -116,14 +97,13 @@ export const UserService = {
       console.error("Error fetching User: ", error);
     }
   },
-  async updateUserImage()
-  {
-    const userEmail = auth.currentUser.email
+  async updateUserImage() {
+    const userEmail = auth.currentUser.email;
     try {
       const userRef = db.collection("Users").doc(userEmail);
       userImageUpload = 1;
       await userRef.update({
-        ImageUpload : 1
+        ImageUpload: 1,
       });
 
       userImageUpload = userRef.ImageUpload;
@@ -131,10 +111,11 @@ export const UserService = {
     } catch (error) {
       console.error("Error updating user NotificationCounter: ", error);
     }
-
-  }
-  ,
-  async updateUserNotificationCounter(counter = 0, userEmail = auth.currentUser.email){
+  },
+  async updateUserNotificationCounter(
+    counter = 0,
+    userEmail = auth.currentUser.email
+  ) {
     try {
       const userRef = db.collection("Users").doc(userEmail);
 
@@ -185,9 +166,15 @@ export const UserService = {
       // Handle the error accordingly
     }
   },
-
 };
 
-export { userFirstName, userLastName, userCity, userAge, userGender , userImageUpload};
+export {
+  userFirstName,
+  userLastName,
+  userCity,
+  userAge,
+  userGender,
+  userImageUpload,
+};
 
 export default UserService;

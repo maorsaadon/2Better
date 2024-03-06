@@ -99,11 +99,10 @@ const MyGroupsScreen = () => {
       </View>
       <ScrollView
         refreshControl={
-          // Notice the correct prop name here: refreshControl instead of RefreshControl
           <RefreshControl
             refreshing={refresh}
             onRefresh={() => onRefreshing()}
-            colors={["#366A68", "black"]} // Set the colors of the loading indicator
+            colors={["#366A68", "black"]}
             progressBackgroundColor="#E9EFE8"
             size="large"
           />

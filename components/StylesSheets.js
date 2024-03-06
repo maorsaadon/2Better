@@ -96,13 +96,13 @@ const stylesProfile = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10, // Adjust as needed
+    marginVertical: 10,
     top: 70,
     left: -10,
   },
   orText: {
     color: "black",
-    paddingHorizontal: 5, // Adjust as needed
+    paddingHorizontal: 5,
     fontSize: 25,
     fontStyle: "italic",
   },
@@ -111,13 +111,13 @@ const stylesProfile = StyleSheet.create({
     flex: 1,
     height: 2,
     backgroundColor: "black",
-    marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
+    marginHorizontal: 5,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20, // Adjust the value as needed
+    paddingHorizontal: 20,
   },
 });
 const stylesAboutUs = StyleSheet.create({
@@ -394,9 +394,8 @@ const stylesHome = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    //justifyContent: "flex-start", // Align items at the top
     alignItems: "center",
-    paddingTop: 30, // Add padding to give some space at the top
+    paddingTop: 30,
     flexDirection: "row",
     gap: 35,
   },
@@ -411,11 +410,11 @@ const stylesHome = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 0, // Align to the bottom
-    left: -18, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
+    position: "absolute",
+    top: 0,
+    left: -18,
+    marginBottom: 10,
+    marginLeft: 10,
   },
   backButtonText: {
     alignSelf: "center",
@@ -472,12 +471,12 @@ const stylesHome = StyleSheet.create({
   },
   iconText: {
     fontWeight: "bold",
-    fontSize: 20, // Adjust the font size as needed
+    fontSize: 20,
   },
   logo: {
-    width: 70, // Adjust the width as needed
-    height: 70, // Adjust the height as needed
-    resizeMode: "contain", // Options: 'cover', 'contain', 'stretch', 'repeat', 'center'
+    width: 70,
+    height: 70,
+    resizeMode: "contain",
   },
   buttonTextPage: {
     alignSelf: "center",
@@ -515,24 +514,23 @@ const stylesHomeCard = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#E9F1E9", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: "#E9F1E9",
+    borderRadius: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 1,
     borderColor: "#E0E0E0",
-    //opacity: 0.7,
   },
   cardTopRow: {
-    marginTop: 0, // Adjust as needed to move closer to the top
-    marginLeft: 0, // Adjust as needed for left alignment
-    alignSelf: "flex-start", // Align self to the start of the cross axis
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -549,10 +547,10 @@ const stylesHomeCard = StyleSheet.create({
     marginLeft: 0,
   },
   sportIcon: {
-    width: 30, // Adjust size as needed
-    height: 30, // Adjust size as needed
+    width: 30,
+    height: 30,
     resizeMode: "contain",
-    marginRight: 10, // Add some space between the icon and the text
+    marginRight: 10,
   },
   title: {
     fontWeight: "bold",
@@ -589,14 +587,13 @@ const stylesHomeCard = StyleSheet.create({
     height: 40,
     marginHorizontal: 10,
     minimumTrackTintColor: "black",
-    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    maximumTrackTintColor: "#C0C0C0",
     thumbTintColor: "white",
   },
   participantText: {
     fontSize: 16,
     color: "#000",
     fontWeight: "bold",
-    // Add margin to the left or right to space the text from the slider
     marginHorizontal: 5,
   },
 });
@@ -647,7 +644,7 @@ const stylesLogin = StyleSheet.create({
   },
   button: {
     backgroundColor: "#366A68",
-    width: "100%", // This will make the button fill the container
+    width: "100%",
     padding: 15,
     borderRadius: 50,
     alignItems: "center",
@@ -658,7 +655,7 @@ const stylesLogin = StyleSheet.create({
     marginTop: 5,
     borderColor: "#366A68",
     borderWidth: 2,
-    width: "100%", // This ensures the outlined button also fills the container
+    width: "100%",
   },
   buttonText: {
     color: "white",
@@ -893,24 +890,23 @@ export const UpcomingStyles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#E9F1E9", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: "#E9F1E9",
+    borderRadius: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 1,
     borderColor: "#E0E0E0",
-    //opacity: 0.7,
   },
   cardTopRow: {
-    marginTop: 0, // Adjust as needed to move closer to the top
-    marginLeft: 0, // Adjust as needed for left alignment
-    alignSelf: "flex-start", // Align self to the start of the cross axis
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -927,10 +923,10 @@ export const UpcomingStyles = StyleSheet.create({
     marginLeft: 0,
   },
   sportIcon: {
-    width: 30, // Adjust size as needed
-    height: 30, // Adjust size as needed
+    width: 30,
+    height: 30,
     resizeMode: "contain",
-    marginRight: 10, // Add some space between the icon and the text
+    marginRight: 10,
   },
   title: {
     fontWeight: "bold",
@@ -975,14 +971,13 @@ export const UpcomingStyles = StyleSheet.create({
     height: 40,
     marginHorizontal: 10,
     minimumTrackTintColor: "black",
-    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    maximumTrackTintColor: "#C0C0C0",
     thumbTintColor: "white",
   },
   participantText: {
     fontSize: 16,
     color: "#000",
     fontWeight: "bold",
-    // Add margin to the left or right to space the text from the slider
     marginHorizontal: 5,
   },
   chatButton: {
@@ -1034,9 +1029,9 @@ const ResultStyles = StyleSheet.create({
     gap: 10,
   },
   cardTopRow: {
-    marginTop: 0, // Adjust as needed to move closer to the top
-    marginLeft: 0, // Adjust as needed for left alignment
-    alignSelf: "flex-start", // Align self to the start of the cross axis
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -1053,10 +1048,10 @@ const ResultStyles = StyleSheet.create({
     marginLeft: 0,
   },
   sportIcon: {
-    width: 30, // Adjust size as needed
-    height: 30, // Adjust size as needed
+    width: 30,
+    height: 30,
     resizeMode: "contain",
-    marginRight: 10, // Add some space between the icon and the text
+    marginRight: 10,
   },
   title: {
     fontWeight: "bold",
@@ -1092,14 +1087,13 @@ const ResultStyles = StyleSheet.create({
     height: 40,
     marginHorizontal: 10,
     minimumTrackTintColor: "black",
-    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    maximumTrackTintColor: "#C0C0C0",
     thumbTintColor: "white",
   },
   participantText: {
     fontSize: 16,
     color: "#000",
     fontWeight: "bold",
-    // Add margin to the left or right to space the text from the slider
     marginHorizontal: 5,
   },
 });
@@ -1120,24 +1114,23 @@ const ManagerMeetingCardStyles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: -30,
-    backgroundColor: "#E9F1E9", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: "#E9F1E9",
+    borderRadius: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 1,
     borderColor: "#E0E0E0",
-    //opacity: 0.7,
   },
   cardTopRow: {
-    marginTop: 0, // Adjust as needed to move closer to the top
-    marginLeft: 0, // Adjust as needed for left alignment
-    alignSelf: "flex-start", // Align self to the start of the cross axis
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -1154,10 +1147,10 @@ const ManagerMeetingCardStyles = StyleSheet.create({
     marginLeft: 0,
   },
   sportIcon: {
-    width: 30, // Adjust size as needed
-    height: 30, // Adjust size as needed
+    width: 30,
+    height: 30,
     resizeMode: "contain",
-    marginRight: 10, // Add some space between the icon and the text
+    marginRight: 10,
   },
   title: {
     fontWeight: "bold",
@@ -1184,7 +1177,6 @@ const ManagerMeetingCardStyles = StyleSheet.create({
     color: "white",
   },
   deleteButton: {
-    // Move delete button to the top right corner
     position: "absolute",
     top: 0,
     right: 0,
@@ -1201,47 +1193,39 @@ const ManagerMeetingCardStyles = StyleSheet.create({
     height: 40,
     marginHorizontal: 10,
     minimumTrackTintColor: "black",
-    maximumTrackTintColor: "#C0C0C0", // Color for the remaining track
+    maximumTrackTintColor: "#C0C0C0",
     thumbTintColor: "white",
   },
   participantText: {
     fontSize: 16,
     color: "#000",
     fontWeight: "bold",
-    // Add margin to the left or right to space the text from the slider
     marginHorizontal: 5,
   },
-  //   deleteButton: {
-  //     backgroundColor: "#8B1B1B",
-  //     width: 150,
-  //     height: 50,
-  //     padding: 15,
-  //     borderRadius: 20,
-  //   },
 });
 
 const NotificationCardStyles = StyleSheet.create({
   card: {
     width: screenWidth - 32,
     marginTop: 10,
-    backgroundColor: "#FFFFFF", // Assuming a white card background
-    borderRadius: 15, // Rounded corners
-    marginVertical: 8, // Adds vertical space between items
-    marginHorizontal: 16, // Adds horizontal space and centers the card in the view
-    padding: 16, // Internal spacing between the border and content
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow position
-    shadowOpacity: 0.22, // Shadow opacity
-    shadowRadius: 2.22, // Shadow blur radius
-    elevation: 3, // Elevation for Android
-    borderWidth: 1, // Border width
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 1,
     borderColor: "#E0E0E0",
     gap: 10,
   },
   cardTopRow: {
-    marginTop: 0, // Adjust as needed to move closer to the top
-    marginLeft: 0, // Adjust as needed for left alignment
-    alignSelf: "flex-start", // Align self to the start of the cross axis
+    marginTop: 0,
+    marginLeft: 0,
+    alignSelf: "flex-start",
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
@@ -1265,14 +1249,14 @@ const NotificationCardStyles = StyleSheet.create({
   },
   acceptButton: {
     backgroundColor: "green",
-    padding: 10, // Adjusted padding to make the button shorter
+    padding: 10,
     borderRadius: 10,
     marginTop: 0,
     marginLeft: 0,
   },
   rejectButton: {
     backgroundColor: "red",
-    padding: 10, // Adjusted padding to make the button shorter
+    padding: 10,
     borderRadius: 10,
     marginTop: 0,
     marginLeft: 0,
@@ -1475,7 +1459,7 @@ const DatePickerWithTimeStyles = StyleSheet.create({
     alignItems: "center",
   },
   datePickerContainer: {
-    marginup: 30, // Adjust this value as needed for the desired spacing
+    marginup: 30,
   },
   inputContainer: {
     width: "80%",
@@ -1514,9 +1498,9 @@ const DatePickerWithTimeStyles = StyleSheet.create({
 const stylesNewGroup = StyleSheet.create({
   safeArea: {
     flex: 1,
-    alignItems: "center", // Center children horizontally
-    justifyContent: "center", // Center children vertically
-    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   backgroundImage: {
     flex: 1,
@@ -1524,10 +1508,10 @@ const stylesNewGroup = StyleSheet.create({
     height: "100%",
   },
   backButton: {
-    alignSelf: "flex-start", // Aligns the button to the start of its container
-    position: "absolute", // Positions the button absolutely within its container
-    top: 10, // Adjusts the distance from the top
-    left: 10, // Adjusts the distance from the left
+    alignSelf: "flex-start",
+    position: "absolute",
+    top: 10,
+    left: 10,
     backgroundColor: "#0782F9",
     padding: 10,
     borderRadius: 10,
@@ -1550,26 +1534,26 @@ const stylesNewGroup = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    width: "80%", // Adjusted to take the full width
-    alignItems: "center", // Centers children horizontally
-    justifyContent: "center", // Aligns children from the top
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "center",
     paddingTop: 50,
     zIndex: 1,
   },
   input: {
     borderColor: "#C3D4D3",
     backgroundColor: "#C3D4D3",
-    width: "80%", // Adjusted to a consistent width for all inputs
+    width: "80%",
     borderRadius: 20,
     color: "black",
     marginTop: 10,
     borderWidth: 1,
-    padding: 15, // Increased padding for better touch area
-    marginBottom: 10, // Adds space between inputs
+    padding: 15,
+    marginBottom: 10,
   },
   dropdownContainer: {
-    width: "80%", // Ensure dropdowns are also the same width as inputs
-    marginBottom: 10, // Consistent spacing
+    width: "80%",
+    marginBottom: 10,
     zIndex: 2,
   },
   dropdownStyle: {
@@ -1577,7 +1561,7 @@ const stylesNewGroup = StyleSheet.create({
     backgroundColor: "#C3D4D3",
     borderRadius: 20,
     borderWidth: 1,
-    padding: 15, // Adjust padding to match inputs
+    padding: 15,
   },
   dropdownItemStyle: {
     justifyContent: "flex-start",
@@ -1591,11 +1575,11 @@ const stylesNewGroup = StyleSheet.create({
   },
 
   button: {
-    width: "80%", // Match the width of inputs and dropdowns
-    padding: 15, // Comfortable padding for tapping
+    width: "80%",
+    padding: 15,
     borderRadius: 20,
-    alignItems: "center", // Center text within the button
-    backgroundColor: "#0782F9", // Example button color
+    alignItems: "center",
+    backgroundColor: "#0782F9",
   },
   buttonOutlineText: {
     color: "white",
@@ -1625,11 +1609,11 @@ const stylesNewMeeting = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 50, // Align to the bottom
-    left: -20, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
+    position: "absolute",
+    top: 50,
+    left: -20,
+    marginBottom: 10,
+    marginLeft: 10,
   },
   backButtonText: {
     alignSelf: "center",
@@ -1708,13 +1692,13 @@ const stylesApp = StyleSheet.create({
   },
   button: {
     backgroundColor: "rgba(54, 106, 104, 0.8)",
-    width: "90%", // This will make the button fill the container
+    width: "90%",
     padding: 15,
     borderRadius: 20,
     alignItems: "center",
   },
   buttonOutline: {
-    width: "100%", // This will make the button fill the container
+    width: "100%",
     padding: 15,
     borderRadius: 20,
     alignItems: "center",
@@ -1740,7 +1724,7 @@ const stylesApp = StyleSheet.create({
 const stylesChat = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   backContainer: {
     position: "absolute",
@@ -1782,7 +1766,7 @@ const stylesEditGroup = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   backContainer: {
     flex: 1,
@@ -1893,26 +1877,19 @@ const stylesEditGroup = StyleSheet.create({
 const stylesEditMeeting = StyleSheet.create({
   safeArea: {
     flex: 1,
-    alignItems: "center", // Center children horizontally
-    justifyContent: "center", // Center children vertically
+    alignItems: "center",
+    justifyContent: "center",
   },
-  // container: {
-  //   flex: 1,
-  //   justifyContent: "flex-start", // Align items at the top
-  //   alignItems: "center",
-  //   paddingTop: 150, // Add padding to give some space at the top
-  //   flexDirection: "column",
-  //   gap: 35,
-  // },
+
   backButton: {
     width: "20%",
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: -200, // Align to the bottom
-    left: -40, // Align to the left
-    top: 35, // Optional margin to add some space from the bottom
+    position: "absolute",
+    top: -200,
+    left: -40,
+    top: 35,
     left: -10,
   },
   backButtonText: {
@@ -1973,7 +1950,6 @@ const stylesEditMeeting = StyleSheet.create({
     borderWidth: 2,
   },
   buttonOutline: {
-    //width: '80',
     backgroundColor: "#366A68",
     marginTop: 5,
   },
@@ -2012,12 +1988,12 @@ const stylesEditMeeting = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10, // Adjust as needed
+    marginVertical: 10,
     top: 150,
   },
   orText: {
     color: "black",
-    paddingHorizontal: 10, // Adjust as needed
+    paddingHorizontal: 10,
     fontSize: 20,
     fontStyle: "italic",
   },
@@ -2025,7 +2001,7 @@ const stylesEditMeeting = StyleSheet.create({
     flex: 1,
     height: 2,
     backgroundColor: "black",
-    marginHorizontal: 5, // Adjust as needed to create space between the text and the lines
+    marginHorizontal: 5,
   },
 });
 const stylesEditProfile = StyleSheet.create({
@@ -2089,9 +2065,9 @@ const stylesFindNew = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    alignItems: "center", // Center children horizontally
-    justifyContent: "center", // Center children vertically
-    backgroundColor: "rgba(233, 240, 233, 0.7)", // Adjust the opacity as needed
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(233, 240, 233, 0.7)",
   },
   dropStyleContainer: {
     marginBottom: 16,
@@ -2199,11 +2175,11 @@ const stylesGroupMeeting = StyleSheet.create({
     left: 100,
   },
   backButton: {
-    position: "absolute", // Use absolute positioning
-    top: 50, // Align to the bottom
-    left: 0, // Align to the left
-    marginBottom: 30, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
+    position: "absolute",
+    top: 50,
+    left: 0,
+    marginBottom: 30,
+    marginLeft: 10,
   },
   backButtonText: {
     alignSelf: "center",
@@ -2221,11 +2197,11 @@ const stylesMemList = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 40, // Align to the bottom
-    left: -10, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
+    position: "absolute",
+    top: 40,
+    left: -10,
+    marginBottom: 10,
+    marginLeft: 10,
   },
   scrollView: {
     marginHorizontal: 20,
@@ -2289,7 +2265,7 @@ const stylesMemList = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background for the modal overlay
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
     margin: 20,
@@ -2308,7 +2284,7 @@ const stylesMemList = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: "#366A68",
-    marginTop: 15, // Added margin top for spacing from the text
+    marginTop: 15,
   },
   textStyle: {
     color: "white",
@@ -2318,7 +2294,7 @@ const stylesMemList = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 16, // Adjusted font size for modal text
+    fontSize: 16,
   },
 });
 
@@ -2336,7 +2312,7 @@ const stylesGroup = StyleSheet.create({
   },
   addContainer: {
     flex: 1,
-    justifyContent: "flex-start", // Align items at the top
+    justifyContent: "flex-start",
     flexDirection: "column",
   },
   container: {
@@ -2375,8 +2351,8 @@ const stylesGroup = StyleSheet.create({
     flex: 1,
     backgroundColor: "#366A68",
     paddingVertical: 10,
-    borderBottomWidth: 2, // Add underline to indicate this part can be tapped
-    borderBottomColor: "#366A68", // Make the underline transparent initially
+    borderBottomWidth: 2,
+    borderBottomColor: "#366A68",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -2385,8 +2361,8 @@ const stylesGroup = StyleSheet.create({
     flex: 1,
     backgroundColor: "#366A68",
     paddingVertical: 10,
-    borderBottomWidth: 2, // Add underline to indicate this part can be tapped
-    borderBottomColor: "#366A68", // Make the underline transparent initially
+    borderBottomWidth: 2,
+    borderBottomColor: "#366A68",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -2426,7 +2402,7 @@ const stylesNotifi = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50, // Adjust this value so that the ScrollView starts below the back button.
+    marginTop: 50,
   },
   notificationItem: {
     padding: 20,
@@ -2442,12 +2418,12 @@ const stylesNotifi = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    position: "absolute", // Use absolute positioning
-    top: 0, // Align to the bottom
-    left: 0, // Align to the left
-    marginBottom: 10, // Optional margin to add some space from the bottom
-    marginLeft: 10, // Optional margin to add some space from the left
-    position: "absolute", // This is good for positioning the button.
+    position: "absolute",
+    top: 0,
+    left: 0,
+    marginBottom: 10,
+    marginLeft: 10,
+    position: "absolute",
     top: 0,
     left: 0,
   },
@@ -2517,7 +2493,6 @@ const stylesResult = StyleSheet.create({
   },
   backButton: {
     width: "20%",
-    //padding: 10,
     borderRadius: 10,
     alignItems: "center",
     position: "absolute",

@@ -6,12 +6,10 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
   Platform,
   ImageBackground,
 } from "react-native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import myLogoPic from "../assets/default.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import { sportTypeDataSearch, cityDataSearch } from "../back/DataBase";

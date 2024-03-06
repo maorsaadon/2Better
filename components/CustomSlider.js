@@ -1,6 +1,6 @@
-import { View, StyleSheet} from "react-native";
+import { View, StyleSheet } from "react-native";
 
-const CustomSlider = ({maximumValue, value }) => {
+const CustomSlider = ({ maximumValue, value }) => {
   const trackWidth = (value / maximumValue) * 100;
 
   return (
@@ -12,11 +12,11 @@ const CustomSlider = ({maximumValue, value }) => {
 
 const styles = StyleSheet.create({
   slider: {
-    height: 10, 
+    height: 10,
     flex: 1,
     marginHorizontal: 10,
-    backgroundColor: "#C0C0C0", 
-    borderRadius: 5, 
+    backgroundColor: "#C0C0C0",
+    borderRadius: 5,
   },
   sliderTrack: {
     backgroundColor: "black",
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    width: "50%", 
+    width: "50%",
     top: 0,
   },
   sliderThumb: {
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderWidth: 1,
     borderColor: "black",
-    right: 0, 
+    right: 0,
   },
 });
 

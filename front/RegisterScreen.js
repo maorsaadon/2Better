@@ -36,14 +36,7 @@ const RegisterScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    // const unsubscribe = auth.onAuthStateChanged(user => {
-    //   if (user) {
-    //     navigation.replace("Login");
-    //   }
-    // })
-
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    // return unsubscribe
   }, [city]);
 
   const isEmailValid = (email) => {
@@ -69,14 +62,6 @@ const RegisterScreen = () => {
       return;
     }
 
-    // // Check if the email is already in use
-    // const emailInUse = await UserService.isEmailInAuth(email);
-
-    // if (emailInUse) {
-    //   // If the email is already in use, show an alert and return without proceeding
-    //   alert("Email is already in use! Please use another email.");
-    //   return;
-    // }
 
     try {
       const accountCreated = await UserService.createUserAccount(
@@ -184,7 +169,6 @@ const RegisterScreen = () => {
             <TextInput
               placeholder="Email"
               value={email}
-              // onChangeText={(text) => setEmail(text)}
               onChangeText={handleEmail}
               style={stylesRegister.input}
             />

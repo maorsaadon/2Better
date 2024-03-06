@@ -21,10 +21,7 @@ const NotificationsScreen = () => {
   const [latestNotification, setLatestNotification] = useState(null);
   const slideAnim = useRef(new Animated.Value(-100)).current; // Initial position off-screen
 
-
   useEffect(() => {
-
-
     const fetchNotifications = async () => {
       try {
         const userNotifications =
@@ -41,11 +38,8 @@ const NotificationsScreen = () => {
       }
     };
 
-
-
     fetchNotifications();
   }, []);
-
 
   const pressedNotification = (notification) => {
     if (

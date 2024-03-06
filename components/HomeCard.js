@@ -2,7 +2,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  Dimensions,
   TouchableOpacity,
   Alert,
 } from "react-native";
@@ -90,7 +89,7 @@ const HomeCard = ({ meeting }) => {
       );
     }
 
-    return null; 
+    return null;
   };
 
   const handleJoinPress = () => {
@@ -154,7 +153,7 @@ const HomeCard = ({ meeting }) => {
           <AntDesign name="user" size={22} color="black" />
         </View>
         <View style={stylesHomeCard.cardBottomRow}>
-          {!isUserInMeeting && isUserInGroup ? ( 
+          {!isUserInMeeting && isUserInGroup ? (
             <TouchableOpacity
               style={stylesHomeCard.button}
               onPress={handleJoinPress}

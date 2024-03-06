@@ -12,8 +12,6 @@ import {
   FontAwesome5,
   FontAwesome6,
   MaterialIcons,
-  FontAwesome,
-  MaterialCommunityIcons,
   Entypo,
   Fontisto,
 } from "@expo/vector-icons";

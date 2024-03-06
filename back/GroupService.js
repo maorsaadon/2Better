@@ -1,17 +1,14 @@
 import { auth, db } from "./firebase";
-import { UserService } from "./UserService";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-
-
 
 export const GroupService = {
   async handleAddNewGroup(groupName, city, sportType) {
     const userEmail = auth.currentUser.email;
     const docRef = db
-      .collection("Groups") // The collection name
-      .doc(groupName) // The document name
+      .collection("Groups")
+      .doc(groupName)
       .set({
         GroupName: groupName,
         LeaderEmail: userEmail,
@@ -53,15 +50,13 @@ export const GroupService = {
         `Error deleting group with ID: ${groupName} and its meetings`,
         error
       );
-      throw error; // or handle the error as needed
+      throw error;
     }
   },
 
   async addGroupMeeting(meetingId, groupName) {
     try {
       const groupRef = db.collection("Groups").doc(groupName);
-
-      // Atomically add a new group ID to the 'MyGroups' array field
 
       await groupRef.update({
         MeetingsGroup: firebase.firestore.FieldValue.arrayUnion(meetingId),
@@ -75,57 +70,60 @@ export const GroupService = {
 
   async removeGroupMeeting(meetingId, groupName) {
     try {
-        const groupRef = db.collection("Groups").doc(groupName);
+      const groupRef = db.collection("Groups").doc(groupName);
 
-        // Fetch the current array
-        const groupSnapshot = await groupRef.get();
-        const currentMeetingsGroup = groupSnapshot.data().MeetingsGroup || [];
+      const groupSnapshot = await groupRef.get();
+      const currentMeetingsGroup = groupSnapshot.data().MeetingsGroup || [];
 
-        // Filter out the meeting with the specified ID
-        const updatedMeetingsGroup = currentMeetingsGroup.filter(s => s.id !== meetingId);
+      const updatedMeetingsGroup = currentMeetingsGroup.filter(
+        (s) => s.id !== meetingId
+      );
 
-        // Update the array in Firestore
-        await groupRef.update({ MeetingsGroup: updatedMeetingsGroup });
-        console.log(`Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`);
+      await groupRef.update({ MeetingsGroup: updatedMeetingsGroup });
+      console.log(
+        `Meeting ID: ${meetingId} has been removed from group ID: ${groupName}`
+      );
     } catch (error) {
-        console.error(`Error removing meeting ID: ${meetingId} from group ID: ${groupName}`, error);
-        // Handle the error accordingly
+      console.error(
+        `Error removing meeting ID: ${meetingId} from group ID: ${groupName}`,
+        error
+      );
     }
   },
 
   async getLeaderEmail(groupName) {
     const groupRef = db.collection("Groups").doc(groupName);
     try {
-        const doc = await groupRef.get();
-        if (doc.exists) {
-            const groupData = doc.data();
-            return groupData.LeaderEmail || "Email not found"; // Returns a default message if no LeaderEmail field exists
-        } else {
-            console.log("No such Email!");
-            return "Email not found"; // Returns a message if the group does not exist
-        }
+      const doc = await groupRef.get();
+      if (doc.exists) {
+        const groupData = doc.data();
+        return groupData.LeaderEmail || "Email not found";
+      } else {
+        console.log("No such Email!");
+        return "Email not found";
+      }
     } catch (error) {
-        console.error("Error getting group leader email: ", error);
-        throw error; // Rethrow or handle error as needed
+      console.error("Error getting group leader email: ", error);
+      throw error;
     }
-},
+  },
 
-  async  getMembers(groupName) {
+  async getMembers(groupName) {
     const groupRef = db.collection("Groups").doc(groupName);
     try {
-        const doc = await groupRef.get();
-        if (doc.exists) {
-            const groupData = doc.data();
-            return groupData.Members || []; // Returns an empty array if no Members field exists
-        } else {
-            console.log("No such group!");
-            return []; // Returns an empty array if the group does not exist
-        }
+      const doc = await groupRef.get();
+      if (doc.exists) {
+        const groupData = doc.data();
+        return groupData.Members || [];
+      } else {
+        console.log("No such group!");
+        return [];
+      }
     } catch (error) {
-        console.error("Error getting group members: ", error);
-        throw error; // Rethrow or handle error as needed
+      console.error("Error getting group members: ", error);
+      throw error;
     }
-},
+  },
 
   async getMemberGroups() {
     const groups = [];
@@ -178,13 +176,13 @@ export const GroupService = {
 
       snapshot.forEach((groupDoc) => {
         const groupData = groupDoc.data();
-        const groupName = groupData.GroupName || "Unknown"; // Provide a default if groupName is missing
+        const groupName = groupData.GroupName || "Unknown";
 
         groups.push({
           GroupName: groupName,
-          LeaderEmail: groupData.LeaderEmail || "Unknown", // Provide a default if userEmail is missing
-          City: groupData.City || "Unknown", // Provide a default if city is missing
-          SportType: groupData.SportType || "Unknown", // Provide a default if sportType is missing
+          LeaderEmail: groupData.LeaderEmail || "Unknown",
+          City: groupData.City || "Unknown",
+          SportType: groupData.SportType || "Unknown",
           Members: groupData.Members?.length || 0,
         });
       });
@@ -198,11 +196,10 @@ export const GroupService = {
 
   async getGroupByName(groupName) {
     try {
-      const snapshot = await db.collection("Groups").doc(groupName).get(); // Add "await" here to wait for the snapshot
+      const snapshot = await db.collection("Groups").doc(groupName).get(); 
 
       if (snapshot.exists) {
-        const groupData = snapshot.data(); // Use "snapshot.data()" to access the document data
-        //console.log("groupData", groupData);
+        const groupData = snapshot.data(); 
 
         return {
           GroupName: groupData.GroupName || "Unknown",
@@ -227,21 +224,23 @@ export const GroupService = {
         return [];
       }
       const userEmail = auth.currentUser.email;
-      const groupsRef = db.collection("Groups").where("LeaderEmail", "!=", userEmail);
-  
+      const groupsRef = db
+        .collection("Groups")
+        .where("LeaderEmail", "!=", userEmail);
+
       const snapshot = await groupsRef.get();
-  
+
       if (snapshot.empty) {
         console.log("No matching groups found.");
         return [];
       }
-  
+
       const groups = [];
-  
+
       snapshot.forEach((doc) => {
         const group = doc.data();
-        // Perform filtering in application code
-        const matchesSportType = sportType === "All" || group.SportType === sportType;
+        const matchesSportType =
+          sportType === "All" || group.SportType === sportType;
         const matchesCity = city === "All" || group.City === city;
         if (matchesSportType && matchesCity) {
           groups.push({
@@ -253,7 +252,7 @@ export const GroupService = {
           });
         }
       });
-  
+
       return groups;
     } catch (error) {
       console.error("Error getting groups by sort:", error);
@@ -277,7 +276,11 @@ export const GroupService = {
     }
   },
 
-  async handleJoinGroup(isSubscribe, groupName, userEmail = auth.currentUser.email) {
+  async handleJoinGroup(
+    isSubscribe,
+    groupName,
+    userEmail = auth.currentUser.email
+  ) {
     try {
       const groupRef = db.collection("Groups").doc(groupName);
       const groupSnapshot = await groupRef.get();
@@ -312,7 +315,6 @@ export const GroupService = {
         const group = snapshot.data();
 
         if (group.Members && group.Members.includes(memberEmail)) {
-          // Remove the userEmail from the Members array and decrement NumberOfMembers atomically
           await groupRef.update({
             Members: firebase.firestore.FieldValue.arrayRemove(memberEmail),
           });
@@ -333,18 +335,16 @@ export const GroupService = {
     try {
       const memGroups = await this.getMemberGroups();
       const menGroups = await this.getManagerGroups();
-      // Check if the group exists in member groups or manager groups
-      const groupExists = memGroups.some(group => group.GroupName === groupName) ||
-                          menGroups.some(group => group.GroupName === groupName);
-  
+      const groupExists =
+        memGroups.some((group) => group.GroupName === groupName) ||
+        menGroups.some((group) => group.GroupName === groupName);
+
       return groupExists;
     } catch (error) {
       console.error(`Error finding groups!`, error);
       return false;
     }
-  }
-
-
+  },
 };
 
 export default GroupService;

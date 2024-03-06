@@ -3,13 +3,21 @@ import { GroupService } from "./GroupService";
 import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
 import {
-   collection, getDocs, deleteDoc, query, where
-} from 'firebase/firestore';
+  collection,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 
 export const MeetingService = {
-
   // Update meeting details
-  async updateMeetingDetails(MeetingID, date, time, location, timestamp, totalCapacity) {
+  async updateMeetingDetails(
+    MeetingID,
+    date,
+    time,
+    location,
+    timestamp,
+    totalCapacity
+  ) {
     try {
       const meetingRef = db.collection("Meetings").doc(MeetingID);
 
@@ -35,7 +43,14 @@ export const MeetingService = {
     }
   },
 
-  async handleAddNewMeeting(groupName, location, date, time, timestamp, totalCapacity) {
+  async handleAddNewMeeting(
+    groupName,
+    location,
+    date,
+    time,
+    timestamp,
+    totalCapacity
+  ) {
     const MeetingRef = db.collection("Meetings").doc(); // The document name
     MeetingRef.set({
       GroupName: groupName,
@@ -54,7 +69,7 @@ export const MeetingService = {
 
   async handleDeleteMeeting(meetingId) {
     try {
-      const chatCollectionRef = collection(db, 'Meetings', meetingId, 'chat');
+      const chatCollectionRef = collection(db, "Meetings", meetingId, "chat");
 
       // Get all documents in the 'chat' subcollection
       const chatQuerySnapshot = await getDocs(chatCollectionRef);
@@ -64,7 +79,7 @@ export const MeetingService = {
         await deleteDoc(doc.ref);
         console.log(`Document with ID ${doc.id} deleted successfully.`);
       });
-      
+
       await db.collection("Meetings").doc(meetingId).delete();
       console.log(`Meeting with ID: ${meetingId} has been deleted.`);
     } catch (error) {
@@ -170,7 +185,6 @@ export const MeetingService = {
       console.error(`Error find meetings members!`, error);
     }
   },
-
 
   async addUserToMeeting(meetingId, memberEmail) {
     try {
@@ -352,22 +366,24 @@ export const MeetingService = {
     }
   },
 
-// Function to return the date alone
-async getDateFromTimestamp(timestamp) {
-  const date = timestamp.toLocaleDateString('he-IL').replace(/\./g, '/');
-  // const date = timestamp.toISOString().split('T')[0].split("-");
-  // const correctDate = date[2] + "/" + date[1] + "/" + date[0];
-  return date;
-},
+  // Function to return the date alone
+  async getDateFromTimestamp(timestamp) {
+    const date = timestamp.toLocaleDateString("he-IL").replace(/\./g, "/");
+    // const date = timestamp.toISOString().split('T')[0].split("-");
+    // const correctDate = date[2] + "/" + date[1] + "/" + date[0];
+    return date;
+  },
 
-// Function to return the time alone
-async getTimeFromTimestamp(timestamp) {
-  const time = timestamp.toLocaleTimeString('he-IL', { minute: '2-digit', hour: '2-digit' });
-  // const time = timestamp.toTimeString().split(' ')[0].split(':');
-  // const correctTime = time[0] + ":" + time[1];
-  return time;
-},
-
+  // Function to return the time alone
+  async getTimeFromTimestamp(timestamp) {
+    const time = timestamp.toLocaleTimeString("he-IL", {
+      minute: "2-digit",
+      hour: "2-digit",
+    });
+    // const time = timestamp.toTimeString().split(' ')[0].split(':');
+    // const correctTime = time[0] + ":" + time[1];
+    return time;
+  },
 };
 
 export default MeetingService;

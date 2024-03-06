@@ -206,4 +206,3 @@ export const sportTypeDataSearch = [
   { label: "Soccer", value: "Soccer" },
   { label: "Surfing", value: "Surfing" },
 ];
-

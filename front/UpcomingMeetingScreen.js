@@ -59,7 +59,6 @@ const UpcomingMeetingsScreen = () => {
           {isLoading ? (
             <Text></Text>
           ) : (
-            //<ActivityIndicator size="large" color="black" />
             <View style={stylesUpcome.container}>
               {upcomingMeetings.map((meeting, index) => (
                 <UpcomingMeetingCard key={index} meeting={meeting} />
