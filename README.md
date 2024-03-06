@@ -1,17 +1,27 @@
 # 2Better
-# Table of Contents
+<details>
+  <summary>Table of Contents</summary>
 
-1. [Introduction](#Introduction)
-2. [Built With](#built-with)
-3. [Getting Started](#getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Installation](#installation)
-4. [Usage](#usage)
-5. [Roadmap](#roadmap)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact](#contact)
-9. [Acknowledgments](#acknowledgments)
+  1. [Introduction](#introduction)
+  2. [Features](#features)
+  3. [App Displays](#app-displays)
+     - [Welcome Screen](#welcome-screen)
+     - [Registration](#registration)
+     - [Login](#login)
+     - [Home Page](#home-page)
+     - [Group Management](#group-management)
+     - [Group Activities](#group-activities)
+     - [Activity Search](#activity-search)
+     - [User Profile](#user-profile)
+  13. [Installation](#installation)
+  14. [Usage](#usage)
+  15. [Contributing](#contributing)
+  16. [License](#license)
+  17. [Contact](#contact)
+  18. [Acknowledgments](#acknowledgments)
+
+</details>
+
    
 ## Introduction
 2Better is an innovative Android application designed to enhance your daily productivity and well-being. With a focus on simplicity and user-friendliness, 2Better offers a range of features to help users better organize their tasks, track their habits, and stay motivated.
@@ -23,7 +33,7 @@
 - **Customizable Themes:** Personalize your app experience with customizable themes and layouts.
 - **Data Sync:** Securely sync your data across devices to keep your progress up-to-date
 
-
+## App Displays
  ### <I> Welcome Screen </I>
 <table>
 <tr>
@@ -159,7 +169,7 @@ We welcome contributions from the community! If you're interested in improving 2
 For more detailed instructions, please refer to our [Contribution Guidelines](CONTRIBUTION_LINK).
 
 ## License
-2Better is released under the [MIT License](LICENSE_LINK). By using or contributing to the project, you agree to the terms and conditions of this license.
+2Better is released under the [LICENSE](LICENSE). By using or contributing to the project, you agree to the terms and conditions of this license.
 
 ## Contact
 For support or any questions related to 2Better, please contact us at [support@2better.com](mailto:support@2better.com).
