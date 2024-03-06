@@ -126,7 +126,7 @@ Users can search for groups based on the type of sport and city, making it easy 
 <table>
 <tr>
 <td>
-<img src="https://github.com/maorsaadon/2Better/blob/main/assets/user_profile.jpg" width="500" height="400" />
+<img src="https://github.com/maorsaadon/2Better/blob/main/assets/user-profile.jpeg" width="500" height="400" />
 </td>
 <td style="font-size: large;">
 <strong> 
