@@ -170,7 +170,7 @@ We welcome contributions from the community! If you're interested in improving 2
 For more detailed instructions, please refer to our [Contribution Guidelines](CONTRIBUTION_LINK).
 
 ## License
-2Better is released under the [MIT License](LICENSE_LINK). By using or contributing to the project, you agree to the terms and conditions of this license.
+2Better is released under the [LICENSE](LICENSE). By using or contributing to the project, you agree to the terms and conditions of this license.
 
 ## Contact
 For support or any questions related to 2Better, please contact us at [support@2better.com](mailto:support@2better.com).
