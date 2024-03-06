@@ -1,27 +1,25 @@
 # 2Better
 <details>
   <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#Welcome-Screen">Welcome Screen</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
+
+  1. [Introduction](#introduction)
+  2. [Features](#features)
+  3. [App Displays](#app-displays)
+     - [Welcome Screen](#welcome-screen)
+     - [Registration](#registration)
+     - [Login](#login)
+     - [Home Page](#home-page)
+     - [Group Management](#group-management)
+     - [Group Activities](#group-activities)
+     - [Activity Search](#activity-search)
+     - [User Profile](#user-profile)
+  13. [Installation](#installation)
+  14. [Usage](#usage)
+  15. [Contributing](#contributing)
+  16. [License](#license)
+  17. [Contact](#contact)
+  18. [Acknowledgments](#acknowledgments)
+
 </details>
 
 
