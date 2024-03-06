@@ -111,7 +111,7 @@ const UpcomingMeetingCard = ({ meeting }) => {
               onPress={handleChatPress}
               style={UpcomingStyles.chatButton}
             >
-              <Entypo name="chat" size={24} color={colors.lightGray} />
+              <Entypo name="chat" size={24} color={'#FAFAFA'} />
             </TouchableOpacity>
             <TouchableOpacity
               style={UpcomingStyles.button}
