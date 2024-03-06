@@ -1,5 +1,18 @@
 # 2Better
+# Table of Contents
 
+1. [Introduction](#Introduction)
+2. [Built With](#built-with)
+3. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+4. [Usage](#usage)
+5. [Roadmap](#roadmap)
+6. [Contributing](#contributing)
+7. [License](#license)
+8. [Contact](#contact)
+9. [Acknowledgments](#acknowledgments)
+   
 ## Introduction
 2Better is an innovative Android application designed to enhance your daily productivity and well-being. With a focus on simplicity and user-friendliness, 2Better offers a range of features to help users better organize their tasks, track their habits, and stay motivated.
 
