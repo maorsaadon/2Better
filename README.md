@@ -27,6 +27,8 @@
 - **Data Sync:** Securely sync your data across devices to keep your progress up-to-date
 
 ## App Displays
+### <I> URL <I> 
+[URL to the video](https://www.youtube.com/playlist?list=PLRfc2Iz-jhyMNyKYxR_9GRgn0rqsPYOCO).
  ### <I> Welcome Screen </I>
 <table>
 <tr>
