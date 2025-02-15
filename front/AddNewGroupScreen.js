@@ -70,6 +70,7 @@ const AddNewGroupScreen = () => {
       >
         <View style={stylesNewGroup.inputContainer}>
           <TextInput
+            testID="group_name_field"
             placeholder="Group name"
             value={groupName}
             onChangeText={(text) => setGroupName(text)}
@@ -125,7 +126,7 @@ const AddNewGroupScreen = () => {
         </View>
       </TouchableWithoutFeedback>
 
-      <TouchableOpacity onPress={AddButton} style={stylesNewGroup.addButton}>
+      <TouchableOpacity testID="create_group_button" onPress={AddButton} style={stylesNewGroup.addButton}>
         <Text style={stylesNewGroup.addButtonText}>Add</Text>
       </TouchableOpacity>
     </SafeAreaView>

@@ -60,6 +60,7 @@ const LoginScreen = () => {
               style={stylesLogin.icon}
             />
             <TextInput
+              testID="username_field"
               placeholder="Email"
               value={email}
               onChangeText={(text) => setEmail(text)}
@@ -75,6 +76,7 @@ const LoginScreen = () => {
               style={stylesLogin.icon}
             />
             <TextInput
+              testID="password_field"
               placeholder="Password"
               value={password}
               onChangeText={(text) => setPassword(text)}
@@ -96,7 +98,7 @@ const LoginScreen = () => {
         </View>
 
         <View style={stylesLogin.buttonContainer}>
-          <TouchableOpacity onPress={handleLogin} style={stylesLogin.button}>
+          <TouchableOpacity testID="login_button" onPress={handleLogin} style={stylesLogin.button}>
             <Text style={stylesLogin.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>

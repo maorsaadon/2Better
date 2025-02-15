@@ -1,0 +1,5 @@
+{
+    "testRunner": "jest",
+    "setupFilesAfterEnv": ["./detox.setup.js"],
+    "reporters": ["detox/runners/jest/streamlineReporter"]
+}

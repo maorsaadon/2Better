@@ -142,7 +142,7 @@ const HomeScreen = () => {
           />
         }
       >
-        <View style={stylesHome.container}>
+        <View testID="home_screen" style={stylesHome.container}>
           <TouchableOpacity
             onPress={handleNotifications}
             style={stylesHome.notificationBotton}
